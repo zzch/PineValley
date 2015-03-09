@@ -1,0 +1,314 @@
+//
+//  ZCChooseThePitchVViewController.m
+//  我爱高尔夫
+//
+//  Created by hh on 15/1/30.
+//  Copyright (c) 2015年 zhongchuang. All rights reserved.
+//
+
+#import "ZCChooseThePitchVViewController.h"
+#import "ZCChooseTableViewCell.h"
+
+#import "MTScenicShopCell.h"
+#import "AFNetworking.h"
+#import "ZCAccount.h"
+#import "ZCstadium.h"
+#import "ZCSwitchTableViewController.h"
+#import "ZCSettingTVController.h"
+#import "ZCStadiumInformation.h"
+
+
+
+@interface ZCChooseThePitchVViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate,CLLocationManagerDelegate>
+
+//搜索栏
+@property (nonatomic , strong)UISearchDisplayController *mySearchDisplayController;
+@property(strong,nonatomic) UISearchBar *mySearchBar;
+@property(strong,nonatomic) UITableView *tableView;
+//数据源
+@property(strong,nonatomic) NSMutableArray *dataArray;
+//搜索结果数据
+@property(strong,nonatomic) NSMutableArray *resultsData;
+//定位
+@property(nonatomic,retain) CLLocationManager *locationMgr;
+
+
+@end
+
+
+
+@implementation ZCChooseThePitchVViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.navigationItem.title=@"选择球场";
+    UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"切换" style:UIBarButtonItemStyleDone target:self action:@selector(switchOtherView)];
+    self.navigationItem.rightBarButtonItem =newBar;
+    
+    // 修改下一个界面返回按钮的文字
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
+
+    
+  // self.navigationController.navigationBarHidden = YES;
+    _dataArray = [NSMutableArray array];
+   // _resultsData = [NSMutableArray array];
+    
+   // [self initDataSource];
+    [self initDataSource1];
+    [self initTableView];
+    //[self initMysearchBarAndMysearchDisPlay];
+    
+    
+    
+}
+
+
+//切换球场地址
+-(void)switchOtherView
+{
+    ZCSwitchTableViewController *switchTableView=[[ZCSwitchTableViewController alloc] init];
+    
+    [self.navigationController  pushViewController:switchTableView animated:YES];
+    
+    
+    
+}
+
+
+//网络请求数据
+-(void)initDataSource1
+{
+    //1.获取经纬度
+    // 初始化并开始更新
+    self.locationMgr=[[CLLocationManager alloc] init];
+    self.locationMgr.delegate=self;
+    self.locationMgr.desiredAccuracy=kCLLocationAccuracyBest;
+    self.locationMgr.distanceFilter=5.0;
+    if([[UIDevice currentDevice].systemVersion doubleValue] >= 8.0)
+    {
+        NSLog(@"是iOS8");
+        // 主动要求用户对我们的程序授权, 授权状态改变就会通知代理
+        [self.locationMgr requestAlwaysAuthorization]; // 请求前台和后台定位权限
+        [self.locationMgr startUpdatingLocation];
+    }else
+    {
+        NSLog(@"是iOS7");
+        // 3.开始监听(开始获取位置)
+        [self.locationMgr startUpdatingLocation];
+    }
+    
+    //[self.locationMgr startUpdatingLocation];
+    
+    
+
+    
+   
+    
+    //2.发送网络请求
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    
+    mgr.responseSerializer.acceptableContentTypes=[NSSet setWithObjects:@"text/html",@"text/plain",@"application/xhtml+xml",@"application/xml",@"application/json", nil];
+ // mgr.responseSerializer.acceptableContentTypes = [mgr.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+   
+//    double  latitude=39.975368;
+//    double  longitude =116.300841;
+    // 2.封装请求参数
+    NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
+    ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
+    ZCLog(@"%@-------",account.token);
+    // 说明服务器返回的JSON数据
+   // mgr.responseSerializer = [AFJSONResponseSerializer serializer];
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"longitude"] = @(116.300841);
+    params[@"latitude"]=@(39.975368);
+    params[@"token"]=account.token;
+    [mgr GET:@"http://augusta.aforeti.me/api/v1/courses/nearest.json" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+       // ZCLog(@"%@------",responseObject);
+        //将字典转换成模型数据
+        NSMutableArray *stadiunArray=[NSMutableArray array];
+        for (NSDictionary *dict in responseObject) {
+            //创建模型
+            ZCstadium *stadium=[ZCstadium stadiumWithDict:dict];
+            //添加模型
+            [stadiunArray addObject:stadium];
+            
+        }
+        self.dataArray=stadiunArray;
+        
+        //刷新表格
+        [self.tableView reloadData];
+        
+        
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        ZCLog(@"%@",error);
+    }];
+    
+}
+
+//代理方法实现
+
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    
+    
+    // 如果只需要获取一次, 可以获取到位置之后就停止
+      //  [self.locationMgr stopUpdatingLocation];
+    
+    // 1.获取最后一次的位置
+    /*
+     location.coordinate; 坐标, 包含经纬度
+     location.altitude; 设备海拔高度 单位是米
+     location.course; 设置前进方向 0表示北 90东 180南 270西
+     location.horizontalAccuracy; 水平精准度
+     location.verticalAccuracy; 垂直精准度
+     location.timestamp; 定位信息返回的时间
+     location.speed; 设备移动速度 单位是米/秒, 适用于行车速度而不太适用于不行
+     */
+    /*
+     可以设置模拟器模拟速度
+     bicycle ride 骑车移动
+     run 跑动
+     freeway drive 高速公路驾车
+     */
+    CLLocation *location = [locations lastObject];
+    NSLog(@"%f, %f ", location.coordinate.latitude , location.coordinate.longitude);
+    
+}
+
+//创建tableview
+- (void)initTableView
+{
+    _tableView = [[UITableView alloc] init];
+   // _tableView.frame = CGRectMake(0, is_IOS_7?64:44, 320, SCREEN_HEIGHT-64);
+    _tableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    _tableView.backgroundColor = [UIColor whiteColor];
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    _tableView.showsVerticalScrollIndicator = NO;
+    _tableView.tableHeaderView = [[UIView alloc] init];
+    _tableView.tableFooterView = [[UIView alloc] init];
+    [self.view addSubview:_tableView];
+    
+//    if (is_IOS_7)
+//        //分割线的位置不带偏移
+//        _tableView.separatorInset = UIEdgeInsetsZero;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+#pragma mark - tableView代理
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+return _dataArray.count;
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 80;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *myCell = @"cell_identifier";
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:myCell];
+    ZCChooseTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:myCell];
+    
+    if (cell == nil) {
+        cell = [[ZCChooseTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:myCell];
+
+    }
+    
+//    while ([cell.contentView.subviews lastObject] != nil) {
+//        [(UIView *)[cell.contentView.subviews lastObject] removeFromSuperview];
+//    }
+    
+//    if (tableView == _mySearchDisplayController.searchResultsTableView)
+//    {
+////        cell.textLabel.text = _resultsData[indexPath.row];
+//        //         ZCstadium *stadium=self.dataArray[indexPath.row];
+//        ZCstadium *stadium=self.resultsData[indexPath.row];
+//        cell.name.text = stadium.name;
+//       // NSLog(@"%@",stadium.distance);
+//        float distance = stadium.distance;
+//        cell.distance.text = [NSString stringWithFormat:@"%@",[NSNumber numberWithFloat:distance]];
+//        //cell.address.text=stadium.address;
+//        cell.address.text=@"xxxxxxxxxxxxxxxxxxxx";
+//
+//    }
+//    else
+//    {  ZCstadium *stadium=self.dataArray[indexPath.row];
+//        
+//        cell.name.text = stadium.name;
+//        float distance = stadium.distance;
+//        cell.distance.text = [NSString stringWithFormat:@"%@",[NSNumber numberWithFloat:distance]];
+//        
+//        // cell.distance.text =@"11";
+//        //cell.address.text=stadium.address;
+//        cell.address.text=@"xxxxxxxxxxxxxxxxxxxx";
+//        // NSLog(@"%@",stadium.distance);
+//
+////
+//          }
+//    
+    
+    ZCstadium *stadium=self.dataArray[indexPath.row];
+    
+    cell.name.text = stadium.name;
+    float distance = stadium.distance;
+    cell.distance.text = [NSString stringWithFormat:@"%@",[NSNumber numberWithFloat:distance]];
+    
+    // cell.distance.text =@"11";
+    //cell.address.text=stadium.address;
+    cell.address.text=@"xxxxxxxxxxxxxxxxxxxx";
+    // NSLog(@"%@",stadium.distance);
+
+    
+   // ZCChooseTableViewCell *cell=[ZCChooseTableViewCell cellWithTable:tableView];
+
+
+    
+    return cell;
+    
+    
+    
+    
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //取消选中
+    //[tableView deselectRowAtIndexPath:indexPath animated:YES];
+   ZCSettingTVController *settingView=[[ZCSettingTVController alloc] init];
+    //点击单个cell时候，发送请求获取单个球场信息   uuid    /v1/matches/show.json
+
+    ZCstadium *stadiumStr=self.dataArray[indexPath.row];
+    
+    NSString *uuidStr=stadiumStr.uuid;
+    
+    settingView.uuidStr=uuidStr;
+    
+    
+    [self.navigationController pushViewController:settingView animated:YES];
+    
+    
+    
+}
+
+
+
+
+@end

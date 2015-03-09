@@ -1,0 +1,35 @@
+//
+//  pchFile.pch
+//  我爱高尔夫
+//
+//  Created by hh on 15/1/30.
+//  Copyright (c) 2015年 zhongchuang. All rights reserved.
+//
+
+#ifndef ______pchFile_pch
+#define ______pchFile_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#endif
+
+
+#define RGBACOLOR(R,G,B,A) [UIColor colorWithRed:(R)/255.0f green:(G)/255.0f blue:(B)/255.0f alpha:(A)]
+
+#pragma mark - 设备型号识别
+#define is_IOS_7 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
+
+#pragma mark - 硬件
+#define SCREEN_WIDTH    ([UIScreen mainScreen].bounds.size.width)
+#define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
+
+// 3.自定义Log
+#ifdef DEBUG
+#define ZCLog(...) NSLog(__VA_ARGS__)
+#else
+#define ZCLog(...)
+#endif
+
+
