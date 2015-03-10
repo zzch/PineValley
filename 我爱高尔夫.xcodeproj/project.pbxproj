@@ -45,6 +45,8 @@
 		A94D47E01AA8426300971FAD /* ZCscorecard.m in Sources */ = {isa = PBXBuildFile; fileRef = A94D47DF1AA8426300971FAD /* ZCscorecard.m */; };
 		A95620091AAD3E7000388D08 /* ZCEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A95620081AAD3E7000388D08 /* ZCEvent.m */; };
 		A956200C1AAD3ECD00388D08 /* ZCCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = A956200B1AAD3ECD00388D08 /* ZCCourse.m */; };
+		A95620111AAD5E6E00388D08 /* ZCEventTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A956200F1AAD5E6E00388D08 /* ZCEventTableViewCell.m */; };
+		A95620121AAD5E6E00388D08 /* ZCEventTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A95620101AAD5E6E00388D08 /* ZCEventTableViewCell.xib */; };
 		A957DD8F1AA05FB9008C5ABA /* ZCChildStadium.m in Sources */ = {isa = PBXBuildFile; fileRef = A957DD8E1AA05FB9008C5ABA /* ZCChildStadium.m */; };
 		A957DD921AA067BD008C5ABA /* ZCSettingTVController.m in Sources */ = {isa = PBXBuildFile; fileRef = A957DD911AA067BD008C5ABA /* ZCSettingTVController.m */; };
 		A957DD951AA068D0008C5ABA /* ZCStadiumInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = A957DD941AA068D0008C5ABA /* ZCStadiumInformation.m */; };
@@ -62,6 +64,12 @@
 		A967AD2A1A9EC7B3009E7468 /* ZCCityStadium.m in Sources */ = {isa = PBXBuildFile; fileRef = A967AD291A9EC7B3009E7468 /* ZCCityStadium.m */; };
 		A9714E491A830BCD00571CB2 /* ZCregisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9714E481A830BCD00571CB2 /* ZCregisterViewController.m */; };
 		A9714E6A1A832F1800571CB2 /* ZCAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = A9714E691A832F1800571CB2 /* ZCAccount.m */; };
+		A974E1161AAEABD800F1519A /* ZCQuickScoringTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A974E1151AAEABD800F1519A /* ZCQuickScoringTableViewController.m */; };
+		A974E1221AAF01C600F1519A /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A974E1181AAF01C600F1519A /* MJRefresh.bundle */; };
+		A974E1231AAF01C600F1519A /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = A974E11B1AAF01C600F1519A /* MJRefreshBaseView.m */; };
+		A974E1241AAF01C600F1519A /* MJRefreshConst.m in Sources */ = {isa = PBXBuildFile; fileRef = A974E11D1AAF01C600F1519A /* MJRefreshConst.m */; };
+		A974E1251AAF01C600F1519A /* MJRefreshFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = A974E11F1AAF01C600F1519A /* MJRefreshFooterView.m */; };
+		A974E1261AAF01C600F1519A /* MJRefreshHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = A974E1211AAF01C600F1519A /* MJRefreshHeaderView.m */; };
 		A998A8D01A7E87C800CE6AAA /* ZCSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = A998A8CF1A7E87C800CE6AAA /* ZCSetting.m */; };
 		A9F00BFA1A8858E200671AC9 /* ZCShowButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F00BF91A8858E200671AC9 /* ZCShowButton.m */; };
 /* End PBXBuildFile section */
@@ -148,6 +156,9 @@
 		A95620081AAD3E7000388D08 /* ZCEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCEvent.m; sourceTree = "<group>"; };
 		A956200A1AAD3ECC00388D08 /* ZCCourse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCCourse.h; sourceTree = "<group>"; };
 		A956200B1AAD3ECD00388D08 /* ZCCourse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCCourse.m; sourceTree = "<group>"; };
+		A956200E1AAD5E6E00388D08 /* ZCEventTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCEventTableViewCell.h; sourceTree = "<group>"; };
+		A956200F1AAD5E6E00388D08 /* ZCEventTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCEventTableViewCell.m; sourceTree = "<group>"; };
+		A95620101AAD5E6E00388D08 /* ZCEventTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZCEventTableViewCell.xib; sourceTree = "<group>"; };
 		A957DD8D1AA05FB9008C5ABA /* ZCChildStadium.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCChildStadium.h; sourceTree = "<group>"; };
 		A957DD8E1AA05FB9008C5ABA /* ZCChildStadium.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCChildStadium.m; sourceTree = "<group>"; };
 		A957DD901AA067BD008C5ABA /* ZCSettingTVController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCSettingTVController.h; sourceTree = "<group>"; };
@@ -183,6 +194,18 @@
 		A9714E481A830BCD00571CB2 /* ZCregisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCregisterViewController.m; sourceTree = "<group>"; };
 		A9714E681A832F1800571CB2 /* ZCAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCAccount.h; sourceTree = "<group>"; };
 		A9714E691A832F1800571CB2 /* ZCAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCAccount.m; sourceTree = "<group>"; };
+		A974E1141AAEABD800F1519A /* ZCQuickScoringTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCQuickScoringTableViewController.h; sourceTree = "<group>"; };
+		A974E1151AAEABD800F1519A /* ZCQuickScoringTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCQuickScoringTableViewController.m; sourceTree = "<group>"; };
+		A974E1181AAF01C600F1519A /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
+		A974E1191AAF01C600F1519A /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefresh.h; sourceTree = "<group>"; };
+		A974E11A1AAF01C600F1519A /* MJRefreshBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshBaseView.h; sourceTree = "<group>"; };
+		A974E11B1AAF01C600F1519A /* MJRefreshBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshBaseView.m; sourceTree = "<group>"; };
+		A974E11C1AAF01C600F1519A /* MJRefreshConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshConst.h; sourceTree = "<group>"; };
+		A974E11D1AAF01C600F1519A /* MJRefreshConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshConst.m; sourceTree = "<group>"; };
+		A974E11E1AAF01C600F1519A /* MJRefreshFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshFooterView.h; sourceTree = "<group>"; };
+		A974E11F1AAF01C600F1519A /* MJRefreshFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshFooterView.m; sourceTree = "<group>"; };
+		A974E1201AAF01C600F1519A /* MJRefreshHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshHeaderView.h; sourceTree = "<group>"; };
+		A974E1211AAF01C600F1519A /* MJRefreshHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJRefreshHeaderView.m; sourceTree = "<group>"; };
 		A998A8CE1A7E87C800CE6AAA /* ZCSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCSetting.h; sourceTree = "<group>"; };
 		A998A8CF1A7E87C800CE6AAA /* ZCSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCSetting.m; sourceTree = "<group>"; };
 		A9F00BF81A8858E200671AC9 /* ZCShowButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCShowButton.h; sourceTree = "<group>"; };
@@ -378,6 +401,7 @@
 		A9438A431A7A007B00B55001 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A956200D1AAD5DD000388D08 /* event（历史赛事） */,
 				A9484F511A80CE0E00681939 /* ZCScorecardView(记分卡自定义View) */,
 				A93BCE801A7CB6B90053FD00 /* MTScenicShopCell.h */,
 				A93BCE811A7CB6B90053FD00 /* MTScenicShopCell.m */,
@@ -476,6 +500,8 @@
 				A967AD051A9EBE7B009E7468 /* ZCSwitchTableViewController.m */,
 				A957DD901AA067BD008C5ABA /* ZCSettingTVController.h */,
 				A957DD911AA067BD008C5ABA /* ZCSettingTVController.m */,
+				A974E1141AAEABD800F1519A /* ZCQuickScoringTableViewController.h */,
+				A974E1151AAEABD800F1519A /* ZCQuickScoringTableViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -509,6 +535,16 @@
 				A95620081AAD3E7000388D08 /* ZCEvent.m */,
 				A956200A1AAD3ECC00388D08 /* ZCCourse.h */,
 				A956200B1AAD3ECD00388D08 /* ZCCourse.m */,
+			);
+			path = "event（历史赛事）";
+			sourceTree = "<group>";
+		};
+		A956200D1AAD5DD000388D08 /* event（历史赛事） */ = {
+			isa = PBXGroup;
+			children = (
+				A956200E1AAD5E6E00388D08 /* ZCEventTableViewCell.h */,
+				A956200F1AAD5E6E00388D08 /* ZCEventTableViewCell.m */,
+				A95620101AAD5E6E00388D08 /* ZCEventTableViewCell.xib */,
 			);
 			path = "event（历史赛事）";
 			sourceTree = "<group>";
@@ -599,10 +635,28 @@
 		A9714E4A1A832D3300571CB2 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				A974E1171AAF01C600F1519A /* MJRefresh */,
 				A967AD071A9EC6CB009E7468 /* MJExtension */,
 				A93B46181A84C54600AF48F0 /* AFNetworking */,
 			);
 			path = Lib;
+			sourceTree = "<group>";
+		};
+		A974E1171AAF01C600F1519A /* MJRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				A974E1181AAF01C600F1519A /* MJRefresh.bundle */,
+				A974E1191AAF01C600F1519A /* MJRefresh.h */,
+				A974E11A1AAF01C600F1519A /* MJRefreshBaseView.h */,
+				A974E11B1AAF01C600F1519A /* MJRefreshBaseView.m */,
+				A974E11C1AAF01C600F1519A /* MJRefreshConst.h */,
+				A974E11D1AAF01C600F1519A /* MJRefreshConst.m */,
+				A974E11E1AAF01C600F1519A /* MJRefreshFooterView.h */,
+				A974E11F1AAF01C600F1519A /* MJRefreshFooterView.m */,
+				A974E1201AAF01C600F1519A /* MJRefreshHeaderView.h */,
+				A974E1211AAF01C600F1519A /* MJRefreshHeaderView.m */,
+			);
+			path = MJRefresh;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -688,10 +742,12 @@
 				A93DF8A61A8208AB009623F5 /* ZCFillViewController.xib in Resources */,
 				A9438A541A7A043700B55001 /* ZCPersonalViewController.xib in Resources */,
 				A9438A641A7A04D800B55001 /* ZCStatisticalViewController.xib in Resources */,
+				A95620121AAD5E6E00388D08 /* ZCEventTableViewCell.xib in Resources */,
 				A93BCE901A7CC3E50053FD00 /* friends.plist in Resources */,
 				A9438A211A79FF6E00B55001 /* Images.xcassets in Resources */,
 				A9438A6E1A7A38AB00B55001 /* ZCQuickScoringViewController.xib in Resources */,
 				A9438A5F1A7A04A200B55001 /* ZCPracticeViewController.xib in Resources */,
+				A974E1221AAF01C600F1519A /* MJRefresh.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -724,7 +780,9 @@
 				A9484F501A80BCD600681939 /* ZCScorecardTableViewController.m in Sources */,
 				A9438A4F1A7A01A700B55001 /* ZCTabbarViewController.m in Sources */,
 				A957DD951AA068D0008C5ABA /* ZCStadiumInformation.m in Sources */,
+				A974E1261AAF01C600F1519A /* MJRefreshHeaderView.m in Sources */,
 				A967AD221A9EC6CB009E7468 /* NSObject+MJKeyValue.m in Sources */,
+				A974E1251AAF01C600F1519A /* MJRefreshFooterView.m in Sources */,
 				A9438A531A7A043700B55001 /* ZCPersonalViewController.m in Sources */,
 				A93B462F1A84C54600AF48F0 /* AFNetworkReachabilityManager.m in Sources */,
 				A93B46371A84D99800AF48F0 /* ZCstadium.m in Sources */,
@@ -738,13 +796,16 @@
 				A9386B9B1A7B7F2900526086 /* ZCChooseThePitchVViewController.m in Sources */,
 				A9438A6D1A7A38AB00B55001 /* ZCQuickScoringViewController.m in Sources */,
 				A9438A631A7A04D800B55001 /* ZCStatisticalViewController.m in Sources */,
+				A974E1161AAEABD800F1519A /* ZCQuickScoringTableViewController.m in Sources */,
 				A956200C1AAD3ECD00388D08 /* ZCCourse.m in Sources */,
 				A967AD211A9EC6CB009E7468 /* NSObject+MJCoding.m in Sources */,
 				A967AD1E1A9EC6CB009E7468 /* MJMethod.m in Sources */,
 				A967AD1D1A9EC6CB009E7468 /* MJMember.m in Sources */,
 				A93B46301A84C54600AF48F0 /* AFSecurityPolicy.m in Sources */,
 				A94D47E01AA8426300971FAD /* ZCscorecard.m in Sources */,
+				A95620111AAD5E6E00388D08 /* ZCEventTableViewCell.m in Sources */,
 				A967AD231A9EC6CB009E7468 /* NSObject+MJMember.m in Sources */,
+				A974E1241AAF01C600F1519A /* MJRefreshConst.m in Sources */,
 				A93B462D1A84C54600AF48F0 /* AFHTTPRequestOperationManager.m in Sources */,
 				A967AD1C1A9EC6CB009E7468 /* MJIvar.m in Sources */,
 				A93B462E1A84C54600AF48F0 /* AFHTTPSessionManager.m in Sources */,
@@ -755,6 +816,7 @@
 				A9714E491A830BCD00571CB2 /* ZCregisterViewController.m in Sources */,
 				A967AD1B1A9EC6CB009E7468 /* MJArgument.m in Sources */,
 				A93B46331A84C54600AF48F0 /* AFURLResponseSerialization.m in Sources */,
+				A974E1231AAF01C600F1519A /* MJRefreshBaseView.m in Sources */,
 				A998A8D01A7E87C800CE6AAA /* ZCSetting.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

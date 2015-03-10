@@ -8,6 +8,7 @@
 
 #import "ZCPracticeViewController.h"
 #import "ZCQuickScoringViewController.h"
+#import "ZCQuickScoringTableViewController.h"
 @interface ZCPracticeViewController ()
 
 @end
@@ -25,8 +26,14 @@
 }
 - (IBAction)clickQuickScoring {
     
-    ZCQuickScoringViewController *quick=[[ZCQuickScoringViewController alloc] init];
-    [self.navigationController pushViewController:quick animated:YES];
+//    ZCQuickScoringViewController *quick=[[ZCQuickScoringViewController alloc] init];
+//    [self.navigationController pushViewController:quick animated:YES];
+//    
+    ZCQuickScoringTableViewController *quickScoringTableViewController=[[ZCQuickScoringTableViewController alloc] init];
+    quickScoringTableViewController.hidesBottomBarWhenPushed=YES;
+    [self.navigationController pushViewController:quickScoringTableViewController animated:YES];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {

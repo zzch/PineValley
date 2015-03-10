@@ -20,16 +20,16 @@
 /**
  *  赛事的总杆数
  */
-@property (nonatomic, assign) int score;
+@property (nonatomic, copy) NSString *score;
 
 /**
  *  赛事的记录的记分卡数量
  */
-@property (nonatomic, assign) int recorded_scorecards_count;
+@property (nonatomic, copy) NSString *recorded_scorecards_count;
 /**
  *  赛事的开始的时间
  */
-@property (nonatomic, assign) int started_at;
+@property (nonatomic, copy) NSString *started_at;
 /**
  *  赛事的球场信息模型
  */

@@ -189,14 +189,12 @@
 {
         if(tableView == _mySearchDisplayController.searchResultsTableView)
         {
-            tableView.sectionHeaderHeight = 0;
+            return nil;
         }else{
-            tableView.sectionHeaderHeight = 40;
-        }
-
     
     ZCCity *city=self.dataArray[section];
     return city.name;
+        }
 }
 
 

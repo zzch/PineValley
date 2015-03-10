@@ -50,11 +50,7 @@
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
     //[self pickerView:self didSelectRow:5 inComponent:nil];
     
-    [self pickerView:nil didSelectRow:3 inComponent:0];
-    [self.pickView selectRow:40 inComponent:0 animated:YES];
-    
-    [self pickerView:nil didSelectRow:1 inComponent:1];
-    [self.pickView selectRow:1 inComponent:1 animated:YES];
+   
 
   
     
@@ -89,8 +85,16 @@
     [self.hitLabel removeObserver:self forKeyPath:@"text"];
 
 }
+//pickView到这个界面的默认值
+-(void)pickerViewDefaultData
+{
+    [self pickerView:nil didSelectRow:40 inComponent:0];
+    [self.pickView selectRow:40 inComponent:0 animated:YES];
+    
+    [self pickerView:nil didSelectRow:1 inComponent:1];
+    [self.pickView selectRow:1 inComponent:1 animated:YES];
 
-
+}
 //push到这个界面的默认值
 -(void)defaultData
 {
@@ -103,10 +107,10 @@
             self.punishcount=0;
             self.pushLabel.text=@"2";
             self.pushcount=2;
-            
+            [self pickerViewDefaultData];
             
             self.count=3;
-            self.pushcount=2;
+            self.punishcount=0;
             
         }else if ([self.scorecard.par isEqual:@"4"])
         {
@@ -115,6 +119,8 @@
             self.pushLabel.text=@"2";
             self.punishcount=0;
             self.pushcount=2;
+            self.count=4;
+            [self pickerViewDefaultData];
            
         }else
         {
@@ -123,15 +129,48 @@
             self.pushLabel.text=@"2";
             self.punishcount=0;
             self.pushcount=2;
+            self.count=5;
+            [self pickerViewDefaultData];
         }
         
     }else
     {
-        self.totalLabel.text=self.scorecard.score;
-        self.punish.text=self.scorecard.penalties;
-        self.pushLabel.text= self.scorecard.putts;
+        self.totalLabel.text=[NSString stringWithFormat:@"%@",self.scorecard.score]   ;
+        self.punish.text=[NSString stringWithFormat:@"%@",self.scorecard.penalties];
+        self.pushLabel.text= [NSString stringWithFormat:@"%@",self.scorecard.putts];
+        
+       // self.distanceLabel.text=[NSString stringWithFormat:@"%@",self.scorecard.distance_from_hole_to_tee_box];
+        
+        
+        if ([self.scorecard.direction isEqual:@"hook"]) {
+            self.hitLabel.text=@"左侧";
+            //[self pickerView:nil didSelectRow:1 inComponent:1];
+            [self.pickView selectRow:0 inComponent:1 animated:YES];
+        }else if([self.scorecard.direction isEqual:@"slice"])
+        {
+            self.hitLabel.text=@"右侧";
+            [self.pickView selectRow:1 inComponent:1 animated:YES];
+        }else
+        {
+           self.hitLabel.text=@"命中";
+            [self.pickView selectRow:2 inComponent:1 animated:YES];
+        }
+        
+       // self.hitLabel.text=[NSString stringWithFormat:@"%@",self.scorecard.direction];
+        int distance=[self.scorecard.driving_distance intValue]/5;
+        
+        ZCLog(@"%@",self.scorecard.driving_distance);
+        [self pickerView:nil didSelectRow:distance inComponent:0];
+        [self.pickView selectRow:distance inComponent:0 animated:YES];
+//        [self pickerView:nil didSelectRow:40 inComponent:0];
+//        [self.pickView selectRow:40 inComponent:0 animated:YES];
+        
         self.punishcount=[self.scorecard.penalties intValue];
         self.pushcount=[self.scorecard.putts intValue];
+        self.count=[self.scorecard.score intValue];
+        
+        
+        
 
     }
 }
@@ -296,7 +335,7 @@
     }else{
         self.count=10;
     }
-    
+    //   self.count=self.pushcount+(self.punishcount) +1;
     self.totalLabel.text=[NSString stringWithFormat:@"%d",self.count];
     //点击后值是否改变
     
@@ -305,12 +344,9 @@
 //总杆数 点击减号
 - (IBAction)totaReduction {
     
-    if (self.count>0) {
+    if (self.count>1&& self.count>self.punishcount &&self.count>self.pushcount &&self.count>self.punishcount+self.pushcount) {
         self.count--;
-    }else{
-        self.count=0;
     }
-    
     self.totalLabel.text=[NSString stringWithFormat:@"%d",self.count];
 
     
@@ -319,14 +355,20 @@
 //推杆数 点击加号
 - (IBAction)pushAdd {
     
-    if (self.pushcount<10) {
+    if (self.pushcount<=self.count-(self.punishcount*2)-1) {
         self.pushcount++;
     }else{
-        self.pushcount=10;
+        //self.pushcount=10;
     }
     
     self.pushLabel.text=[NSString stringWithFormat:@"%d",self.pushcount];
-
+    
+   //
+    if (self.count<self.pushcount+(self.punishcount) +1) {
+        self.count=self.pushcount+(self.punishcount) +1;
+         self.totalLabel.text=[NSString stringWithFormat:@"%d",self.count];
+    }
+   
     
 }
 //推杆数 点击减号
@@ -344,16 +386,21 @@
 //罚杆数 点击加号
 - (IBAction)punishAdd {
     
-    if (self.punishcount<10) {
+    if (self.punishcount<(self.count-self.pushcount-1)/2) {
         self.punishcount++;
     }else{
-        self.punishcount=10;
+       // self.punishcount=10;
     }
     
     self.punish.text=[NSString stringWithFormat:@"%d",self.punishcount];
     
 
+    if (self.count<self.pushcount+(self.punishcount) +1) {
+        self.count=self.pushcount+(self.punishcount) +1;
+        self.totalLabel.text=[NSString stringWithFormat:@"%d",self.count];
+    }
     
+
 }
 //罚杆数 点击减号
 - (IBAction)punishReduction {

@@ -293,12 +293,6 @@
     return cell;
 }
 
-//-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-//{
-//     return @"1111111";
-//
-//}
-
 // 设置每一组的头View
 
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
