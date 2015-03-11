@@ -58,7 +58,14 @@
     self.scoreLabel.text=[NSString stringWithFormat:@"%@",self.event.score ];
 ;
     self.nameLabel.text=self.event.course.name;
-    self.startedAtLabel.text=self.event.started_at;
+    
+    
+    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+    [fmt setDateFormat:@"yyyy年MM月dd日 "];
+    NSDate *confromTimesp=[NSDate dateWithTimeIntervalSince1970:self.event.started_at];
+    NSString *confromTimespStr=[fmt stringFromDate:confromTimesp];
+
+    self.startedAtLabel.text=confromTimespStr;
     self.typeLabel.text=self.event.type;
    // if (![self.event.recorded_scorecards_count isKindOfClass:[NSNull class]]) {
     

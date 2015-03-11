@@ -23,6 +23,11 @@
     self.navigationItem.backBarButtonItem.tintColor = [UIColor blackColor];
     
     
+//    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+//    [fmt setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+//    NSDate *date1=[NSDate date];
+//    NSString *currentDateStr = [fmt stringFromDate:date1];
+//    ZCLog(@"%@",currentDateStr);
 }
 - (IBAction)clickQuickScoring {
     

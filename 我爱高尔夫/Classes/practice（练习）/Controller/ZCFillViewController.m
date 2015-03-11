@@ -344,8 +344,20 @@
 //总杆数 点击减号
 - (IBAction)totaReduction {
     
-    if (self.count>1&& self.count>self.punishcount &&self.count>self.pushcount &&self.count>self.punishcount+self.pushcount) {
-        self.count--;
+//    if (self.count>1&& self.count>self.punishcount &&self.count>self.pushcount &&self.count>self.punishcount+self.pushcount) {
+//        self.count--;
+//    }
+    self.count--;
+    
+    if (self.count<(self.pushcount+self.punishcount)*2) {
+        if (self.punishcount==0) {
+            self.pushcount--;
+            self.pushLabel.text=[NSString stringWithFormat:@"%d",self.pushcount];
+        }else
+        {
+            self.punishcount--;
+            self.punish.text=[NSString stringWithFormat:@"%d",self.punishcount];
+        }
     }
     self.totalLabel.text=[NSString stringWithFormat:@"%d",self.count];
 
@@ -364,9 +376,9 @@
     self.pushLabel.text=[NSString stringWithFormat:@"%d",self.pushcount];
     
    //
-    if (self.count<self.pushcount+(self.punishcount) +1) {
-        self.count=self.pushcount+(self.punishcount) +1;
-         self.totalLabel.text=[NSString stringWithFormat:@"%d",self.count];
+    if (self.count<(self.pushcount+self.punishcount) *2) {
+        self.count=(self.pushcount+self.punishcount) *2;
+        self.totalLabel.text=[NSString stringWithFormat:@"%d",self.count];
     }
    
     
@@ -386,17 +398,17 @@
 //罚杆数 点击加号
 - (IBAction)punishAdd {
     
-    if (self.punishcount<(self.count-self.pushcount-1)/2) {
-        self.punishcount++;
-    }else{
-       // self.punishcount=10;
-    }
-    
+//    if (self.punishcount) {
+//        self.punishcount++;
+//    }else{
+//       // self.punishcount=10;
+//    }
+    self.punishcount++;
     self.punish.text=[NSString stringWithFormat:@"%d",self.punishcount];
     
 
-    if (self.count<self.pushcount+(self.punishcount) +1) {
-        self.count=self.pushcount+(self.punishcount) +1;
+    if (self.count<(self.pushcount+self.punishcount) *2) {
+        self.count=(self.pushcount+self.punishcount) *2;
         self.totalLabel.text=[NSString stringWithFormat:@"%d",self.count];
     }
     

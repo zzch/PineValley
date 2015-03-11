@@ -9,6 +9,9 @@
 #import "ZCEvent.h"
 #import "ZCCourse.h"
 @implementation ZCEvent
+
+//1425047495     Fri May 09 16:30:34 +0800 2014
+
 + (instancetype)eventWithDict:(NSDictionary *)dict
 {
     return [[self alloc] initWithDict:dict];
@@ -23,10 +26,10 @@
         self.score=dict[@"score"] ;
         self.recorded_scorecards_count=dict[@"recorded_scorecards_count"] ;
         
-        self.started_at=dict[@"started_at"] ;
+        self.started_at=[dict[@"started_at"] longValue] ;
         
         self.course=[ZCCourse courseWithDict:dict[@"course"]];
-        ZCLog(@"%@",self.course.name);
+       // ZCLog(@"%@",self.course.name);
         
     }
     return self;

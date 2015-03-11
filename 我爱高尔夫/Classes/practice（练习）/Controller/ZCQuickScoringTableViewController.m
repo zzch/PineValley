@@ -46,18 +46,18 @@
     return _eventArray;
 }
 
-//-viewdidappear
+
 -(void)viewWillAppear:(BOOL)animated
 {
+   
+  
     
-    //网络请求
-    [self serverData];
     
-    // f (self.eventArray.count)
-//    int a=1;
-//    if (a) {
+//    //如果没有数据执行此方法
+//    if (self.eventArray.count==0) {
 //        
 //        UIView *vc=[[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//        vc.backgroundColor=[UIColor whiteColor];
 //        
 //        
 //        
@@ -73,27 +73,17 @@
 //        
 //        
 //    }
-//    
-    
-    
-    
-
-
 
     
 }
 
+//-viewdidappear
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    //底部tabbar滑走消失
-    //self.hidesBottomBarWhenPushed=YES;
-    
+ 
     
     self.navigationItem.title=@"快捷记分卡";
-   // UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"新建" style:UIBarButtonItemStyleDone target:self action:@selector(chooseThePitch)];
-    
-   // self.navigationItem.rightBarButtonItem =newBar;
     
     UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"新建" style:UIBarButtonItemStyleDone target:self action:@selector(chooseThePitch)];
     self.navigationItem.rightBarButtonItem =newBar;
@@ -106,20 +96,6 @@
     self.tableView.delegate=self;
     self.tableView.rowHeight=140;
     self.page=1;
-    
-//    
-//    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-//    self.refreshControl=refreshControl;
-//    // 监听刷新控件的状态改变
-//    [self.refreshControl addTarget:self action:@selector(onlineData:) forControlEvents:UIControlEventValueChanged];
-//    
-//    [self.tableView addSubview:refreshControl];
-    
-    // 自动进入刷新状态(不会触发监听方法)
-    //[refreshControl beginRefreshing];
-    
-    // 直接加载数据
-    //[self onlineData:refreshControl];
     
     
     
@@ -136,19 +112,63 @@
     footer.scrollView = self.tableView;
     footer.delegate = self;
     self.footer = footer;
-
-
     
 
+    
+//    
+//    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+//    self.refreshControl=refreshControl;
+//    // 监听刷新控件的状态改变
+//    [self.refreshControl addTarget:self action:@selector(onlineData:) forControlEvents:UIControlEventValueChanged];
+//    
+//    [self.tableView addSubview:refreshControl];
+    
+    // 自动进入刷新状态(不会触发监听方法)
+    //[refreshControl beginRefreshing];
+    
+    // 直接加载数据
+    //[self onlineData:refreshControl];
+    
+  // [self serverData];
+   // 如果没有数据执行此方法
+   // int q=1;
+    ZCLog(@"先执行吗%lu",self.eventArray.count);
+//    if (self.eventArray.count) {
+//       
+//        UIView *vc=[[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//        vc.backgroundColor=[UIColor whiteColor];
+//        
+//        
+//        
+//        [self.tableView addSubview:vc];
+//        self.view=vc;
+//        
+//        UILabel *seelabel=[[UILabel alloc] initWithFrame:CGRectMake(10, 300, 350, 20)];
+//        
+//        seelabel.text=  @"您还没有记分卡，点击右上角新建按钮创建记分卡";
+//        seelabel.textColor=[UIColor blackColor];
+//        //seelabel.textAlignment=13;
+//        [vc addSubview:seelabel];
+//        
+//        
+//    }
+    
+    
 
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    
+    
+    
+    
+    
 }
 
 - (void)dealloc
 {
-//    // 释放内存
+    // 释放内存
     [self.header free];
     [self.footer free];
 }
@@ -178,6 +198,7 @@
 //服务器数据请求
 -(void)serverData
 {
+    ZCLog(@"中执行%lu",self.eventArray.count);
     //2.发送网络请求
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     
@@ -206,28 +227,46 @@
         self.eventArray=eventMutableArray;
         
         
-        
-        //        if (self.delete) {
-        //            self.delete=NO;
-        //
-        //            // 从数据源删除数据
-        //            [self.eventArray removeObjectAtIndex:self.indexPath.row];
-        //
-        //            // 表格删除数据，会重新调用数据源方法，产生越界
-        //            [self.tableView deleteRowsAtIndexPaths:@[self.indexPath] withRowAnimation:UITableViewRowAnimationFade];
-        //        }
-        
-        
-        
+//        //如果没有数据执行此方法
+//        if (self.eventArray.count) {
+//            
+//            UIView *vc=[[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//            vc.backgroundColor=[UIColor whiteColor];
+//            
+//            
+//            
+//            [self.tableView addSubview:vc];
+//            self.view=vc;
+//            
+//            UILabel *seelabel=[[UILabel alloc] initWithFrame:CGRectMake(10, 300, 350, 20)];
+//            
+//            seelabel.text=  @"您还没有记分卡，点击右上角新建按钮创建记分卡";
+//            seelabel.textColor=[UIColor blackColor];
+//            //seelabel.textAlignment=13;
+//            [vc addSubview:seelabel];
+//            
+//           
+//        }//else
+////        {
+//
+//           // [self.tableView reloadData];
+//            
+//            // 让刷新控件停止显示刷新状态
+//            //[refreshControl endRefreshing];
+//            
+//            // 让刷新控件停止显示刷新状态
+//            
+//        
+//        }
+//
         
         [self.tableView reloadData];
-        
-        // 让刷新控件停止显示刷新状态
-          //[refreshControl endRefreshing];
-        
-        // 让刷新控件停止显示刷新状态
         [self.header endRefreshing];
         [self showNewStatusCount];
+
+        ZCLog(@"后执行吗%lu",self.eventArray.count);
+
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         ZCLog(@"获取数据失败");
         
@@ -273,14 +312,14 @@
         //self.eventArray=eventMutableArray;
         
         // 添加新数据到旧数据的后面
-        [self.self.eventArray addObjectsFromArray:eventMutableArray];
+        [self.eventArray addObjectsFromArray:eventMutableArray];
 
         
 
         
         
         
-        [self.tableView reloadData];
+       // [self.tableView reloadData];
         
         // 让刷新控件停止显示刷新状态
         //[refreshControl endRefreshing];
@@ -458,9 +497,11 @@
         //      [self.tableView deleteRowsAtIndexPaths:@[self.indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
     
-    // 按钮的索引肯定不是0
+    
     
 }
+
+
 
 -(void)deleteData
 {
@@ -493,49 +534,5 @@
 }
 
 
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -29,7 +29,7 @@
 /**
  *  赛事的开始的时间
  */
-@property (nonatomic, copy) NSString *started_at;
+@property (nonatomic, assign) long started_at;
 /**
  *  赛事的球场信息模型
  */
