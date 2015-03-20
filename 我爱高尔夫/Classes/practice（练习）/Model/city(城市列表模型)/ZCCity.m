@@ -20,16 +20,16 @@
 {
     if (self = [super init]) {
         self.name=dict[@"name"];
-        NSDictionary *courses = dict[@"courses"];
-        self.courses = [NSMutableArray array];
-        for (NSDictionary *course in courses) {
+        NSDictionary *venues = dict[@"venues"];
+        self.venues = [NSMutableArray array];
+        for (NSDictionary *venue in venues) {
 //            NSString *address = course[@"address"];
 //            NSString *name = course[@"name"];
 //            NSString *uuid = course[@"uuid"];
 //            NSLog(@"%@--,%@--,%@--",address,name,uuid);
             
-            ZCCityStadium *stadium = [ZCCityStadium coursesWithDict:course];
-            [self.courses addObject:stadium];
+            ZCCityStadium *stadium = [ZCCityStadium coursesWithDict:venue];
+            [self.venues addObject:stadium];
         }
        // ZCLog(@"---courses---%zd",self.courses.count);
     }

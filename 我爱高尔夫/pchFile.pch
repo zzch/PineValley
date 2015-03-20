@@ -21,6 +21,11 @@
 #pragma mark - 设备型号识别
 #define is_IOS_7 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
 
+#define API @"http://123.57.210.52/api/v1/"
+
+// 2.获得RGB颜色
+#define ZCColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]
+
 #pragma mark - 硬件
 #define SCREEN_WIDTH    ([UIScreen mainScreen].bounds.size.width)
 #define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
@@ -30,6 +35,8 @@
 #define ZCLog(...) NSLog(__VA_ARGS__)
 #else
 #define ZCLog(...)
+
+
 #endif
 
 

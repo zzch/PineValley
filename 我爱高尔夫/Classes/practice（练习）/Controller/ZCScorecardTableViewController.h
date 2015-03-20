@@ -10,7 +10,7 @@
 #import "ZCTotalScorecards.h"
 @interface ZCScorecardTableViewController : UITableViewController
 @property(nonatomic,strong)ZCTotalScorecards *totalScorecards;
-//@property(nonatomic,copy)NSString *uuid;
+@property(nonatomic,copy)NSString *uuid;
 //@property(nonatomic,copy)NSString *tee_box;
 //@property(nonatomic,copy)NSString *lastUuid;
 //@property(nonatomic,copy)NSString *lastTee_box;

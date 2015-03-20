@@ -21,11 +21,11 @@
     if (self=[super init]) {
         self.name=dict[@"name"];
         
-         NSDictionary *groups = dict[@"groups"];
-        self.groups=[NSMutableArray array];
-        for (NSDictionary *group in groups) {
-            ZCChildStadium *childStadium=[ZCChildStadium childStadiumWithDict:group];
-            [self.groups addObject:childStadium];
+         NSDictionary *courses = dict[@"courses"];
+        self.courses=[NSMutableArray array];
+        for (NSDictionary *course in courses) {
+            ZCChildStadium *childStadium=[ZCChildStadium childStadiumWithDict:course];
+            [self.courses addObject:childStadium];
         }
         
 //         ZCLog(@"---groups---%zd",self.groups.count);

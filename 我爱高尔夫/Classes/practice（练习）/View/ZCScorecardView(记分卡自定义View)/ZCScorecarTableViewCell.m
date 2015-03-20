@@ -37,7 +37,7 @@
 /*
  加号图片
  */
-@property(nonatomic,weak) UILabel *addImage;
+@property(nonatomic,weak) UIView *addImage;
 
 /*
  显示值的按钮
@@ -49,47 +49,16 @@
 
 
 /*
- 成绩
+  左边view
  */
-@property(nonatomic,weak) UIView *resultsView;
+@property(nonatomic,weak) UIView *liftView;
 
 /*
- 开杆距离
+ 中间view
  */
-@property(nonatomic,weak) UILabel *driving_distance_label;
-/*
- 求道方向
- */
-@property(nonatomic,weak) UILabel *directionLabel;
+@property(nonatomic,weak) UIView *middleView;
 
-/**
- * 罚杆数 成绩左
- */
-@property (nonatomic, weak) UILabel *penaltiesLabel;
-/**
- *  成绩中 总杆数
- */
-@property (nonatomic, weak) UILabel *scoreLabel;
-/**
- * 推杆数 成绩右
- */
-@property (nonatomic, weak) UILabel *puttsLabel;
-/**
- * 开杆距离前图片
- */
-@property (nonatomic, weak) UIImageView *drivingImage;
-/**
- * 求道方向前图片
- */
-@property (nonatomic, weak) UIImageView *directionImage;
-
-/**
- * 向右箭头图片
- */
-@property (nonatomic, weak) UIImageView *rightImage;
-
-
-
+@property(nonatomic,weak) UIImageView *image1;
 
 
 
@@ -101,39 +70,59 @@
 {
 
     if (self=[super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+        //背景
+         self.backgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jifenka_yihangbeijing"]];
+        
+        //左边view
+        UIView *liftView=[[UIView alloc] init];
+        [self.contentView addSubview:liftView];
+        self.liftView=liftView;
+        
+        //中间view
+        UIView *middleView=[[UIView alloc] init];
+        [self.contentView addSubview:middleView];
+        self.middleView=middleView;
+        self.middleView.backgroundColor=[UIColor blackColor];
+
+        
         //创建球洞编号
         UILabel *numberLabel=[[UILabel alloc] init];
-        [self.contentView addSubview:numberLabel];
-//        ballLabel.text=@"A1";
+        [self.liftView addSubview:numberLabel];
         numberLabel.textAlignment=NSTextAlignmentCenter;
         //ballLabel.font=[UIFont fontWithName:@"Helvetica" size:20];
+        
         numberLabel.font=[UIFont systemFontOfSize:30];
+        numberLabel.textColor=ZCColor(208, 210, 212);
         self.numberLabel=numberLabel;
        
         //创建标准杆
         UILabel *parLabel=[[UILabel alloc] init];
-        [self.contentView addSubview:parLabel];
-       // poleCount.text=@"8";
+        [self.liftView addSubview:parLabel];
+        parLabel.textColor=ZCColor(208, 210, 212);
         parLabel.textAlignment=NSTextAlignmentCenter;
-        parLabel.font=[UIFont systemFontOfSize:21];
+       // parLabel.font=[UIFont systemFontOfSize:26];
+        parLabel.font=[UIFont fontWithName:@"Arial" size:26];
         self.parLabel=parLabel;
         //创建离球洞距离的Label
         UILabel *distanceLabel=[[UILabel alloc] init];
-        [self.contentView addSubview:distanceLabel];
+        [self.liftView addSubview:distanceLabel];
         distanceLabel.font=[UIFont systemFontOfSize:21];
         self.distanceLabel=distanceLabel;
-        
+        self.distanceLabel.font=[UIFont fontWithName:@"Arial" size:26];
+        distanceLabel.textColor=ZCColor(208, 210, 212);
         //创建小P label
         UILabel *PLabel=[[UILabel alloc] init];
-        [self.contentView addSubview:PLabel];
+        [self.liftView addSubview:PLabel];
         PLabel.text=@"P";
+        PLabel.textColor=ZCColor(208, 210, 212);
        // PLabel.backgroundColor=[UIColor blueColor];
         self.PLabel=PLabel;
         
         //创建小Y label
         UILabel *YLabel=[[UILabel alloc] init];
-        [self.contentView addSubview:YLabel];
+        [self.liftView addSubview:YLabel];
         YLabel.text=@"Y";
+        YLabel.textColor=ZCColor(208, 210, 212);
        // YLabel.backgroundColor=[UIColor blueColor];
         self.YLabel=YLabel;
         
@@ -141,12 +130,21 @@
         if (self.scorecard.score==nil) {
             
             //创建加号图片
-            UILabel *addImage=[[UILabel alloc] init];
+            
+            UIView *addImage=[[UIView alloc] init];
             [self.contentView addSubview:addImage];
-             addImage.backgroundColor=[UIColor blueColor];
+            UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jifenka_yihangbeijing"]];
+            addImage.backgroundColor=col;
              self.addImage=addImage;
             
-            addImage.text=@"+++++";
+            
+            UIImageView *image=[[UIImageView alloc] init];
+            
+                       image.image=[UIImage imageNamed:@"tiejia"];
+             [self.addImage addSubview:image];
+            self.image1=image;
+            
+           
         }else{
         UILabel *showLabel=[[UILabel alloc] init];
         [self.contentView addSubview:showLabel];
@@ -314,6 +312,33 @@
     self.parLabel.text=[NSString stringWithFormat:@"%@",scorecard.par];
     self.distanceLabel.text=[NSString stringWithFormat:@"%@",scorecard.distance_from_hole_to_tee_box];
     
+    if ([scorecard.tee_box_color isEqual:@"red"]) {
+        UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_hong"]];
+        self.numberLabel.backgroundColor=col;
+        
+    }else if ([scorecard.tee_box_color isEqual:@"white"])
+    {
+      UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_bai"]];
+        self.numberLabel.backgroundColor=col;
+    }else if ([scorecard.tee_box_color isEqual:@"blue"])
+    {
+        UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_lan"]];
+        self.numberLabel.backgroundColor=col;
+
+    }else if ([scorecard.tee_box_color isEqual:@"black"])
+    {
+        UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_hei"]];
+        self.numberLabel.backgroundColor=col;
+
+    }else if ([scorecard.tee_box_color isEqual:@"gold"])
+    {
+        UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_huang"]];
+        self.numberLabel.backgroundColor=col;
+
+    }
+    
+   
+    
 //
 //    
 //    self.scoreLabel.text=[NSString stringWithFormat:@"%@",scorecard.score];
@@ -357,47 +382,65 @@
 {
     [super layoutSubviews];
     
+    //创建左边View的frame
+    CGFloat liftViewX=0;
+    CGFloat liftViewY=0;
+    CGFloat liftViewW=self.frame.size.width*0.39;
+    CGFloat liftViewH=self.frame.size.height;
+    
+    self.liftView.frame=CGRectMake(liftViewX, liftViewY, liftViewW, liftViewH);
+
+    //创建中间的view
+    
+    CGFloat middleViewX=liftViewW;
+    CGFloat middleViewY=0;
+    CGFloat middleViewW=1;
+    CGFloat middleViewH=self.frame.size.height;
+
+    self.middleView.frame=CGRectMake(middleViewX, middleViewY, middleViewW, middleViewH);
+    
     //创建球洞ballLabel的frame
-    CGFloat ballLabelX=0;
-    CGFloat ballLabelY=0;
-    CGFloat ballLabelW=150;
-    CGFloat ballLabelH=self.frame.size.height-40;
+    
+    CGFloat ballLabelW=62;
+    CGFloat ballLabelH=62;
+    CGFloat ballLabelX=(self.liftView.frame.size.width-ballLabelW)*0.5;
+    CGFloat ballLabelY=self.liftView.frame.size.height*0.152;
 
     self.numberLabel.frame=CGRectMake(ballLabelX, ballLabelY, ballLabelW, ballLabelH);
     
     //parLabel的frame
-    CGFloat parLabelX=10;
-    CGFloat parLabelY=ballLabelH;
-    CGFloat parLabelW=25;
-    CGFloat parLabelH=40;
+    CGFloat parLabelX=self.liftView.frame.size.width*0.192;
+    CGFloat parLabelY=ballLabelY+ballLabelH+10;
+    CGFloat parLabelW=22;
+    CGFloat parLabelH=22;
     
     self.parLabel.frame=CGRectMake(parLabelX, parLabelY, parLabelW, parLabelH);
 
     
     //小P得PLabel的frame
-    CGFloat PLabelX=parLabelX+parLabelW;
-    CGFloat PLabelY=ballLabelH+20;
+    CGFloat PLabelX=parLabelX+parLabelW-3;
+    CGFloat PLabelY=parLabelY+(parLabelH*0.5);
     CGFloat PLabelW=15;
     CGFloat PLabelH=15;
     self.PLabel.frame=CGRectMake(PLabelX, PLabelY, PLabelW, PLabelH);
     //距离球洞的距离distanceLabel的frame
     
-    CGFloat distanceLabelX=PLabelX+PLabelW+10;
+    CGFloat distanceLabelX=PLabelX+PLabelW+5;
     CGFloat distanceLabelY=parLabelY;
-    CGFloat distanceLabelW=40;
-    CGFloat distanceLabelH=40;
+    CGFloat distanceLabelW=45;
+    CGFloat distanceLabelH=22;
     self.distanceLabel.frame=CGRectMake(distanceLabelX, distanceLabelY, distanceLabelW, distanceLabelH);
     //小Y得YLabel的frame
     CGFloat YLabelX=distanceLabelX+distanceLabelW;
-    CGFloat YLabelY=parLabelY+20;
+    CGFloat YLabelY=distanceLabelY+(distanceLabelH*0.5);
     CGFloat YLabelW=15;
     CGFloat YLabelH=15;
     self.YLabel.frame=CGRectMake(YLabelX, YLabelY, YLabelW, YLabelH);
     
     //showButton的frame
-    CGFloat showLabelX=ballLabelW;
-    CGFloat showLabelY=ballLabelY;
-    CGFloat showLabelW=self.frame.size.width-ballLabelW;
+    CGFloat showLabelX=middleViewX+middleViewW;
+    CGFloat showLabelY=0;
+    CGFloat showLabelW=self.frame.size.width-showLabelX;
     CGFloat showLabelH=self.frame.size.height;
     self.showLabel.frame=CGRectMake(showLabelX, showLabelY, showLabelW, showLabelH);
     
@@ -406,13 +449,21 @@
    // self.addImage.frame=self.showButton.bounds;
     
     //showButton的frame
-    CGFloat addImageX=ballLabelW;
-    CGFloat addImageY=ballLabelY;
-    CGFloat addImageW=self.frame.size.width-ballLabelW;
+    CGFloat addImageX=middleViewX+middleViewW;
+    CGFloat addImageY=0;
+    CGFloat addImageW=self.frame.size.width-addImageX;
     CGFloat addImageH=self.frame.size.height;
     self.addImage.frame=CGRectMake(addImageX, addImageY, addImageW, addImageH);
     
     
+    
+    
+    CGFloat  imageX=(self.addImage.frame.size.width-self.addImage.frame.size.width*0.117)*0.5;
+    CGFloat  imageY=(self.addImage.frame.size.height-self.addImage.frame.size.height*0.24)*0.5;
+    CGFloat  imageW=self.addImage.frame.size.width*0.117;
+    CGFloat  imageH=self.addImage.frame.size.height*0.24;
+    self.image1.frame=CGRectMake(imageX, imageY, imageW, imageH);
+
     
 //    //成绩frame
 //    self.resultsView.frame=CGRectMake(0, 0, self.frame.size.width-40, 70);

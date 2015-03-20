@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
@@ -14,37 +15,80 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="示意图模式模拟球场记分，记录更加精准，能得到多维度的数据分析" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CLR-Qq-zdD">
-                    <rect key="frame" x="39" y="218" width="298" height="126"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="记录更加精准" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CLR-Qq-zdD">
+                    <rect key="frame" x="34" y="215" width="252" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="0ej-h1-KME"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NpN-Vs-UyF">
-                    <rect key="frame" x="66" y="418" width="224" height="30"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                    <state key="normal" title="快捷记分">
-                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="能得到多维度的数据分析" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eqs-8z-rMe">
+                    <rect key="frame" x="34" y="245" width="532" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="gEP-j6-hIC"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lg1-ga-xxp">
+                    <rect key="frame" x="34" y="143" width="532" height="52"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="52" id="OFD-d2-Wwe"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                    <state key="normal" title="专业记分卡" backgroundImage="anniu">
+                        <color key="titleColor" red="0.21176470588235294" green="0.49411764705882355" blue="0.27058823529411763" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NpN-Vs-UyF">
+                    <rect key="frame" x="34" y="352" width="532" height="52"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="52" id="jpE-xu-SZF"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                    <state key="normal" title="简单记分卡" backgroundImage="anniu">
+                        <color key="titleColor" red="0.21176470589999999" green="0.4941176471" blue="0.27058823529999998" alpha="1" colorSpace="calibratedRGB"/>
                     </state>
                     <connections>
                         <action selector="clickQuickScoring" destination="-1" eventType="touchUpInside" id="pki-ld-g9d"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="快速开始计分，简单易用" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B6O-HC-rJE">
-                    <rect key="frame" x="95" y="456" width="187" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="快速开始计分，简单易用" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B6O-HC-rJE">
+                    <rect key="frame" x="8" y="426" width="536" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="17" id="cuu-ue-vaH"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KHO-Z4-6Xr">
-                    <rect key="frame" x="71" y="187" width="224" height="30"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                    <state key="normal" title="示意图记分">
-                        <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                    </state>
-                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="NpN-Vs-UyF" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="34" id="1YN-Rr-qso"/>
+                <constraint firstAttribute="bottom" secondItem="NpN-Vs-UyF" secondAttribute="bottom" constant="248" id="1bi-Uh-7D0"/>
+                <constraint firstItem="eqs-8z-rMe" firstAttribute="top" secondItem="CLR-Qq-zdD" secondAttribute="bottom" constant="10" id="4QT-SL-P9W"/>
+                <constraint firstItem="Lg1-ga-xxp" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="143" id="HJu-d4-gUx"/>
+                <constraint firstAttribute="trailing" secondItem="eqs-8z-rMe" secondAttribute="trailing" constant="34" id="HiT-Yh-7Ca"/>
+                <constraint firstAttribute="trailing" secondItem="Lg1-ga-xxp" secondAttribute="trailing" constant="34" id="K2m-xX-LnE"/>
+                <constraint firstItem="B6O-HC-rJE" firstAttribute="top" secondItem="NpN-Vs-UyF" secondAttribute="bottom" constant="20" id="Kn5-HB-tgg"/>
+                <constraint firstItem="CLR-Qq-zdD" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="34" id="NRx-8Z-tcw"/>
+                <constraint firstItem="B6O-HC-rJE" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="32" id="OLM-01-DIH"/>
+                <constraint firstAttribute="trailing" secondItem="NpN-Vs-UyF" secondAttribute="trailing" constant="34" id="PjQ-OH-aa7"/>
+                <constraint firstItem="CLR-Qq-zdD" firstAttribute="top" secondItem="Lg1-ga-xxp" secondAttribute="bottom" constant="20" id="Skc-o5-4jP"/>
+                <constraint firstItem="Lg1-ga-xxp" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="34" id="Szb-J9-Uq5"/>
+                <constraint firstAttribute="trailing" secondItem="CLR-Qq-zdD" secondAttribute="trailing" constant="314" id="Yhh-13-mab"/>
+                <constraint firstAttribute="trailing" secondItem="B6O-HC-rJE" secondAttribute="trailing" constant="32" id="loC-sl-Zmw"/>
+                <constraint firstItem="eqs-8z-rMe" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="34" id="ocD-TU-e2n"/>
+            </constraints>
+            <point key="canvasLocation" x="484" y="392"/>
         </view>
     </objects>
+    <resources>
+        <image name="anniu" width="252" height="52"/>
+    </resources>
 </document>

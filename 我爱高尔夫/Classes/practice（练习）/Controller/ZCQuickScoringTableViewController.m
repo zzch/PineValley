@@ -11,11 +11,12 @@
 #import "AFNetworking.h"
 #import "ZCAccount.h"
 #import "ZCEvent.h"
-#import "ZCEventTableViewCell.h"
+
 #import "ZCScorecardTableViewController.h"
 #import "ZCscorecard.h"
 #import "MJRefresh.h"
-
+#import "ZCEventUuidTool.h"
+#import "ZCEventCell.h"
 @interface ZCQuickScoringTableViewController ()<MJRefreshBaseViewDelegate>
 //模型数组
 @property(nonatomic,strong)NSMutableArray *eventArray;
@@ -88,16 +89,20 @@
     UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"新建" style:UIBarButtonItemStyleDone target:self action:@selector(chooseThePitch)];
     self.navigationItem.rightBarButtonItem =newBar;
 
+    //背景颜色
+    self.tableView.backgroundColor=ZCColor(23, 25, 28);
+    
+    
     
     // 修改下一个界面返回按钮的文字
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
 
     self.tableView.dataSource=self;
     self.tableView.delegate=self;
-    self.tableView.rowHeight=140;
+    self.tableView.rowHeight=100;
     self.page=1;
-    
-    
+    //让分割线不显示
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     // 1.下拉刷新
     MJRefreshHeaderView *header = [MJRefreshHeaderView header];
@@ -215,9 +220,10 @@
     
     params[@"page"]=@"1";
     params[@"token"]=account.token;
-    
-    [mgr GET:@"http://augusta.aforeti.me/api/v1/matches.json" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        // ZCLog(@"----%@",responseObject);
+    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"matches/practice"];
+    //ZCLog(@"%@",url);
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+       // ZCLog(@"----%@",responseObject);
         
         NSMutableArray *eventMutableArray=[NSMutableArray array];
         for (NSDictionary *dict in responseObject) {
@@ -268,7 +274,7 @@
 
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        ZCLog(@"获取数据失败");
+        ZCLog(@"获取数据失败%@",error);
         
         // 让刷新控件停止显示刷新状态
         [self.header endRefreshing];
@@ -300,8 +306,8 @@
     self.page++;
     params[@"page"]=[NSString stringWithFormat:@"%d",self.page];
     params[@"token"]=account.token;
-    
-    [mgr GET:@"http://augusta.aforeti.me/api/v1/matches.json" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"matches/practice"];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         // ZCLog(@"----%@",responseObject);
         
         NSMutableArray *eventMutableArray=[NSMutableArray array];
@@ -405,43 +411,42 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ZCEventTableViewCell *eventTableViewCell=[ZCEventTableViewCell cellWithTableView:tableView];
     
-    eventTableViewCell.event=self.eventArray[indexPath.row];
+    NSString *CellIdentifier = @"cellID";
     
+    ZCEventCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    return eventTableViewCell;
+    if (cell == nil) {
+        cell = [[ZCEventCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+
+    cell.event=self.eventArray[indexPath.row];
+    
+//    
+//    ZCEventTableViewCell *eventTableViewCell=[ZCEventTableViewCell cellWithTableView:tableView];
+   
+    //cell.event=self.eventArray[indexPath.row];
+    
+    //cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+  //  cell.selectedBackgroundView.backgroundColor = [UIColor redColor];
+    return cell;
     
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
-    ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
-    params[@"uuid"]=[self.eventArray[indexPath.row] uuid];
-    params[@"token"]=account.token;
-    ///v1/matches/show.json
-    [mgr GET:@"http://augusta.aforeti.me/api/v1/matches/show.json" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        // ZCLog(@"%@",responseObject);
-        ZCScorecardTableViewController *scorecardTableView=[[ZCScorecardTableViewController alloc] init];
-        
-        ZCTotalScorecards *totalScorecards= [ZCTotalScorecards totalScorecardsWithDict:responseObject];
-        //        ZCscorecard *as=totalScorecards.scorecards[indexPath.row];
-        //        as.score=@"asd";
-        // [totalScorecards.scorecards[indexPath.row] score]
-        // [scorecardTableView.totalScorecards.scorecards[indexPath.row] score]=[NSString stringWithFormat:@"dasdas"];
-        // ZCLog(@"-------%@",totalScorecards.type);
-        scorecardTableView.totalScorecards=totalScorecards;
-        [self.navigationController pushViewController:scorecardTableView animated:YES];
-        
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        ZCLog(@"%@",error);
-    }];
+    //单利模式  为统计页面保存uuid
+    ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
+    tool.uuid=[self.eventArray[indexPath.row] uuid];
     
+    
+     ZCScorecardTableViewController *scorecardTableView=[[ZCScorecardTableViewController alloc] init];
+     [self.navigationController pushViewController:scorecardTableView animated:YES];
+    
+    scorecardTableView.uuid=[self.eventArray[indexPath.row] uuid];
+    
+   
+
 }
 
 
@@ -521,7 +526,9 @@
     
     params[@"uuid"]=[self.eventArray[self.indexPath.row] uuid];
     params[@"token"]=account.token;
-    [mgr DELETE:@"http://augusta.aforeti.me/api/v1/matches.json" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+     NSString *url=[NSString stringWithFormat:@"%@%@",API,@"matches/practice"];
+    [mgr DELETE:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //请求网络重新加载数据
         [self serverData];
         

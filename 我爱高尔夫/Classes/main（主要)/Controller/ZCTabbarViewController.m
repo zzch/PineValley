@@ -24,20 +24,45 @@
     
     if (self) {
         
+        UIImage *image = [UIImage imageNamed:@"biaoqianlan"];
+        [self.tabBar setBackgroundImage:image];
         
+//        self.tabBar.backgroundColor=ZCColor(44, 49, 54);
         //练习
         ZCPracticeViewController *practice=[[ZCPracticeViewController alloc] init];
         
         //创建导航控制器，并把练习界面设置成跟控制器
+        
+        
         UINavigationController *nav=[[UINavigationController alloc] initWithRootViewController:practice];
-        [self  addOneChildViewController:nav title:@"练习" imageName:@"tabbar_home" selectedImageName:@"tabbar_message_center_selected"];
+       
+        
+//        UINavigationBar *navBar = self.navigationController.navigationBar;
+//        [navBar setBackgroundImage:[UIImage imageNamed:@"daohanglan"] forBarMetrics:UIBarMetricsDefault];
+//        navBar.tintColor=[UIColor whiteColor];
+//        navBar.translucent=YES;
+//
+        
+       // [nav.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan"] forBarPosition:UIBarPositionAny barMetrics:UIBarMetricsDefault];
+        
+       // nav.translucent=YES;
+       //nav.navigationBar.backIndicatorImage=[UIImage imageNamed:@"daohanglan"];
+        
+        [nav.navigationBar setBackgroundImage:[UIImage imageNamed:@"daohanglan"] forBarMetrics:UIBarMetricsDefault];
+        
+        nav.navigationBar.titleTextAttributes=@{UITextAttributeTextColor: [UIColor whiteColor],
+                                                UITextAttributeFont : [UIFont boldSystemFontOfSize:18]};
+        
+       // [self.navigationController.navigationBarsetBackgroundImage:[UIImageimageNamed:@"bg.jpg"] forBarMetrics:UIBarMetricsDefault]
+//        nav.navigationBar.backgroundColor=ZCColor(44, 49, 54);
+        [self  addOneChildViewController:nav title:@"练习" imageName:@"tabbar_message_center_selected" selectedImageName:@"lianxi"];
         
         
         
         //统计
         ZCStatisticalViewController *statistical=[[ZCStatisticalViewController alloc] init];
         UINavigationController *nav1=[[UINavigationController alloc] initWithRootViewController:statistical];
-        [self addOneChildViewController:nav1 title:@"统计" imageName:@"tabbar_discover" selectedImageName:@"tabbar_discover_selected"];
+        [self addOneChildViewController:nav1 title:@"统计" imageName:@"shape-324" selectedImageName:@"tabbar_discover_selected"];
         
         
         
@@ -46,7 +71,7 @@
         //个人
         ZCPersonalViewController *personal=[[ZCPersonalViewController alloc] init];
         UINavigationController *nav2=[[UINavigationController alloc] initWithRootViewController:personal];
-        [self addOneChildViewController:nav2 title:@"个人" imageName:@"tabbar_profile" selectedImageName:@"tabbar_profile_selected"];
+        [self addOneChildViewController:nav2 title:@"个人" imageName:@"user" selectedImageName:@"tabbar_profile_selected"];
         
         
         

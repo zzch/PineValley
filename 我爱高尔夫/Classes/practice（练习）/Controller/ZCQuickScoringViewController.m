@@ -11,7 +11,7 @@
 #import "AFNetworking.h"
 #import "ZCAccount.h"
 #import "ZCEvent.h"
-#import "ZCEventTableViewCell.h"
+
 #import "ZCScorecardTableViewController.h"
 #import "ZCscorecard.h"
 @interface ZCQuickScoringViewController ()<UITableViewDataSource,UITableViewDelegate>
@@ -100,8 +100,9 @@
     
     params[@"page"]=@"1";
     params[@"token"]=account.token;
+    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"matches.json"];
     
-    [mgr GET:@"http://augusta.aforeti.me/api/v1/matches.json" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         // ZCLog(@"----%@",responseObject);
         
         NSMutableArray *eventMutableArray=[NSMutableArray array];
@@ -136,12 +137,12 @@
 
         
         [self.tableView reloadData];
-        
+     //   ZCLog(@"%@",url);
         // 让刷新控件停止显示刷新状态
       //  [refreshControl endRefreshing];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        ZCLog(@"获取数据失败");
+        ZCLog(@"11111获取数据失败%@",error);
         
         // 让刷新控件停止显示刷新状态
         //[refreshControl endRefreshing];
@@ -210,16 +211,16 @@
     return self.eventArray.count;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    ZCEventTableViewCell *eventTableViewCell=[ZCEventTableViewCell cellWithTableView:tableView];
-    
-    eventTableViewCell.event=self.eventArray[indexPath.row];
-    
-    
-    return eventTableViewCell;
-
-}
+//-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+////{
+////    ZCEventTableViewCell *eventTableViewCell=[ZCEventTableViewCell cellWithTableView:tableView];
+////    
+////    eventTableViewCell.event=self.eventArray[indexPath.row];
+////    
+//
+//    return eventTableViewCell;
+//
+//}
 
 
 
@@ -235,7 +236,8 @@
     params[@"uuid"]=[self.eventArray[indexPath.row] uuid];
     params[@"token"]=account.token;
     ///v1/matches/show.json
-    [mgr GET:@"http://augusta.aforeti.me/api/v1/matches/show.json" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+     NSString *url=[NSString stringWithFormat:@"%@%@",API,@"matches/show.json"];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
        // ZCLog(@"%@",responseObject);
         ZCScorecardTableViewController *scorecardTableView=[[ZCScorecardTableViewController alloc] init];
@@ -331,7 +333,8 @@
     
     params[@"uuid"]=[self.eventArray[self.indexPath.row] uuid];
     params[@"token"]=account.token;
-    [mgr DELETE:@"http://augusta.aforeti.me/api/v1/matches.json" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+     NSString *url=[NSString stringWithFormat:@"%@%@",API,@"matches.json"];
+    [mgr DELETE:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         //请求网络重新加载数据
         [self onlineData:nil];
         self.delete=YES;

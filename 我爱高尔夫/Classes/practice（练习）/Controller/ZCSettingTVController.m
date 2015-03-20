@@ -16,6 +16,8 @@
 #import "ZCScorecardTableViewController.h"
 #import "ZCTotalScorecards.h"
 #import "ZCScorecardTableViewController.h"
+#import "ZCEventUuidTool.h"
+#import "ZCEventUuidTool.h"
 @interface ZCSettingTVController ()<UITableViewDelegate,UITableViewDataSource,ZCSettingHeadViewDelegate>
 @property(nonatomic,assign) int count;
 
@@ -57,6 +59,11 @@
     
     [super viewDidLoad];
     
+    //让分割线不显示
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    self.tableView.backgroundColor=ZCColor(23, 25, 28);
+    self.tableView.rowHeight=50;
     
     
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
@@ -68,8 +75,10 @@
     params[@"token"]=account.token;
     
     //发送请求/v1/courses/show.json
-    [mgr GET:@"http://augusta.aforeti.me/api/v1/courses/show.json" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
+    
+    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"venues/show.json"];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //ZCLog(@"%@",responseObject);
  
         
         ZCStadiumInformation  *stadiumInformation=[ZCStadiumInformation stadiumInformationWithDict:responseObject];
@@ -93,21 +102,22 @@
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
     self.tableView.sectionHeaderHeight = 60;
+   // self.tableView.
     
     
     UIButton *startButton=[[UIButton alloc] init];
      CGFloat startButtonX=0;
     
      CGFloat startButtonW=SCREEN_WIDTH;
-     CGFloat startButtonH=40;
+     CGFloat startButtonH=50;
     CGFloat startButtonY=SCREEN_HEIGHT-startButtonH;
     
     startButton.frame=CGRectMake(startButtonX, startButtonY, startButtonW, startButtonH);
     
     // startButton.frame=CGRectMake(0, 300, 317, 40);
     [startButton setTitle:@"开始回合" forState:UIControlStateNormal];
-    startButton.backgroundColor=[UIColor redColor];
-    [startButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    startButton.backgroundColor=ZCColor(105, 178, 138);
+    [startButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [startButton addTarget:self action:@selector(clickDidStartButton) forControlEvents:UIControlEventTouchUpInside];
     UIWindow *wd = [[UIApplication sharedApplication].delegate window];
     [wd addSubview:startButton];
@@ -132,13 +142,9 @@
 -(void)clickDidStartButton
 {
     ZCLog(@"--------可以点击Button");
+    
     ZCScorecardTableViewController *scorecardTableView=[[ZCScorecardTableViewController alloc] init];
     
-//    scorecardTableView.uuid=self.uuid;
-//    scorecardTableView.tee_box=self.tee_boxe;
-//    scorecardTableView.lastUuid=self.lastUuid;
-//    scorecardTableView.lastTee_box=self.lastTee_boxe;
-//    
     
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
@@ -146,29 +152,38 @@
     NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
     ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
         if (self.lastUuid==nil&&self.lastTee_boxe==nil) {
-        params[@"group_uuids"]=self.uuid;
+        params[@"course_uuids"]=self.uuid;
 //        ZCLog(@"%@",self.uuid);
 //        ZCLog(@"%@",self.tee_boxe);
         params[@"tee_boxes"]=self.tee_boxe;
     }else{
-    params[@"group_uuids"]= [NSString stringWithFormat:@"%@,%@" , self.uuid,self.lastUuid ];
+    params[@"course_uuids"]= [NSString stringWithFormat:@"%@,%@" , self.uuid,self.lastUuid ];
         params[@"tee_boxes"]=[NSString stringWithFormat:@"%@,%@" , self.tee_boxe,self.lastTee_boxe ];
     }
+    ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
+    ZCLog(@"%@",tool.scoring);
+    params[@"scoring_type"]=tool.scoring;
     params[@"token"]=account.token;
 ///v1/matches/practice.json
-    [mgr POST:@"http://augusta.aforeti.me/api/v1/matches/practice.json" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"matches/practice.json"];
+    [mgr POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-       // ZCLog(@"-------%@",responseObject);
+       ZCLog(@"-------%@",responseObject);
         
-        ZCTotalScorecards *totalScorecards= [ZCTotalScorecards totalScorecardsWithDict:responseObject];
-        ZCLog(@"-------%@",totalScorecards.type);
-        scorecardTableView.totalScorecards=totalScorecards;
+       // ZCTotalScorecards *totalScorecards= [ZCTotalScorecards totalScorecardsWithDict:responseObject];
+       // ZCLog(@"-------%@",totalScorecards.type);
+       // scorecardTableView.totalScorecards=totalScorecards;
+        //单利模式  为统计页面保存uuid
+        ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
+        tool.uuid=responseObject[@"uuid"];
+        
+        scorecardTableView.uuid=responseObject[@"uuid"];
         
         [self.navigationController pushViewController:scorecardTableView animated:YES];
         
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        ZCLog(@"%@",error);
+        //ZCLog(@"%@",error);
     }];
     
     
@@ -178,15 +193,19 @@
 }
 
 
-
+//是否可以点击开始按钮
 -(void)canStart
 {
     
+    self.startButton.enabled=NO;
+    self.startButton.backgroundColor=ZCColor(105, 178, 138);
+     //ZCLog(@"进入该方法了");
     
     if (self.childStadium.holes_count==18) {
         if (self.tee_boxe) {
             self.startButton.enabled=YES;
-            self.startButton.backgroundColor=[UIColor blueColor];
+            self.startButton.backgroundColor=ZCColor(37, 176, 101);
+           
             
         }
     }else if (self.childStadium.holes_count==9)
@@ -195,7 +214,8 @@
             if (self.lastChildName) {
                 if (self.lastTee_boxe) {
                     self.startButton.enabled=YES;
-                    self.startButton.backgroundColor=[UIColor blueColor];
+                    self.startButton.backgroundColor=ZCColor(37, 176, 101);
+                    
                 }
             }
         }
@@ -211,7 +231,7 @@
    
     if (self.count) {
         return self.count;
-    }else if(self.stadiumInformation.groups.count==1)
+    }else if(self.stadiumInformation.courses.count==1)
     {
         //默认调用点击方法
         [self tableView:tableView didSelectRowAtIndexPath:nil];
@@ -229,7 +249,7 @@
     
     if (section==0) {
         
-        return (self.opened1? 0:self.stadiumInformation.groups.count) ;
+        return (self.opened1? 0:self.stadiumInformation.courses.count) ;
     }else if(section==1){
         
         NSLog(@"%zd",self.childStadium.tee_boxes.count);
@@ -255,12 +275,13 @@
     NSString *myCell = [NSString stringWithFormat:@"Cell%ld%ld", [indexPath section], [indexPath row]];
     UITableViewCell  *cell = [tableView dequeueReusableCellWithIdentifier:myCell];
     
-    if (cell == nil) {
+    
+       if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:myCell];
     }
     
     if (indexPath.section==0) {
-        ZCChildStadium *childStadium=self.stadiumInformation.groups[indexPath.row];
+        ZCChildStadium *childStadium=self.stadiumInformation.courses[indexPath.row];
         cell.textLabel.text=childStadium.name;
        // cell.detailTextLabel.text=[NSString stringWithFormat:@"%@",[NSNumber numberWithFloat:childStadium.holes_count]];
         cell.detailTextLabel.text=[NSString stringWithFormat:@"%d洞",childStadium.holes_count];
@@ -268,9 +289,29 @@
     {
         NSString *tee=self.childStadium.tee_boxes[indexPath.row];
        
-       
-            cell.textLabel.text=tee;
-            cell.imageView.image=[UIImage imageNamed:@"main_badge"];
+        if ([tee isEqual:@"white"]) {
+            cell.textLabel.text=@"白色T台";
+            cell.imageView.image=[UIImage imageNamed:@"bai"];
+        }else if ([tee isEqual:@"red"])
+        {
+            cell.textLabel.text=@"红色T台";
+            cell.imageView.image=[UIImage imageNamed:@"hong"];
+        }else if ([tee isEqual:@"blue"])
+        {
+            cell.textLabel.text=@"蓝色T台";
+            cell.imageView.image=[UIImage imageNamed:@"lan"];
+
+        }else if ([tee isEqual:@"black"])
+        {
+            cell.textLabel.text=@"黑色T台";
+            cell.imageView.image=[UIImage imageNamed:@"hei"];
+        }else if ([tee isEqual:@"gold"])
+        {
+            cell.textLabel.text=@"金色T台";
+            cell.imageView.image=[UIImage imageNamed:@"huang"];
+
+        }
+        
        
         
     
@@ -284,11 +325,39 @@
     {
         NSString *tee=self.lastChildStadium.tee_boxes[indexPath.row];
         
+        if ([tee isEqual:@"white"]) {
+            cell.textLabel.text=@"白色T台";
+            cell.imageView.image=[UIImage imageNamed:@"bai"];
+        }else if ([tee isEqual:@"red"])
+        {
+            cell.textLabel.text=@"红色T台";
+            cell.imageView.image=[UIImage imageNamed:@"hong"];
+        }else if ([tee isEqual:@"blue"])
+        {
+            cell.textLabel.text=@"蓝色T台";
+            cell.imageView.image=[UIImage imageNamed:@"lan"];
+            
+        }else if ([tee isEqual:@"black"])
+        {
+            cell.textLabel.text=@"黑色T台";
+            cell.imageView.image=[UIImage imageNamed:@"hei"];
+        }else if ([tee isEqual:@"gold"])
+        {
+            cell.textLabel.text=@"金色T台";
+            cell.imageView.image=[UIImage imageNamed:@"huang"];
+            
+        }
         
-        cell.textLabel.text=tee;
-        cell.imageView.image=[UIImage imageNamed:@"main_badge"];
+
+        
     }
     
+
+    
+    //设置cell的背景
+    cell.backgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cell-bj"]];
+    cell.textLabel.textColor=ZCColor(208, 210, 212);
+    cell.detailTextLabel.textColor=ZCColor(208, 210, 212);
 
     return cell;
 }
@@ -308,10 +377,10 @@
         headerView.tag=1001;
         
         if (self.opened1) {
-             headerView.imageName=@"navigationbar_arrow_down";
+             headerView.imageName=@"icon_arrowxia";
         }else
         {
-           headerView.imageName=@"navigationbar_back_highlighted";
+           headerView.imageName=@"icon_arrowshang";
         }
         
         if (self.firstChildName==nil) {
@@ -334,10 +403,10 @@
         headerView.tag=1002;
         
         if (self.opened2) {
-            headerView.imageName=@"navigationbar_arrow_down";
+            headerView.imageName=@"icon_arrowxia";
         }else
         {
-            headerView.imageName=@"navigationbar_back_highlighted";
+            headerView.imageName=@"icon_arrowshang";
         }
 
         
@@ -360,10 +429,10 @@
         headerView.tag=1003;
         
         if (self.opened3) {
-            headerView.imageName=@"navigationbar_arrow_down";
+            headerView.imageName=@"icon_arrowxia";
         }else
         {
-            headerView.imageName=@"navigationbar_back_highlighted";
+            headerView.imageName=@"icon_arrowshang";
         }
 
         
@@ -381,10 +450,10 @@
         
     }else{
         if (self.opened4) {
-            headerView.imageName=@"navigationbar_arrow_down";
+            headerView.imageName=@"icon_arrowxia";
         }else
         {
-            headerView.imageName=@"navigationbar_back_highlighted";
+            headerView.imageName=@"icon_arrowshang";
         }
 
         
@@ -447,21 +516,12 @@
         self.opened2=NO;
         self.opened3=NO;
         self.opened4=NO;
-//        ZCSettingHeadView *headView2= (ZCSettingHeadView *)[self.tableView viewWithTag:1002]   ;
-//        headView2.cleicedName=nil;
-//        
-//        ZCSettingHeadView *headView3= (ZCSettingHeadView *)[self.tableView viewWithTag:1003]   ;
-//        headView3.cleicedName=nil;
-//        
-//        ZCSettingHeadView *headView4= (ZCSettingHeadView *)[self.tableView viewWithTag:1004]   ;
-//        headView4.cleicedName=nil;
-        
         self.tee_boxe=nil;
         self.lastChildName=nil;
         self.lastTee_boxe=nil;
        
         self.count=2;
-        ZCChildStadium *childStadium=self.stadiumInformation.groups[indexPath.row];
+        ZCChildStadium *childStadium=self.stadiumInformation.courses[indexPath.row];
         self.childStadium = childStadium;
         NSString *uuidStr=childStadium.uuid;
         self.uuid=uuidStr;
@@ -480,10 +540,7 @@
       self.opened2=YES;
         self.opened3=NO;
         self.opened4=NO;
-//        ZCSettingHeadView *headView3= (ZCSettingHeadView *)[self.tableView viewWithTag:1003]   ;
-//        headView3.cleicedName=nil;
-//        ZCSettingHeadView *headView4= (ZCSettingHeadView *)[self.tableView viewWithTag:1004]   ;
-//        headView4.cleicedName=nil;
+;
 
 
         self.lastTee_boxe=nil;
@@ -502,7 +559,7 @@
             
             
             
-            NSMutableArray *childStadiums=self.stadiumInformation.groups;
+            NSMutableArray *childStadiums=self.stadiumInformation.courses;
             for (ZCChildStadium *childStadium in childStadiums) {
                 if (childStadium.holes_count==18) {
                     
@@ -531,9 +588,9 @@
         self.lastChildStadium=lastChildStadium;
         self.lastUuid=lastChildStadium.uuid;
         self.lastChildName=lastChildStadium.name;
+        
     
-    
-    }else
+    }else if(indexPath.section==3)
     {
         self.opened4=YES;        //保存后9洞的T台
         NSString *houTee_box=self.lastChildStadium.tee_boxes[indexPath.row];
@@ -546,6 +603,7 @@
     }
     
     [self canStart];
+    
     [self.tableView reloadData];
     
     

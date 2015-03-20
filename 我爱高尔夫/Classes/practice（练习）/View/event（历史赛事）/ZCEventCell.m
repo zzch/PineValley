@@ -1,0 +1,278 @@
+//
+//  ZCEventCell.m
+//  我爱高尔夫
+//
+//  Created by hh on 15/3/18.
+//  Copyright (c) 2015年 zhongchuang. All rights reserved.
+//
+
+#import "ZCEventCell.h"
+@interface ZCEventCell()
+/**
+ 总杆数uilabel
+ 
+ */
+
+@property (weak, nonatomic)  UILabel *scoreLabel;
+/**
+ 球场名称
+ 
+ */
+@property (weak, nonatomic)  UILabel *nameLabel;
+/**
+ 开始的时间
+ */
+@property (weak, nonatomic)  UILabel *startedAtLabel;
+/**
+ 赛事的类型
+ */
+@property (weak, nonatomic)  UILabel *typeLabel;
+/**
+ 记录的记分卡数量
+ */
+
+@property (weak, nonatomic)  UILabel *recorded_scorecards_count_label;
+
+/**
+ 球杆图片
+ */
+@property(weak,nonatomic) UIImageView *qiuganImage;
+/**
+ 时间前的图片
+ */
+@property(weak,nonatomic) UIImageView *timeImage;
+/**
+ 向右图片
+ */
+@property(weak,nonatomic) UIImageView *rightImage;
+
+@end
+
+@implementation ZCEventCell
+
+
+
+-(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+{
+    self=[super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if(self){
+        //设置背景图片
+        self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bj"]];
+        
+              // self.selectedBackgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bj"]];
+       // self.selectedBackgroundView.backgroundColor=[UIColor redColor];
+         //        self.backgroundColor
+        
+        
+        //总杆数
+        UILabel *scoreLabel=[[UILabel alloc] init];
+        [self.contentView addSubview:scoreLabel];
+        self.scoreLabel=scoreLabel;
+        scoreLabel.textAlignment=NSTextAlignmentCenter;
+        scoreLabel.font=[UIFont systemFontOfSize:34 ];
+        scoreLabel.textColor=[UIColor whiteColor];
+        
+        //球场名称
+        UILabel *nameLabel=[[UILabel alloc] init];
+        [self.contentView addSubview:nameLabel];
+        self.nameLabel=nameLabel;
+        nameLabel.textColor=[UIColor whiteColor];
+       // scoreLabel.textAlignment=NSTextAlignmentCenter;
+
+        //创建时间
+        UILabel *startedAtLabel=[[UILabel alloc] init];
+        [self.contentView addSubview:startedAtLabel];
+        self.startedAtLabel=startedAtLabel;
+         startedAtLabel.textColor=[UIColor whiteColor];
+        //赛事类型
+        UILabel *typeLabel=[[UILabel alloc] init];
+        [self.contentView addSubview:typeLabel];
+        self.typeLabel=typeLabel;
+        UIColor *col1=[UIColor colorWithPatternImage:[UIImage imageNamed:@"lianxisai-1"]];
+        typeLabel.backgroundColor=col1;
+        //typeLabel.backgroundColor=col;
+        typeLabel.textAlignment=NSTextAlignmentCenter;
+        typeLabel.font=[UIFont fontWithName:@"AppleGothic" size:11];
+       // typeLabel.font=[UIFont systemFontOfSize:11 ];
+         typeLabel.textColor=[UIColor whiteColor];
+
+        //
+        UILabel *recorded_scorecards_count_label=[[UILabel alloc] init];
+        [self.contentView addSubview:recorded_scorecards_count_label];
+        self.recorded_scorecards_count_label=recorded_scorecards_count_label;
+        UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"lianxisai"]];
+        recorded_scorecards_count_label.backgroundColor=col;
+        recorded_scorecards_count_label.textAlignment=NSTextAlignmentCenter;
+        recorded_scorecards_count_label.font=[UIFont systemFontOfSize:14 ];
+         recorded_scorecards_count_label.textColor=[UIColor whiteColor];
+        
+        
+        
+        //球杆图片
+        UIImageView *qiuganImage=[[UIImageView alloc] init];
+        [self.contentView addSubview:qiuganImage];
+        self.qiuganImage=qiuganImage;
+        qiuganImage.image=[UIImage imageNamed:@"qiugan"];
+        
+      
+        //时间前图片
+        UIImageView *timeImage=[[UIImageView alloc] init];
+        [self.contentView addSubview:timeImage];
+        self.timeImage=timeImage;
+        timeImage.image=[UIImage imageNamed:@"calendar"];
+        
+        //时间前图片
+        UIImageView *rightImage=[[UIImageView alloc] init];
+        [self.contentView addSubview:rightImage];
+        self.rightImage=rightImage;
+        rightImage.image=[UIImage imageNamed:@"icon_arrow"];
+        rightImage.contentMode =  UIViewContentModeCenter;
+
+        
+        }
+    return self;
+}
+
+
+-(void)setEvent:(ZCEvent *)event
+{
+    _event=event;
+    
+    if ([self.event.score isKindOfClass:[NSNull class]]) {
+        self.scoreLabel.text=@"未记录";
+        self.scoreLabel.font=[UIFont systemFontOfSize:25];
+    }else
+    {
+    self.scoreLabel.text=[NSString stringWithFormat:@"%@",self.event.score ];
+    }
+  
+    self.nameLabel.text=self.event.venue.name;
+    
+    
+    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+    [fmt setDateFormat:@"yyyy年MM月dd日 "];
+    NSDate *confromTimesp=[NSDate dateWithTimeIntervalSince1970:self.event.started_at];
+    NSString *confromTimespStr=[fmt stringFromDate:confromTimesp];
+    
+    self.startedAtLabel.text=confromTimespStr;
+    
+    if ([self.event.type isEqual:@"practice"]) {
+        self.typeLabel.text=@"练习赛";
+    }else{
+    self.typeLabel.text=self.event.type;
+    }
+    // if (![self.event.recorded_scorecards_count isKindOfClass:[NSNull class]]) {
+    
+    // }
+    self.recorded_scorecards_count_label.text=[NSString stringWithFormat:@"%@/18",self.event.recorded_scorecards_count ];
+    
+
+    
+    
+}
+
+
+
+
+
+
+
+
+
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    //成绩frame
+    CGFloat scoreLabelX=0;
+    CGFloat scoreLabelY=15;
+    CGFloat scoreLabelW=self.frame.size.width*0.34;
+    CGFloat scoreLabelH=self.frame.size.height*0.7;
+    self.scoreLabel.frame=CGRectMake(scoreLabelX, scoreLabelY, scoreLabelW, scoreLabelH);
+    
+    //球杆图片frame
+    
+    CGFloat qiuganImageX=scoreLabelW*0.53;
+    CGFloat qiuganImageY=scoreLabelH+5;
+    CGFloat qiuganImageW=32;
+    CGFloat qiuganImageH=23;
+    
+    self.qiuganImage.frame=CGRectMake(qiuganImageX, qiuganImageY, qiuganImageW, qiuganImageH);
+    
+    
+    
+    //nameLabel frame
+    
+    CGFloat nameLabelX=scoreLabelW;
+    CGFloat nameLabelY=10;
+    CGFloat nameLabelW=self.frame.size.width*0.6;
+    CGFloat nameLabelH=23;
+    
+    self.nameLabel.frame=CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH);
+
+
+    //timeImage frame
+    
+    CGFloat timeImageX=scoreLabelW;
+    CGFloat timeImageY=nameLabelY+nameLabelH+5;
+    CGFloat timeImageW=17;
+    CGFloat timeImageH=15;
+    
+    self.timeImage.frame=CGRectMake(timeImageX, timeImageY, timeImageW, timeImageH);
+    
+
+    
+    //startedAtLabel frame
+    
+    CGFloat startedAtLabelX=timeImageX+timeImageW+5;
+    CGFloat startedAtLabelY=timeImageY;
+    CGFloat startedAtLabelW=170;
+    CGFloat startedAtLabelH=15;
+    
+    self.startedAtLabel.frame=CGRectMake(startedAtLabelX, startedAtLabelY, startedAtLabelW, startedAtLabelH);
+    
+
+    
+    //typeLabel frame
+    
+    CGFloat typeLabelX=timeImageX;
+    CGFloat typeLabelY=timeImageY+timeImageH+10;
+    CGFloat typeLabelW=75;
+    CGFloat typeLabelH=20;
+    
+    self.typeLabel.frame=CGRectMake(typeLabelX, typeLabelY, typeLabelW, typeLabelH);
+    
+    
+    //recorded_scorecards_count_label frame
+    
+    CGFloat countLabelX=typeLabelX+typeLabelW+10;
+    CGFloat countLabelY=timeImageY+timeImageH+10;
+    CGFloat countLabelW=75;
+    CGFloat countLabelH=20;
+    
+    self.recorded_scorecards_count_label.frame=CGRectMake(countLabelX, countLabelY, countLabelW, countLabelH);
+    
+     //向右的图片
+    
+    CGFloat rightImageX=self.frame.size.width-self.frame.size.width*0.1;
+    CGFloat rightImageY=(self.frame.size.height-17)*0.5;
+    CGFloat rightImageW=10;
+    CGFloat rightImageH=17;
+    
+    self.rightImage.frame=CGRectMake(rightImageX, rightImageY, rightImageW, rightImageH);
+
+
+}
+
+- (void)awakeFromNib {
+    // Initialization code
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+    
+   
+}
+
+@end

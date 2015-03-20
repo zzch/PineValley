@@ -16,6 +16,7 @@
 #import "ZCShowButton.h"
 #import "AFNetworking.h"
 #import "ZCAccount.h"
+#import "ZCAmateurStatisticsViewController.h"
 
 @interface ZCScorecardTableViewController ()<UITableViewDataSource,UITableViewDelegate,ZCScorecarDelegate,ZCZCFillViewControllerDelegate>
 @property (nonatomic, strong) NSMutableArray *scorecards;
@@ -37,21 +38,73 @@
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:self action:nil];
 
     
+    self.navigationItem.title=@"快捷记分卡";
     
+    UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"统计" style:UIBarButtonItemStyleDone target:self action:@selector(clickOnTheStatistics)];
+    self.navigationItem.rightBarButtonItem =newBar;
+    
+    
+   
+    self.tableView.backgroundColor=ZCColor(23, 25, 28);
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
    // self.tableView.sectionHeaderHeight=60;
     
     
-    self.tableView.rowHeight=100;
+    self.tableView.rowHeight=125;
     
     
-    }
+    [self online];
+
+    
+    
+ }
+
+-(void)online
+{
+
+    
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
+    ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
+    params[@"uuid"]=self.uuid;
+    // ZCLog(@"%@",[self.eventArray[indexPath.row] uuid]);
+    params[@"token"]=account.token;
+    
+    ///v1/matches/show.json
+    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"matches/practice/show"];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+       
+        
+        
+        ZCTotalScorecards *totalScorecards= [ZCTotalScorecards totalScorecardsWithDict:responseObject];
+        
+        self.totalScorecards=totalScorecards;
+        
+        [self.tableView reloadData ];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        ZCLog(@"%@",error);
+    }];
+    
+
+    
+}
 
 
+-(void)clickOnTheStatistics
+{
+    
+    ZCAmateurStatisticsViewController *statisticsViewController=[[ZCAmateurStatisticsViewController alloc] init];
+    
+    [self.navigationController pushViewController:statisticsViewController animated:YES];
+    
 
-
-
+}
 
 
 
@@ -63,7 +116,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
-    ZCLog(@"先执行吗");
+   
     return 1;
     
 }

@@ -33,7 +33,7 @@
 /**
  *  赛事的球场信息模型
  */
-@property (nonatomic, strong) ZCCourse *course;
+@property (nonatomic, strong) ZCCourse *venue;
 
 
 

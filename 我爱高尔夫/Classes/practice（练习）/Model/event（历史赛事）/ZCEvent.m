@@ -28,7 +28,7 @@
         
         self.started_at=[dict[@"started_at"] longValue] ;
         
-        self.course=[ZCCourse courseWithDict:dict[@"course"]];
+        self.venue=[ZCCourse courseWithDict:dict[@"venue"]];
        // ZCLog(@"%@",self.course.name);
         
     }

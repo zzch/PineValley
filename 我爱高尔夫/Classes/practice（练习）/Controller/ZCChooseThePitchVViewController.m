@@ -123,7 +123,8 @@
     params[@"longitude"] = @(116.300841);
     params[@"latitude"]=@(39.975368);
     params[@"token"]=account.token;
-    [mgr GET:@"http://augusta.aforeti.me/api/v1/courses/nearest.json" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+     NSString *url=[NSString stringWithFormat:@"%@%@",API,@"venues/nearest.json"];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
        // ZCLog(@"%@------",responseObject);
         //将字典转换成模型数据
         NSMutableArray *stadiunArray=[NSMutableArray array];
@@ -191,6 +192,10 @@
     _tableView.showsVerticalScrollIndicator = NO;
     _tableView.tableHeaderView = [[UIView alloc] init];
     _tableView.tableFooterView = [[UIView alloc] init];
+    _tableView.backgroundColor=ZCColor(23, 25, 28);
+    //让分割线不显示
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
     [self.view addSubview:_tableView];
     
 //    if (is_IOS_7)
@@ -218,7 +223,7 @@ return _dataArray.count;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 80;
+    return 85;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -232,50 +237,9 @@ return _dataArray.count;
 
     }
     
-//    while ([cell.contentView.subviews lastObject] != nil) {
-//        [(UIView *)[cell.contentView.subviews lastObject] removeFromSuperview];
-//    }
-    
-//    if (tableView == _mySearchDisplayController.searchResultsTableView)
-//    {
-////        cell.textLabel.text = _resultsData[indexPath.row];
-//        //         ZCstadium *stadium=self.dataArray[indexPath.row];
-//        ZCstadium *stadium=self.resultsData[indexPath.row];
-//        cell.name.text = stadium.name;
-//       // NSLog(@"%@",stadium.distance);
-//        float distance = stadium.distance;
-//        cell.distance.text = [NSString stringWithFormat:@"%@",[NSNumber numberWithFloat:distance]];
-//        //cell.address.text=stadium.address;
-//        cell.address.text=@"xxxxxxxxxxxxxxxxxxxx";
-//
-//    }
-//    else
-//    {  ZCstadium *stadium=self.dataArray[indexPath.row];
-//        
-//        cell.name.text = stadium.name;
-//        float distance = stadium.distance;
-//        cell.distance.text = [NSString stringWithFormat:@"%@",[NSNumber numberWithFloat:distance]];
-//        
-//        // cell.distance.text =@"11";
-//        //cell.address.text=stadium.address;
-//        cell.address.text=@"xxxxxxxxxxxxxxxxxxxx";
-//        // NSLog(@"%@",stadium.distance);
-//
-////
-//          }
-//    
     
     ZCstadium *stadium=self.dataArray[indexPath.row];
-    
-    cell.name.text = stadium.name;
-    float distance = stadium.distance;
-    cell.distance.text = [NSString stringWithFormat:@"%@",[NSNumber numberWithFloat:distance]];
-    
-    // cell.distance.text =@"11";
-    //cell.address.text=stadium.address;
-    cell.address.text=@"xxxxxxxxxxxxxxxxxxxx";
-    // NSLog(@"%@",stadium.distance);
-
+    cell.stadium=stadium;
     
    // ZCChooseTableViewCell *cell=[ZCChooseTableViewCell cellWithTable:tableView];
 

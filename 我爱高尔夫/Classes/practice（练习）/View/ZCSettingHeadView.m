@@ -33,6 +33,8 @@
 {
     if (self=[super initWithReuseIdentifier:reuseIdentifier]) {
         
+        self.backgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yihangbeijing"]];
+        
         //添加子控件
         //1.添加按钮
         UIButton *nameButton=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -71,10 +73,10 @@
         
         //添加选中显示的值
         UILabel *childName=[[UILabel alloc] init];
-        childName.backgroundColor=[UIColor blueColor];
+        //childName.backgroundColor=[UIColor blueColor];
         //居中
-        childName.textAlignment=NSTextAlignmentCenter;
-        
+       // childName.textAlignment=NSTextAlignmentCenter;
+        childName.textColor=ZCColor(208, 210, 212);
         
         [self addSubview:childName];
         self.childName=childName;
@@ -82,30 +84,24 @@
         //右边
         UILabel *TTaiName=[[UILabel alloc] init];
         
-        TTaiName.backgroundColor=[UIColor blueColor];
+       TTaiName.textColor=ZCColor(208, 210, 212);
         //居中
-        TTaiName.textAlignment=NSTextAlignmentCenter;
-        //TTaiName.text=self.cleicedName;
+        TTaiName.textAlignment=NSTextAlignmentRight;
+        
         [self addSubview:TTaiName];
         self.TTaiName=TTaiName;
+        
+        
         //添加图片按钮
-        
-        
-        
-        
+      
         UIImageView *imageView=[[UIImageView alloc] init];
-        
-        
-        //[imageView setImage:[UIImage imageNamed:@"navigationbar_arrow_down"]];
-        
         [self addSubview:imageView];
         self.imageView=imageView;
 
        // 添加T台图片
         UIImageView *TTaiImage=[[UIImageView alloc] init];
         // 添加内部的小箭头
-        
-        [TTaiImage setImage:[UIImage imageNamed:@"main_badge"]];
+    
         [self addSubview:TTaiImage];
         self.TTaiImage=TTaiImage;
     }
@@ -143,8 +139,38 @@
 
 -(void)setCleicedName:(NSString *)cleicedName
 {
-    _cleicedName=cleicedName;
-    self.TTaiName.text=cleicedName;
+    
+     _cleicedName=cleicedName;
+    if ([cleicedName isEqual:@"white"]) {
+        [self.TTaiImage setImage:[UIImage imageNamed:@"bai"]];
+        self.TTaiName.text=@"白色T台";
+    }else if([cleicedName isEqual:@"red"])
+    {
+       [self.TTaiImage setImage:[UIImage imageNamed:@"hong"]];
+        self.TTaiName.text=@"红色T台";
+    }else if([cleicedName isEqual:@"blue"])
+    {
+      [self.TTaiImage setImage:[UIImage imageNamed:@"lan"]];
+       self.TTaiName.text=@"蓝色T台";
+    }else if ([cleicedName isEqual:@"black"])
+    {
+      [self.TTaiImage setImage:[UIImage imageNamed:@"hei"]];
+        self.TTaiName.text=@"黑色T台";
+    }else if ([cleicedName isEqual:@"gold"])
+    {
+      [self.TTaiImage setImage:[UIImage imageNamed:@"huang"]];
+        self.TTaiName.text=@"金色色T台";
+    }else
+    {
+       self.TTaiName.text=cleicedName;
+    }
+        
+    
+    
+    
+    
+   
+    
     
 }
 -(void)setLiftName:(NSString *)liftName
@@ -172,34 +198,37 @@
     //设置childName的frame
     
     
-    CGFloat childNameY=0;
-    CGFloat childNameW=100;
-    CGFloat childNameX=20;
-    CGFloat childNameH=60;
+    
+    CGFloat childNameW=self.frame.size.width*0.35;
+    CGFloat childNameX=self.frame.size.width*0.03;
+    CGFloat childNameH=40;
+    CGFloat childNameY=(self.frame.size.height-childNameH)*0.5;
     
 //    self.childName.frame=CGRectMake(childNameX, childNameY, childNameW, childNameH);
     self.childName.frame=CGRectMake(childNameX, childNameY, childNameW, childNameH);
 
-    CGFloat TTaiImageY=0;
-    CGFloat TTaiImageW=30;
-    CGFloat TTaiImageX=140;
-    CGFloat TTaiImageH=self.frame.size.height;
+   
+    CGFloat TTaiImageW=19;
+    CGFloat TTaiImageX=self.frame.size.width*0.62;
+    CGFloat TTaiImageH=19;
+    CGFloat TTaiImageY=(self.frame.size.height-TTaiImageH)*0.5;
     
     self.TTaiImage.frame=CGRectMake(TTaiImageX, TTaiImageY, TTaiImageW, TTaiImageH);
     
-    CGFloat TTaiNameY=0;
-    CGFloat TTaiNameW=50;
-    CGFloat TTaiNameX=200;
-    CGFloat TTaiNameH=self.frame.size.height;
+    CGFloat TTaiNameY=childNameY;
+    CGFloat TTaiNameW=65;
+    CGFloat TTaiNameX=TTaiImageX+TTaiImageW;
+    CGFloat TTaiNameH=childNameH;
     
     self.TTaiName.frame=CGRectMake(TTaiNameX, TTaiNameY, TTaiNameW, TTaiNameH);
     
 
     
-    CGFloat imageViewY=0;
-    CGFloat imageViewW=50;
-    CGFloat imageViewX=300;
-    CGFloat imageViewH=self.frame.size.height;
+    
+    CGFloat imageViewW=17;
+    CGFloat imageViewX=self.frame.size.width-imageViewW-10;
+    CGFloat imageViewH=10;
+    CGFloat imageViewY=(self.frame.size.height-imageViewH)*0.5;
 
 
     self.imageView.frame=CGRectMake(imageViewX, imageViewY, imageViewW, imageViewH);

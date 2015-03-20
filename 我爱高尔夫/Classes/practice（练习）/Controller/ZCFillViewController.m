@@ -11,6 +11,35 @@
 #import "ZCAccount.h"
 #import "AFNetworking.h"
 @interface ZCFillViewController ()<UIPickerViewDataSource,UIPickerViewDelegate,UIAlertViewDelegate>
+//总杆数 加号
+@property(weak,nonatomic) UIButton *totalLabelAdd;
+
+//总杆数 减号
+@property(weak,nonatomic) UIButton *totalLabelMinus;
+
+//推杆数 加号
+@property(weak,nonatomic) UIButton *pushLabelAdd;
+
+//推杆数 减号
+@property(weak,nonatomic) UIButton *pushLabelMinus;
+
+//推杆数 加号
+@property(weak,nonatomic) UIButton *punishAdd;
+
+//推杆数 减号
+@property(weak,nonatomic) UIButton *punishMinus;
+
+//总杆数名称
+@property (weak, nonatomic)  UILabel *totalLabelName;
+//推杆数名称
+@property (weak, nonatomic)  UILabel *pushLabelName;
+
+////总杆数名称
+//@property (weak, nonatomic)  UILabel *totalLabelName;
+//
+
+
+//总杆数
 @property (weak, nonatomic) IBOutlet UILabel *totalLabel;
 //推杆
 @property (weak, nonatomic) IBOutlet UILabel *pushLabel;
@@ -213,7 +242,8 @@
     }
     ZCLog(@"%@", params[@"direction"]);
     ///v1/scorecards.json
-    [mgr PUT:@"http://augusta.aforeti.me/api/v1/scorecards.json" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"scorecards.json"];
+    [mgr PUT:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         
         
@@ -310,7 +340,7 @@
     if (_pickArray==nil) {
         _pickArray=[NSArray array];
         NSMutableArray *pickArray1=[NSMutableArray array];
-        for (int i = 0; i < 80; i ++) {
+        for (int i = 0; i < 81; i ++) {
             [pickArray1 addObject:[NSString stringWithFormat:@"%d",i*5]];
         }
 
@@ -330,12 +360,9 @@
 
 //总杆数 点击加号
 - (IBAction)totalAdd {
-    if (self.count<10) {
+    
         self.count++;
-    }else{
-        self.count=10;
-    }
-    //   self.count=self.pushcount+(self.punishcount) +1;
+        //   self.count=self.pushcount+(self.punishcount) +1;
     self.totalLabel.text=[NSString stringWithFormat:@"%d",self.count];
     //点击后值是否改变
     
@@ -343,23 +370,24 @@
 }
 //总杆数 点击减号
 - (IBAction)totaReduction {
-    
-//    if (self.count>1&& self.count>self.punishcount &&self.count>self.pushcount &&self.count>self.punishcount+self.pushcount) {
-//        self.count--;
-//    }
-    self.count--;
-    
-    if (self.count<(self.pushcount+self.punishcount)*2) {
-        if (self.punishcount==0) {
-            self.pushcount--;
-            self.pushLabel.text=[NSString stringWithFormat:@"%d",self.pushcount];
-        }else
-        {
-            self.punishcount--;
-            self.punish.text=[NSString stringWithFormat:@"%d",self.punishcount];
+    if (self.count>1) {
+        self.count--;
+        
+        if (self.count<(self.pushcount+(self.punishcount)*2)+1) {
+            if (self.punishcount==0) {
+                self.pushcount--;
+                self.pushLabel.text=[NSString stringWithFormat:@"%d",self.pushcount];
+            }else
+            {
+                self.punishcount--;
+                self.punish.text=[NSString stringWithFormat:@"%d",self.punishcount];
+            }
         }
+
     }
-    self.totalLabel.text=[NSString stringWithFormat:@"%d",self.count];
+    
+    
+        self.totalLabel.text=[NSString stringWithFormat:@"%d",self.count];
 
     
     
@@ -367,17 +395,17 @@
 //推杆数 点击加号
 - (IBAction)pushAdd {
     
-    if (self.pushcount<=self.count-(self.punishcount*2)-1) {
-        self.pushcount++;
-    }else{
-        //self.pushcount=10;
-    }
-    
+//    if (self.pushcount<=self.count-(self.punishcount*2)-1) {
+//        self.pushcount++;
+//    }else{
+//        //self.pushcount=10;
+//    }
+     self.pushcount++;
     self.pushLabel.text=[NSString stringWithFormat:@"%d",self.pushcount];
     
    //
-    if (self.count<(self.pushcount+self.punishcount) *2) {
-        self.count=(self.pushcount+self.punishcount) *2;
+    if (self.count<(self.pushcount+(self.punishcount)*2)+1) {
+        self.count=(self.pushcount+(self.punishcount)*2)+1;
         self.totalLabel.text=[NSString stringWithFormat:@"%d",self.count];
     }
    
@@ -407,8 +435,8 @@
     self.punish.text=[NSString stringWithFormat:@"%d",self.punishcount];
     
 
-    if (self.count<(self.pushcount+self.punishcount) *2) {
-        self.count=(self.pushcount+self.punishcount) *2;
+    if (self.count<(self.pushcount+(self.punishcount)*2)+1) {
+        self.count=(self.pushcount+(self.punishcount)*2)+1;
         self.totalLabel.text=[NSString stringWithFormat:@"%d",self.count];
     }
     

@@ -17,7 +17,7 @@
  *  球场集体信息模型
  */
 
-@property (nonatomic, strong) NSMutableArray *groups;
+@property (nonatomic, strong) NSMutableArray *courses;
 + (instancetype)stadiumInformationWithDict:(NSDictionary *)dict;
 - (instancetype)initWithDict:(NSDictionary *)dict;
 

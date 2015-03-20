@@ -16,7 +16,7 @@
 /**
  *  该省份下球场名称
  */
-@property (nonatomic, strong) NSMutableArray *courses;
+@property (nonatomic, strong) NSMutableArray *venues;
 
 + (instancetype)citysWithDict:(NSDictionary *)dict;
 - (instancetype)initWithDict:(NSDictionary *)dict;

@@ -43,9 +43,9 @@
     // AFNetworking\AFN
     // 1.创建请求管理对象
     AFHTTPRequestOperationManager *mar=[AFHTTPRequestOperationManager manager];
-    
+    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"users/sign_up_simple"];
     //发送请求
-    [mar POST:@"http://augusta.aforeti.me/api/v1/users/sign_up_simple" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [mar POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
          NSLog(@"%@",responseObject);
         

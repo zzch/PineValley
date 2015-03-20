@@ -64,8 +64,10 @@
     
     params[@"token"]=account.token;
     
-    
-    [mgr GET:@"http://augusta.aforeti.me/api/v1/courses/sectionalized_by_province.json" parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+     NSString *url=[NSString stringWithFormat:@"%@%@",API,@"venues/sectionalized_by_province.json"];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+       
         
         // 将字典数组转为模型数组(
         //self.citys = [ZCCity objectArrayWithKeyValuesArray:responseObject];
@@ -131,7 +133,7 @@
     }else{
 
     ZCCity *city= self.dataArray[section];
-    return city.courses.count;
+    return city.venues.count;
 
     }
 }
@@ -163,7 +165,7 @@
     else
     {
         ZCCity *city= self.dataArray[indexPath.section];
-        ZCCityStadium *stadium = city.courses[indexPath.row];
+        ZCCityStadium *stadium = city.venues[indexPath.row];
         cell.textLabel.text = stadium.name;
         cell.detailTextLabel.text= [NSString stringWithFormat:@"address===%zd",indexPath.row];
 
@@ -314,7 +316,7 @@ shouldReloadTableForSearchScope:(NSInteger)searchOption
     
     for (int i = 0; i < _dataArray.count; i++) {
        
-        NSMutableArray *coursesArrays=[_dataArray[i] courses];
+        NSMutableArray *coursesArrays=[_dataArray[i] venues];
         for (int j=0; j<coursesArrays.count; j++) {
             ZCCityStadium *cityStadium=coursesArrays[j];
             NSString *storeString =cityStadium.name;

@@ -7,13 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "ZCstadium.h"
 @interface ZCChooseTableViewCell : UITableViewCell
 //+(instancetype)cellWithTable:(UITableView *)tableView;
-///球场名称
-@property (nonatomic, strong) UILabel *name;
-//球场地址
-@property (nonatomic, strong) UILabel *address;
-//距离
-@property (nonatomic, strong) UILabel *distance;
+
+@property (nonatomic, strong) ZCstadium *stadium;
 @end

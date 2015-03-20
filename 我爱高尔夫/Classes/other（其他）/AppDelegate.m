@@ -15,11 +15,28 @@
 @end
 
 @implementation AppDelegate
+//屏幕转动
+-(NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    if (self.allowRotation) {
+        return UIInterfaceOrientationMaskAll;
+    }
+    return UIInterfaceOrientationMaskPortrait;
+}
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //创建Window
     self.window=[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    
+    if (is_IOS_7) { // 判断是否是IOS7
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
+    }
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+
+    
+    
+    
     
     //先判断有无存储账号信息
     NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
@@ -39,6 +56,9 @@
        
     
     }
+    
+   // [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"biaoqianlan"] forBarMetrics:UIBarMetricsDefault];
+    
     
     // 4.显示window
     [self.window makeKeyAndVisible];

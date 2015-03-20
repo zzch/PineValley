@@ -9,6 +9,9 @@
 #import "ZCPracticeViewController.h"
 #import "ZCQuickScoringViewController.h"
 #import "ZCQuickScoringTableViewController.h"
+#import "AppDelegate.h"
+#import "ZCEventUuidTool.h"
+
 @interface ZCPracticeViewController ()
 
 @end
@@ -17,11 +20,27 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    AppDelegate *app=  (AppDelegate *)[UIApplication sharedApplication].delegate;
+    [app setAllowRotation:NO];
+    
+    
+    
+    if ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    }
+    
+    //NSString *as=API;
+   // NSString *str=[NSString stringWithFormat:@"%@%@",API,@"ASDASD"];
+   // ZCLog(@"%@",str);
     self.navigationItem.title=@"选择计分卡";
     // 修改下一个界面返回按钮的文字
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
     self.navigationItem.backBarButtonItem.tintColor = [UIColor blackColor];
     
+    self.view.backgroundColor=ZCColor(23, 25, 28);
+   // ZCLog(@"%f,%f",SCREEN_HEIGHT,SCREEN_WIDTH);
+//    self.view.backgroundColor=[UIColor c]
     
 //    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
 //    [fmt setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -30,6 +49,9 @@
 //    ZCLog(@"%@",currentDateStr);
 }
 - (IBAction)clickQuickScoring {
+    
+    ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
+    tool.scoring=@"simple";
     
 //    ZCQuickScoringViewController *quick=[[ZCQuickScoringViewController alloc] init];
 //    [self.navigationController pushViewController:quick animated:YES];
