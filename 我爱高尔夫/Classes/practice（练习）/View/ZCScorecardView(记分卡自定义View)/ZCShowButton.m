@@ -136,6 +136,7 @@
     }
     return self;
 }
+
 -(void)setScorecard:(ZCscorecard *)scorecard
 {
     _scorecard=scorecard;

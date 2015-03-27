@@ -757,7 +757,7 @@
         for (int i=0; i<holeView.subviews.count; i++) {
             UILabel *holeLabel=holeView.subviews[1];
         
-        ZCLog(@"%lu",self.nameView2.subviews.count);
+      
         if (index>=0&&index<9) {
            
             
@@ -813,7 +813,7 @@
         UIView *resultsView1=self.resultsView.subviews[i];
         
         for (int j=0; j<resultsView1.subviews.count; j++) {
-            ZCLog(@"%lu",resultsView1.subviews.count);
+         
             UIView *resultsView2=resultsView1.subviews[0];
             for (int f=0; f<resultsView2.subviews.count; f++) {
                 UILabel *name1=resultsView2.subviews[0];
@@ -849,6 +849,127 @@
     
     
    
+    
+    //成功率界面successRateView
+    for (int i=0; i<self.successRateView.subviews.count; i++) {
+        UIView *successView1=self.successRateView.subviews[i];
+        for (int j=0; j<successView1.subviews.count; j++) {
+            UILabel *successLabel1=successView1.subviews[0];
+            UILabel *successLabel2=successView1.subviews[1];
+            
+            if (i==0) {
+                successLabel1.text=@"开球最远距离";
+                successLabel2.text=[NSString stringWithFormat:@"%@码",self.statistical.longest_drive_length];
+            }else if (i==1)
+            {
+                successLabel1.text=@"开球成功率";
+                successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.drive_fairways_hit];
+                
+            }else if (i==2)
+            {
+                successLabel1.text=@"标准杆上果岭率";
+                successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.greens_in_regulation];
+            }else if (i==3)
+            {
+                successLabel1.text=@"救球成功率";
+                successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.scrambles];
+            }else if (i==4)
+            {
+                successLabel1.text=@"反弹率";
+                successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.bounce];
+            }else if (i==5)
+            {
+                successLabel1.text=@"标准杆上果岭平均推杆数";
+                successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.putts_per_gir];
+            }else if (i==6)
+            {
+                successLabel1.text=@"优势转化率";
+                successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.advantage_transformation];
+            }else if (i==7)
+            {
+                successLabel1.text=@"平均开球距离";
+                successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.average_drive_length];
+            }
+            
+            
+            
+        }
+        
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+   //平均分 averageView
+    for (int index=0; index<self.averageView.subviews.count; index++) {
+        UIView *averageView=self.averageView.subviews[index];
+        for (int i=0; i<averageView.subviews.count; i++) {
+            UILabel *averageLabel1=averageView.subviews[0];
+            UILabel *averageLabel2=averageView.subviews[1];
+            if (index==0) {
+                averageLabel1.text=@"PAR3平均得分";
+                averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_3];
+            }else if (index==1)
+            {
+                averageLabel1.text=@"PAR4平均得分";
+                averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_4];
+                
+            }else if (index==2)
+            {
+                averageLabel1.text=@"PAR5平均得分";
+                averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_5];
+            }
+
+        }
+ 
+    }
+    
+    
+    
+    
+    
+    //ballScoresView
+    for (int index=0; index<self.ballScoresView.subviews.count; index++) {
+        UIView *ballScoresView=self.ballScoresView.subviews[index];
+        for (int i=0; i<ballScoresView.subviews.count; i++) {
+            UILabel *ballScoresLabel1=ballScoresView.subviews[0];
+            UILabel *ballScoresLabel2=ballScoresView.subviews[1];
+            if (index==0) {
+                ballScoresLabel1.text=@"信天翁球";
+                ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.double_eagle];
+            }else if (index==1)
+            {
+                ballScoresLabel1.text=@"老鹰球";
+                ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.eagle];
+                
+            }else if (index==2)
+            {
+                ballScoresLabel1.text=@"小鸟球";
+                ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.birdie];
+            }else if (index==3)
+            {
+                ballScoresLabel1.text=@"标准杆数";
+                ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.par];
+            }else if (index==4)
+            {
+                ballScoresLabel1.text=@"柏忌数";
+                ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.bogey];
+            }else if (index==5)
+            {
+                ballScoresLabel1.text=@"双柏忌数";
+                ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.double_bogey];
+            }
+            
+
+            
+        }
+    }
+    
     
     
     

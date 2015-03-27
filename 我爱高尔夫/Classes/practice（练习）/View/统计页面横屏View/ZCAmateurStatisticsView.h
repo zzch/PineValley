@@ -10,7 +10,7 @@
 #import "ZCStatistical.h"
 #import "ZCStatisticalScorecard.h"
 @interface ZCAmateurStatisticsView : UIView
-+(instancetype)amateurStatisticsView:(ZCStatistical *)statistical;
+//+(instancetype)amateurStatisticsView:(ZCStatistical *)statistical;
 //模型数据
 @property(nonatomic,strong)ZCStatistical *statistical;
 

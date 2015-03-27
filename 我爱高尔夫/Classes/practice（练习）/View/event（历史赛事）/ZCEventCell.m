@@ -27,12 +27,13 @@
  赛事的类型
  */
 @property (weak, nonatomic)  UILabel *typeLabel;
+@property (weak, nonatomic)  UIImageView *typeLabelView;
 /**
  记录的记分卡数量
  */
 
 @property (weak, nonatomic)  UILabel *recorded_scorecards_count_label;
-
+@property (weak, nonatomic)  UIImageView *recorded_scorecards_count_label_View;
 /**
  球杆图片
  */
@@ -59,7 +60,7 @@
         //设置背景图片
         self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bj"]];
         
-              // self.selectedBackgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bj"]];
+        self.selectedBackgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"lishijifengka_bj_anxia"]];
        // self.selectedBackgroundView.backgroundColor=[UIColor redColor];
          //        self.backgroundColor
         
@@ -85,11 +86,18 @@
         self.startedAtLabel=startedAtLabel;
          startedAtLabel.textColor=[UIColor whiteColor];
         //赛事类型
+        
+        UIImageView *typeLabelView=[[UIImageView alloc] init];
+        self.typeLabelView=typeLabelView;
+        typeLabelView.image=[UIImage imageNamed:@"lianxisai-1"];
+        [self.contentView addSubview:typeLabelView];
+        
+        
         UILabel *typeLabel=[[UILabel alloc] init];
-        [self.contentView addSubview:typeLabel];
+        [self.typeLabelView addSubview:typeLabel];
         self.typeLabel=typeLabel;
-        UIColor *col1=[UIColor colorWithPatternImage:[UIImage imageNamed:@"lianxisai-1"]];
-        typeLabel.backgroundColor=col1;
+//        UIColor *col1=[UIColor colorWithPatternImage:[UIImage imageNamed:@"lianxisai-1"]];
+//        typeLabel.backgroundColor=col1;
         //typeLabel.backgroundColor=col;
         typeLabel.textAlignment=NSTextAlignmentCenter;
         typeLabel.font=[UIFont fontWithName:@"AppleGothic" size:11];
@@ -97,16 +105,22 @@
          typeLabel.textColor=[UIColor whiteColor];
 
         //
+        UIImageView *recorded_scorecards_count_label_View=[[UIImageView alloc] init];
+        recorded_scorecards_count_label_View.image=[UIImage imageNamed:@"lianxisai"];
+        
+        self.recorded_scorecards_count_label_View=recorded_scorecards_count_label_View;
+        [self.contentView addSubview:recorded_scorecards_count_label_View];
+        
         UILabel *recorded_scorecards_count_label=[[UILabel alloc] init];
         [self.contentView addSubview:recorded_scorecards_count_label];
         self.recorded_scorecards_count_label=recorded_scorecards_count_label;
-        UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"lianxisai"]];
-        recorded_scorecards_count_label.backgroundColor=col;
+//        UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"lianxisai"]];
+//        recorded_scorecards_count_label.backgroundColor=col;
         recorded_scorecards_count_label.textAlignment=NSTextAlignmentCenter;
         recorded_scorecards_count_label.font=[UIFont systemFontOfSize:14 ];
          recorded_scorecards_count_label.textColor=[UIColor whiteColor];
         
-        
+        [recorded_scorecards_count_label_View addSubview:recorded_scorecards_count_label];
         
         //球杆图片
         UIImageView *qiuganImage=[[UIImageView alloc] init];
@@ -240,9 +254,9 @@
     CGFloat typeLabelW=75;
     CGFloat typeLabelH=20;
     
-    self.typeLabel.frame=CGRectMake(typeLabelX, typeLabelY, typeLabelW, typeLabelH);
+    self.typeLabelView.frame=CGRectMake(typeLabelX, typeLabelY, typeLabelW, typeLabelH);
     
-    
+    self.typeLabel.frame=self.typeLabelView.bounds;
     //recorded_scorecards_count_label frame
     
     CGFloat countLabelX=typeLabelX+typeLabelW+10;
@@ -250,8 +264,11 @@
     CGFloat countLabelW=75;
     CGFloat countLabelH=20;
     
-    self.recorded_scorecards_count_label.frame=CGRectMake(countLabelX, countLabelY, countLabelW, countLabelH);
-    
+   // self.recorded_scorecards_count_label.frame=CGRectMake(countLabelX, countLabelY, countLabelW, countLabelH);
+    self.recorded_scorecards_count_label_View.frame=CGRectMake(countLabelX, countLabelY, countLabelW, countLabelH);
+    //图片上文字的位置
+    self.recorded_scorecards_count_label.frame=self.recorded_scorecards_count_label_View.bounds;
+
      //向右的图片
     
     CGFloat rightImageX=self.frame.size.width-self.frame.size.width*0.1;

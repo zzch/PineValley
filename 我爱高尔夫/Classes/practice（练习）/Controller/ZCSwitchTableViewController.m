@@ -40,6 +40,9 @@
     
     _resultsData = [NSMutableArray array];
     
+    self.tableView.backgroundColor=ZCColor(23, 25, 28);
+    //让分割线不显示
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self onlineData];
     //搜索
     [self initMysearchBarAndMysearchDisPlay];
@@ -120,7 +123,7 @@
     //searchDisplayController自身有一个searchResultsTableView，所以在执行操作的时候首先要判断是否是搜索结果的tableView，如果是显示的就是搜索结果的数据，如果不是，则显示原始数据。
     if(tableView == _mySearchDisplayController.searchResultsTableView)
     {
-        tableView.frame = CGRectMake(0, 20, 320, SCREEN_HEIGHT-20);
+        tableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
         //解决上面空出的20个像素
         self.edgesForExtendedLayout = UIRectEdgeNone;
         
@@ -170,6 +173,11 @@
         cell.detailTextLabel.text= [NSString stringWithFormat:@"address===%zd",indexPath.row];
 
     }
+    cell.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"ss_beijing"]];
+    cell.textLabel.textColor=ZCColor(208, 210, 212);
+    cell.detailTextLabel.textColor=ZCColor(121, 121, 121);
+    
+    cell.selectedBackgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sousuo_bj_anxia"]];
     
     return cell;
 
@@ -184,19 +192,48 @@
 
 #pragma mark - Table view delegate source
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 75;
+    return 70;
 }
-
--(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-        if(tableView == _mySearchDisplayController.searchResultsTableView)
-        {
-            return nil;
-        }else{
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if(tableView == _mySearchDisplayController.searchResultsTableView)
+    {
+        return 0;
+    }else{
+        return 50;
+    }
     
+  
+}
+//-(CGFloat)tableView:(UITableView *)tableView estimatedHeightForHeaderInSection:(NSInteger)section
+//{
+//
+//    return 60;
+//}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *labelView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 50)];
+    labelView.backgroundColor=ZCColor(19, 21, 23);
+    UILabel *nameLabel=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 150, 30)];
     ZCCity *city=self.dataArray[section];
-    return city.name;
-        }
+    nameLabel.text=city.name;
+    nameLabel.textColor=ZCColor(208, 210, 212);
+    [labelView addSubview:nameLabel];
+    return labelView;
+
+    
+//        if(tableView == _mySearchDisplayController.searchResultsTableView)
+//        {
+//            return nil;
+//        }else{
+//            UIView *labelView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 50)];
+//            UILabel *nameLabel=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 50, 30)];
+//            ZCCity *city=self.dataArray[section];
+//            nameLabel.text=city.name;
+//            nameLabel.textColor=ZCColor(208, 210, 212);
+//            return labelView;
+//            
+//        }
+    
 }
 
 
@@ -205,13 +242,38 @@
 -(void)initMysearchBarAndMysearchDisPlay
 {
     _mySearchBar = [[UISearchBar alloc] init];
+    //_mySearchBar.frame=CGRectMake(0, 0, SCREEN_WIDTH, 40);
     _mySearchBar.delegate = self;
     //    //设置选项
         //[_mySearchBar setScopeButtonTitles:[NSArray arrayWithObjects:@"First",@"Last",nil]];
-    [_mySearchBar setAutocapitalizationType:UITextAutocapitalizationTypeNone];
+   [_mySearchBar setAutocapitalizationType:UITextAutocapitalizationTypeNone];
     [_mySearchBar sizeToFit];
-    _mySearchBar.backgroundColor = RGBACOLOR(249,249,249,1);
-    _mySearchBar.backgroundImage = [self imageWithColor:[UIColor clearColor] size:_mySearchBar.bounds.size];
+    _mySearchBar.backgroundColor = ZCColor(23, 25, 28);//[UIColor colorWithPatternImage:[UIImage imageNamed:@"ss_sousuokuang"]];
+     _mySearchBar.backgroundImage = [self imageWithColor:[UIColor clearColor] size:_mySearchBar.bounds.size];
+   
+    
+    _mySearchBar.tintColor=[UIColor whiteColor];
+    // _mySearchBar.barTintColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"ss_sousuokuang"]];
+//
+    _mySearchBar.placeholder=@"请输入球场名称";
+    //改变输入字体的颜色
+    UITextField *searchField=[_mySearchBar valueForKey:@"_searchField"];
+    searchField.textColor=ZCColor(208, 210, 212);
+    
+    [searchField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+    [_mySearchBar setSearchFieldBackgroundImage:[UIImage imageNamed:@"ss_sousuokuang"] forState:UIControlStateNormal];
+    //移除灰色模板背景
+    for (UIView *subview in [[_mySearchBar.subviews firstObject] subviews]) {
+        if ([subview isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
+            [subview removeFromSuperview];
+            break;
+        }
+    }
+    
+   
+    self.tableView.tableHeaderView.backgroundColor=ZCColor(23, 25, 28);
+
+    
     //加入列表的header里面
     self.tableView.tableHeaderView = _mySearchBar;
     
@@ -221,15 +283,25 @@
     _mySearchDisplayController.searchResultsDataSource = self;
     // searchResultsDelegate 就是 UITableViewDelegate
     _mySearchDisplayController.searchResultsDelegate = self;
+   // [self.searchDisplayController setActive:NO animated:NO];
+    
+    _mySearchDisplayController.searchResultsTableView.backgroundColor=ZCColor(23, 25, 28);
+    //让分割线不显示
+    _mySearchDisplayController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    _mySearchDisplayController.searchBar.tintColor=ZCColor(208, 210, 212);
+//    _mySearchDisplayController.searchBar.barTintColor=ZCColor(23, 25, 28);
 }
 
 #pragma mark UISearchBar and UISearchDisplayController Delegate Methods
 
+
+
+
 //searchBar开始编辑时改变取消按钮的文字
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
 {
-    _mySearchBar.showsCancelButton = YES;
-    
+//    _mySearchBar.showsCancelButton = YES;
+    [_mySearchBar setShowsCancelButton:YES animated:YES];
     NSArray *subViews;
     
     if (is_IOS_7) {
@@ -246,7 +318,8 @@
             break;
         }
     }
-}
+    
+    }
 
 -(BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar
 {

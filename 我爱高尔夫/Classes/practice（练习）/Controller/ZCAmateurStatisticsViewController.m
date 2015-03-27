@@ -559,35 +559,35 @@
         [tempview addSubview:label];
         
         if (i==0) {
-            imageView.backgroundColor=[UIColor whiteColor];
+            imageView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jstj_xintianwen"]];
             label.text=@"信天翁";
             label.font=[UIFont systemFontOfSize:10];
             
         }else if (i==1)
         {
-            imageView.backgroundColor=[UIColor blackColor];
+            imageView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jstj_laoying"]];
             label.text=@"老鹰";
             label.font=[UIFont systemFontOfSize:10];
         
         }else if (i==2)
         {
-            imageView.backgroundColor=[UIColor yellowColor];
+            imageView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jstj_xiaoniao"]];
             label.text=@"小鸟";
             label.font=[UIFont systemFontOfSize:10];
             
         }else if (i==3)
         {
-            imageView.backgroundColor=[UIColor redColor];
+            imageView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jstj_biaozhungan"]];
             label.text=@"标准";
             label.font=[UIFont systemFontOfSize:10];
         }else if(i==4)
         {
-            imageView.backgroundColor=[UIColor yellowColor];
+            imageView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jstj_boji"]];
             label.text=@"柏忌";
             label.font=[UIFont systemFontOfSize:10];
         }else if (i==5)
         {
-            imageView.backgroundColor=[UIColor brownColor];
+            imageView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jstj_shuangboji"]];
             label.text=@"双柏忌+";
             label.font=[UIFont systemFontOfSize:10];
         }
@@ -723,44 +723,44 @@
         //创建下面文字
         UILabel *successLabel2=[[UILabel alloc] init];
         successLabel2.frame=CGRectMake(successView.frame.size.width-70,0 , 70, successView.frame.size.height);
-       
+       successLabel2.textAlignment=NSTextAlignmentRight;
         successLabel2.textColor=ZCColor(37, 176, 101);
         [successView addSubview:successLabel2];
         
         
         
         if (index==0) {
-            successLabel1.text=@"开球距离";
-            successLabel2.text=[NSString stringWithFormat:@"%d码",index];
+            successLabel1.text=@"开球最远距离";
+            successLabel2.text=[NSString stringWithFormat:@"%@码",self.statistical.longest_drive_length];
         }else if (index==1)
         {
             successLabel1.text=@"开球成功率";
-            successLabel2.text=[NSString stringWithFormat:@"%d",index];
+            successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.drive_fairways_hit];
         
         }else if (index==2)
         {
             successLabel1.text=@"标准杆上果岭率";
-            successLabel2.text=[NSString stringWithFormat:@"%d",index];
+            successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.greens_in_regulation];
         }else if (index==3)
         {
             successLabel1.text=@"救球成功率";
-            successLabel2.text=[NSString stringWithFormat:@"%d",index];
+            successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.scrambles];
         }else if (index==4)
         {
             successLabel1.text=@"反弹率";
-            successLabel2.text=[NSString stringWithFormat:@"%d",index];
+            successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.bounce];
         }else if (index==5)
         {
             successLabel1.text=@"标准杆上果岭平均推杆数";
-            successLabel2.text=[NSString stringWithFormat:@"%d",index];
+            successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.putts_per_gir];
         }else if (index==6)
         {
-            successLabel1.text=@"开球距离";
-            successLabel2.text=[NSString stringWithFormat:@"%d",index];
+            successLabel1.text=@"优势转化率";
+            successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.advantage_transformation];
         }else if (index==7)
         {
-            successLabel1.text=@"每洞平均推杆数";
-            successLabel2.text=[NSString stringWithFormat:@"%d",index];
+            successLabel1.text=@"平均开球距离";
+            successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.average_drive_length];
         }
 
 
@@ -812,6 +812,7 @@
         UILabel *averageLabel2=[[UILabel alloc] init];
         averageLabel2.frame=CGRectMake(averageView1.frame.size.width-70,0 , 70, averageView1.frame.size.height);
         averageLabel2.textColor=ZCColor(37, 176, 101);
+        averageLabel2.textAlignment=NSTextAlignmentRight;
         [averageView1 addSubview:averageLabel2];
         
         
@@ -821,16 +822,16 @@
         
         if (index==0) {
             averageLabel1.text=@"PAR3平均得分";
-            averageLabel2.text=[NSString stringWithFormat:@"%d",index];
+            averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_3];
         }else if (index==1)
         {
             averageLabel1.text=@"PAR4平均得分";
-            averageLabel2.text=[NSString stringWithFormat:@"%d",index];
+            averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_4];
             
         }else if (index==2)
         {
             averageLabel1.text=@"PAR5平均得分";
-            averageLabel2.text=[NSString stringWithFormat:@"%d",index];
+            averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_5];
         }
     }
    
@@ -879,6 +880,7 @@
         ballScoresLabel2.frame=CGRectMake(ballScoresView1.frame.size.width-70,0 , 70, ballScoresView1.frame.size.height);
         
         ballScoresLabel2.textColor=ZCColor(37, 176, 101);
+        ballScoresLabel2.textAlignment=NSTextAlignmentRight;
         [ballScoresView1 addSubview:ballScoresLabel2];
         
         
@@ -888,28 +890,28 @@
         
         if (index==0) {
             ballScoresLabel1.text=@"信天翁球";
-            ballScoresLabel2.text=[NSString stringWithFormat:@"%d",index];
+            ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.double_eagle];
         }else if (index==1)
         {
             ballScoresLabel1.text=@"老鹰球";
-            ballScoresLabel2.text=[NSString stringWithFormat:@"%d",index];
+            ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.eagle];
             
         }else if (index==2)
         {
             ballScoresLabel1.text=@"小鸟球";
-            ballScoresLabel2.text=[NSString stringWithFormat:@"%d",index];
+            ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.birdie];
         }else if (index==3)
         {
             ballScoresLabel1.text=@"标准杆数";
-            ballScoresLabel2.text=[NSString stringWithFormat:@"%d",index];
+            ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.par];
         }else if (index==4)
         {
             ballScoresLabel1.text=@"柏忌数";
-            ballScoresLabel2.text=[NSString stringWithFormat:@"%d",index];
+            ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.bogey];
         }else if (index==5)
         {
             ballScoresLabel1.text=@"双柏忌数";
-            ballScoresLabel2.text=[NSString stringWithFormat:@"%d",index];
+            ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.double_bogey];
         }
 
     }

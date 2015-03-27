@@ -137,7 +137,7 @@
   // [self serverData];
    // 如果没有数据执行此方法
    // int q=1;
-    ZCLog(@"先执行吗%lu",self.eventArray.count);
+  
 //    if (self.eventArray.count) {
 //       
 //        UIView *vc=[[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -203,7 +203,7 @@
 //服务器数据请求
 -(void)serverData
 {
-    ZCLog(@"中执行%lu",self.eventArray.count);
+   
     //2.发送网络请求
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     
@@ -270,9 +270,6 @@
         [self.header endRefreshing];
         [self showNewStatusCount];
 
-        ZCLog(@"后执行吗%lu",self.eventArray.count);
-
-        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         ZCLog(@"获取数据失败%@",error);
         

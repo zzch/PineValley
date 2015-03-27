@@ -31,6 +31,10 @@
  */
 @property (nonatomic, copy) NSString *advantage_transformation;
 /**
+ * 平均开球距离
+ */
+@property (nonatomic, copy) NSString *average_drive_length;
+/**
  *  小鸟球
  */
 @property (nonatomic, copy) NSString *birdie;

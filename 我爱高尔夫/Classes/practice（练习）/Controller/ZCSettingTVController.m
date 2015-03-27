@@ -168,7 +168,7 @@
     NSString *url=[NSString stringWithFormat:@"%@%@",API,@"matches/practice.json"];
     [mgr POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-       ZCLog(@"-------%@",responseObject);
+      
         
        // ZCTotalScorecards *totalScorecards= [ZCTotalScorecards totalScorecardsWithDict:responseObject];
        // ZCLog(@"-------%@",totalScorecards.type);
@@ -358,7 +358,7 @@
     cell.backgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cell-bj"]];
     cell.textLabel.textColor=ZCColor(208, 210, 212);
     cell.detailTextLabel.textColor=ZCColor(208, 210, 212);
-
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 

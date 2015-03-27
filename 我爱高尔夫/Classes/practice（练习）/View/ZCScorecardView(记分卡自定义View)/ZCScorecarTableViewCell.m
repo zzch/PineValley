@@ -73,6 +73,9 @@
         //背景
          self.backgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jifenka_yihangbeijing"]];
         
+        
+        self.selectedBackgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jfk_anxia_bj"]];
+        
         //左边view
         UIView *liftView=[[UIView alloc] init];
         [self.contentView addSubview:liftView];
@@ -92,7 +95,7 @@
         //ballLabel.font=[UIFont fontWithName:@"Helvetica" size:20];
         
         numberLabel.font=[UIFont systemFontOfSize:30];
-        numberLabel.textColor=ZCColor(208, 210, 212);
+        
         self.numberLabel=numberLabel;
        
         //创建标准杆
@@ -315,25 +318,30 @@
     if ([scorecard.tee_box_color isEqual:@"red"]) {
         UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_hong"]];
         self.numberLabel.backgroundColor=col;
+        self.numberLabel.textColor=ZCColor(208, 210, 212);
         
     }else if ([scorecard.tee_box_color isEqual:@"white"])
     {
       UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_bai"]];
         self.numberLabel.backgroundColor=col;
+        self.numberLabel.textColor=ZCColor(33, 33, 33);
     }else if ([scorecard.tee_box_color isEqual:@"blue"])
     {
         UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_lan"]];
         self.numberLabel.backgroundColor=col;
+        self.numberLabel.textColor=ZCColor(208, 210, 212);
 
     }else if ([scorecard.tee_box_color isEqual:@"black"])
     {
         UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_hei"]];
         self.numberLabel.backgroundColor=col;
+        self.numberLabel.textColor=ZCColor(208, 210, 212);
 
     }else if ([scorecard.tee_box_color isEqual:@"gold"])
     {
         UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_huang"]];
         self.numberLabel.backgroundColor=col;
+        self.numberLabel.textColor=ZCColor(33, 33, 33);
 
     }
     

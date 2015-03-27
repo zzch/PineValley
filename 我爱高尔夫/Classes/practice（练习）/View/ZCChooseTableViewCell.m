@@ -37,6 +37,9 @@
     {
        // self.backgroundView  yihangbeijing
         self.backgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yihangbeijing"]];
+        
+        self.selectedBackgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"xuanzeqiuchang_bj_anxia"]];
+        
        //公司名称
         UILabel *name=[[UILabel alloc] init];
         [self addSubview:name];
