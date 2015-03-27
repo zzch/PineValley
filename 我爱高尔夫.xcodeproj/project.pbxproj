@@ -23,8 +23,6 @@
 		A93BCE821A7CB6B90053FD00 /* MTScenicShopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A93BCE811A7CB6B90053FD00 /* MTScenicShopCell.m */; };
 		A93BCE901A7CC3E50053FD00 /* friends.plist in Resources */ = {isa = PBXBuildFile; fileRef = A93BCE8F1A7CC3E50053FD00 /* friends.plist */; };
 		A93DF8991A81D465009623F5 /* ZCScorecarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A93DF8981A81D465009623F5 /* ZCScorecarTableViewCell.m */; };
-		A93DF8A51A8208AB009623F5 /* ZCFillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A93DF8A31A8208AB009623F5 /* ZCFillViewController.m */; };
-		A93DF8A61A8208AB009623F5 /* ZCFillViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A93DF8A41A8208AB009623F5 /* ZCFillViewController.xib */; };
 		A9438A161A79FF6E00B55001 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A9438A151A79FF6E00B55001 /* main.m */; };
 		A9438A211A79FF6E00B55001 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9438A201A79FF6E00B55001 /* Images.xcassets */; };
 		A9438A301A79FF6E00B55001 /* _____Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = A9438A2F1A79FF6E00B55001 /* _____Tests.m */; };
@@ -36,8 +34,6 @@
 		A9438A5F1A7A04A200B55001 /* ZCPracticeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9438A5D1A7A04A200B55001 /* ZCPracticeViewController.xib */; };
 		A9438A631A7A04D800B55001 /* ZCStatisticalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9438A611A7A04D800B55001 /* ZCStatisticalViewController.m */; };
 		A9438A641A7A04D800B55001 /* ZCStatisticalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9438A621A7A04D800B55001 /* ZCStatisticalViewController.xib */; };
-		A9438A6D1A7A38AB00B55001 /* ZCQuickScoringViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9438A6B1A7A38AB00B55001 /* ZCQuickScoringViewController.m */; };
-		A9438A6E1A7A38AB00B55001 /* ZCQuickScoringViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9438A6C1A7A38AB00B55001 /* ZCQuickScoringViewController.xib */; };
 		A944AFBB1AB5D60E00A8E887 /* ZCAmateurStatisticsView.m in Sources */ = {isa = PBXBuildFile; fileRef = A944AFBA1AB5D60E00A8E887 /* ZCAmateurStatisticsView.m */; };
 		A945582F1AA46C4E00079DEB /* ZCSettingHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = A945582E1AA46C4E00079DEB /* ZCSettingHeadView.m */; };
 		A9484F501A80BCD600681939 /* ZCScorecardTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9484F4F1A80BCD600681939 /* ZCScorecardTableViewController.m */; };
@@ -50,6 +46,7 @@
 		A957DD8F1AA05FB9008C5ABA /* ZCChildStadium.m in Sources */ = {isa = PBXBuildFile; fileRef = A957DD8E1AA05FB9008C5ABA /* ZCChildStadium.m */; };
 		A957DD921AA067BD008C5ABA /* ZCSettingTVController.m in Sources */ = {isa = PBXBuildFile; fileRef = A957DD911AA067BD008C5ABA /* ZCSettingTVController.m */; };
 		A957DD951AA068D0008C5ABA /* ZCStadiumInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = A957DD941AA068D0008C5ABA /* ZCStadiumInformation.m */; };
+		A95AB5C61AC3B20D00F63D92 /* ZCModifyTheScorecardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A95AB5C51AC3B20D00F63D92 /* ZCModifyTheScorecardViewController.m */; };
 		A967AD061A9EBE7B009E7468 /* ZCSwitchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A967AD051A9EBE7B009E7468 /* ZCSwitchTableViewController.m */; };
 		A967AD1B1A9EC6CB009E7468 /* MJArgument.m in Sources */ = {isa = PBXBuildFile; fileRef = A967AD091A9EC6CB009E7468 /* MJArgument.m */; };
 		A967AD1C1A9EC6CB009E7468 /* MJIvar.m in Sources */ = {isa = PBXBuildFile; fileRef = A967AD0C1A9EC6CB009E7468 /* MJIvar.m */; };
@@ -120,9 +117,6 @@
 		A93BCE8F1A7CC3E50053FD00 /* friends.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = friends.plist; sourceTree = "<group>"; };
 		A93DF8971A81D465009623F5 /* ZCScorecarTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCScorecarTableViewCell.h; sourceTree = "<group>"; };
 		A93DF8981A81D465009623F5 /* ZCScorecarTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCScorecarTableViewCell.m; sourceTree = "<group>"; };
-		A93DF8A21A8208AB009623F5 /* ZCFillViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCFillViewController.h; sourceTree = "<group>"; };
-		A93DF8A31A8208AB009623F5 /* ZCFillViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCFillViewController.m; sourceTree = "<group>"; };
-		A93DF8A41A8208AB009623F5 /* ZCFillViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZCFillViewController.xib; sourceTree = "<group>"; };
 		A9438A101A79FF6E00B55001 /* 我爱高尔夫.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "我爱高尔夫.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9438A141A79FF6E00B55001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9438A151A79FF6E00B55001 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -143,9 +137,6 @@
 		A9438A601A7A04D800B55001 /* ZCStatisticalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCStatisticalViewController.h; sourceTree = "<group>"; };
 		A9438A611A7A04D800B55001 /* ZCStatisticalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCStatisticalViewController.m; sourceTree = "<group>"; };
 		A9438A621A7A04D800B55001 /* ZCStatisticalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZCStatisticalViewController.xib; sourceTree = "<group>"; };
-		A9438A6A1A7A38AB00B55001 /* ZCQuickScoringViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCQuickScoringViewController.h; sourceTree = "<group>"; };
-		A9438A6B1A7A38AB00B55001 /* ZCQuickScoringViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCQuickScoringViewController.m; sourceTree = "<group>"; };
-		A9438A6C1A7A38AB00B55001 /* ZCQuickScoringViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZCQuickScoringViewController.xib; sourceTree = "<group>"; };
 		A944AFB91AB5D60E00A8E887 /* ZCAmateurStatisticsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCAmateurStatisticsView.h; sourceTree = "<group>"; };
 		A944AFBA1AB5D60E00A8E887 /* ZCAmateurStatisticsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCAmateurStatisticsView.m; sourceTree = "<group>"; };
 		A945582D1AA46C4E00079DEB /* ZCSettingHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCSettingHeadView.h; sourceTree = "<group>"; };
@@ -168,6 +159,8 @@
 		A957DD911AA067BD008C5ABA /* ZCSettingTVController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCSettingTVController.m; sourceTree = "<group>"; };
 		A957DD931AA068D0008C5ABA /* ZCStadiumInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCStadiumInformation.h; sourceTree = "<group>"; };
 		A957DD941AA068D0008C5ABA /* ZCStadiumInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCStadiumInformation.m; sourceTree = "<group>"; };
+		A95AB5C41AC3B20D00F63D92 /* ZCModifyTheScorecardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCModifyTheScorecardViewController.h; sourceTree = "<group>"; };
+		A95AB5C51AC3B20D00F63D92 /* ZCModifyTheScorecardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCModifyTheScorecardViewController.m; sourceTree = "<group>"; };
 		A967AD041A9EBE7B009E7468 /* ZCSwitchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCSwitchTableViewController.h; sourceTree = "<group>"; };
 		A967AD051A9EBE7B009E7468 /* ZCSwitchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCSwitchTableViewController.m; sourceTree = "<group>"; };
 		A967AD081A9EC6CB009E7468 /* MJArgument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJArgument.h; sourceTree = "<group>"; };
@@ -500,16 +493,10 @@
 				A9438A5B1A7A04A200B55001 /* ZCPracticeViewController.h */,
 				A9438A5C1A7A04A200B55001 /* ZCPracticeViewController.m */,
 				A9438A5D1A7A04A200B55001 /* ZCPracticeViewController.xib */,
-				A9438A6A1A7A38AB00B55001 /* ZCQuickScoringViewController.h */,
-				A9438A6B1A7A38AB00B55001 /* ZCQuickScoringViewController.m */,
-				A9438A6C1A7A38AB00B55001 /* ZCQuickScoringViewController.xib */,
 				A9386B991A7B7F2900526086 /* ZCChooseThePitchVViewController.h */,
 				A9386B9A1A7B7F2900526086 /* ZCChooseThePitchVViewController.m */,
 				A9484F4E1A80BCD600681939 /* ZCScorecardTableViewController.h */,
 				A9484F4F1A80BCD600681939 /* ZCScorecardTableViewController.m */,
-				A93DF8A21A8208AB009623F5 /* ZCFillViewController.h */,
-				A93DF8A31A8208AB009623F5 /* ZCFillViewController.m */,
-				A93DF8A41A8208AB009623F5 /* ZCFillViewController.xib */,
 				A967AD041A9EBE7B009E7468 /* ZCSwitchTableViewController.h */,
 				A967AD051A9EBE7B009E7468 /* ZCSwitchTableViewController.m */,
 				A957DD901AA067BD008C5ABA /* ZCSettingTVController.h */,
@@ -518,6 +505,8 @@
 				A974E1151AAEABD800F1519A /* ZCQuickScoringTableViewController.m */,
 				A987C57B1AB14889004D164B /* ZCAmateurStatisticsViewController.h */,
 				A987C57C1AB14889004D164B /* ZCAmateurStatisticsViewController.m */,
+				A95AB5C41AC3B20D00F63D92 /* ZCModifyTheScorecardViewController.h */,
+				A95AB5C51AC3B20D00F63D92 /* ZCModifyTheScorecardViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -795,12 +784,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A93DF8A61A8208AB009623F5 /* ZCFillViewController.xib in Resources */,
 				A9438A541A7A043700B55001 /* ZCPersonalViewController.xib in Resources */,
 				A9438A641A7A04D800B55001 /* ZCStatisticalViewController.xib in Resources */,
 				A93BCE901A7CC3E50053FD00 /* friends.plist in Resources */,
 				A9438A211A79FF6E00B55001 /* Images.xcassets in Resources */,
-				A9438A6E1A7A38AB00B55001 /* ZCQuickScoringViewController.xib in Resources */,
 				A9438A5F1A7A04A200B55001 /* ZCPracticeViewController.xib in Resources */,
 				A974E1221AAF01C600F1519A /* MJRefresh.bundle in Resources */,
 			);
@@ -838,6 +825,7 @@
 				A957DD951AA068D0008C5ABA /* ZCStadiumInformation.m in Sources */,
 				A974E1261AAF01C600F1519A /* MJRefreshHeaderView.m in Sources */,
 				A967AD221A9EC6CB009E7468 /* NSObject+MJKeyValue.m in Sources */,
+				A95AB5C61AC3B20D00F63D92 /* ZCModifyTheScorecardViewController.m in Sources */,
 				A974E1251AAF01C600F1519A /* MJRefreshFooterView.m in Sources */,
 				A9438A531A7A043700B55001 /* ZCPersonalViewController.m in Sources */,
 				A975C3E91AB6E4D100140242 /* ZCStatisticalScorecard.m in Sources */,
@@ -851,7 +839,6 @@
 				A9714E6A1A832F1800571CB2 /* ZCAccount.m in Sources */,
 				A93BCE821A7CB6B90053FD00 /* MTScenicShopCell.m in Sources */,
 				A9386B9B1A7B7F2900526086 /* ZCChooseThePitchVViewController.m in Sources */,
-				A9438A6D1A7A38AB00B55001 /* ZCQuickScoringViewController.m in Sources */,
 				A9438A631A7A04D800B55001 /* ZCStatisticalViewController.m in Sources */,
 				A975C3DF1AB6D88F00140242 /* ZCEventUuidTool.m in Sources */,
 				A956200C1AAD3ECD00388D08 /* ZCCourse.m in Sources */,
@@ -870,7 +857,6 @@
 				A967AD201A9EC6CB009E7468 /* MJTypeEncoding.m in Sources */,
 				A96B67D81ABA6A01006D2047 /* ZCstadium.m in Sources */,
 				A94C27CB1AB9834D006A7BA1 /* ZCQuickScoringTableViewController.m in Sources */,
-				A93DF8A51A8208AB009623F5 /* ZCFillViewController.m in Sources */,
 				A93B462C1A84C54600AF48F0 /* AFHTTPRequestOperation.m in Sources */,
 				A9714E491A830BCD00571CB2 /* ZCregisterViewController.m in Sources */,
 				A967AD1B1A9EC6CB009E7468 /* MJArgument.m in Sources */,

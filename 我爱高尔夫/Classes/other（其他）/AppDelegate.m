@@ -28,7 +28,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //创建Window
     self.window=[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    
+    //self.window.backgroundColor=[UIColor whiteColor];
     if (is_IOS_7) { // 判断是否是IOS7
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     }

@@ -7,7 +7,7 @@
 //
 
 #import "ZCPracticeViewController.h"
-#import "ZCQuickScoringViewController.h"
+
 #import "ZCQuickScoringTableViewController.h"
 #import "AppDelegate.h"
 #import "ZCEventUuidTool.h"
