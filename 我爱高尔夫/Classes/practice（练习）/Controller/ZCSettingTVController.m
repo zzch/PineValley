@@ -18,6 +18,7 @@
 #import "ZCScorecardTableViewController.h"
 #import "ZCEventUuidTool.h"
 #import "ZCEventUuidTool.h"
+#import "ZCBackBackButtonitem.h"
 @interface ZCSettingTVController ()<UITableViewDelegate,UITableViewDataSource,ZCSettingHeadViewDelegate>
 @property(nonatomic,assign) int count;
 
@@ -58,7 +59,9 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    // 修改下一个界面返回按钮的文字
     
+    self.navigationItem.backBarButtonItem = [[ ZCBackBackButtonitem alloc] init];
     //让分割线不显示
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     

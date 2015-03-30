@@ -47,6 +47,7 @@
 		A957DD921AA067BD008C5ABA /* ZCSettingTVController.m in Sources */ = {isa = PBXBuildFile; fileRef = A957DD911AA067BD008C5ABA /* ZCSettingTVController.m */; };
 		A957DD951AA068D0008C5ABA /* ZCStadiumInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = A957DD941AA068D0008C5ABA /* ZCStadiumInformation.m */; };
 		A95AB5C61AC3B20D00F63D92 /* ZCModifyTheScorecardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A95AB5C51AC3B20D00F63D92 /* ZCModifyTheScorecardViewController.m */; };
+		A95D720C1AC8F7B300DBD7E4 /* ZCBackBackButtonitem.m in Sources */ = {isa = PBXBuildFile; fileRef = A95D720B1AC8F7B300DBD7E4 /* ZCBackBackButtonitem.m */; };
 		A967AD061A9EBE7B009E7468 /* ZCSwitchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A967AD051A9EBE7B009E7468 /* ZCSwitchTableViewController.m */; };
 		A967AD1B1A9EC6CB009E7468 /* MJArgument.m in Sources */ = {isa = PBXBuildFile; fileRef = A967AD091A9EC6CB009E7468 /* MJArgument.m */; };
 		A967AD1C1A9EC6CB009E7468 /* MJIvar.m in Sources */ = {isa = PBXBuildFile; fileRef = A967AD0C1A9EC6CB009E7468 /* MJIvar.m */; };
@@ -161,6 +162,8 @@
 		A957DD941AA068D0008C5ABA /* ZCStadiumInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCStadiumInformation.m; sourceTree = "<group>"; };
 		A95AB5C41AC3B20D00F63D92 /* ZCModifyTheScorecardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCModifyTheScorecardViewController.h; sourceTree = "<group>"; };
 		A95AB5C51AC3B20D00F63D92 /* ZCModifyTheScorecardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCModifyTheScorecardViewController.m; sourceTree = "<group>"; };
+		A95D720A1AC8F7B300DBD7E4 /* ZCBackBackButtonitem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCBackBackButtonitem.h; sourceTree = "<group>"; };
+		A95D720B1AC8F7B300DBD7E4 /* ZCBackBackButtonitem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCBackBackButtonitem.m; sourceTree = "<group>"; };
 		A967AD041A9EBE7B009E7468 /* ZCSwitchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCSwitchTableViewController.h; sourceTree = "<group>"; };
 		A967AD051A9EBE7B009E7468 /* ZCSwitchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCSwitchTableViewController.m; sourceTree = "<group>"; };
 		A967AD081A9EC6CB009E7468 /* MJArgument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJArgument.h; sourceTree = "<group>"; };
@@ -456,9 +459,9 @@
 		A9438A491A7A015700B55001 /* main（主要) */ = {
 			isa = PBXGroup;
 			children = (
+				A95D72091AC8F78700DBD7E4 /* View */,
 				A9438A4A1A7A015700B55001 /* Controller */,
 				A9438A4B1A7A015700B55001 /* Model */,
-				A9438A4C1A7A015700B55001 /* View */,
 			);
 			path = "main（主要)";
 			sourceTree = "<group>";
@@ -478,13 +481,6 @@
 			children = (
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		A9438A4C1A7A015700B55001 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		A9438A5A1A7A04A200B55001 /* Controller */ = {
@@ -571,6 +567,15 @@
 				A957DD8E1AA05FB9008C5ABA /* ZCChildStadium.m */,
 			);
 			path = "stadium（球场信息模型）";
+			sourceTree = "<group>";
+		};
+		A95D72091AC8F78700DBD7E4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A95D720A1AC8F7B300DBD7E4 /* ZCBackBackButtonitem.h */,
+				A95D720B1AC8F7B300DBD7E4 /* ZCBackBackButtonitem.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		A967AD071A9EC6CB009E7468 /* MJExtension */ = {
@@ -810,6 +815,7 @@
 				A93B46321A84C54600AF48F0 /* AFURLRequestSerialization.m in Sources */,
 				A9386B651A7B418F00526086 /* ZCChooseTableViewCell.m in Sources */,
 				A967AD271A9EC762009E7468 /* ZCCity.m in Sources */,
+				A95D720C1AC8F7B300DBD7E4 /* ZCBackBackButtonitem.m in Sources */,
 				A967AD1F1A9EC6CB009E7468 /* MJType.m in Sources */,
 				A93B46311A84C54600AF48F0 /* AFURLConnectionOperation.m in Sources */,
 				A9438A5E1A7A04A200B55001 /* ZCPracticeViewController.m in Sources */,

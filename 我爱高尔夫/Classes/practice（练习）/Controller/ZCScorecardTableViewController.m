@@ -11,7 +11,7 @@
 
 
 #import "ZCScorecarTableViewCell.h"
-
+#import "ZCBackBackButtonitem.h"
 #import "ZCScorecard.h"
 #import "ZCShowButton.h"
 #import "AFNetworking.h"
@@ -28,19 +28,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //网络请求
-    //[self scorecardsData];
-    //[self.tableView reloadData];
-//    ZCLog(@"---%lu----",self.totalScorecards.scorecards.count);
-//    ZCscorecard *scorecard=self.totalScorecards.scorecards[0];
-//    ZCLog(@"------%@",scorecard.number );
+       
+    // 修改下一个界面返回按钮的文字
     
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:self action:nil];
-
+    self.navigationItem.backBarButtonItem = [[ ZCBackBackButtonitem alloc] init];
     
     self.navigationItem.title=@"快捷记分卡";
     
     UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"统计" style:UIBarButtonItemStyleDone target:self action:@selector(clickOnTheStatistics)];
+    //改变UIBarButtonItem字体颜色
+    [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor,nil] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem =newBar;
     
     
@@ -152,26 +149,38 @@
 
 
 //ZCScorecarTableViewCell的代理方法
-//-(void)addImageDidClick:(UIButton *)sender
-//{
-//    //拿到对应cell的indexPath
-//    UIView *view=(UIView *)sender;
-//    UIView *superView=view.superview;
-//    while (![superView isKindOfClass:[UITableViewCell class]]) {
-//        superView=superView.superview;
-//    }
-//    
-//    
-//    NSIndexPath *indexPath=[self.tableView  indexPathForCell:(UITableViewCell *)superView ];
-//    self.indexPath=indexPath;
-//
-//    
-//    
-//    ZCFillViewController *fillView=[[ZCFillViewController alloc] init];
-//    [self.navigationController pushViewController:fillView animated:YES];
-//    fillView.delegate=self;
-//}
-//
+-(void)addImageDidClick:(UIButton *)sender
+{
+    //拿到对应cell的indexPath
+    UIView *view=(UIView *)sender;
+    UIView *superView=view.superview;
+    while (![superView isKindOfClass:[UITableViewCell class]]) {
+        superView=superView.superview;
+    }
+    
+    
+    NSIndexPath *indexPath=[self.tableView  indexPathForCell:(UITableViewCell *)superView ];
+    self.indexPath=indexPath;
+
+    
+    
+    
+    NSMutableArray *scorecards=self.totalScorecards.scorecards;
+    ZCscorecard *scorecard=scorecards[indexPath.row];
+    
+    ZCModifyTheScorecardViewController *fillView=[[ZCModifyTheScorecardViewController alloc] init];
+    //传递数据模型给下个控制器
+    fillView.scorecard=scorecard;
+    [self.navigationController pushViewController:fillView animated:YES];
+    fillView.delegate=self;
+    
+    
+    
+
+    
+   
+}
+
 
 #pragma mark - ZCZCFillViewControllerDelegate代理方法 
 
@@ -196,17 +205,17 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 
 {
-    NSMutableArray *scorecards=self.totalScorecards.scorecards;
-    ZCscorecard *scorecard=scorecards[indexPath.row];
-    
-    ZCModifyTheScorecardViewController *fillView=[[ZCModifyTheScorecardViewController alloc] init];
-    //传递数据模型给下个控制器
-    fillView.scorecard=scorecard;
-    [self.navigationController pushViewController:fillView animated:YES];
-    fillView.delegate=self;
-    
-    self.indexPath=indexPath;
-    
+//    NSMutableArray *scorecards=self.totalScorecards.scorecards;
+//    ZCscorecard *scorecard=scorecards[indexPath.row];
+//    
+//    ZCModifyTheScorecardViewController *fillView=[[ZCModifyTheScorecardViewController alloc] init];
+//    //传递数据模型给下个控制器
+//    fillView.scorecard=scorecard;
+//    [self.navigationController pushViewController:fillView animated:YES];
+//    fillView.delegate=self;
+//    
+//    self.indexPath=indexPath;
+//    
     
     
 }

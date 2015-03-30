@@ -11,7 +11,7 @@
 /*
  成绩
  */
-@property(nonatomic,weak) UIView *resultsView;
+@property(nonatomic,weak) UIButton *resultsView;
 
 /*
  开杆距离
@@ -59,10 +59,10 @@
 {
     if (self=[super initWithFrame:frame]) {
         
-        
+        [self setBackgroundImage:[UIImage imageNamed:@"jfk_anxia_bj"] forState:UIControlStateHighlighted];
         //成绩
         
-        UIView *resultsView=[[UIView alloc] init];
+        UIButton *resultsView=[[UIButton alloc] init];
         [self addSubview:resultsView];
         self.resultsView=resultsView;
         
@@ -184,6 +184,8 @@
 {
     [super layoutSubviews];
     
+    
+    
     //成绩frame
     
     CGFloat resultsViewX=0;
@@ -249,7 +251,7 @@
     
     //成绩左的frame
     
-    CGFloat penaltiesLabelW=15;
+    CGFloat penaltiesLabelW=20;
     CGFloat penaltiesLabelH=15;
     
     CGFloat penaltiesLabelX=scoreLabelX-10;
@@ -259,7 +261,7 @@
     
     
     //成绩右的frame
-    CGFloat puttsLabelW=15;
+    CGFloat puttsLabelW=20;
     CGFloat puttsLabelH=15;
     
     CGFloat puttsLabelX=scoreLabelX+scoreLabelW;

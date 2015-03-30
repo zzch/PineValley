@@ -79,14 +79,23 @@
     
     self.navigationItem.title=[NSString stringWithFormat:@"%@",self.scorecard.number];
     UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleDone target:self action:@selector(saveOtherView)];
+    //改变UIBarButtonItem字体颜色
+    [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor,nil] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem =newBar;
     
 
     //返回按钮
-    UIBarButtonItem *blackButton= [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:self action:@selector(dataToModify)];
-    self.navigationItem.leftBarButtonItem=blackButton;
     
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    backBtn.frame = CGRectMake(0, 0, 31, 18);
     
+    [backBtn setImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
+    [backBtn setImage:[UIImage imageNamed:@"fanhui-anxia"] forState:UIControlStateHighlighted];
+    [backBtn addTarget:self action:@selector(dataToModify) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
+   
+    self.navigationItem.leftBarButtonItem = backItem;
     //注册观察者
     [self registeredObservers];
 

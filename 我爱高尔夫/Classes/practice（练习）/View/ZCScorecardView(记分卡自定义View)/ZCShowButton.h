@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "ZCscorecard.h"
-@interface ZCShowButton : UILabel
+@interface ZCShowButton : UIButton
 @property (nonatomic, strong) ZCscorecard *scorecard;
 @end

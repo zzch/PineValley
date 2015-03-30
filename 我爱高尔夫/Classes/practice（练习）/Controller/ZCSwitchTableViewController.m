@@ -12,7 +12,7 @@
 #import "MJExtension.h"
 #import "ZCCity.h"
 #import "ZCCityStadium.h"
-
+#import "ZCBackBackButtonitem.h"
 
 
 @interface ZCSwitchTableViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate>
@@ -35,6 +35,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // 修改下一个界面返回按钮的文字
+    
+    self.navigationItem.backBarButtonItem = [[ ZCBackBackButtonitem alloc] init];
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
     

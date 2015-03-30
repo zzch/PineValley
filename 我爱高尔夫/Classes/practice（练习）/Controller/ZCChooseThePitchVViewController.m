@@ -8,7 +8,7 @@
 
 #import "ZCChooseThePitchVViewController.h"
 #import "ZCChooseTableViewCell.h"
-
+#import "ZCBackBackButtonitem.h"
 #import "MTScenicShopCell.h"
 #import "AFNetworking.h"
 #import "ZCAccount.h"
@@ -42,12 +42,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title=@"选择球场";
+    
     UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"切换" style:UIBarButtonItemStyleDone target:self action:@selector(switchOtherView)];
+    //改变UIBarButtonItem字体颜色
+    [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor,nil] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem =newBar;
     
     // 修改下一个界面返回按钮的文字
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
-
+    
+    self.navigationItem.backBarButtonItem = [[ ZCBackBackButtonitem alloc] init];
     
   // self.navigationController.navigationBarHidden = YES;
     _dataArray = [NSMutableArray array];

@@ -85,17 +85,35 @@
  
     
     self.navigationItem.title=@"快捷记分卡";
-    
+//    
     UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"新建" style:UIBarButtonItemStyleDone target:self action:@selector(chooseThePitch)];
+    //改变UIBarButtonItem字体颜色
+    [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor,nil] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem =newBar;
+    
+    
+    UIImage* image = [UIImage imageNamed:@"fanhui-anxia"];
+    UIImage *image1=[UIImage imageNamed:@"fanhui"];
+    UIBarButtonItem *newBar1=[[UIBarButtonItem alloc] init];
+    [newBar1 setBackButtonBackgroundImage:[image1 resizableImageWithCapInsets:UIEdgeInsetsMake(10, image.size.width, 0, 0)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+
+    [newBar1 setBackButtonBackgroundImage:[image resizableImageWithCapInsets:UIEdgeInsetsMake(10, image.size.width, 0, 0)] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+    
+//    
+   [newBar1 setBackButtonTitlePositionAdjustment:UIOffsetMake(-550.f, 0) forBarMetrics:UIBarMetricsDefault];
+    
+    self.navigationItem.backBarButtonItem = newBar1;
+
+    
+    
 
     //背景颜色
     self.tableView.backgroundColor=ZCColor(23, 25, 28);
     
     
     
-    // 修改下一个界面返回按钮的文字
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
+//    // 修改下一个界面返回按钮的文字
+//    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
 
     self.tableView.dataSource=self;
     self.tableView.delegate=self;

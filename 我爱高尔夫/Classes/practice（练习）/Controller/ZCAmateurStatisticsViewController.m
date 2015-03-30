@@ -14,7 +14,7 @@
 #import "ZCStatisticalScorecard.h"
 #import "ZCStatistical.h"
 #import "ZCEventUuidTool.h"
-
+#import "ZCBackBackButtonitem.h"
 //#define UIDeviceOrientationIsPortrait(orientation)  ((orientation) == UIDeviceOrientationPortrait || (orientation) == UIDeviceOrientationPortraitUpsideDown)
 //#define UIDeviceOrientationIsLandscape(orientation) ((orientation) == UIDeviceOrientationLandscapeLeft || (orientation) == UIDeviceOrientationLandscapeRight)
 //
@@ -54,7 +54,9 @@
     [super viewDidLoad];
     self.view.backgroundColor=ZCColor(23, 25, 28);
     
-   
+    // 修改下一个界面返回按钮的文字
+    
+    self.navigationItem.backBarButtonItem = [[ ZCBackBackButtonitem alloc] init];
     
    
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];

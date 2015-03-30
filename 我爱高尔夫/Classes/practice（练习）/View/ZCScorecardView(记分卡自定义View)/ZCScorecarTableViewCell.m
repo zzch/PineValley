@@ -37,12 +37,12 @@
 /*
  加号图片
  */
-@property(nonatomic,weak) UIView *addImage;
+@property(nonatomic,weak) UIButton *addImage;
 
 /*
  显示值的按钮
  */
-@property(nonatomic,weak) UILabel *showLabel;
+@property(nonatomic,weak) ZCShowButton *showButton;
 
 
 
@@ -73,8 +73,8 @@
         //背景
          self.backgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jifenka_yihangbeijing"]];
         
-        
-        self.selectedBackgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jfk_anxia_bj"]];
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+//        self.selectedBackgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jfk_anxia_bj"]];
         
         //左边view
         UIView *liftView=[[UIView alloc] init];
@@ -134,24 +134,29 @@
             
             //创建加号图片
             
-            UIView *addImage=[[UIView alloc] init];
+            UIButton *addImage=[[UIButton alloc] init];
+            
+           // UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jifenka_yihangbeijing"]];
+            //addImage.backgroundColor=col;
+            
+            [addImage setImage:[UIImage imageNamed:@"tiejia"] forState:UIControlStateNormal];
+            [addImage setImage:[UIImage imageNamed:@"jfk_tiejia_anxia"] forState:UIControlStateHighlighted];
+            [addImage addTarget:self action:@selector(addImageClick:) forControlEvents:UIControlEventTouchUpInside];
             [self.contentView addSubview:addImage];
-            UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jifenka_yihangbeijing"]];
-            addImage.backgroundColor=col;
-             self.addImage=addImage;
+            self.addImage=addImage;
             
+//            UIImageView *image=[[UIImageView alloc] init];
+//            
+//                       image.image=[UIImage imageNamed:@"tiejia"];
+//             [self.addImage addSubview:image];
+//            self.image1=image;
             
-            UIImageView *image=[[UIImageView alloc] init];
-            
-                       image.image=[UIImage imageNamed:@"tiejia"];
-             [self.addImage addSubview:image];
-            self.image1=image;
             
            
         }else{
-        UILabel *showLabel=[[UILabel alloc] init];
-        [self.contentView addSubview:showLabel];
-        self.showLabel=showLabel;
+        ZCShowButton *showButton=[[ZCShowButton alloc] init];
+        [self.contentView addSubview:showButton];
+        self.showButton=showButton;
         }
         
 //        ZCShowButton *showLabel=[[ZCShowButton alloc] init];
@@ -274,17 +279,17 @@
     return self;
 }
 
-////点击addImage
-//-(void)addImageClick:(UIButton *)sender
-//{
-//    
-//    
-//   //创建代理，通知控制器+号被点击了
-//    if ([self.delegate respondsToSelector:@selector(addImageDidClick:)]) {
-//        [self.delegate addImageDidClick:sender];
-//    }
-//
-//}
+//点击addImage
+-(void)addImageClick:(UIButton *)sender
+{
+    
+    
+   //创建代理，通知控制器+号被点击了或者显示的按钮被点击
+    if ([self.delegate respondsToSelector:@selector(addImageDidClick:)]) {
+        [self.delegate addImageDidClick:sender];
+    }
+
+}
 
 -(void)setScorecard:(ZCscorecard *)scorecard
 {
@@ -295,15 +300,15 @@
         if (self.addImage) {
             [self.addImage removeFromSuperview];
         }
-        if (self.showLabel) {
-            [self.showLabel removeFromSuperview];
+        if (self.showButton) {
+            [self.showButton removeFromSuperview];
         }
         //创建可显示的showLabel
-        ZCShowButton *showLabel=[[ZCShowButton alloc] init];
-        showLabel.scorecard=scorecard;
-        [self.contentView addSubview:showLabel];
-        //showLabel.backgroundColor=[UIColor redColor];
-        self.showLabel=showLabel;
+        ZCShowButton *showButton=[[ZCShowButton alloc] init];
+        showButton.scorecard=scorecard;
+        [self.contentView addSubview:showButton];
+        [showButton addTarget:self action:@selector(addImageClick:) forControlEvents:UIControlEventTouchUpInside];
+        self.showButton=showButton;
         
        
         
@@ -450,7 +455,7 @@
     CGFloat showLabelY=0;
     CGFloat showLabelW=self.frame.size.width-showLabelX;
     CGFloat showLabelH=self.frame.size.height;
-    self.showLabel.frame=CGRectMake(showLabelX, showLabelY, showLabelW, showLabelH);
+    self.showButton.frame=CGRectMake(showLabelX, showLabelY, showLabelW, showLabelH);
     
     
     //addImage的frame

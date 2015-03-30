@@ -7,7 +7,7 @@
 //
 
 #import "ZCPracticeViewController.h"
-
+#import "ZCBackBackButtonitem.h"
 #import "ZCQuickScoringTableViewController.h"
 #import "AppDelegate.h"
 #import "ZCEventUuidTool.h"
@@ -34,10 +34,8 @@
    // NSString *str=[NSString stringWithFormat:@"%@%@",API,@"ASDASD"];
    // ZCLog(@"%@",str);
     self.navigationItem.title=@"选择计分卡";
-    // 修改下一个界面返回按钮的文字
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
-    self.navigationItem.backBarButtonItem.tintColor = [UIColor blackColor];
-    
+    //返回按钮
+    self.navigationItem.backBarButtonItem = [[ ZCBackBackButtonitem alloc] init];
     self.view.backgroundColor=ZCColor(23, 25, 28);
    // ZCLog(@"%f,%f",SCREEN_HEIGHT,SCREEN_WIDTH);
 //    self.view.backgroundColor=[UIColor c]
@@ -53,9 +51,6 @@
     ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
     tool.scoring=@"simple";
     
-//    ZCQuickScoringViewController *quick=[[ZCQuickScoringViewController alloc] init];
-//    [self.navigationController pushViewController:quick animated:YES];
-//    
     ZCQuickScoringTableViewController *quickScoringTableViewController=[[ZCQuickScoringTableViewController alloc] init];
     quickScoringTableViewController.hidesBottomBarWhenPushed=YES;
     [self.navigationController pushViewController:quickScoringTableViewController animated:YES];
@@ -68,14 +63,5 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
