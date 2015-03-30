@@ -10,7 +10,7 @@
 #import "AFNetworking.h"
 #import "ZCAccount.h"
 #import "ZCTabbarViewController.h"
-
+#import "SVProgressHUD.h"
 @interface ZCregisterViewController ()
 
 @end
@@ -39,6 +39,7 @@
 //点击一键注册，注册账号
 -(void)clickKeyButton
 {
+   [SVProgressHUD show];
     
     // AFNetworking\AFN
     // 1.创建请求管理对象
@@ -59,10 +60,12 @@
         //去首页
         self.view.window.rootViewController = [[ZCTabbarViewController alloc] init];
         
-        
+        [SVProgressHUD dismiss];
        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
          NSLog(@"请求失败%@",error);
+        [SVProgressHUD dismiss];
     }];
 
 }

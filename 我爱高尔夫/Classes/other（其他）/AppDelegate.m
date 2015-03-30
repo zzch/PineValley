@@ -34,8 +34,7 @@
     }
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 
-    
-    
+   
     
     
     //先判断有无存储账号信息
@@ -45,6 +44,7 @@
 
     if (account) {//之前登陆成功
          ZCTabbarViewController *tabBarVc=[[ZCTabbarViewController alloc] init];
+        
          self.window.rootViewController=tabBarVc;
     }else
     {// 之前没有登录成功
@@ -57,7 +57,15 @@
     
     }
     
-   // [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"biaoqianlan"] forBarMetrics:UIBarMetricsDefault];
+    
+    //导航栏的背景颜色和字体
+    
+           UINavigationBar *bar = [UINavigationBar appearance];
+            [bar setBackgroundImage:[UIImage imageNamed:@"daohanglan"] forBarMetrics:UIBarMetricsDefault];
+    
+            bar.titleTextAttributes=@{UITextAttributeTextColor: [UIColor whiteColor],UITextAttributeFont : [UIFont boldSystemFontOfSize:18]};
+
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"biaoqianlan"] forBarMetrics:UIBarMetricsDefault];
     
     
     // 4.显示window

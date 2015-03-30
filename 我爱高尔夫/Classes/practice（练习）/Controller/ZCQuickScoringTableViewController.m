@@ -92,17 +92,17 @@
     self.navigationItem.rightBarButtonItem =newBar;
     
     
-    UIImage* image = [UIImage imageNamed:@"fanhui-anxia"];
-    UIImage *image1=[UIImage imageNamed:@"fanhui"];
-    UIBarButtonItem *newBar1=[[UIBarButtonItem alloc] init];
-    [newBar1 setBackButtonBackgroundImage:[image1 resizableImageWithCapInsets:UIEdgeInsetsMake(10, image.size.width, 0, 0)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-
-    [newBar1 setBackButtonBackgroundImage:[image resizableImageWithCapInsets:UIEdgeInsetsMake(10, image.size.width, 0, 0)] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-    
+//    UIImage* image = [UIImage imageNamed:@"fanhui-anxia"];
+//    UIImage *image1=[UIImage imageNamed:@"fanhui"];
+//    UIBarButtonItem *newBar1=[[UIBarButtonItem alloc] init];
+//    [newBar1 setBackButtonBackgroundImage:[image1 resizableImageWithCapInsets:UIEdgeInsetsMake(10, image.size.width, 0, 0)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+//
+//    [newBar1 setBackButtonBackgroundImage:[image resizableImageWithCapInsets:UIEdgeInsetsMake(10, image.size.width, 0, 0)] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
 //    
-   [newBar1 setBackButtonTitlePositionAdjustment:UIOffsetMake(-550.f, 0) forBarMetrics:UIBarMetricsDefault];
+////    
+//   [newBar1 setBackButtonTitlePositionAdjustment:UIOffsetMake(-550.f, 0) forBarMetrics:UIBarMetricsDefault];
     
-    self.navigationItem.backBarButtonItem = newBar1;
+    //self.navigationItem.backBarButtonItem = [zc];
 
     
     

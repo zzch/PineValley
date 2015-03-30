@@ -8,11 +8,11 @@
 
 #import "ZCShowButton.h"
 @interface ZCShowButton()
-/*
- 成绩
- */
-@property(nonatomic,weak) UIButton *resultsView;
-
+///*
+// 成绩
+// */
+//@property(nonatomic,weak) UIButton *resultsView;
+//
 /*
  开杆距离
  */
@@ -60,15 +60,15 @@
     if (self=[super initWithFrame:frame]) {
         
         [self setBackgroundImage:[UIImage imageNamed:@"jfk_anxia_bj"] forState:UIControlStateHighlighted];
-        //成绩
-        
-        UIButton *resultsView=[[UIButton alloc] init];
-        [self addSubview:resultsView];
-        self.resultsView=resultsView;
+//        //成绩
+//        
+//        UIButton *resultsView=[[UIButton alloc] init];
+//        [self addSubview:resultsView];
+//        self.resultsView=resultsView;
         
         //成绩左
         UILabel *penaltiesLabel=[[UILabel alloc] init];
-        [resultsView addSubview:penaltiesLabel];
+        [self addSubview:penaltiesLabel];
         penaltiesLabel.textColor=ZCColor(208, 210, 212);
         self.penaltiesLabel=penaltiesLabel;
         //总杆数
@@ -77,13 +77,13 @@
         scoreLabel.textColor=ZCColor(208, 210, 212);
         scoreLabel.font=[UIFont fontWithName:@"Arial" size:49];
         scoreLabel.textAlignment=NSTextAlignmentCenter;
-        [resultsView addSubview:scoreLabel];
+        [self addSubview:scoreLabel];
         self.scoreLabel=scoreLabel;
         
         //推杆数 成绩右
         UILabel *puttsLabel=[[UILabel alloc] init];
         puttsLabel.textColor=ZCColor(208, 210, 212);
-        [resultsView addSubview:puttsLabel];
+        [self addSubview:puttsLabel];
         self.puttsLabel=puttsLabel;
         
         //开杆距离
@@ -186,13 +186,13 @@
     
     
     
-    //成绩frame
-    
-    CGFloat resultsViewX=0;
-    CGFloat resultsViewY=0;
+//    //成绩frame
+//    
+//    CGFloat resultsViewX=0;
+//    CGFloat resultsViewY=0;
     CGFloat resultsViewW=self.frame.size.width*0.86;
     CGFloat resultsViewH=self.frame.size.height*0.72;
-    self.resultsView.frame=CGRectMake(resultsViewX, resultsViewY, resultsViewW, resultsViewH);
+//    self.resultsView.frame=CGRectMake(resultsViewX, resultsViewY, resultsViewW, resultsViewH);
     /**
      * 开杆距离前图片
      */
@@ -244,7 +244,7 @@
     CGFloat scoreLabelH=55;
 
     CGFloat scoreLabelX=(self.frame.size.width-scoreLabelW)*0.5;
-    CGFloat scoreLabelY=self.resultsView.frame.size.height*0.20;
+    CGFloat scoreLabelY=self.frame.size.height*0.14;
     
     
     self.scoreLabel.frame=CGRectMake(scoreLabelX, scoreLabelY, scoreLabelW, scoreLabelH);

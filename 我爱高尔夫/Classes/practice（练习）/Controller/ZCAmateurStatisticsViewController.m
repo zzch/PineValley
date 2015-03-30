@@ -54,11 +54,24 @@
     [super viewDidLoad];
     self.view.backgroundColor=ZCColor(23, 25, 28);
     
-    // 修改下一个界面返回按钮的文字
+//    // 修改下一个界面返回按钮的文字
+//    
+//    self.navigationItem.backBarButtonItem = [[ ZCBackBackButtonitem alloc] init];
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    backBtn.frame = CGRectMake(0, 0, 31, 18);
     
-    self.navigationItem.backBarButtonItem = [[ ZCBackBackButtonitem alloc] init];
+    [backBtn setImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
+    [backBtn setImage:[UIImage imageNamed:@"fanhui-anxia"] forState:UIControlStateHighlighted];
+    [backBtn addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
     
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
+    
+    self.navigationItem.leftBarButtonItem = backItem;
    
+    
+    
+    
+    
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];

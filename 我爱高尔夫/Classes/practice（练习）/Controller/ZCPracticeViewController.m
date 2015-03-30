@@ -34,8 +34,15 @@
    // NSString *str=[NSString stringWithFormat:@"%@%@",API,@"ASDASD"];
    // ZCLog(@"%@",str);
     self.navigationItem.title=@"选择计分卡";
-    //返回按钮
-    self.navigationItem.backBarButtonItem = [[ ZCBackBackButtonitem alloc] init];
+    //返回按钮UIBarButtonItemStylePlain
+//    UIBarButtonItem *bar=[[ ZCBackBackButtonitem alloc] init] ;
+//    bar.style=UIBarButtonItemStylePlain;
+//    self.navigationItem.backBarButtonItem = bar;//[[ ZCBackBackButtonitem alloc] init] ;
+    
+    UIImage* image = [UIImage imageNamed:@"fanhui-anxia"];
+    UIImage *image1=[UIImage imageNamed:@"fanhui"];
+
+     self.navigationItem.backBarButtonItem=[[UIBarButtonItem alloc] initWithImage:image1 landscapeImagePhone:image style:UIBarButtonItemStylePlain target:nil action:nil];
     self.view.backgroundColor=ZCColor(23, 25, 28);
    // ZCLog(@"%f,%f",SCREEN_HEIGHT,SCREEN_WIDTH);
 //    self.view.backgroundColor=[UIColor c]
