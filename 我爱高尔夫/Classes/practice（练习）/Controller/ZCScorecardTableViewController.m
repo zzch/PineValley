@@ -9,9 +9,9 @@
 #import "ZCScorecardTableViewController.h"
 
 
-
+#import "UIBarButtonItem+DC.h"
 #import "ZCScorecarTableViewCell.h"
-#import "ZCBackBackButtonitem.h"
+#import "MBProgressHUD+NJ.h"
 #import "ZCScorecard.h"
 #import "ZCShowButton.h"
 #import "AFNetworking.h"
@@ -29,9 +29,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
        
-    // 修改下一个界面返回按钮的文字
+    // 修改返回按钮
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui-anxia" action:@selector(liftBthClick:) target:self];
     
-    self.navigationItem.backBarButtonItem = [[ ZCBackBackButtonitem alloc] init];
+    
     
     self.navigationItem.title=@"快捷记分卡";
     
@@ -43,6 +44,7 @@
     
    
     self.tableView.backgroundColor=ZCColor(23, 25, 28);
+    //去掉分割线
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
@@ -58,9 +60,19 @@
     
  }
 
+
+//返回到上个界面
+-(void)liftBthClick:(UIButton *)bth
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+//网络加载
 -(void)online
 {
 
+    //显示圈圈
+    [MBProgressHUD showMessage:@"加载中..."];
     
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
@@ -81,10 +93,15 @@
         ZCTotalScorecards *totalScorecards= [ZCTotalScorecards totalScorecardsWithDict:responseObject];
         
         self.totalScorecards=totalScorecards;
-        
+        //隐藏圈圈
+        [MBProgressHUD hideHUD];
         [self.tableView reloadData ];
         
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        //隐藏圈圈
+        [MBProgressHUD hideHUD];
+
         ZCLog(@"%@",error);
     }];
     

@@ -18,7 +18,8 @@
 #import "ZCScorecardTableViewController.h"
 #import "ZCEventUuidTool.h"
 #import "ZCEventUuidTool.h"
-#import "ZCBackBackButtonitem.h"
+#import "UIBarButtonItem+DC.h"
+#import "MBProgressHUD+NJ.h"
 @interface ZCSettingTVController ()<UITableViewDelegate,UITableViewDataSource,ZCSettingHeadViewDelegate>
 @property(nonatomic,assign) int count;
 
@@ -59,16 +60,18 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    // 修改下一个界面返回按钮的文字
+    // 修改返回按钮
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui-anxia" action:@selector(liftBthClick:) target:self];
     
-    self.navigationItem.backBarButtonItem = [[ ZCBackBackButtonitem alloc] init];
+    
+    
     //让分割线不显示
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     self.tableView.backgroundColor=ZCColor(23, 25, 28);
     self.tableView.rowHeight=50;
-    
-    
+    //加载圈圈
+    [MBProgressHUD showMessage:@"加载中..."];
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
@@ -87,7 +90,8 @@
         ZCStadiumInformation  *stadiumInformation=[ZCStadiumInformation stadiumInformationWithDict:responseObject];
         
         self.stadiumInformation=stadiumInformation;
-        
+        //隐藏圈圈
+        [MBProgressHUD hideHUD];
         // 刷新表格
         [self.tableView reloadData];
         
@@ -96,6 +100,8 @@
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         ZCLog(@"请求失败%@",error);
+        //隐藏圈圈
+        [MBProgressHUD hideHUD];
     }];
     
 
@@ -131,6 +137,16 @@
  
 
 }
+
+
+
+//返回到上个界面
+-(void)liftBthClick:(UIButton *)bth
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
 -(void)viewWillDisappear:(BOOL)animated
 {
   self.startButton.hidden=YES;

@@ -94,7 +94,7 @@
     CGFloat nameLabX = CGRectGetMaxX(_iconView.frame) + gap;
     _nameLab.frame = CGRectMake(nameLabX, gap, 320 - phoneBtnW, LabHeight);
     
-    CGFloat iconStarY = self.height * 0.5;
+    //CGFloat iconStarY = self.height * 0.5;
     
 //    if (_rating != 0)
 //    {

@@ -64,10 +64,13 @@
 		A957DD921AA067BD008C5ABA /* ZCSettingTVController.m in Sources */ = {isa = PBXBuildFile; fileRef = A957DD911AA067BD008C5ABA /* ZCSettingTVController.m */; };
 		A957DD951AA068D0008C5ABA /* ZCStadiumInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = A957DD941AA068D0008C5ABA /* ZCStadiumInformation.m */; };
 		A95AB5C61AC3B20D00F63D92 /* ZCModifyTheScorecardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A95AB5C51AC3B20D00F63D92 /* ZCModifyTheScorecardViewController.m */; };
-		A95D720C1AC8F7B300DBD7E4 /* ZCBackBackButtonitem.m in Sources */ = {isa = PBXBuildFile; fileRef = A95D720B1AC8F7B300DBD7E4 /* ZCBackBackButtonitem.m */; };
+		A95B09D31ACA51F6002D739A /* UIBarButtonItem+DC.m in Sources */ = {isa = PBXBuildFile; fileRef = A95B09D21ACA51F6002D739A /* UIBarButtonItem+DC.m */; };
 		A967AD061A9EBE7B009E7468 /* ZCSwitchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A967AD051A9EBE7B009E7468 /* ZCSwitchTableViewController.m */; };
 		A967AD271A9EC762009E7468 /* ZCCity.m in Sources */ = {isa = PBXBuildFile; fileRef = A967AD261A9EC762009E7468 /* ZCCity.m */; };
 		A967AD2A1A9EC7B3009E7468 /* ZCCityStadium.m in Sources */ = {isa = PBXBuildFile; fileRef = A967AD291A9EC7B3009E7468 /* ZCCityStadium.m */; };
+		A969EECB1ACA9D5900F73C37 /* MBProgressHUD+NJ.m in Sources */ = {isa = PBXBuildFile; fileRef = A969EEC71ACA9D5900F73C37 /* MBProgressHUD+NJ.m */; };
+		A969EECC1ACA9D5900F73C37 /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A969EEC81ACA9D5900F73C37 /* MBProgressHUD.bundle */; };
+		A969EECD1ACA9D5900F73C37 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = A969EECA1ACA9D5900F73C37 /* MBProgressHUD.m */; };
 		A96B67D81ABA6A01006D2047 /* ZCstadium.m in Sources */ = {isa = PBXBuildFile; fileRef = A96B67D71ABA6A01006D2047 /* ZCstadium.m */; };
 		A9714E491A830BCD00571CB2 /* ZCregisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9714E481A830BCD00571CB2 /* ZCregisterViewController.m */; };
 		A9714E6A1A832F1800571CB2 /* ZCAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = A9714E691A832F1800571CB2 /* ZCAccount.m */; };
@@ -198,14 +201,19 @@
 		A957DD941AA068D0008C5ABA /* ZCStadiumInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCStadiumInformation.m; sourceTree = "<group>"; };
 		A95AB5C41AC3B20D00F63D92 /* ZCModifyTheScorecardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCModifyTheScorecardViewController.h; sourceTree = "<group>"; };
 		A95AB5C51AC3B20D00F63D92 /* ZCModifyTheScorecardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCModifyTheScorecardViewController.m; sourceTree = "<group>"; };
-		A95D720A1AC8F7B300DBD7E4 /* ZCBackBackButtonitem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCBackBackButtonitem.h; sourceTree = "<group>"; };
-		A95D720B1AC8F7B300DBD7E4 /* ZCBackBackButtonitem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCBackBackButtonitem.m; sourceTree = "<group>"; };
+		A95B09D11ACA51F6002D739A /* UIBarButtonItem+DC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+DC.h"; sourceTree = "<group>"; };
+		A95B09D21ACA51F6002D739A /* UIBarButtonItem+DC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+DC.m"; sourceTree = "<group>"; };
 		A967AD041A9EBE7B009E7468 /* ZCSwitchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCSwitchTableViewController.h; sourceTree = "<group>"; };
 		A967AD051A9EBE7B009E7468 /* ZCSwitchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCSwitchTableViewController.m; sourceTree = "<group>"; };
 		A967AD251A9EC762009E7468 /* ZCCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCCity.h; sourceTree = "<group>"; };
 		A967AD261A9EC762009E7468 /* ZCCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCCity.m; sourceTree = "<group>"; };
 		A967AD281A9EC7B3009E7468 /* ZCCityStadium.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCCityStadium.h; sourceTree = "<group>"; };
 		A967AD291A9EC7B3009E7468 /* ZCCityStadium.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCCityStadium.m; sourceTree = "<group>"; };
+		A969EEC61ACA9D5900F73C37 /* MBProgressHUD+NJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+NJ.h"; sourceTree = "<group>"; };
+		A969EEC71ACA9D5900F73C37 /* MBProgressHUD+NJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+NJ.m"; sourceTree = "<group>"; };
+		A969EEC81ACA9D5900F73C37 /* MBProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MBProgressHUD.bundle; sourceTree = "<group>"; };
+		A969EEC91ACA9D5900F73C37 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		A969EECA1ACA9D5900F73C37 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		A96B67D61ABA6A01006D2047 /* ZCstadium.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCstadium.h; sourceTree = "<group>"; };
 		A96B67D71ABA6A01006D2047 /* ZCstadium.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCstadium.m; sourceTree = "<group>"; };
 		A9714E471A830BCD00571CB2 /* ZCregisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCregisterViewController.h; sourceTree = "<group>"; };
@@ -249,6 +257,7 @@
 		A911BDDA1AC963EA00819F52 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				A969EEC51ACA9D5900F73C37 /* MBProgressHUD */,
 				A911BE291AC9643E00819F52 /* SVProgressHUD */,
 				A911BDDB1AC963EA00819F52 /* AFNetworking */,
 				A911BDEF1AC963EA00819F52 /* MJExtension */,
@@ -651,8 +660,8 @@
 		A95D72091AC8F78700DBD7E4 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				A95D720A1AC8F7B300DBD7E4 /* ZCBackBackButtonitem.h */,
-				A95D720B1AC8F7B300DBD7E4 /* ZCBackBackButtonitem.m */,
+				A95B09D11ACA51F6002D739A /* UIBarButtonItem+DC.h */,
+				A95B09D21ACA51F6002D739A /* UIBarButtonItem+DC.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -666,6 +675,18 @@
 				A967AD291A9EC7B3009E7468 /* ZCCityStadium.m */,
 			);
 			path = "city(城市列表模型)";
+			sourceTree = "<group>";
+		};
+		A969EEC51ACA9D5900F73C37 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				A969EEC61ACA9D5900F73C37 /* MBProgressHUD+NJ.h */,
+				A969EEC71ACA9D5900F73C37 /* MBProgressHUD+NJ.m */,
+				A969EEC81ACA9D5900F73C37 /* MBProgressHUD.bundle */,
+				A969EEC91ACA9D5900F73C37 /* MBProgressHUD.h */,
+				A969EECA1ACA9D5900F73C37 /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
 			sourceTree = "<group>";
 		};
 		A96B67D51ABA6A01006D2047 /* 选择球场模型 */ = {
@@ -804,6 +825,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A911BE2D1AC9643F00819F52 /* SVProgressHUD.bundle in Resources */,
+				A969EECC1ACA9D5900F73C37 /* MBProgressHUD.bundle in Resources */,
 				A9438A541A7A043700B55001 /* ZCPersonalViewController.xib in Resources */,
 				A9438A641A7A04D800B55001 /* ZCStatisticalViewController.xib in Resources */,
 				A911BE201AC963EA00819F52 /* MJRefresh.bundle in Resources */,
@@ -828,15 +850,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				A911BE241AC963EA00819F52 /* MJRefreshHeaderView.m in Sources */,
+				A969EECB1ACA9D5900F73C37 /* MBProgressHUD+NJ.m in Sources */,
 				A911BE0E1AC963EA00819F52 /* AFHTTPRequestOperation.m in Sources */,
 				A911BE111AC963EA00819F52 /* AFNetworkReachabilityManager.m in Sources */,
 				A911BE101AC963EA00819F52 /* AFHTTPSessionManager.m in Sources */,
 				A9386B651A7B418F00526086 /* ZCChooseTableViewCell.m in Sources */,
 				A911BE2E1AC9643F00819F52 /* SVProgressHUD.m in Sources */,
 				A967AD271A9EC762009E7468 /* ZCCity.m in Sources */,
+				A969EECD1ACA9D5900F73C37 /* MBProgressHUD.m in Sources */,
 				A911BE1C1AC963EA00819F52 /* MJTypeEncoding.m in Sources */,
 				A911BE211AC963EA00819F52 /* MJRefreshBaseView.m in Sources */,
-				A95D720C1AC8F7B300DBD7E4 /* ZCBackBackButtonitem.m in Sources */,
 				A9438A5E1A7A04A200B55001 /* ZCPracticeViewController.m in Sources */,
 				A94C27CA1AB9693D006A7BA1 /* ZCEventCell.m in Sources */,
 				A9438A161A79FF6E00B55001 /* main.m in Sources */,
@@ -848,6 +871,7 @@
 				A957DD8F1AA05FB9008C5ABA /* ZCChildStadium.m in Sources */,
 				A9438A481A7A007B00B55001 /* AppDelegate.m in Sources */,
 				A911BE1D1AC963EA00819F52 /* NSObject+MJCoding.m in Sources */,
+				A95B09D31ACA51F6002D739A /* UIBarButtonItem+DC.m in Sources */,
 				A911BE221AC963EA00819F52 /* MJRefreshConst.m in Sources */,
 				A9484F501A80BCD600681939 /* ZCScorecardTableViewController.m in Sources */,
 				A9438A4F1A7A01A700B55001 /* ZCTabbarViewController.m in Sources */,

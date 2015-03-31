@@ -7,7 +7,7 @@
 //
 
 #import "ZCPracticeViewController.h"
-#import "ZCBackBackButtonitem.h"
+
 #import "ZCQuickScoringTableViewController.h"
 #import "AppDelegate.h"
 #import "ZCEventUuidTool.h"
@@ -39,10 +39,12 @@
 //    bar.style=UIBarButtonItemStylePlain;
 //    self.navigationItem.backBarButtonItem = bar;//[[ ZCBackBackButtonitem alloc] init] ;
     
-    UIImage* image = [UIImage imageNamed:@"fanhui-anxia"];
-    UIImage *image1=[UIImage imageNamed:@"fanhui"];
-
-     self.navigationItem.backBarButtonItem=[[UIBarButtonItem alloc] initWithImage:image1 landscapeImagePhone:image style:UIBarButtonItemStylePlain target:nil action:nil];
+//    UIImage* image = [UIImage imageNamed:@"fanhui-anxia"];
+//    UIImage *image1=[UIImage imageNamed:@"fanhui"];
+//
+//     self.navigationItem.backBarButtonItem=[[UIBarButtonItem alloc] initWithImage:image1 landscapeImagePhone:image style:UIBarButtonItemStylePlain target:nil action:nil];
+    
+   
     self.view.backgroundColor=ZCColor(23, 25, 28);
    // ZCLog(@"%f,%f",SCREEN_HEIGHT,SCREEN_WIDTH);
 //    self.view.backgroundColor=[UIColor c]

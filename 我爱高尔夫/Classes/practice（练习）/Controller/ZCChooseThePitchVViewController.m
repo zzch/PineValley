@@ -8,7 +8,7 @@
 
 #import "ZCChooseThePitchVViewController.h"
 #import "ZCChooseTableViewCell.h"
-#import "ZCBackBackButtonitem.h"
+#import "UIBarButtonItem+DC.h"
 #import "MTScenicShopCell.h"
 #import "AFNetworking.h"
 #import "ZCAccount.h"
@@ -16,8 +16,8 @@
 #import "ZCSwitchTableViewController.h"
 #import "ZCSettingTVController.h"
 #import "ZCStadiumInformation.h"
-
-
+#import "SVProgressHUD.h"
+#import "MBProgressHUD+NJ.h"
 
 @interface ZCChooseThePitchVViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate,CLLocationManagerDelegate>
 
@@ -48,9 +48,9 @@
     [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor,nil] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem =newBar;
     
-    // 修改下一个界面返回按钮的文字
+    // 修改返回按钮
+     self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui-anxia" action:@selector(liftBthClick:) target:self];
     
-    self.navigationItem.backBarButtonItem = [[ ZCBackBackButtonitem alloc] init];
     
   // self.navigationController.navigationBarHidden = YES;
     _dataArray = [NSMutableArray array];
@@ -60,9 +60,14 @@
     [self initDataSource1];
     [self initTableView];
     //[self initMysearchBarAndMysearchDisPlay];
+   // [SVProgressHUD show];
     
-    
-    
+    [MBProgressHUD showMessage:@"加载中..."];
+}
+//返回到上个界面
+-(void)liftBthClick:(UIButton *)bth
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -119,7 +124,7 @@
     NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
     ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
-    ZCLog(@"%@-------",account.token);
+    
     // 说明服务器返回的JSON数据
    // mgr.responseSerializer = [AFJSONResponseSerializer serializer];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
@@ -143,11 +148,16 @@
         //刷新表格
         [self.tableView reloadData];
         
-        
-        
-        
+        //移除
+       // [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         ZCLog(@"%@",error);
+        //移除
+        //[SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
+        [MBProgressHUD showError:@"cuowu"];
+
     }];
     
 }

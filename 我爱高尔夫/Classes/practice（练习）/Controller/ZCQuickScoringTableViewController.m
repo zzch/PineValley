@@ -11,12 +11,13 @@
 #import "AFNetworking.h"
 #import "ZCAccount.h"
 #import "ZCEvent.h"
-
+#import "UIBarButtonItem+DC.h"
 #import "ZCScorecardTableViewController.h"
 #import "ZCscorecard.h"
 #import "MJRefresh.h"
 #import "ZCEventUuidTool.h"
 #import "ZCEventCell.h"
+#import "UIBarButtonItem+DC.h"
 @interface ZCQuickScoringTableViewController ()<MJRefreshBaseViewDelegate>
 //模型数组
 @property(nonatomic,strong)NSMutableArray *eventArray;
@@ -25,8 +26,8 @@
 @property(nonatomic,strong) NSIndexPath *indexPath;
 
 @property(nonatomic,strong)UIRefreshControl *refreshControl;
-
-
+//无内容显示
+@property(nonatomic,weak) UIView *vc;
 @property (nonatomic, weak) MJRefreshFooterView *footer;
 @property (nonatomic, weak) MJRefreshHeaderView *header;
 
@@ -92,20 +93,8 @@
     self.navigationItem.rightBarButtonItem =newBar;
     
     
-//    UIImage* image = [UIImage imageNamed:@"fanhui-anxia"];
-//    UIImage *image1=[UIImage imageNamed:@"fanhui"];
-//    UIBarButtonItem *newBar1=[[UIBarButtonItem alloc] init];
-//    [newBar1 setBackButtonBackgroundImage:[image1 resizableImageWithCapInsets:UIEdgeInsetsMake(10, image.size.width, 0, 0)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-//
-//    [newBar1 setBackButtonBackgroundImage:[image resizableImageWithCapInsets:UIEdgeInsetsMake(10, image.size.width, 0, 0)] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-//    
-////    
-//   [newBar1 setBackButtonTitlePositionAdjustment:UIOffsetMake(-550.f, 0) forBarMetrics:UIBarMetricsDefault];
-    
-    //self.navigationItem.backBarButtonItem = [zc];
-
-    
-    
+    //返回 
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui-anxia" action:@selector(liftBthClick:) target:self];
 
     //背景颜色
     self.tableView.backgroundColor=ZCColor(23, 25, 28);
@@ -189,6 +178,12 @@
     
 }
 
+//返回按钮
+-(void)liftBthClick:(UIButton *)bth
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)dealloc
 {
     // 释放内存
@@ -249,6 +244,19 @@
             [eventMutableArray addObject:event];
         }
         self.eventArray=eventMutableArray;
+        
+        //无内容时候
+        if (self.eventArray.count==0) {
+            UIView *vc=[[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.156, 0, 257, 67)];
+            vc.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"wuneirong"]];
+            self.vc=vc;
+            [self.tableView addSubview:vc];
+        }else
+        {
+            self.vc.hidden=YES;
+        }
+        
+
         
         
 //        //如果没有数据执行此方法
@@ -420,7 +428,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-   
+    
     return self.eventArray.count;
 }
 

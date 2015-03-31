@@ -10,6 +10,7 @@
 #import "ZCScorecard.h"
 #import "ZCAccount.h"
 #import "AFNetworking.h"
+#import "UIBarButtonItem+DC.h"
 @interface ZCModifyTheScorecardViewController ()<UIPickerViewDataSource,UIPickerViewDelegate,UIAlertViewDelegate>
 //总杆数 加号
 @property(weak,nonatomic) UIButton *totalLabelAddButton;
@@ -77,25 +78,29 @@
     
     [self defaultData];
     
-    self.navigationItem.title=[NSString stringWithFormat:@"%@",self.scorecard.number];
+    self.navigationItem.title=[NSString stringWithFormat:@"%@洞",self.scorecard.number];
     UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleDone target:self action:@selector(saveOtherView)];
     //改变UIBarButtonItem字体颜色
     [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor,nil] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem =newBar;
     
 
-    //返回按钮
+//    //返回按钮
+//    
+//    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    backBtn.frame = CGRectMake(0, 0, 31, 18);
+//    
+//    [backBtn setImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
+//    [backBtn setImage:[UIImage imageNamed:@"fanhui-anxia"] forState:UIControlStateHighlighted];
+//    [backBtn addTarget:self action:@selector(dataToModify) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
+//   
+//    self.navigationItem.leftBarButtonItem = backItem;
     
-    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    backBtn.frame = CGRectMake(0, 0, 31, 18);
     
-    [backBtn setImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
-    [backBtn setImage:[UIImage imageNamed:@"fanhui-anxia"] forState:UIControlStateHighlighted];
-    [backBtn addTarget:self action:@selector(dataToModify) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
-   
-    self.navigationItem.leftBarButtonItem = backItem;
+    // 修改返回按钮
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui-anxia" action:@selector(dataToModify:) target:self];
     //注册观察者
     [self registeredObservers];
 
@@ -190,9 +195,17 @@
 {
     //创建pickview
     
-    UIPickerView *pickView=[[UIPickerView alloc] init];
+    UIPickerView *pickView=[[UIPickerView alloc] initWithFrame:CGRectZero];
+    pickView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     pickView.delegate=self;
-    pickView.tintColor=[UIColor whiteColor];
+    pickView.dataSource = self;
+    //pickView.tintColor=[UIColor whiteColor];
+    CGFloat pickViewW=200;
+    CGFloat pickViewH=160;
+    CGFloat pickViewX=(self.pickerView.frame.size.width-pickViewW)/2-40;
+    CGFloat pickViewY=10;
+    pickView.frame = CGRectMake(pickViewX, pickViewY, pickViewW, pickViewH);
+    pickView.showsSelectionIndicator = YES;
     self.pickView=pickView;
     [self.pickerView addSubview:pickView ];
     
@@ -746,7 +759,7 @@
     
 }
 //点击返回按钮
--(void)dataToModify
+-(void)dataToModify:(UIButton *)bth
 {
     
     if (self.editor) {
@@ -884,14 +897,19 @@
     
 }
 
-
-
--(CGFloat) pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
 {
-    
-    return 100;
+    if(component == 1)
+        return 60;
+    return 130;
 }
 
+//-(CGFloat) pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
+//{
+//    
+//    return 100;
+//}
+//
 
 
 

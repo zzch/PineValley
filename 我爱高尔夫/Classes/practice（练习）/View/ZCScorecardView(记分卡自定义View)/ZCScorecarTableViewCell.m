@@ -321,7 +321,7 @@
     self.distanceLabel.text=[NSString stringWithFormat:@"%@",scorecard.distance_from_hole_to_tee_box];
     
     if ([scorecard.tee_box_color isEqual:@"red"]) {
-        UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_hong"]];
+        UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"hongdong"]];
         self.numberLabel.backgroundColor=col;
         self.numberLabel.textColor=ZCColor(208, 210, 212);
         
@@ -344,7 +344,7 @@
 
     }else if ([scorecard.tee_box_color isEqual:@"gold"])
     {
-        UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_huang"]];
+        UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jingdong"]];
         self.numberLabel.backgroundColor=col;
         self.numberLabel.textColor=ZCColor(33, 33, 33);
 

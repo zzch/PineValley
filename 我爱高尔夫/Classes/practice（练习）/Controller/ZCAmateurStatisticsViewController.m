@@ -14,7 +14,8 @@
 #import "ZCStatisticalScorecard.h"
 #import "ZCStatistical.h"
 #import "ZCEventUuidTool.h"
-#import "ZCBackBackButtonitem.h"
+#import "UIBarButtonItem+DC.h"
+#import "MBProgressHUD+NJ.h"
 //#define UIDeviceOrientationIsPortrait(orientation)  ((orientation) == UIDeviceOrientationPortrait || (orientation) == UIDeviceOrientationPortraitUpsideDown)
 //#define UIDeviceOrientationIsLandscape(orientation) ((orientation) == UIDeviceOrientationLandscapeLeft || (orientation) == UIDeviceOrientationLandscapeRight)
 //
@@ -54,24 +55,15 @@
     [super viewDidLoad];
     self.view.backgroundColor=ZCColor(23, 25, 28);
     
-//    // 修改下一个界面返回按钮的文字
-//    
-//    self.navigationItem.backBarButtonItem = [[ ZCBackBackButtonitem alloc] init];
-    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    backBtn.frame = CGRectMake(0, 0, 31, 18);
     
-    [backBtn setImage:[UIImage imageNamed:@"fanhui"] forState:UIControlStateNormal];
-    [backBtn setImage:[UIImage imageNamed:@"fanhui-anxia"] forState:UIControlStateHighlighted];
-    [backBtn addTarget:self action:nil forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backBtn];
-    
-    self.navigationItem.leftBarButtonItem = backItem;
+    self.navigationItem.title=@"统计";
+    // 修改返回按钮
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui-anxia" action:@selector(liftBthClick:) target:self];
    
     
     
     
-    
+    [MBProgressHUD showMessage:@"加载中..."];
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
@@ -99,8 +91,8 @@
 //
         
         self.statistical=statistical;
-       
-        
+       //隐藏
+        [MBProgressHUD hideHUD];
         
         
         if ([[UIDevice currentDevice]orientation] == UIInterfaceOrientationLandscapeLeft){
@@ -155,6 +147,8 @@
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         ZCLog(@"%@",error);
+        //隐藏
+        [MBProgressHUD hideHUD];
         
     }];
       //    scrollView.backgroundColor=[UIColor redColor];
@@ -197,6 +191,14 @@
     
     
 }
+
+
+//返回到上个界面
+-(void)liftBthClick:(UIButton *)bth
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 //竖屏添加控件
 -(void)addControls
@@ -428,7 +430,7 @@
         //holesResult.textColor=ZCColor(208, 210, 212);
         [self.beforeScoringView addSubview:labelView];
         UIView *bjView=[[UIView alloc] init];
-        bjView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jstj_shutiao"]];
+        bjView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"tj_shutiao"]];
         bjView.frame=CGRectMake(0, 0, 1, labelView.frame.size.height);
         [labelView addSubview:bjView];
         UILabel *holesResult=[[UILabel alloc] init];

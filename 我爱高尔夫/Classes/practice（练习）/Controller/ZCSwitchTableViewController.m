@@ -12,9 +12,9 @@
 #import "MJExtension.h"
 #import "ZCCity.h"
 #import "ZCCityStadium.h"
-#import "ZCBackBackButtonitem.h"
+#import "UIBarButtonItem+DC.h"
 
-
+#import "MBProgressHUD+NJ.h"
 @interface ZCSwitchTableViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate>
 
 //@property (nonatomic, strong) NSArray *citys;
@@ -35,9 +35,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // 修改下一个界面返回按钮的文字
+    // 修改返回按钮
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui-anxia" action:@selector(liftBthClick:) target:self];
     
-    self.navigationItem.backBarButtonItem = [[ ZCBackBackButtonitem alloc] init];
+    
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
     
@@ -50,12 +51,23 @@
     //搜索
     [self initMysearchBarAndMysearchDisPlay];
     
+    
     }
+
+
+//返回到上个界面
+-(void)liftBthClick:(UIButton *)bth
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 
 //获取网络请求数据，城市列表 AFHTTPRequestOperationManager  /v1/courses/sectionalized_by_province.json
 -(void)onlineData
 {
+    [MBProgressHUD showMessage:@"加载中..."];
+    
     // 1.创建请求管理对象
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     // 2.封装请求参数
@@ -90,10 +102,12 @@
         // ZCLog(@"---self.dataArray---%zd",self.dataArray.count);
         // 刷新表格
         [self.tableView reloadData];
-        
-        
+        //移除
+        [MBProgressHUD hideHUD];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         ZCLog(@"数据请求失败%@",error);
+        //移除
+        [MBProgressHUD hideHUD];
     }];
 }
 
