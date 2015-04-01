@@ -245,6 +245,8 @@
         }
         self.eventArray=eventMutableArray;
         
+        
+        
         //无内容时候
         if (self.eventArray.count==0) {
             UIView *vc=[[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.156, 0, 257, 67)];
@@ -258,39 +260,9 @@
         
 
         
+  
         
-//        //如果没有数据执行此方法
-//        if (self.eventArray.count) {
-//            
-//            UIView *vc=[[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
-//            vc.backgroundColor=[UIColor whiteColor];
-//            
-//            
-//            
-//            [self.tableView addSubview:vc];
-//            self.view=vc;
-//            
-//            UILabel *seelabel=[[UILabel alloc] initWithFrame:CGRectMake(10, 300, 350, 20)];
-//            
-//            seelabel.text=  @"您还没有记分卡，点击右上角新建按钮创建记分卡";
-//            seelabel.textColor=[UIColor blackColor];
-//            //seelabel.textAlignment=13;
-//            [vc addSubview:seelabel];
-//            
-//           
-//        }//else
-////        {
-//
-//           // [self.tableView reloadData];
-//            
-//            // 让刷新控件停止显示刷新状态
-//            //[refreshControl endRefreshing];
-//            
-//            // 让刷新控件停止显示刷新状态
-//            
-//        
-//        }
-//
+        
         
         [self.tableView reloadData];
         [self.header endRefreshing];

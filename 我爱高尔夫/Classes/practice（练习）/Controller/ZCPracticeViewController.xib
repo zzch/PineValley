@@ -33,17 +33,6 @@
                     <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lg1-ga-xxp">
-                    <rect key="frame" x="34" y="143" width="532" height="52"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="52" id="OFD-d2-Wwe"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                    <state key="normal" title="专业记分卡" backgroundImage="anniu">
-                        <color key="titleColor" red="0.21176470588235294" green="0.49411764705882355" blue="0.27058823529411763" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NpN-Vs-UyF">
                     <rect key="frame" x="34" y="352" width="532" height="52"/>
                     <constraints>
@@ -66,6 +55,20 @@
                     <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lg1-ga-xxp">
+                    <rect key="frame" x="34" y="94" width="532" height="52"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="52" id="OFD-d2-Wwe"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                    <state key="normal" title="专业记分卡" backgroundImage="anniu">
+                        <color key="titleColor" red="0.21176470588235294" green="0.49411764705882355" blue="0.27058823529411763" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="chickModifyTheProfessionalScorecard" destination="-1" eventType="touchUpInside" id="oak-1A-Bys"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>

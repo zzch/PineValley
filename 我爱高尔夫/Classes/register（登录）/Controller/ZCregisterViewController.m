@@ -11,6 +11,7 @@
 #import "ZCAccount.h"
 #import "ZCTabbarViewController.h"
 #import "SVProgressHUD.h"
+#import "ZCAKeyToRegisterView.h"
 @interface ZCregisterViewController ()
 
 @end
@@ -23,53 +24,12 @@
     self.view.backgroundColor=[UIColor whiteColor];
     
     self.navigationItem.title=@"我爱高尔夫";
-    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
+//    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
     
-    //添加一键注册 按钮
-    UIButton *keyButton=[[UIButton alloc] init];
-    keyButton.backgroundColor=[UIColor grayColor];
-    keyButton.frame=CGRectMake(100, 160, 200, 80);
-    [keyButton setTitle:@"一键注册" forState:UIControlStateNormal];
-    [keyButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.view addSubview:keyButton];
-    [keyButton addTarget:self action:@selector(clickKeyButton) forControlEvents:UIControlEventTouchUpInside];
-    
+    ZCAKeyToRegisterView *Register=[[ZCAKeyToRegisterView alloc] initWithFrame:CGRectMake(10, 32, 300, 40)];
+    [self.view addSubview:Register];
    
 }
-//点击一键注册，注册账号
--(void)clickKeyButton
-{
-   [SVProgressHUD show];
-    
-    // AFNetworking\AFN
-    // 1.创建请求管理对象
-    AFHTTPRequestOperationManager *mar=[AFHTTPRequestOperationManager manager];
-    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"users/sign_up_simple"];
-    //发送请求
-    [mar POST:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-         NSLog(@"%@",responseObject);
-        
-        // 先将字典转为模型
-        ZCAccount *account=[ZCAccount accountWithDict:responseObject];
-        // 存储模型数据
-        NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-        NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
-        [NSKeyedArchiver archiveRootObject:account toFile:file];
-        
-        //去首页
-        self.view.window.rootViewController = [[ZCTabbarViewController alloc] init];
-        
-        [SVProgressHUD dismiss];
-       
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-         NSLog(@"请求失败%@",error);
-        [SVProgressHUD dismiss];
-    }];
-
-}
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

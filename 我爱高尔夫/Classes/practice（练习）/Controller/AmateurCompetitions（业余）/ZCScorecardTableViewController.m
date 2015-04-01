@@ -7,8 +7,8 @@
 //
 
 #import "ZCScorecardTableViewController.h"
-
-
+#import "ZCModifyTheProfessionalScorecardController.h"
+#import "ZCEventUuidTool.h"
 #import "UIBarButtonItem+DC.h"
 #import "ZCScorecarTableViewCell.h"
 #import "MBProgressHUD+NJ.h"
@@ -185,11 +185,20 @@
     NSMutableArray *scorecards=self.totalScorecards.scorecards;
     ZCscorecard *scorecard=scorecards[indexPath.row];
     
-    ZCModifyTheScorecardViewController *fillView=[[ZCModifyTheScorecardViewController alloc] init];
-    //传递数据模型给下个控制器
-    fillView.scorecard=scorecard;
-    [self.navigationController pushViewController:fillView animated:YES];
-    fillView.delegate=self;
+    //单利
+    ZCEventUuidTool *UuidTool=[ZCEventUuidTool sharedEventUuidTool];
+    if ([UuidTool.scoring isEqual:@"simple"]) {
+        ZCModifyTheScorecardViewController *fillView=[[ZCModifyTheScorecardViewController alloc] init];
+        //传递数据模型给下个控制器
+        fillView.scorecard=scorecard;
+        [self.navigationController pushViewController:fillView animated:YES];
+        fillView.delegate=self;
+    }else
+    {
+        ZCModifyTheProfessionalScorecardController *professional=[[ZCModifyTheProfessionalScorecardController alloc] init];
+        [self.navigationController pushViewController:professional animated:YES];
+    }
+    
     
     
     

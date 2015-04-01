@@ -66,6 +66,15 @@
     
     
 }
+- (IBAction)chickModifyTheProfessionalScorecard {
+    ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
+    tool.scoring=@"professional";
+    
+    ZCQuickScoringTableViewController *quickScoringTableViewController=[[ZCQuickScoringTableViewController alloc] init];
+    quickScoringTableViewController.hidesBottomBarWhenPushed=YES;
+    [self.navigationController pushViewController:quickScoringTableViewController animated:YES];
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
