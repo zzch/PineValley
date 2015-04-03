@@ -34,7 +34,10 @@
  *  赛事的球场信息模型
  */
 @property (nonatomic, strong) ZCCourse *venue;
-
+/**
+ *  练习赛的类型是专业还是普通
+ */
+@property (nonatomic, copy) NSString * scoring_type;
 
 
 + (instancetype)eventWithDict:(NSDictionary *)dict;

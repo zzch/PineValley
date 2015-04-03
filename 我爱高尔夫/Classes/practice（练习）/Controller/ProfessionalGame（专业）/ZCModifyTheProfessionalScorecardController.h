@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface ZCModifyTheProfessionalScorecardController : UITableViewController
-
+#import "ZCscorecard.h"
+@interface ZCModifyTheProfessionalScorecardController : UIViewController
+@property(nonatomic,strong) ZCscorecard *scorecard;
 @end

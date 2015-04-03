@@ -196,6 +196,7 @@
     }else
     {
         ZCModifyTheProfessionalScorecardController *professional=[[ZCModifyTheProfessionalScorecardController alloc] init];
+        professional.scorecard=scorecard;
         [self.navigationController pushViewController:professional animated:YES];
     }
     

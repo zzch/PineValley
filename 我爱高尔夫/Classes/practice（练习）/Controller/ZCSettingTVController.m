@@ -182,6 +182,7 @@
     ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
     ZCLog(@"%@",tool.scoring);
     params[@"scoring_type"]=tool.scoring;
+    ZCLog(@"%@",tool.scoring);
     params[@"token"]=account.token;
 ///v1/matches/practice.json
     NSString *url=[NSString stringWithFormat:@"%@%@",API,@"matches/practice.json"];

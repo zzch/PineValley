@@ -57,6 +57,8 @@
 		A94C27CB1AB9834D006A7BA1 /* ZCQuickScoringTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A974E1151AAEABD800F1519A /* ZCQuickScoringTableViewController.m */; };
 		A94D47CE1AA807A900971FAD /* ZCTotalScorecards.m in Sources */ = {isa = PBXBuildFile; fileRef = A94D47CD1AA807A900971FAD /* ZCTotalScorecards.m */; };
 		A94D47E01AA8426300971FAD /* ZCscorecard.m in Sources */ = {isa = PBXBuildFile; fileRef = A94D47DF1AA8426300971FAD /* ZCscorecard.m */; };
+		A953D9421ACCE868004CA165 /* ZCChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = A953D9411ACCE868004CA165 /* ZCChooseView.m */; };
+		A953D9461ACD57F0004CA165 /* ZCSelectTheDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = A953D9451ACD57F0004CA165 /* ZCSelectTheDisplay.m */; };
 		A95620091AAD3E7000388D08 /* ZCEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A95620081AAD3E7000388D08 /* ZCEvent.m */; };
 		A956200C1AAD3ECD00388D08 /* ZCCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = A956200B1AAD3ECD00388D08 /* ZCCourse.m */; };
 		A957DD8F1AA05FB9008C5ABA /* ZCChildStadium.m in Sources */ = {isa = PBXBuildFile; fileRef = A957DD8E1AA05FB9008C5ABA /* ZCChildStadium.m */; };
@@ -190,6 +192,10 @@
 		A94D47CD1AA807A900971FAD /* ZCTotalScorecards.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCTotalScorecards.m; sourceTree = "<group>"; };
 		A94D47DE1AA8426300971FAD /* ZCscorecard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCscorecard.h; sourceTree = "<group>"; };
 		A94D47DF1AA8426300971FAD /* ZCscorecard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCscorecard.m; sourceTree = "<group>"; };
+		A953D9401ACCE868004CA165 /* ZCChooseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCChooseView.h; sourceTree = "<group>"; };
+		A953D9411ACCE868004CA165 /* ZCChooseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCChooseView.m; sourceTree = "<group>"; };
+		A953D9441ACD57F0004CA165 /* ZCSelectTheDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCSelectTheDisplay.h; sourceTree = "<group>"; };
+		A953D9451ACD57F0004CA165 /* ZCSelectTheDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCSelectTheDisplay.m; sourceTree = "<group>"; };
 		A95620071AAD3E7000388D08 /* ZCEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCEvent.h; sourceTree = "<group>"; };
 		A95620081AAD3E7000388D08 /* ZCEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCEvent.m; sourceTree = "<group>"; };
 		A956200A1AAD3ECC00388D08 /* ZCCourse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCCourse.h; sourceTree = "<group>"; };
@@ -492,6 +498,7 @@
 		A9438A421A7A007B00B55001 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A953D9431ACD56D2004CA165 /* professional（专业） */,
 				A96B67D51ABA6A01006D2047 /* 选择球场模型 */,
 				A975C3E31AB6E27F00140242 /* statistical（统计） */,
 				A95620061AAD3E5D00388D08 /* event（历史赛事） */,
@@ -630,6 +637,15 @@
 				A94D47DF1AA8426300971FAD /* ZCscorecard.m */,
 			);
 			path = "scorecards（记分卡数据模型）";
+			sourceTree = "<group>";
+		};
+		A953D9431ACD56D2004CA165 /* professional（专业） */ = {
+			isa = PBXGroup;
+			children = (
+				A953D9441ACD57F0004CA165 /* ZCSelectTheDisplay.h */,
+				A953D9451ACD57F0004CA165 /* ZCSelectTheDisplay.m */,
+			);
+			path = "professional（专业）";
 			sourceTree = "<group>";
 		};
 		A95620061AAD3E5D00388D08 /* event（历史赛事） */ = {
@@ -803,6 +819,8 @@
 			children = (
 				A9BE932B1ACBFBDC00ADFAAF /* ZCSwingCell.h */,
 				A9BE932C1ACBFBDC00ADFAAF /* ZCSwingCell.m */,
+				A953D9401ACCE868004CA165 /* ZCChooseView.h */,
+				A953D9411ACCE868004CA165 /* ZCChooseView.m */,
 			);
 			path = "swingCell（挥杆）";
 			sourceTree = "<group>";
@@ -937,6 +955,7 @@
 				A9438A481A7A007B00B55001 /* AppDelegate.m in Sources */,
 				A911BE1D1AC963EA00819F52 /* NSObject+MJCoding.m in Sources */,
 				A95B09D31ACA51F6002D739A /* UIBarButtonItem+DC.m in Sources */,
+				A953D9461ACD57F0004CA165 /* ZCSelectTheDisplay.m in Sources */,
 				A911BE221AC963EA00819F52 /* MJRefreshConst.m in Sources */,
 				A9438A4F1A7A01A700B55001 /* ZCTabbarViewController.m in Sources */,
 				A957DD951AA068D0008C5ABA /* ZCStadiumInformation.m in Sources */,
@@ -961,6 +980,7 @@
 				A911BE171AC963EA00819F52 /* MJArgument.m in Sources */,
 				A956200C1AAD3ECD00388D08 /* ZCCourse.m in Sources */,
 				A975C3E61AB6E29F00140242 /* ZCStatistical.m in Sources */,
+				A953D9421ACCE868004CA165 /* ZCChooseView.m in Sources */,
 				A94D47E01AA8426300971FAD /* ZCscorecard.m in Sources */,
 				A911BE141AC963EA00819F52 /* AFURLRequestSerialization.m in Sources */,
 				A911BE1F1AC963EA00819F52 /* NSObject+MJMember.m in Sources */,

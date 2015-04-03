@@ -172,8 +172,8 @@
     
     if ([self.event.type isEqual:@"practice"]) {
         self.typeLabel.text=@"练习赛";
-    }else{
-    self.typeLabel.text=self.event.type;
+    }else if([self.event.type isEqual:@"professional"]){
+    self.typeLabel.text=@"专业赛";
     }
     // if (![self.event.recorded_scorecards_count isKindOfClass:[NSNull class]]) {
     

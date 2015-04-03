@@ -230,13 +230,14 @@
     // 说明服务器返回的JSON数据
     // mgr.responseSerializer = [AFJSONResponseSerializer serializer];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    
+    ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
     params[@"page"]=@"1";
     params[@"token"]=account.token;
+    params[@"scoring_type"]=tool.scoring;
     NSString *url=[NSString stringWithFormat:@"%@%@",API,@"matches/practice"];
     //ZCLog(@"%@",url);
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-       // ZCLog(@"----%@",responseObject);
+        ZCLog(@"----%@",responseObject);
         
         NSMutableArray *eventMutableArray=[NSMutableArray array];
         for (NSDictionary *dict in responseObject) {

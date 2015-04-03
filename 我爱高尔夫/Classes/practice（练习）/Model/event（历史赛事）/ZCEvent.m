@@ -27,7 +27,7 @@
         self.recorded_scorecards_count=dict[@"recorded_scorecards_count"] ;
         
         self.started_at=[dict[@"started_at"] longValue] ;
-        
+        self.scoring_type=dict[@"scoring_type"];
         self.venue=[ZCCourse courseWithDict:dict[@"venue"]];
        // ZCLog(@"%@",self.course.name);
         
