@@ -373,9 +373,16 @@
       [self.tableView deleteRowsAtIndexPaths:@[self.indexPath] withRowAnimation:UITableViewRowAnimationFade];
 
         
-        [NSTimer scheduledTimerWithTimeInterval:0.5f target:self selector:@selector(reloadData) userInfo:nil repeats:NO];
+       // [NSTimer scheduledTimerWithTimeInterval:0.5f target:self selector:@selector(reloadData) userInfo:nil repeats:NO];
         
-        
+        // 模拟(2秒后执行)
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            // 移除遮盖
+           
+            [self.tableView reloadData];
+            
+        });
+
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         ZCLog(@"%@",error);
@@ -385,11 +392,11 @@
 }
 
 
-//刷新控件
--(void)reloadData
-{
-  [self.tableView reloadData];
-}
+////刷新控件
+//-(void)reloadData
+//{
+//  [self.tableView reloadData];
+//}
 
 //ZCChooseView的代理方法
 -(void)ZCChooseView:(ZCChooseView *)ZCChooseView clickdetermineButtonAndSelectTheDisplay:(ZCSelectTheDisplay *)selectTheDisplay andScore:(NSString *)score andPenalties:(NSString *)penalties andPutts:(NSString *)putts

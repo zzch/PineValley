@@ -83,6 +83,8 @@
 		A9BE931D1ACBE08600ADFAAF /* ZCScorecardTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9BE931A1ACBE08600ADFAAF /* ZCScorecardTableViewController.m */; };
 		A9BE93281ACBECB100ADFAAF /* ZCModifyTheProfessionalScorecardController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9BE93271ACBECB100ADFAAF /* ZCModifyTheProfessionalScorecardController.m */; };
 		A9BE932D1ACBFBDC00ADFAAF /* ZCSwingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A9BE932C1ACBFBDC00ADFAAF /* ZCSwingCell.m */; };
+		A9DDC6B81AD3B167002B89EA /* ZCPhoneloginView.m in Sources */ = {isa = PBXBuildFile; fileRef = A9DDC6B71AD3B167002B89EA /* ZCPhoneloginView.m */; };
+		A9DDC6BB1AD3CAAC002B89EA /* ZCRegisteredViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9DDC6BA1AD3CAAC002B89EA /* ZCRegisteredViewController.m */; };
 		A9F00BFA1A8858E200671AC9 /* ZCShowButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F00BF91A8858E200671AC9 /* ZCShowButton.m */; };
 /* End PBXBuildFile section */
 
@@ -245,6 +247,10 @@
 		A9BE93271ACBECB100ADFAAF /* ZCModifyTheProfessionalScorecardController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCModifyTheProfessionalScorecardController.m; sourceTree = "<group>"; };
 		A9BE932B1ACBFBDC00ADFAAF /* ZCSwingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCSwingCell.h; sourceTree = "<group>"; };
 		A9BE932C1ACBFBDC00ADFAAF /* ZCSwingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCSwingCell.m; sourceTree = "<group>"; };
+		A9DDC6B61AD3B167002B89EA /* ZCPhoneloginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCPhoneloginView.h; sourceTree = "<group>"; };
+		A9DDC6B71AD3B167002B89EA /* ZCPhoneloginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCPhoneloginView.m; sourceTree = "<group>"; };
+		A9DDC6B91AD3CAAC002B89EA /* ZCRegisteredViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCRegisteredViewController.h; sourceTree = "<group>"; };
+		A9DDC6BA1AD3CAAC002B89EA /* ZCRegisteredViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCRegisteredViewController.m; sourceTree = "<group>"; };
 		A9F00BF81A8858E200671AC9 /* ZCShowButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCShowButton.h; sourceTree = "<group>"; };
 		A9F00BF91A8858E200671AC9 /* ZCShowButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCShowButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -735,6 +741,8 @@
 			children = (
 				A9714E471A830BCD00571CB2 /* ZCregisterViewController.h */,
 				A9714E481A830BCD00571CB2 /* ZCregisterViewController.m */,
+				A9DDC6B91AD3CAAC002B89EA /* ZCRegisteredViewController.h */,
+				A9DDC6BA1AD3CAAC002B89EA /* ZCRegisteredViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -751,6 +759,7 @@
 		A9714E461A830B2300571CB2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A9DDC6B51AD3B167002B89EA /* MobilePhonelogin（手机登陆） */,
 				A9BE93131ACBDF6900ADFAAF /* MobilePhoneRegistered（手机注册） */,
 				A9BE930F1ACBA69D00ADFAAF /* AKeyToRegister(一键注册) */,
 			);
@@ -823,6 +832,15 @@
 				A953D9411ACCE868004CA165 /* ZCChooseView.m */,
 			);
 			path = "swingCell（挥杆）";
+			sourceTree = "<group>";
+		};
+		A9DDC6B51AD3B167002B89EA /* MobilePhonelogin（手机登陆） */ = {
+			isa = PBXGroup;
+			children = (
+				A9DDC6B61AD3B167002B89EA /* ZCPhoneloginView.h */,
+				A9DDC6B71AD3B167002B89EA /* ZCPhoneloginView.m */,
+			);
+			path = "MobilePhonelogin（手机登陆）";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -954,6 +972,7 @@
 				A9BE93281ACBECB100ADFAAF /* ZCModifyTheProfessionalScorecardController.m in Sources */,
 				A9438A481A7A007B00B55001 /* AppDelegate.m in Sources */,
 				A911BE1D1AC963EA00819F52 /* NSObject+MJCoding.m in Sources */,
+				A9DDC6B81AD3B167002B89EA /* ZCPhoneloginView.m in Sources */,
 				A95B09D31ACA51F6002D739A /* UIBarButtonItem+DC.m in Sources */,
 				A953D9461ACD57F0004CA165 /* ZCSelectTheDisplay.m in Sources */,
 				A911BE221AC963EA00819F52 /* MJRefreshConst.m in Sources */,
@@ -966,6 +985,7 @@
 				A945582F1AA46C4E00079DEB /* ZCSettingHeadView.m in Sources */,
 				A911BE1B1AC963EA00819F52 /* MJType.m in Sources */,
 				A9BE931B1ACBE08600ADFAAF /* ZCAmateurStatisticsViewController.m in Sources */,
+				A9DDC6BB1AD3CAAC002B89EA /* ZCRegisteredViewController.m in Sources */,
 				A911BE1E1AC963EA00819F52 /* NSObject+MJKeyValue.m in Sources */,
 				A957DD921AA067BD008C5ABA /* ZCSettingTVController.m in Sources */,
 				A93DF8991A81D465009623F5 /* ZCScorecarTableViewCell.m in Sources */,

@@ -61,6 +61,8 @@
         NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
         [NSKeyedArchiver archiveRootObject:account toFile:file];
         
+         ZCLog(@"%@",account.token);
+        
         //去首页
         self.window.rootViewController = [[ZCTabbarViewController alloc] init];
         
