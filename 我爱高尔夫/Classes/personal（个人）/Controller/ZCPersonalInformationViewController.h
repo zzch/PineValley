@@ -1,5 +1,5 @@
 //
-//  ZCPersonalViewController.h
+//  ZCPersonalInformationViewController.h
 //  我爱高尔夫
 //
 //  Created by hh on 15/4/8.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ZCPersonalViewController : UIViewController
+@interface ZCPersonalInformationViewController : UIViewController
 
 @end

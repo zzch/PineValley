@@ -45,8 +45,6 @@
 		A9438A301A79FF6E00B55001 /* _____Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = A9438A2F1A79FF6E00B55001 /* _____Tests.m */; };
 		A9438A481A7A007B00B55001 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A9438A3C1A7A007B00B55001 /* AppDelegate.m */; };
 		A9438A4F1A7A01A700B55001 /* ZCTabbarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9438A4E1A7A01A700B55001 /* ZCTabbarViewController.m */; };
-		A9438A531A7A043700B55001 /* ZCPersonalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9438A511A7A043700B55001 /* ZCPersonalViewController.m */; };
-		A9438A541A7A043700B55001 /* ZCPersonalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9438A521A7A043700B55001 /* ZCPersonalViewController.xib */; };
 		A9438A5E1A7A04A200B55001 /* ZCPracticeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9438A5C1A7A04A200B55001 /* ZCPracticeViewController.m */; };
 		A9438A5F1A7A04A200B55001 /* ZCPracticeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9438A5D1A7A04A200B55001 /* ZCPracticeViewController.xib */; };
 		A9438A631A7A04D800B55001 /* ZCStatisticalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9438A611A7A04D800B55001 /* ZCStatisticalViewController.m */; };
@@ -68,6 +66,8 @@
 		A967AD061A9EBE7B009E7468 /* ZCSwitchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A967AD051A9EBE7B009E7468 /* ZCSwitchTableViewController.m */; };
 		A967AD271A9EC762009E7468 /* ZCCity.m in Sources */ = {isa = PBXBuildFile; fileRef = A967AD261A9EC762009E7468 /* ZCCity.m */; };
 		A967AD2A1A9EC7B3009E7468 /* ZCCityStadium.m in Sources */ = {isa = PBXBuildFile; fileRef = A967AD291A9EC7B3009E7468 /* ZCCityStadium.m */; };
+		A969A9111AD4D880000700DD /* ZCPersonalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A969A9101AD4D880000700DD /* ZCPersonalViewController.m */; };
+		A969A9141AD510DA000700DD /* ZCPersonalInformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A969A9131AD510DA000700DD /* ZCPersonalInformationViewController.m */; };
 		A969EECB1ACA9D5900F73C37 /* MBProgressHUD+NJ.m in Sources */ = {isa = PBXBuildFile; fileRef = A969EEC71ACA9D5900F73C37 /* MBProgressHUD+NJ.m */; };
 		A969EECC1ACA9D5900F73C37 /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A969EEC81ACA9D5900F73C37 /* MBProgressHUD.bundle */; };
 		A969EECD1ACA9D5900F73C37 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = A969EECA1ACA9D5900F73C37 /* MBProgressHUD.m */; };
@@ -175,9 +175,6 @@
 		A9438A3C1A7A007B00B55001 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		A9438A4D1A7A01A700B55001 /* ZCTabbarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCTabbarViewController.h; sourceTree = "<group>"; };
 		A9438A4E1A7A01A700B55001 /* ZCTabbarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCTabbarViewController.m; sourceTree = "<group>"; };
-		A9438A501A7A043700B55001 /* ZCPersonalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCPersonalViewController.h; sourceTree = "<group>"; };
-		A9438A511A7A043700B55001 /* ZCPersonalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCPersonalViewController.m; sourceTree = "<group>"; };
-		A9438A521A7A043700B55001 /* ZCPersonalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZCPersonalViewController.xib; sourceTree = "<group>"; };
 		A9438A5B1A7A04A200B55001 /* ZCPracticeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCPracticeViewController.h; sourceTree = "<group>"; };
 		A9438A5C1A7A04A200B55001 /* ZCPracticeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCPracticeViewController.m; sourceTree = "<group>"; };
 		A9438A5D1A7A04A200B55001 /* ZCPracticeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZCPracticeViewController.xib; sourceTree = "<group>"; };
@@ -216,6 +213,10 @@
 		A967AD261A9EC762009E7468 /* ZCCity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCCity.m; sourceTree = "<group>"; };
 		A967AD281A9EC7B3009E7468 /* ZCCityStadium.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCCityStadium.h; sourceTree = "<group>"; };
 		A967AD291A9EC7B3009E7468 /* ZCCityStadium.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCCityStadium.m; sourceTree = "<group>"; };
+		A969A90F1AD4D880000700DD /* ZCPersonalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCPersonalViewController.h; sourceTree = "<group>"; };
+		A969A9101AD4D880000700DD /* ZCPersonalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCPersonalViewController.m; sourceTree = "<group>"; };
+		A969A9121AD510DA000700DD /* ZCPersonalInformationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCPersonalInformationViewController.h; sourceTree = "<group>"; };
+		A969A9131AD510DA000700DD /* ZCPersonalInformationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCPersonalInformationViewController.m; sourceTree = "<group>"; };
 		A969EEC61ACA9D5900F73C37 /* MBProgressHUD+NJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+NJ.h"; sourceTree = "<group>"; };
 		A969EEC71ACA9D5900F73C37 /* MBProgressHUD+NJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+NJ.m"; sourceTree = "<group>"; };
 		A969EEC81ACA9D5900F73C37 /* MBProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MBProgressHUD.bundle; sourceTree = "<group>"; };
@@ -460,21 +461,11 @@
 		A9438A3D1A7A007B00B55001 /* personal（个人） */ = {
 			isa = PBXGroup;
 			children = (
-				A9438A3E1A7A007B00B55001 /* Controller */,
+				A969A90E1AD4D868000700DD /* Controller */,
 				A9438A3F1A7A007B00B55001 /* Model */,
 				A9438A401A7A007B00B55001 /* View */,
 			);
 			path = "personal（个人）";
-			sourceTree = "<group>";
-		};
-		A9438A3E1A7A007B00B55001 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				A9438A501A7A043700B55001 /* ZCPersonalViewController.h */,
-				A9438A511A7A043700B55001 /* ZCPersonalViewController.m */,
-				A9438A521A7A043700B55001 /* ZCPersonalViewController.xib */,
-			);
-			path = Controller;
 			sourceTree = "<group>";
 		};
 		A9438A3F1A7A007B00B55001 /* Model */ = {
@@ -705,6 +696,17 @@
 			path = "city(城市列表模型)";
 			sourceTree = "<group>";
 		};
+		A969A90E1AD4D868000700DD /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A969A90F1AD4D880000700DD /* ZCPersonalViewController.h */,
+				A969A9101AD4D880000700DD /* ZCPersonalViewController.m */,
+				A969A9121AD510DA000700DD /* ZCPersonalInformationViewController.h */,
+				A969A9131AD510DA000700DD /* ZCPersonalInformationViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		A969EEC51ACA9D5900F73C37 /* MBProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
@@ -925,7 +927,6 @@
 			files = (
 				A911BE2D1AC9643F00819F52 /* SVProgressHUD.bundle in Resources */,
 				A969EECC1ACA9D5900F73C37 /* MBProgressHUD.bundle in Resources */,
-				A9438A541A7A043700B55001 /* ZCPersonalViewController.xib in Resources */,
 				A9438A641A7A04D800B55001 /* ZCStatisticalViewController.xib in Resources */,
 				A911BE201AC963EA00819F52 /* MJRefresh.bundle in Resources */,
 				A93BCE901A7CC3E50053FD00 /* friends.plist in Resources */,
@@ -948,6 +949,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A969A9141AD510DA000700DD /* ZCPersonalInformationViewController.m in Sources */,
 				A911BE241AC963EA00819F52 /* MJRefreshHeaderView.m in Sources */,
 				A969EECB1ACA9D5900F73C37 /* MBProgressHUD+NJ.m in Sources */,
 				A911BE0E1AC963EA00819F52 /* AFHTTPRequestOperation.m in Sources */,
@@ -957,6 +959,7 @@
 				A911BE2E1AC9643F00819F52 /* SVProgressHUD.m in Sources */,
 				A967AD271A9EC762009E7468 /* ZCCity.m in Sources */,
 				A969EECD1ACA9D5900F73C37 /* MBProgressHUD.m in Sources */,
+				A969A9111AD4D880000700DD /* ZCPersonalViewController.m in Sources */,
 				A911BE1C1AC963EA00819F52 /* MJTypeEncoding.m in Sources */,
 				A911BE211AC963EA00819F52 /* MJRefreshBaseView.m in Sources */,
 				A9438A5E1A7A04A200B55001 /* ZCPracticeViewController.m in Sources */,
@@ -978,7 +981,6 @@
 				A911BE221AC963EA00819F52 /* MJRefreshConst.m in Sources */,
 				A9438A4F1A7A01A700B55001 /* ZCTabbarViewController.m in Sources */,
 				A957DD951AA068D0008C5ABA /* ZCStadiumInformation.m in Sources */,
-				A9438A531A7A043700B55001 /* ZCPersonalViewController.m in Sources */,
 				A911BE131AC963EA00819F52 /* AFURLConnectionOperation.m in Sources */,
 				A975C3E91AB6E4D100140242 /* ZCStatisticalScorecard.m in Sources */,
 				A967AD061A9EBE7B009E7468 /* ZCSwitchTableViewController.m in Sources */,

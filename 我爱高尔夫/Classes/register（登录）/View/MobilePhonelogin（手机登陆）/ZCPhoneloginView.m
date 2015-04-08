@@ -63,8 +63,15 @@
         [phoneloginBth setBackgroundImage:[UIImage imageNamed:@"denglu_anniu-1"] forState:UIControlStateNormal];
         [phoneloginBth setBackgroundImage:[UIImage imageNamed:@"denglu_anniu_anxia"] forState:UIControlStateHighlighted];
         [phoneloginBth addTarget:self action:@selector(clickphoneloginBth) forControlEvents:UIControlEventTouchUpInside];
+        [phoneloginBth setBackgroundColor:ZCColor(105, 178, 138) ];
+        phoneloginBth.enabled=NO;
+
         [self addSubview:phoneloginBth];
         self.phoneloginBth=phoneloginBth;
+        
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChangelogin) name:UITextFieldTextDidChangeNotification object:self.phoneAccount];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChangelogin) name:UITextFieldTextDidChangeNotification object:self.phonePassword];
 
         
     }
@@ -72,6 +79,28 @@
 
     return self;
 }
+
+//监听文本框里的值  改变就调用
+-(void)textChangelogin
+{
+    if (self.phoneAccount.text.length==11&&self.phonePassword.text.length>=6) {
+        
+        self.phoneloginBth.enabled=YES;
+        [self.phoneloginBth setBackgroundImage:[UIImage imageNamed:@"denglu_anniu-1"] forState:UIControlStateNormal];
+        [self.phoneloginBth setBackgroundImage:[UIImage imageNamed:@"denglu_anniu_anxia"] forState:UIControlStateHighlighted];
+        
+    }else
+    {
+        self.phoneloginBth.enabled=NO;
+        [self.phoneloginBth setBackgroundColor:ZCColor(105, 178, 138) ];
+    
+    }
+
+    
+    
+    
+}
+
 
 -(void)clickphoneloginBth
 {
@@ -105,7 +134,7 @@
         
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+        ZCLog(@"%@",error);
     }];
 
 
