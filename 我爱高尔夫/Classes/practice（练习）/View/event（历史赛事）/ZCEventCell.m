@@ -162,7 +162,7 @@
   
     self.nameLabel.text=self.event.venue.name;
     
-    
+    //时间卓转成想要的格式
     NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
     [fmt setDateFormat:@"yyyy年MM月dd日 "];
     NSDate *confromTimesp=[NSDate dateWithTimeIntervalSince1970:self.event.started_at];

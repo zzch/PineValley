@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "ZCPersonalData.h"
 @interface ZCPersonalInformationViewController : UIViewController
-
+@property(nonatomic,strong)ZCPersonalData *personalData;
 @end

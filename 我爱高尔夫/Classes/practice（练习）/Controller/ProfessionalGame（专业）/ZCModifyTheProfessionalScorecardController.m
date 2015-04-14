@@ -12,6 +12,7 @@
 #import "AFNetworking.h"
 #import "ZCAccount.h"
 #import "ZCSelectTheDisplay.h"
+#import "ZCProfessionalStatisticalViewController.h"
 @interface ZCModifyTheProfessionalScorecardController ()<UITableViewDataSource,UITableViewDelegate,ZCChooseViewDelegate>
 
 //表示行数
@@ -51,6 +52,14 @@
     [super viewDidLoad];
     
     
+//    UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"统计" style:UIBarButtonItemStyleDone target:self action:@selector(clickOnTheProfessionalStatistical)];
+//    //改变UIBarButtonItem字体颜色
+//    [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor,nil] forState:UIControlStateNormal];
+//    self.navigationItem.rightBarButtonItem =newBar;
+    
+    
+    
+    
     [self online];
     
     //创建显示值的view
@@ -59,12 +68,22 @@
     [self initTableView];
     
     
+    
+    
 //    CGRect frame = self.view.bounds;
 //    frame.size.height = frame.size.height - 40;
 
 
 }
 
+
+////点击统计
+//-(void)clickOnTheProfessionalStatistical
+//{
+//    
+//    
+//
+//}
 
 -(NSMutableArray *)selectTheDisplayArray
 {

@@ -18,6 +18,7 @@
 #import "ZCAccount.h"
 #import "ZCAmateurStatisticsViewController.h"
 #import "ZCModifyTheScorecardViewController.h"
+#import "ZCProfessionalStatisticalViewController.h"
 @interface ZCScorecardTableViewController ()<UITableViewDataSource,UITableViewDelegate,ZCScorecarDelegate,ZCModifyTheScorecardViewControllerDelegate>
 @property (nonatomic, strong) NSMutableArray *scorecards;
 
@@ -112,12 +113,20 @@
 
 -(void)clickOnTheStatistics
 {
-    
+    //单利
+    ZCEventUuidTool *UuidTool=[ZCEventUuidTool sharedEventUuidTool];
+    if ([UuidTool.scoring isEqual:@"simple"]){
     ZCAmateurStatisticsViewController *statisticsViewController=[[ZCAmateurStatisticsViewController alloc] init];
     
     [self.navigationController pushViewController:statisticsViewController animated:YES];
     
-
+    }else{
+    
+    ZCProfessionalStatisticalViewController *ProfessionalStatistical=[[ZCProfessionalStatisticalViewController alloc] init];
+    
+    [self.navigationController pushViewController:ProfessionalStatistical animated:YES];
+    
+    }
 }
 
 

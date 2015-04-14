@@ -38,7 +38,6 @@
 		A9386B9D1A7B83CA00526086 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9386B9C1A7B83CA00526086 /* UIKit.framework */; };
 		A93B45FA1A8470E500AF48F0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A93B45F91A8470E500AF48F0 /* CoreLocation.framework */; };
 		A93BCE821A7CB6B90053FD00 /* MTScenicShopCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A93BCE811A7CB6B90053FD00 /* MTScenicShopCell.m */; };
-		A93BCE901A7CC3E50053FD00 /* friends.plist in Resources */ = {isa = PBXBuildFile; fileRef = A93BCE8F1A7CC3E50053FD00 /* friends.plist */; };
 		A93DF8991A81D465009623F5 /* ZCScorecarTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A93DF8981A81D465009623F5 /* ZCScorecarTableViewCell.m */; };
 		A9438A161A79FF6E00B55001 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A9438A151A79FF6E00B55001 /* main.m */; };
 		A9438A211A79FF6E00B55001 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9438A201A79FF6E00B55001 /* Images.xcassets */; };
@@ -63,6 +62,10 @@
 		A957DD921AA067BD008C5ABA /* ZCSettingTVController.m in Sources */ = {isa = PBXBuildFile; fileRef = A957DD911AA067BD008C5ABA /* ZCSettingTVController.m */; };
 		A957DD951AA068D0008C5ABA /* ZCStadiumInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = A957DD941AA068D0008C5ABA /* ZCStadiumInformation.m */; };
 		A95B09D31ACA51F6002D739A /* UIBarButtonItem+DC.m in Sources */ = {isa = PBXBuildFile; fileRef = A95B09D21ACA51F6002D739A /* UIBarButtonItem+DC.m */; };
+		A95D73391AD65560009062AF /* UIImage+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = A95D73371AD65560009062AF /* UIImage+MJ.m */; };
+		A95D733B1AD65960009062AF /* city2.plist in Resources */ = {isa = PBXBuildFile; fileRef = A95D733A1AD65960009062AF /* city2.plist */; };
+		A95D733E1AD6597A009062AF /* CityPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A95D733D1AD6597A009062AF /* CityPickerView.m */; };
+		A95D73411AD668F3009062AF /* ZCDatapickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A95D73401AD668F3009062AF /* ZCDatapickerView.m */; };
 		A967AD061A9EBE7B009E7468 /* ZCSwitchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A967AD051A9EBE7B009E7468 /* ZCSwitchTableViewController.m */; };
 		A967AD271A9EC762009E7468 /* ZCCity.m in Sources */ = {isa = PBXBuildFile; fileRef = A967AD261A9EC762009E7468 /* ZCCity.m */; };
 		A967AD2A1A9EC7B3009E7468 /* ZCCityStadium.m in Sources */ = {isa = PBXBuildFile; fileRef = A967AD291A9EC7B3009E7468 /* ZCCityStadium.m */; };
@@ -74,9 +77,36 @@
 		A96B67D81ABA6A01006D2047 /* ZCstadium.m in Sources */ = {isa = PBXBuildFile; fileRef = A96B67D71ABA6A01006D2047 /* ZCstadium.m */; };
 		A9714E491A830BCD00571CB2 /* ZCregisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9714E481A830BCD00571CB2 /* ZCregisterViewController.m */; };
 		A9714E6A1A832F1800571CB2 /* ZCAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = A9714E691A832F1800571CB2 /* ZCAccount.m */; };
+		A97345D51ADCB1BB0066F5FA /* ZCAverageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A97345D41ADCB1BB0066F5FA /* ZCAverageModel.m */; };
+		A97345DB1ADCB2E20066F5FA /* ZCPushRodModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A97345DA1ADCB2E20066F5FA /* ZCPushRodModel.m */; };
+		A97345DE1ADCB3ED0066F5FA /* ZCBunkersModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A97345DD1ADCB3ED0066F5FA /* ZCBunkersModel.m */; };
+		A97345E11ADCECDB0066F5FA /* ZCAverageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A97345E01ADCECDB0066F5FA /* ZCAverageViewController.m */; };
+		A97345E41ADD13AF0066F5FA /* ZCPushRodViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A97345E31ADD13AF0066F5FA /* ZCPushRodViewController.m */; };
 		A975C3E61AB6E29F00140242 /* ZCStatistical.m in Sources */ = {isa = PBXBuildFile; fileRef = A975C3E51AB6E29F00140242 /* ZCStatistical.m */; };
 		A975C3E91AB6E4D100140242 /* ZCStatisticalScorecard.m in Sources */ = {isa = PBXBuildFile; fileRef = A975C3E81AB6E4D100140242 /* ZCStatisticalScorecard.m */; };
+		A98E19C71ADB7E8F005615A9 /* ZCProfessionalStatisticalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A98E19C61ADB7E8F005615A9 /* ZCProfessionalStatisticalViewController.m */; };
+		A98E19CB1ADBDBEF005615A9 /* ZCProfessionalStatisticalModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A98E19CA1ADBDBEF005615A9 /* ZCProfessionalStatisticalModel.m */; };
+		A98E19CE1ADBDC3B005615A9 /* ZCProfessionalScorecardModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A98E19CD1ADBDC3B005615A9 /* ZCProfessionalScorecardModel.m */; };
+		A98E19D11ADBDE24005615A9 /* ZCTotalModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A98E19D01ADBDE24005615A9 /* ZCTotalModel.m */; };
 		A998A8D01A7E87C800CE6AAA /* ZCSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = A998A8CF1A7E87C800CE6AAA /* ZCSetting.m */; };
+		A9A703241AD7C34A00D84C66 /* ZCPersonalData.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A703231AD7C34A00D84C66 /* ZCPersonalData.m */; };
+		A9A703271AD7C54000D84C66 /* ZCPersonalURL.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A703261AD7C54000D84C66 /* ZCPersonalURL.m */; };
+		A9A7034A1AD7CEFF00D84C66 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A7032A1AD7CEFF00D84C66 /* MKAnnotationView+WebCache.m */; };
+		A9A7034B1AD7CEFF00D84C66 /* NSData+ImageContentType.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A7032C1AD7CEFF00D84C66 /* NSData+ImageContentType.m */; };
+		A9A7034C1AD7CEFF00D84C66 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A7032E1AD7CEFF00D84C66 /* SDImageCache.m */; };
+		A9A7034D1AD7CEFF00D84C66 /* SDWebImageCompat.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A703301AD7CEFF00D84C66 /* SDWebImageCompat.m */; };
+		A9A7034E1AD7CEFF00D84C66 /* SDWebImageDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A703321AD7CEFF00D84C66 /* SDWebImageDecoder.m */; };
+		A9A7034F1AD7CEFF00D84C66 /* SDWebImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A703341AD7CEFF00D84C66 /* SDWebImageDownloader.m */; };
+		A9A703501AD7CEFF00D84C66 /* SDWebImageDownloaderOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A703361AD7CEFF00D84C66 /* SDWebImageDownloaderOperation.m */; };
+		A9A703511AD7CEFF00D84C66 /* SDWebImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A703381AD7CEFF00D84C66 /* SDWebImageManager.m */; };
+		A9A703521AD7CEFF00D84C66 /* SDWebImagePrefetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A7033B1AD7CEFF00D84C66 /* SDWebImagePrefetcher.m */; };
+		A9A703531AD7CEFF00D84C66 /* UIButton+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A7033D1AD7CEFF00D84C66 /* UIButton+WebCache.m */; };
+		A9A703541AD7CEFF00D84C66 /* UIImage+GIF.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A7033F1AD7CEFF00D84C66 /* UIImage+GIF.m */; };
+		A9A703551AD7CEFF00D84C66 /* UIImage+MultiFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A703411AD7CEFF00D84C66 /* UIImage+MultiFormat.m */; };
+		A9A703561AD7CEFF00D84C66 /* UIImage+WebP.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A703431AD7CEFF00D84C66 /* UIImage+WebP.m */; };
+		A9A703571AD7CEFF00D84C66 /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A703451AD7CEFF00D84C66 /* UIImageView+HighlightedWebCache.m */; };
+		A9A703581AD7CEFF00D84C66 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A703471AD7CEFF00D84C66 /* UIImageView+WebCache.m */; };
+		A9A703591AD7CEFF00D84C66 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A9A703491AD7CEFF00D84C66 /* UIView+WebCacheOperation.m */; };
 		A9BE93121ACBA69E00ADFAAF /* ZCAKeyToRegisterView.m in Sources */ = {isa = PBXBuildFile; fileRef = A9BE93111ACBA69E00ADFAAF /* ZCAKeyToRegisterView.m */; };
 		A9BE931B1ACBE08600ADFAAF /* ZCAmateurStatisticsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9BE93161ACBE08600ADFAAF /* ZCAmateurStatisticsViewController.m */; };
 		A9BE931C1ACBE08600ADFAAF /* ZCModifyTheScorecardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9BE93181ACBE08600ADFAAF /* ZCModifyTheScorecardViewController.m */; };
@@ -161,7 +191,6 @@
 		A93B45F91A8470E500AF48F0 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		A93BCE801A7CB6B90053FD00 /* MTScenicShopCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTScenicShopCell.h; sourceTree = "<group>"; };
 		A93BCE811A7CB6B90053FD00 /* MTScenicShopCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTScenicShopCell.m; sourceTree = "<group>"; };
-		A93BCE8F1A7CC3E50053FD00 /* friends.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = friends.plist; sourceTree = "<group>"; };
 		A93DF8971A81D465009623F5 /* ZCScorecarTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCScorecarTableViewCell.h; sourceTree = "<group>"; };
 		A93DF8981A81D465009623F5 /* ZCScorecarTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCScorecarTableViewCell.m; sourceTree = "<group>"; };
 		A9438A101A79FF6E00B55001 /* 我爱高尔夫.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "我爱高尔夫.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -207,6 +236,13 @@
 		A957DD941AA068D0008C5ABA /* ZCStadiumInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCStadiumInformation.m; sourceTree = "<group>"; };
 		A95B09D11ACA51F6002D739A /* UIBarButtonItem+DC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+DC.h"; sourceTree = "<group>"; };
 		A95B09D21ACA51F6002D739A /* UIBarButtonItem+DC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+DC.m"; sourceTree = "<group>"; };
+		A95D73361AD65560009062AF /* UIImage+MJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MJ.h"; sourceTree = "<group>"; };
+		A95D73371AD65560009062AF /* UIImage+MJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MJ.m"; sourceTree = "<group>"; };
+		A95D733A1AD65960009062AF /* city2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = city2.plist; sourceTree = "<group>"; };
+		A95D733C1AD6597A009062AF /* CityPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CityPickerView.h; sourceTree = "<group>"; };
+		A95D733D1AD6597A009062AF /* CityPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CityPickerView.m; sourceTree = "<group>"; };
+		A95D733F1AD668F3009062AF /* ZCDatapickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCDatapickerView.h; sourceTree = "<group>"; };
+		A95D73401AD668F3009062AF /* ZCDatapickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCDatapickerView.m; sourceTree = "<group>"; };
 		A967AD041A9EBE7B009E7468 /* ZCSwitchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCSwitchTableViewController.h; sourceTree = "<group>"; };
 		A967AD051A9EBE7B009E7468 /* ZCSwitchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCSwitchTableViewController.m; sourceTree = "<group>"; };
 		A967AD251A9EC762009E7468 /* ZCCity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCCity.h; sourceTree = "<group>"; };
@@ -228,14 +264,69 @@
 		A9714E481A830BCD00571CB2 /* ZCregisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCregisterViewController.m; sourceTree = "<group>"; };
 		A9714E681A832F1800571CB2 /* ZCAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCAccount.h; sourceTree = "<group>"; };
 		A9714E691A832F1800571CB2 /* ZCAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCAccount.m; sourceTree = "<group>"; };
+		A97345D31ADCB1BB0066F5FA /* ZCAverageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCAverageModel.h; sourceTree = "<group>"; };
+		A97345D41ADCB1BB0066F5FA /* ZCAverageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCAverageModel.m; sourceTree = "<group>"; };
+		A97345D91ADCB2E20066F5FA /* ZCPushRodModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCPushRodModel.h; sourceTree = "<group>"; };
+		A97345DA1ADCB2E20066F5FA /* ZCPushRodModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCPushRodModel.m; sourceTree = "<group>"; };
+		A97345DC1ADCB3ED0066F5FA /* ZCBunkersModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCBunkersModel.h; sourceTree = "<group>"; };
+		A97345DD1ADCB3ED0066F5FA /* ZCBunkersModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCBunkersModel.m; sourceTree = "<group>"; };
+		A97345DF1ADCECDB0066F5FA /* ZCAverageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCAverageViewController.h; sourceTree = "<group>"; };
+		A97345E01ADCECDB0066F5FA /* ZCAverageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCAverageViewController.m; sourceTree = "<group>"; };
+		A97345E21ADD13AF0066F5FA /* ZCPushRodViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCPushRodViewController.h; sourceTree = "<group>"; };
+		A97345E31ADD13AF0066F5FA /* ZCPushRodViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCPushRodViewController.m; sourceTree = "<group>"; };
 		A974E1141AAEABD800F1519A /* ZCQuickScoringTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCQuickScoringTableViewController.h; sourceTree = "<group>"; };
 		A974E1151AAEABD800F1519A /* ZCQuickScoringTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCQuickScoringTableViewController.m; sourceTree = "<group>"; };
 		A975C3E41AB6E29F00140242 /* ZCStatistical.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCStatistical.h; sourceTree = "<group>"; };
 		A975C3E51AB6E29F00140242 /* ZCStatistical.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCStatistical.m; sourceTree = "<group>"; };
 		A975C3E71AB6E4D100140242 /* ZCStatisticalScorecard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCStatisticalScorecard.h; sourceTree = "<group>"; };
 		A975C3E81AB6E4D100140242 /* ZCStatisticalScorecard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCStatisticalScorecard.m; sourceTree = "<group>"; };
+		A98E19C51ADB7E8F005615A9 /* ZCProfessionalStatisticalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCProfessionalStatisticalViewController.h; sourceTree = "<group>"; };
+		A98E19C61ADB7E8F005615A9 /* ZCProfessionalStatisticalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCProfessionalStatisticalViewController.m; sourceTree = "<group>"; };
+		A98E19C91ADBDBEF005615A9 /* ZCProfessionalStatisticalModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCProfessionalStatisticalModel.h; sourceTree = "<group>"; };
+		A98E19CA1ADBDBEF005615A9 /* ZCProfessionalStatisticalModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCProfessionalStatisticalModel.m; sourceTree = "<group>"; };
+		A98E19CC1ADBDC3B005615A9 /* ZCProfessionalScorecardModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCProfessionalScorecardModel.h; sourceTree = "<group>"; };
+		A98E19CD1ADBDC3B005615A9 /* ZCProfessionalScorecardModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCProfessionalScorecardModel.m; sourceTree = "<group>"; };
+		A98E19CF1ADBDE24005615A9 /* ZCTotalModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCTotalModel.h; sourceTree = "<group>"; };
+		A98E19D01ADBDE24005615A9 /* ZCTotalModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCTotalModel.m; sourceTree = "<group>"; };
 		A998A8CE1A7E87C800CE6AAA /* ZCSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCSetting.h; sourceTree = "<group>"; };
 		A998A8CF1A7E87C800CE6AAA /* ZCSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCSetting.m; sourceTree = "<group>"; };
+		A9A703221AD7C34A00D84C66 /* ZCPersonalData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCPersonalData.h; sourceTree = "<group>"; };
+		A9A703231AD7C34A00D84C66 /* ZCPersonalData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCPersonalData.m; sourceTree = "<group>"; };
+		A9A703251AD7C54000D84C66 /* ZCPersonalURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCPersonalURL.h; sourceTree = "<group>"; };
+		A9A703261AD7C54000D84C66 /* ZCPersonalURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCPersonalURL.m; sourceTree = "<group>"; };
+		A9A703291AD7CEFF00D84C66 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
+		A9A7032A1AD7CEFF00D84C66 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
+		A9A7032B1AD7CEFF00D84C66 /* NSData+ImageContentType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+ImageContentType.h"; sourceTree = "<group>"; };
+		A9A7032C1AD7CEFF00D84C66 /* NSData+ImageContentType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+ImageContentType.m"; sourceTree = "<group>"; };
+		A9A7032D1AD7CEFF00D84C66 /* SDImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDImageCache.h; sourceTree = "<group>"; };
+		A9A7032E1AD7CEFF00D84C66 /* SDImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDImageCache.m; sourceTree = "<group>"; };
+		A9A7032F1AD7CEFF00D84C66 /* SDWebImageCompat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageCompat.h; sourceTree = "<group>"; };
+		A9A703301AD7CEFF00D84C66 /* SDWebImageCompat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageCompat.m; sourceTree = "<group>"; };
+		A9A703311AD7CEFF00D84C66 /* SDWebImageDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageDecoder.h; sourceTree = "<group>"; };
+		A9A703321AD7CEFF00D84C66 /* SDWebImageDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageDecoder.m; sourceTree = "<group>"; };
+		A9A703331AD7CEFF00D84C66 /* SDWebImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageDownloader.h; sourceTree = "<group>"; };
+		A9A703341AD7CEFF00D84C66 /* SDWebImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageDownloader.m; sourceTree = "<group>"; };
+		A9A703351AD7CEFF00D84C66 /* SDWebImageDownloaderOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageDownloaderOperation.h; sourceTree = "<group>"; };
+		A9A703361AD7CEFF00D84C66 /* SDWebImageDownloaderOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageDownloaderOperation.m; sourceTree = "<group>"; };
+		A9A703371AD7CEFF00D84C66 /* SDWebImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageManager.h; sourceTree = "<group>"; };
+		A9A703381AD7CEFF00D84C66 /* SDWebImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageManager.m; sourceTree = "<group>"; };
+		A9A703391AD7CEFF00D84C66 /* SDWebImageOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageOperation.h; sourceTree = "<group>"; };
+		A9A7033A1AD7CEFF00D84C66 /* SDWebImagePrefetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImagePrefetcher.h; sourceTree = "<group>"; };
+		A9A7033B1AD7CEFF00D84C66 /* SDWebImagePrefetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImagePrefetcher.m; sourceTree = "<group>"; };
+		A9A7033C1AD7CEFF00D84C66 /* UIButton+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+WebCache.h"; sourceTree = "<group>"; };
+		A9A7033D1AD7CEFF00D84C66 /* UIButton+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+WebCache.m"; sourceTree = "<group>"; };
+		A9A7033E1AD7CEFF00D84C66 /* UIImage+GIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+GIF.h"; sourceTree = "<group>"; };
+		A9A7033F1AD7CEFF00D84C66 /* UIImage+GIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+GIF.m"; sourceTree = "<group>"; };
+		A9A703401AD7CEFF00D84C66 /* UIImage+MultiFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MultiFormat.h"; sourceTree = "<group>"; };
+		A9A703411AD7CEFF00D84C66 /* UIImage+MultiFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MultiFormat.m"; sourceTree = "<group>"; };
+		A9A703421AD7CEFF00D84C66 /* UIImage+WebP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+WebP.h"; sourceTree = "<group>"; };
+		A9A703431AD7CEFF00D84C66 /* UIImage+WebP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+WebP.m"; sourceTree = "<group>"; };
+		A9A703441AD7CEFF00D84C66 /* UIImageView+HighlightedWebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+HighlightedWebCache.h"; sourceTree = "<group>"; };
+		A9A703451AD7CEFF00D84C66 /* UIImageView+HighlightedWebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+HighlightedWebCache.m"; sourceTree = "<group>"; };
+		A9A703461AD7CEFF00D84C66 /* UIImageView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+WebCache.h"; sourceTree = "<group>"; };
+		A9A703471AD7CEFF00D84C66 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
+		A9A703481AD7CEFF00D84C66 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
+		A9A703491AD7CEFF00D84C66 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		A9BE93101ACBA69D00ADFAAF /* ZCAKeyToRegisterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCAKeyToRegisterView.h; sourceTree = "<group>"; };
 		A9BE93111ACBA69E00ADFAAF /* ZCAKeyToRegisterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCAKeyToRegisterView.m; sourceTree = "<group>"; };
 		A9BE93151ACBE08600ADFAAF /* ZCAmateurStatisticsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCAmateurStatisticsViewController.h; sourceTree = "<group>"; };
@@ -279,6 +370,7 @@
 		A911BDDA1AC963EA00819F52 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				A9A703281AD7CEFF00D84C66 /* SDWebImage */,
 				A969EEC51ACA9D5900F73C37 /* MBProgressHUD */,
 				A911BE291AC9643E00819F52 /* SVProgressHUD */,
 				A911BDDB1AC963EA00819F52 /* AFNetworking */,
@@ -409,7 +501,7 @@
 		A9438A131A79FF6E00B55001 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				A93BCE8F1A7CC3E50053FD00 /* friends.plist */,
+				A95D733A1AD65960009062AF /* city2.plist */,
 				A9438A141A79FF6E00B55001 /* Info.plist */,
 				A9438A151A79FF6E00B55001 /* main.m */,
 				A9386B981A7B6D4900526086 /* pchFile.pch */,
@@ -450,6 +542,7 @@
 		A9438A3A1A7A007B00B55001 /* other（其他） */ = {
 			isa = PBXGroup;
 			children = (
+				A95D73331AD65560009062AF /* Category */,
 				A911BE251AC963F300819F52 /* 单利 */,
 				A911BDDA1AC963EA00819F52 /* Lib */,
 				A9438A3B1A7A007B00B55001 /* AppDelegate.h */,
@@ -471,6 +564,10 @@
 		A9438A3F1A7A007B00B55001 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A9A703221AD7C34A00D84C66 /* ZCPersonalData.h */,
+				A9A703231AD7C34A00D84C66 /* ZCPersonalData.m */,
+				A9A703251AD7C54000D84C66 /* ZCPersonalURL.h */,
+				A9A703261AD7C54000D84C66 /* ZCPersonalURL.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -478,6 +575,10 @@
 		A9438A401A7A007B00B55001 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A95D733C1AD6597A009062AF /* CityPickerView.h */,
+				A95D733D1AD6597A009062AF /* CityPickerView.m */,
+				A95D733F1AD668F3009062AF /* ZCDatapickerView.h */,
+				A95D73401AD668F3009062AF /* ZCDatapickerView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -639,6 +740,7 @@
 		A953D9431ACD56D2004CA165 /* professional（专业） */ = {
 			isa = PBXGroup;
 			children = (
+				A98E19C81ADBDB18005615A9 /* 专业统计模型 */,
 				A953D9441ACD57F0004CA165 /* ZCSelectTheDisplay.h */,
 				A953D9451ACD57F0004CA165 /* ZCSelectTheDisplay.m */,
 			);
@@ -683,6 +785,15 @@
 				A95B09D21ACA51F6002D739A /* UIBarButtonItem+DC.m */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		A95D73331AD65560009062AF /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				A95D73361AD65560009062AF /* UIImage+MJ.h */,
+				A95D73371AD65560009062AF /* UIImage+MJ.m */,
+			);
+			path = Category;
 			sourceTree = "<group>";
 		};
 		A967AD241A9EC745009E7468 /* city(城市列表模型) */ = {
@@ -779,6 +890,65 @@
 			path = "statistical（统计）";
 			sourceTree = "<group>";
 		};
+		A98E19C81ADBDB18005615A9 /* 专业统计模型 */ = {
+			isa = PBXGroup;
+			children = (
+				A98E19C91ADBDBEF005615A9 /* ZCProfessionalStatisticalModel.h */,
+				A98E19CA1ADBDBEF005615A9 /* ZCProfessionalStatisticalModel.m */,
+				A98E19CC1ADBDC3B005615A9 /* ZCProfessionalScorecardModel.h */,
+				A98E19CD1ADBDC3B005615A9 /* ZCProfessionalScorecardModel.m */,
+				A98E19CF1ADBDE24005615A9 /* ZCTotalModel.h */,
+				A98E19D01ADBDE24005615A9 /* ZCTotalModel.m */,
+				A97345D31ADCB1BB0066F5FA /* ZCAverageModel.h */,
+				A97345D41ADCB1BB0066F5FA /* ZCAverageModel.m */,
+				A97345D91ADCB2E20066F5FA /* ZCPushRodModel.h */,
+				A97345DA1ADCB2E20066F5FA /* ZCPushRodModel.m */,
+				A97345DC1ADCB3ED0066F5FA /* ZCBunkersModel.h */,
+				A97345DD1ADCB3ED0066F5FA /* ZCBunkersModel.m */,
+			);
+			path = "专业统计模型";
+			sourceTree = "<group>";
+		};
+		A9A703281AD7CEFF00D84C66 /* SDWebImage */ = {
+			isa = PBXGroup;
+			children = (
+				A9A703291AD7CEFF00D84C66 /* MKAnnotationView+WebCache.h */,
+				A9A7032A1AD7CEFF00D84C66 /* MKAnnotationView+WebCache.m */,
+				A9A7032B1AD7CEFF00D84C66 /* NSData+ImageContentType.h */,
+				A9A7032C1AD7CEFF00D84C66 /* NSData+ImageContentType.m */,
+				A9A7032D1AD7CEFF00D84C66 /* SDImageCache.h */,
+				A9A7032E1AD7CEFF00D84C66 /* SDImageCache.m */,
+				A9A7032F1AD7CEFF00D84C66 /* SDWebImageCompat.h */,
+				A9A703301AD7CEFF00D84C66 /* SDWebImageCompat.m */,
+				A9A703311AD7CEFF00D84C66 /* SDWebImageDecoder.h */,
+				A9A703321AD7CEFF00D84C66 /* SDWebImageDecoder.m */,
+				A9A703331AD7CEFF00D84C66 /* SDWebImageDownloader.h */,
+				A9A703341AD7CEFF00D84C66 /* SDWebImageDownloader.m */,
+				A9A703351AD7CEFF00D84C66 /* SDWebImageDownloaderOperation.h */,
+				A9A703361AD7CEFF00D84C66 /* SDWebImageDownloaderOperation.m */,
+				A9A703371AD7CEFF00D84C66 /* SDWebImageManager.h */,
+				A9A703381AD7CEFF00D84C66 /* SDWebImageManager.m */,
+				A9A703391AD7CEFF00D84C66 /* SDWebImageOperation.h */,
+				A9A7033A1AD7CEFF00D84C66 /* SDWebImagePrefetcher.h */,
+				A9A7033B1AD7CEFF00D84C66 /* SDWebImagePrefetcher.m */,
+				A9A7033C1AD7CEFF00D84C66 /* UIButton+WebCache.h */,
+				A9A7033D1AD7CEFF00D84C66 /* UIButton+WebCache.m */,
+				A9A7033E1AD7CEFF00D84C66 /* UIImage+GIF.h */,
+				A9A7033F1AD7CEFF00D84C66 /* UIImage+GIF.m */,
+				A9A703401AD7CEFF00D84C66 /* UIImage+MultiFormat.h */,
+				A9A703411AD7CEFF00D84C66 /* UIImage+MultiFormat.m */,
+				A9A703421AD7CEFF00D84C66 /* UIImage+WebP.h */,
+				A9A703431AD7CEFF00D84C66 /* UIImage+WebP.m */,
+				A9A703441AD7CEFF00D84C66 /* UIImageView+HighlightedWebCache.h */,
+				A9A703451AD7CEFF00D84C66 /* UIImageView+HighlightedWebCache.m */,
+				A9A703461AD7CEFF00D84C66 /* UIImageView+WebCache.h */,
+				A9A703471AD7CEFF00D84C66 /* UIImageView+WebCache.m */,
+				A9A703481AD7CEFF00D84C66 /* UIView+WebCacheOperation.h */,
+				A9A703491AD7CEFF00D84C66 /* UIView+WebCacheOperation.m */,
+			);
+			path = SDWebImage;
+			sourceTree = "<group>";
+		};
 		A9BE930F1ACBA69D00ADFAAF /* AKeyToRegister(一键注册) */ = {
 			isa = PBXGroup;
 			children = (
@@ -813,6 +983,12 @@
 			children = (
 				A9BE93261ACBECB100ADFAAF /* ZCModifyTheProfessionalScorecardController.h */,
 				A9BE93271ACBECB100ADFAAF /* ZCModifyTheProfessionalScorecardController.m */,
+				A98E19C51ADB7E8F005615A9 /* ZCProfessionalStatisticalViewController.h */,
+				A98E19C61ADB7E8F005615A9 /* ZCProfessionalStatisticalViewController.m */,
+				A97345DF1ADCECDB0066F5FA /* ZCAverageViewController.h */,
+				A97345E01ADCECDB0066F5FA /* ZCAverageViewController.m */,
+				A97345E21ADD13AF0066F5FA /* ZCPushRodViewController.h */,
+				A97345E31ADD13AF0066F5FA /* ZCPushRodViewController.m */,
 			);
 			path = "ProfessionalGame（专业）";
 			sourceTree = "<group>";
@@ -925,11 +1101,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A95D733B1AD65960009062AF /* city2.plist in Resources */,
 				A911BE2D1AC9643F00819F52 /* SVProgressHUD.bundle in Resources */,
 				A969EECC1ACA9D5900F73C37 /* MBProgressHUD.bundle in Resources */,
 				A9438A641A7A04D800B55001 /* ZCStatisticalViewController.xib in Resources */,
 				A911BE201AC963EA00819F52 /* MJRefresh.bundle in Resources */,
-				A93BCE901A7CC3E50053FD00 /* friends.plist in Resources */,
 				A9438A211A79FF6E00B55001 /* Images.xcassets in Resources */,
 				A9438A5F1A7A04A200B55001 /* ZCPracticeViewController.xib in Resources */,
 			);
@@ -949,33 +1125,50 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A97345DE1ADCB3ED0066F5FA /* ZCBunkersModel.m in Sources */,
 				A969A9141AD510DA000700DD /* ZCPersonalInformationViewController.m in Sources */,
 				A911BE241AC963EA00819F52 /* MJRefreshHeaderView.m in Sources */,
 				A969EECB1ACA9D5900F73C37 /* MBProgressHUD+NJ.m in Sources */,
+				A9A703511AD7CEFF00D84C66 /* SDWebImageManager.m in Sources */,
+				A9A703581AD7CEFF00D84C66 /* UIImageView+WebCache.m in Sources */,
+				A95D73391AD65560009062AF /* UIImage+MJ.m in Sources */,
 				A911BE0E1AC963EA00819F52 /* AFHTTPRequestOperation.m in Sources */,
 				A911BE111AC963EA00819F52 /* AFNetworkReachabilityManager.m in Sources */,
 				A911BE101AC963EA00819F52 /* AFHTTPSessionManager.m in Sources */,
 				A9386B651A7B418F00526086 /* ZCChooseTableViewCell.m in Sources */,
 				A911BE2E1AC9643F00819F52 /* SVProgressHUD.m in Sources */,
+				A98E19D11ADBDE24005615A9 /* ZCTotalModel.m in Sources */,
 				A967AD271A9EC762009E7468 /* ZCCity.m in Sources */,
 				A969EECD1ACA9D5900F73C37 /* MBProgressHUD.m in Sources */,
 				A969A9111AD4D880000700DD /* ZCPersonalViewController.m in Sources */,
 				A911BE1C1AC963EA00819F52 /* MJTypeEncoding.m in Sources */,
 				A911BE211AC963EA00819F52 /* MJRefreshBaseView.m in Sources */,
 				A9438A5E1A7A04A200B55001 /* ZCPracticeViewController.m in Sources */,
+				A9A703501AD7CEFF00D84C66 /* SDWebImageDownloaderOperation.m in Sources */,
 				A94C27CA1AB9693D006A7BA1 /* ZCEventCell.m in Sources */,
 				A9BE932D1ACBFBDC00ADFAAF /* ZCSwingCell.m in Sources */,
+				A9A703521AD7CEFF00D84C66 /* SDWebImagePrefetcher.m in Sources */,
 				A9438A161A79FF6E00B55001 /* main.m in Sources */,
 				A911BE151AC963EA00819F52 /* AFURLResponseSerialization.m in Sources */,
 				A911BE191AC963EA00819F52 /* MJMember.m in Sources */,
 				A95620091AAD3E7000388D08 /* ZCEvent.m in Sources */,
+				A97345E11ADCECDB0066F5FA /* ZCAverageViewController.m in Sources */,
+				A98E19C71ADB7E8F005615A9 /* ZCProfessionalStatisticalViewController.m in Sources */,
+				A97345D51ADCB1BB0066F5FA /* ZCAverageModel.m in Sources */,
+				A97345E41ADD13AF0066F5FA /* ZCPushRodViewController.m in Sources */,
+				A95D73411AD668F3009062AF /* ZCDatapickerView.m in Sources */,
 				A94D47CE1AA807A900971FAD /* ZCTotalScorecards.m in Sources */,
+				A9A7034A1AD7CEFF00D84C66 /* MKAnnotationView+WebCache.m in Sources */,
+				A9A7034F1AD7CEFF00D84C66 /* SDWebImageDownloader.m in Sources */,
 				A9F00BFA1A8858E200671AC9 /* ZCShowButton.m in Sources */,
 				A957DD8F1AA05FB9008C5ABA /* ZCChildStadium.m in Sources */,
 				A9BE93281ACBECB100ADFAAF /* ZCModifyTheProfessionalScorecardController.m in Sources */,
 				A9438A481A7A007B00B55001 /* AppDelegate.m in Sources */,
 				A911BE1D1AC963EA00819F52 /* NSObject+MJCoding.m in Sources */,
+				A9A703541AD7CEFF00D84C66 /* UIImage+GIF.m in Sources */,
+				A9A703561AD7CEFF00D84C66 /* UIImage+WebP.m in Sources */,
 				A9DDC6B81AD3B167002B89EA /* ZCPhoneloginView.m in Sources */,
+				A98E19CE1ADBDC3B005615A9 /* ZCProfessionalScorecardModel.m in Sources */,
 				A95B09D31ACA51F6002D739A /* UIBarButtonItem+DC.m in Sources */,
 				A953D9461ACD57F0004CA165 /* ZCSelectTheDisplay.m in Sources */,
 				A911BE221AC963EA00819F52 /* MJRefreshConst.m in Sources */,
@@ -989,9 +1182,15 @@
 				A9BE931B1ACBE08600ADFAAF /* ZCAmateurStatisticsViewController.m in Sources */,
 				A9DDC6BB1AD3CAAC002B89EA /* ZCRegisteredViewController.m in Sources */,
 				A911BE1E1AC963EA00819F52 /* NSObject+MJKeyValue.m in Sources */,
+				A9A7034D1AD7CEFF00D84C66 /* SDWebImageCompat.m in Sources */,
+				A9A703571AD7CEFF00D84C66 /* UIImageView+HighlightedWebCache.m in Sources */,
+				A9A703591AD7CEFF00D84C66 /* UIView+WebCacheOperation.m in Sources */,
 				A957DD921AA067BD008C5ABA /* ZCSettingTVController.m in Sources */,
+				A9A703551AD7CEFF00D84C66 /* UIImage+MultiFormat.m in Sources */,
+				A9A703531AD7CEFF00D84C66 /* UIButton+WebCache.m in Sources */,
 				A93DF8991A81D465009623F5 /* ZCScorecarTableViewCell.m in Sources */,
 				A9BE931D1ACBE08600ADFAAF /* ZCScorecardTableViewController.m in Sources */,
+				A97345DB1ADCB2E20066F5FA /* ZCPushRodModel.m in Sources */,
 				A9714E6A1A832F1800571CB2 /* ZCAccount.m in Sources */,
 				A9BE93121ACBA69E00ADFAAF /* ZCAKeyToRegisterView.m in Sources */,
 				A911BE1A1AC963EA00819F52 /* MJMethod.m in Sources */,
@@ -999,23 +1198,30 @@
 				A9386B9B1A7B7F2900526086 /* ZCChooseThePitchVViewController.m in Sources */,
 				A9BE931C1ACBE08600ADFAAF /* ZCModifyTheScorecardViewController.m in Sources */,
 				A9438A631A7A04D800B55001 /* ZCStatisticalViewController.m in Sources */,
+				A98E19CB1ADBDBEF005615A9 /* ZCProfessionalStatisticalModel.m in Sources */,
 				A911BE171AC963EA00819F52 /* MJArgument.m in Sources */,
 				A956200C1AAD3ECD00388D08 /* ZCCourse.m in Sources */,
 				A975C3E61AB6E29F00140242 /* ZCStatistical.m in Sources */,
+				A95D733E1AD6597A009062AF /* CityPickerView.m in Sources */,
 				A953D9421ACCE868004CA165 /* ZCChooseView.m in Sources */,
 				A94D47E01AA8426300971FAD /* ZCscorecard.m in Sources */,
+				A9A703271AD7C54000D84C66 /* ZCPersonalURL.m in Sources */,
 				A911BE141AC963EA00819F52 /* AFURLRequestSerialization.m in Sources */,
 				A911BE1F1AC963EA00819F52 /* NSObject+MJMember.m in Sources */,
+				A9A7034C1AD7CEFF00D84C66 /* SDImageCache.m in Sources */,
 				A967AD2A1A9EC7B3009E7468 /* ZCCityStadium.m in Sources */,
 				A911BE0F1AC963EA00819F52 /* AFHTTPRequestOperationManager.m in Sources */,
 				A911BE161AC963EA00819F52 /* AFURLSessionManager.m in Sources */,
+				A9A703241AD7C34A00D84C66 /* ZCPersonalData.m in Sources */,
 				A911BE231AC963EA00819F52 /* MJRefreshFooterView.m in Sources */,
 				A96B67D81ABA6A01006D2047 /* ZCstadium.m in Sources */,
 				A94C27CB1AB9834D006A7BA1 /* ZCQuickScoringTableViewController.m in Sources */,
 				A911BE121AC963EA00819F52 /* AFSecurityPolicy.m in Sources */,
+				A9A7034B1AD7CEFF00D84C66 /* NSData+ImageContentType.m in Sources */,
 				A9714E491A830BCD00571CB2 /* ZCregisterViewController.m in Sources */,
 				A998A8D01A7E87C800CE6AAA /* ZCSetting.m in Sources */,
 				A911BE181AC963EA00819F52 /* MJIvar.m in Sources */,
+				A9A7034E1AD7CEFF00D84C66 /* SDWebImageDecoder.m in Sources */,
 				A911BE281AC963F300819F52 /* ZCEventUuidTool.m in Sources */,
 				A944AFBB1AB5D60E00A8E887 /* ZCAmateurStatisticsView.m in Sources */,
 			);
