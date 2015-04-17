@@ -13,6 +13,15 @@
 #import "ZCProfessionalStatisticalModel.h"
 #import "ZCAverageViewController.h"
 #import "ZCPushRodViewController.h"
+#import "ZCBunkersViewController.h"
+#import "ZCWedgeViewController.h"
+#import "ZCGreenViewController.h"
+#import "ZCFairwayViewController.h"
+#import "ZCKickOffViewController.h"
+#import "ZCRodNumberViewController.h"
+#import "ZCCueTableViewController.h"
+#import "ZCCueMode.h"
+#import "ZCTotalGradeViewController.h"
 @interface ZCProfessionalStatisticalViewController ()
 @property(nonatomic,weak)UIScrollView *scrollView;
 @property(nonatomic,strong)ZCProfessionalStatisticalModel *professionalStatisticalModel;
@@ -92,7 +101,9 @@
     CGFloat totalGradeBtnW=SCREEN_WIDTH;
     CGFloat totalGradeBtnH=120;
     totalGradeBtn.frame=CGRectMake(totalGradeBtnX, totalGradeBtnY, totalGradeBtnW, totalGradeBtnH);
-   
+    //监听点击
+    [totalGradeBtn addTarget:self action:@selector(clicktotalGradeBtn) forControlEvents:UIControlEventTouchUpInside];
+    
     [self.scrollView addSubview:totalGradeBtn];
     NSDictionary *total= self.professionalStatisticalModel.item_01;
     //总成绩里面的内容
@@ -147,6 +158,9 @@
     bunkersBtn.frame=CGRectMake(bunkersBtnX, bunkersBtnY, bunkersBtnW, bunkersBtnH);
     [self.scrollView addSubview:bunkersBtn];
     
+    //监听点击
+    [bunkersBtn addTarget:self action:@selector(clickbunkersBtn) forControlEvents:UIControlEventTouchUpInside];
+    
     NSDictionary *bunkers= self.professionalStatisticalModel.item_04;
 
     //推杆里内容
@@ -165,6 +179,9 @@
     CGFloat wedgeBtnH=totalGradeBtnH;
     wedgeBtn.frame=CGRectMake(wedgeBtnX, wedgeBtnY, wedgeBtnW, wedgeBtnH);
     [self.scrollView addSubview:wedgeBtn];
+    //监听点击
+    [wedgeBtn addTarget:self action:@selector(clickwedgeBtn) forControlEvents:UIControlEventTouchUpInside];
+    
     //切杆里内容
     NSDictionary *wedge= self.professionalStatisticalModel.item_05;
     [self addContent:wedgeBtn imageView:@"20141118042246536.jpg" nameLabel:@"切杆" firstLabel:[NSString stringWithFormat:@"%@",wedge[@"up_and_downs_count"]] secondLabel:nil thirdLabel:[NSString stringWithFormat:@"%@",wedge[@"longest_chip_ins_length"]] firstNameLabel:@"一切一推" secondNameLabel:nil thirdNameLabel:@"切杆进洞"];
@@ -181,6 +198,9 @@
     CGFloat greenBtnH=totalGradeBtnH;
     greenBtn.frame=CGRectMake(greenBtnX, greenBtnY, greenBtnW, greenBtnH);
     [self.scrollView addSubview:greenBtn];
+    //点击监听
+    [greenBtn addTarget:self action:@selector(clickBreenBtn) forControlEvents:UIControlEventTouchUpInside];
+    
     //攻果岭
     NSDictionary *green= self.professionalStatisticalModel.item_06;
     [self addContent:greenBtn imageView:@"20141118042246536.jpg" nameLabel:@"攻果岭" firstLabel:[NSString stringWithFormat:@"%@",green[@"gir_percentage"]] secondLabel:[NSString stringWithFormat:@"%@",green[@"non_gir_percentage"]] thirdLabel:nil firstNameLabel:@"命中" secondNameLabel:@"未命中" thirdNameLabel:nil];
@@ -195,6 +215,9 @@
     CGFloat fairwayBtnH=totalGradeBtnH;
     fairwayBtn.frame=CGRectMake(fairwayBtnX, fairwayBtnY, fairwayBtnW, fairwayBtnH);
     [self.scrollView addSubview:fairwayBtn];
+    //点击监听
+    [fairwayBtn addTarget:self action:@selector(clickFairwayBtn) forControlEvents:UIControlEventTouchUpInside];
+    
     //球道命中
     NSDictionary *fairway= self.professionalStatisticalModel.item_07;
     [self addContent:fairwayBtn imageView:@"20141118042246536.jpg" nameLabel:@"球道命中" firstLabel:[NSString stringWithFormat:@"%@",fairway[@"drive_fairways_hit"]] secondLabel:[NSString stringWithFormat:@"%@",fairway[@"drive_left_roughs_hit"]] thirdLabel:[NSString stringWithFormat:@"%@",fairway[@"drive_right_roughs_hit"]] firstNameLabel:@"命中" secondNameLabel:@"左侧" thirdNameLabel:@"右侧"];
@@ -212,6 +235,9 @@
     CGFloat kickOffBtnH=totalGradeBtnH;
     kickOffBtn.frame=CGRectMake(kickOffBtnX, kickOffBtnY, kickOffBtnW, kickOffBtnH);
     [self.scrollView addSubview:kickOffBtn];
+    
+    //点击监听
+    [kickOffBtn addTarget:self action:@selector(clickkickOffBtn) forControlEvents:UIControlEventTouchUpInside];
     //开球
     NSDictionary *kickOff= self.professionalStatisticalModel.item_08;
     [self addContent:kickOffBtn imageView:@"20141118042246536.jpg" nameLabel:@"开球" firstLabel:[NSString stringWithFormat:@"%@",kickOff[@"longest_drive_length"]] secondLabel:[NSString stringWithFormat:@"%@",kickOff[@"average_drive_length"]] thirdLabel:[NSString stringWithFormat:@"%@",kickOff[@"good_drives"]] firstNameLabel:@"最远max" secondNameLabel:@"平均" thirdNameLabel:@"max/2"];
@@ -227,6 +253,9 @@
     rodNumberBtn.frame=CGRectMake(rodNumberBtnX, rodNumberBtnY, rodNumberBtnW, rodNumberBtnH);
     [self.scrollView addSubview:rodNumberBtn];
 
+    //点击监听
+    [rodNumberBtn addTarget:self action:@selector(clickRodNumberBtn) forControlEvents:UIControlEventTouchUpInside];
+    
     //杆数
     NSDictionary *rodNumber= self.professionalStatisticalModel.item_09;
     [self addContent:rodNumberBtn imageView:@"20141118042246536.jpg" nameLabel:@"杆数" firstLabel:[NSString stringWithFormat:@"%@",rodNumber[@"birdie"]] secondLabel:[NSString stringWithFormat:@"%@",rodNumber[@"par"]] thirdLabel:[NSString stringWithFormat:@"%@",rodNumber[@"bogey"]] firstNameLabel:@"小鸟" secondNameLabel:@"标准杆" thirdNameLabel:@"柏忌"];
@@ -243,11 +272,83 @@
     CGFloat cueButtonH=150;
     cueButton.frame=CGRectMake(cueButtonX, cueButtonY, cueButtonW, cueButtonH);
     [self.scrollView addSubview:cueButton];
+    
+    //点击监听
+    [cueButton addTarget:self action:@selector(clickCueButton) forControlEvents:UIControlEventTouchUpInside];
+    
     [self addcueButtonContent:cueButton];
     
     
     
 }
+//点击监听总成绩
+-(void)clicktotalGradeBtn
+{
+    ZCTotalGradeViewController *totalGradeViewController=[[ZCTotalGradeViewController alloc] init];
+    totalGradeViewController.professionalScorecardModel=self.professionalStatisticalModel.scorecards;
+    totalGradeViewController.totalModel=self.professionalStatisticalModel.item_01;
+    [self.navigationController pushViewController:totalGradeViewController animated:YES];
+}
+
+
+
+
+//点击监听球杆
+-(void)clickCueButton
+{
+
+    ZCCueTableViewController *cueTableViewController=[[ZCCueTableViewController alloc] init];
+    cueTableViewController.cueModel=self.professionalStatisticalModel.item_10[@"clubs"];
+    [self.navigationController pushViewController:cueTableViewController animated:YES];
+    
+}
+
+
+//点击杆数
+-(void)clickRodNumberBtn
+{
+    ZCRodNumberViewController *RodNumberViewController=[[ZCRodNumberViewController alloc] init];
+    RodNumberViewController.rodNumberModel=self.professionalStatisticalModel.item_09;
+    [self.navigationController pushViewController:RodNumberViewController animated:YES];
+   
+}
+
+//点击监听开球
+-(void)clickkickOffBtn
+{
+    ZCKickOffViewController *kickOffViewController=[[ZCKickOffViewController alloc] init];
+    kickOffViewController.kickOffModel=self.professionalStatisticalModel.item_08;
+    [self.navigationController pushViewController:kickOffViewController animated:YES];
+}
+
+
+//点击监听球道位置
+-(void)clickFairwayBtn
+{
+    ZCFairwayViewController *fairwayViewController=[[ZCFairwayViewController alloc] init];
+    fairwayViewController.fairwayModel=self.professionalStatisticalModel.item_07;
+    [self.navigationController pushViewController:fairwayViewController animated:YES];
+
+}
+
+
+//点击监听攻果岭
+-(void)clickBreenBtn
+{
+    ZCGreenViewController *greenViewController=[[ZCGreenViewController alloc] init];
+    greenViewController.greenModel=self.professionalStatisticalModel.item_06;
+    [self.navigationController pushViewController:greenViewController animated:YES];
+}
+
+
+//点击监听沙坑
+-(void)clickbunkersBtn
+{
+    ZCBunkersViewController *bunkersViewController=[[ZCBunkersViewController alloc] init];
+    bunkersViewController.bunkersModel=self.professionalStatisticalModel.item_04;
+    [self.navigationController pushViewController:bunkersViewController animated:YES];
+}
+
 
 //监听点击平均干
 -(void)clickaverageBtn
@@ -259,6 +360,13 @@
 
 }
 
+//点击切杆
+-(void)clickwedgeBtn
+{
+    ZCWedgeViewController *wedgeViewController=[[ZCWedgeViewController alloc] init];
+    wedgeViewController.wedgeModel=self.professionalStatisticalModel.item_05;
+    [self .navigationController pushViewController:wedgeViewController animated:YES];
+}
 
 //监听点击推杆
 -(void)clickpushRodBtn
@@ -380,6 +488,17 @@
 //添加球杆里的内容
 -(void)addcueButtonContent:(UIButton *)button
 {
+     NSArray *frequentlyArray= self.professionalStatisticalModel.item_10[@"frequently_used_clubs"];
+    NSMutableArray *cueMutableArray=[NSMutableArray array];
+    for (NSDictionary *dict in frequentlyArray) {
+        
+        ZCCueMode *cueMode=[ZCCueMode cueModelWithDict:dict];
+        [cueMutableArray addObject:cueMode];
+    }
+   
+    
+    
+    
     UILabel *nameLabel=[[UILabel alloc] init];
     
     CGFloat nameLabelY=10;
@@ -399,9 +518,12 @@
      firstView.frame=CGRectMake(firstViewX, firstViewY, firstViewW, firstViewH);
      [button addSubview:firstView];
     //添加里面内容
-    NSDictionary *Dict= self.professionalStatisticalModel.item_10;
-    NSDictionary *firstDict=Dict[@"club_1w"];
-    [self addView:firstView topLabel:@"1w" cueImageName:@"20141118042246536.jpg" codeNumber:[NSString stringWithFormat:@"%@",firstDict[@"maximum_length"]]];
+    if (cueMutableArray.count>=1) {
+        ZCCueMode *cue= cueMutableArray[0];
+        [self addView:firstView topLabel:[NSString stringWithFormat:@"%@",cue.name] cueImageName:@"20141118042246536.jpg" codeNumber:[NSString stringWithFormat:@"%@",cue.maximum_length]];
+        
+
+    }
     
     
     
@@ -413,9 +535,19 @@
     CGFloat secondViewH=firstViewH;
     secondView.frame=CGRectMake(secondViewX, secondViewY, secondViewW, secondViewH);
     [button addSubview:secondView];
+    
     //添加里面内容
-    NSDictionary *secondDict=Dict[@"club_3w"];
-    [self addView:secondView topLabel:@"3w" cueImageName:@"20141118042246536.jpg" codeNumber:[NSString stringWithFormat:@"%@",secondDict[@"maximum_length"]]];
+    if (cueMutableArray.count>=2) {
+        ZCCueMode *cue= cueMutableArray[1];
+        [self addView:secondView topLabel:[NSString stringWithFormat:@"%@",cue.name] cueImageName:@"20141118042246536.jpg" codeNumber:[NSString stringWithFormat:@"%@",cue.maximum_length]];
+ 
+        
+    }else{
+        secondView.backgroundColor=[UIColor redColor];
+    }
+
+    
+   
 
     
     UIView *thirdView=[[UIView alloc] init];
@@ -426,8 +558,16 @@
     thirdView.frame=CGRectMake(thirdViewX, thirdViewY, thirdViewW, thirdViewH);
     [button addSubview:thirdView];
     //添加里面内容
-     NSDictionary *thirdDict=Dict[@"club_5w"];
-    [self addView:thirdView topLabel:@"5w" cueImageName:@"20141118042246536.jpg" codeNumber:[NSString stringWithFormat:@"%@",thirdDict[@"maximum_length"]]];
+    if (cueMutableArray.count>=3) {
+        ZCCueMode *cue= cueMutableArray[2];
+        [self addView:thirdView topLabel:[NSString stringWithFormat:@"%@",cue.name] cueImageName:@"20141118042246536.jpg" codeNumber:[NSString stringWithFormat:@"%@",cue.maximum_length]];
+        
+        
+    }else{
+        thirdView.backgroundColor=[UIColor redColor];
+    }
+    
+
     
     UIView *fourthView=[[UIView alloc] init];
     
@@ -437,9 +577,18 @@
     CGFloat fourthViewH=firstViewH;
     fourthView.frame=CGRectMake(fourthViewX, fourthViewY, fourthViewW, fourthViewH);
     [button addSubview:fourthView];
+   
     //添加里面内容
-    NSDictionary *fourthDict=Dict[@"club_7w"];
-    [self addView:fourthView topLabel:@"7w" cueImageName:@"20141118042246536.jpg" codeNumber:[NSString stringWithFormat:@"%@",fourthDict[@"maximum_length"]]];
+    if (cueMutableArray.count>=4) {
+        ZCCueMode *cue= cueMutableArray[3];
+        [self addView:fourthView topLabel:[NSString stringWithFormat:@"%@",cue.name] cueImageName:@"20141118042246536.jpg" codeNumber:[NSString stringWithFormat:@"%@",cue.maximum_length]];
+        
+        
+    }else{
+        fourthView.backgroundColor=[UIColor redColor];
+    }
+
+    
     
     //向右的箭头
     UIImageView *rightImage=[[UIImageView alloc] init];

@@ -85,7 +85,7 @@
      NSString *url=[NSString stringWithFormat:@"%@%@",API,@"venues/sectionalized_by_province.json"];
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-       
+        ZCLog(@"%@",responseObject);
         
         // 将字典数组转为模型数组(
         //self.citys = [ZCCity objectArrayWithKeyValuesArray:responseObject];

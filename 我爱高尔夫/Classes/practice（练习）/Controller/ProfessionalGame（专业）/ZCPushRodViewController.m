@@ -9,7 +9,8 @@
 #import "ZCPushRodViewController.h"
 
 @interface ZCPushRodViewController ()
-
+@property(nonatomic,assign)int index;
+@property(nonatomic,assign)int index2;
 //
 @property(nonatomic,weak)UIScrollView *scrollView;
 @end
@@ -56,8 +57,7 @@
     firstView.frame=CGRectMake(firstViewX, firstViewY, firstViewW, firstViewH);
     [topView addSubview:firstView];
     
-    [self addChildControls:firstView imageStr:@"20141118042246536.jpg" numberStr:[NSString stringWithFormat:@"ASDASD"] nameStr:@"平均推杆数" promptStr:@"点击第一个提示语点击第一个提示语点击第一个提示语"];
-    
+    [self addChildControls:firstView imageStr:@"20141118042246536.jpg" numberStr:[NSString stringWithFormat:@"%@",self.pushRodModel[@"average_putts"]] nameStr:@"平均推杆数"];
     
     UIView *secendView=[[UIView alloc] init];
     CGFloat secendViewX=0;
@@ -67,7 +67,7 @@
     secendView.frame=CGRectMake(secendViewX, secendViewY, secendViewW, secendViewH);
     [topView addSubview:secendView];
     //[self addChildControls:secendView imageStr:@"20141118042246536.jpg" numberStr:[NSString stringWithFormat:@"%@",self.averageModel[@"average_score_par_4"]] nameStr:@"4杆洞"];
-    [self addChildControls:secendView imageStr:@"20141118042246536.jpg" numberStr:[NSString stringWithFormat:@"ASDASD"] nameStr:@"平均推杆数" promptStr:@"点击第二个提示语点击第第二个提示语点击第第二个提示语"];
+   [self addChildControls:secendView imageStr:@"20141118042246536.jpg" numberStr:[NSString stringWithFormat:@"%@",self.pushRodModel[@"putts_per_gir"]] nameStr:@"GIR平均推杆数"];
     
     
     UIView *thirdView=[[UIView alloc] init];
@@ -80,7 +80,7 @@
     [topView addSubview:thirdView];
     //[self addChildControls:thirdView imageStr:@"20141118042246536.jpg" numberStr:[NSString stringWithFormat:@"%@",self.averageModel[@"average_score_par_5"]] nameStr:@"5杆洞"];
     
-    [self addChildControls:thirdView imageStr:@"20141118042246536.jpg" numberStr:[NSString stringWithFormat:@"ASDASD"] nameStr:@"平均推杆数"  promptStr:@"点击第三个提示语点点击第三个提示语点点击第三个提示语点"];
+    [self addChildControls:thirdView imageStr:@"20141118042246536.jpg" numberStr:[NSString stringWithFormat:@"%@",self.pushRodModel[@"putts_per_non_gir"]] nameStr:@"大于GIR平均推杆数"];
     //右边图片
     UIImageView *barChartImage=[[UIImageView alloc] init];
     CGFloat barChartImageX=topViewH+10;
@@ -118,6 +118,7 @@
     [self addMiddlethirdViewControls:middlethirdView];
     
     
+    
     //中间第四个View
     UIView *middleFourthView=[[UIView alloc] init];
     CGFloat middleFourthViewX=0;
@@ -126,6 +127,8 @@
     CGFloat middleFourthViewH=200;
     middleFourthView.frame=CGRectMake(middleFourthViewX, middleFourthViewY, middleFourthViewW, middleFourthViewH);
     [self.scrollView addSubview:middleFourthView];
+    NSDictionary *distance_0_1=self.pushRodModel[@"distance_0_1_from_hole_in_green"];
+    [self addMiddleViewControls:middleFourthView codeStr:@"10-20码" tryStr:[NSString stringWithFormat:@"%@",distance_0_1[@"per_round"]] averageStr:[NSString stringWithFormat:@"%@",distance_0_1[@"shots_to_hole"]] ALeverToPromote:distance_0_1[@"holed_percentage"] averageRemainingYards:[NSString stringWithFormat:@"%@",distance_0_1[@"dispersion"]]];
 
     //中间第五个View
     UIView *middleFifthView=[[UIView alloc] init];
@@ -135,6 +138,9 @@
     CGFloat middleFifthViewH=200;
     middleFifthView.frame=CGRectMake(middleFifthViewX, middleFifthViewY, middleFifthViewW, middleFifthViewH);
     [self.scrollView addSubview:middleFifthView];
+    //添加里面内容
+    NSDictionary *distance_0_2=self.pushRodModel[@"distance_1_2_from_hole_in_green"];
+    [self addMiddleViewControls:middleFifthView codeStr:@"20-30码" tryStr:[NSString stringWithFormat:@"%@",distance_0_2[@"per_round"]] averageStr:[NSString stringWithFormat:@"%@",distance_0_2[@"shots_to_hole"]] ALeverToPromote:distance_0_2[@"holed_percentage"] averageRemainingYards:[NSString stringWithFormat:@"%@",distance_0_2[@"dispersion"]]];
 
     
     //中间第六个View
@@ -145,6 +151,12 @@
     CGFloat middleSixthViewH=200;
     middleSixthView.frame=CGRectMake(middleSixthViewX, middleSixthViewY, middleSixthViewW, middleSixthViewH);
     [self.scrollView addSubview:middleSixthView];
+    
+    //添加里面内容
+    NSDictionary *distance_0_3=self.pushRodModel[@"distance_2_3_from_hole_in_green"];
+    [self addMiddleViewControls:middleSixthView codeStr:@"30-40码" tryStr:[NSString stringWithFormat:@"%@",distance_0_3[@"per_round"]] averageStr:[NSString stringWithFormat:@"%@",distance_0_3[@"shots_to_hole"]] ALeverToPromote:distance_0_3[@"holed_percentage"] averageRemainingYards:[NSString stringWithFormat:@"%@",distance_0_3[@"dispersion"]]];
+    
+    
 
     
     UIView *middleSeventhView=[[UIView alloc] init];
@@ -154,11 +166,17 @@
     CGFloat middleSeventhViewH=200;
     middleSeventhView.frame=CGRectMake(middleSeventhViewX, middleSeventhViewY, middleSeventhViewW, middleSeventhViewH);
     [self.scrollView addSubview:middleSeventhView];
+    
+    //添加里面内容
+    NSDictionary *distance_0_4=self.pushRodModel[@"distance_3_5_from_hole_in_green"];
+    [self addMiddleViewControls:middleSeventhView codeStr:@"40-50码" tryStr:[NSString stringWithFormat:@"%@",distance_0_4[@"per_round"]] averageStr:[NSString stringWithFormat:@"%@",distance_0_4[@"shots_to_hole"]] ALeverToPromote:distance_0_4[@"holed_percentage"] averageRemainingYards:[NSString stringWithFormat:@"%@",distance_0_4[@"dispersion"]]];
 
 
 }
 
 
+
+//最后4个模型View 调用创建
 -(void)addMiddleViewControls:(UIView *)view codeStr:(NSString *)codeStr tryStr:(NSString *)tryStr averageStr:(NSString *)averageStr  ALeverToPromote:(NSString *)leverStr  averageRemainingYards :(NSString *)averageRemainingYards
 {
     UIImageView *personImage=[[UIImageView alloc] init];
@@ -199,7 +217,9 @@
     promptBtn.frame=CGRectMake(promptBtnX, promptBtnY, promptBtnW, promptBtnH);
     [promptBtn setImage:[UIImage imageNamed:@"20141118042246536.jpg"]
                forState:UIControlStateNormal];
-    // [promptBtn addTarget:self action:@selector(clickprompBtn4) forControlEvents:UIControlEventTouchUpInside];
+    self.index++;
+    promptBtn.tag=self.index+1000;
+    [promptBtn addTarget:self action:@selector(clickpromptishi:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:promptBtn];
     
     //第一行
@@ -339,7 +359,8 @@
     promptBtn.frame=CGRectMake(promptBtnX, promptBtnY, promptBtnW, promptBtnH);
     [promptBtn setImage:[UIImage imageNamed:@"20141118042246536.jpg"]
                forState:UIControlStateNormal];
-    // [promptBtn addTarget:self action:@selector(clickprompBtn4) forControlEvents:UIControlEventTouchUpInside];
+    promptBtn.tag=1007;
+    [promptBtn addTarget:self action:@selector(clickpromptishi:) forControlEvents:UIControlEventTouchUpInside];
     [middlethirdView addSubview:promptBtn];
     
 
@@ -350,7 +371,7 @@
     CGFloat numberLabelW=SCREEN_WIDTH;
     CGFloat numberLabelH=70;
     numberLabel.frame=CGRectMake(numberLabelX, numberLabelY, numberLabelW, numberLabelH);
-    numberLabel.text=@"234";
+    numberLabel.text=[NSString stringWithFormat:@"%@",self.pushRodModel[@"holed_putt_length"]];
     numberLabel.textAlignment=NSTextAlignmentCenter;
     [middlethirdView addSubview:numberLabel];
     
@@ -387,7 +408,8 @@
     promptBtn.frame=CGRectMake(promptBtnX, promptBtnY, promptBtnW, promptBtnH);
     [promptBtn setImage:[UIImage imageNamed:@"20141118042246536.jpg"]
                forState:UIControlStateNormal];
-   // [promptBtn addTarget:self action:@selector(clickprompBtn4) forControlEvents:UIControlEventTouchUpInside];
+    promptBtn.tag=1006;
+    [promptBtn addTarget:self action:@selector(clickpromptishi:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:promptBtn];
 
     
@@ -398,7 +420,7 @@
     CGFloat  firstNumberLaberH=30;
     firstNumberLaber.frame=CGRectMake(firstNumberLaberX, firstNumberLaberY, firstNumberLaberW, firstNumberLaberH);
     firstNumberLaber.textAlignment=NSTextAlignmentCenter;
-    firstNumberLaber.text=@"2.88";
+    firstNumberLaber.text=[NSString stringWithFormat:@"%@",self.pushRodModel[@"first_putt_length"]];
     [view addSubview:firstNumberLaber];
     
     //没秋冬
@@ -421,7 +443,7 @@
     CGFloat  secondNumberLaberH=30;
     secondNumberLaber.frame=CGRectMake(secondNumberLaberX, secondNumberLaberY, secondNumberLaberW, secondNumberLaberH);
     secondNumberLaber.textAlignment=NSTextAlignmentCenter;
-    secondNumberLaber.text=@"2.88";
+    secondNumberLaber.text=[NSString stringWithFormat:@"%@",self.pushRodModel[@"first_putt_length_gir"]];
     [view addSubview:secondNumberLaber];
     
     
@@ -444,7 +466,7 @@
     CGFloat  thirdNumberLaberH=30;
     thirdNumberLaber.frame=CGRectMake(thirdNumberLaberX, thirdNumberLaberY, thirdNumberLaberW, thirdNumberLaberH);
     thirdNumberLaber.textAlignment=NSTextAlignmentCenter;
-    thirdNumberLaber.text=@"2.88";
+    thirdNumberLaber.text=[NSString stringWithFormat:@"%@",self.pushRodModel[@"first_putt_length_non_gir"]];
     [view addSubview:thirdNumberLaber];
     
 
@@ -462,7 +484,7 @@
 
 
 //添加子控件
--(void)addChildControls:(UIView *)childView  imageStr:(NSString *)imageStr  numberStr:(NSString *)numberStr  nameStr:(NSString *)nameStr  promptStr:(NSString *)promptStr
+-(void)addChildControls:(UIView *)childView  imageStr:(NSString *)imageStr  numberStr:(NSString *)numberStr  nameStr:(NSString *)nameStr
 {
     UIImageView *imageView=[[UIImageView alloc] init];
     CGFloat imageViewX=5;
@@ -501,7 +523,10 @@
     CGFloat promptBtnH=20;
     promptBtn.frame=CGRectMake(promptBtnX, promptBtnY, promptBtnW, promptBtnH);
     [promptBtn setImage:[UIImage imageNamed:@"20141118042246536.jpg"] forState:UIControlStateNormal];
-    [promptBtn addTarget:self action:@selector(clickpromptBtn:) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.index2++;
+    promptBtn.tag=self.index2+1100;
+    [promptBtn addTarget:self action:@selector(clickpromptishi:) forControlEvents:UIControlEventTouchUpInside];
     
     [childView addSubview:promptBtn];
     
@@ -509,7 +534,8 @@
 }
 
 
--(void)clickpromptBtn:(UIButton *)btn
+//提示按钮点击
+-(void)clickpromptishi:(UIButton *)btn
 {
     
 
