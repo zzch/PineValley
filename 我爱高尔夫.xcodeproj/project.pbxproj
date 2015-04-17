@@ -65,6 +65,8 @@
 		A95AABEF1AE0D62E00897808 /* ZCWedgeThirdCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A95AABEE1AE0D62E00897808 /* ZCWedgeThirdCell.m */; };
 		A95AABF21AE0DE2800897808 /* ZCWedgeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A95AABF11AE0DE2800897808 /* ZCWedgeModel.m */; };
 		A95AABF91AE0F48700897808 /* ZCStatisticalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A95AABF81AE0F48700897808 /* ZCStatisticalViewController.m */; };
+		A95AABFC1AE108C200897808 /* ZCHomePageStatistics.m in Sources */ = {isa = PBXBuildFile; fileRef = A95AABFB1AE108C200897808 /* ZCHomePageStatistics.m */; };
+		A95AABFF1AE1179500897808 /* ZCGraphicsView.m in Sources */ = {isa = PBXBuildFile; fileRef = A95AABFE1AE1179500897808 /* ZCGraphicsView.m */; };
 		A95B09D31ACA51F6002D739A /* UIBarButtonItem+DC.m in Sources */ = {isa = PBXBuildFile; fileRef = A95B09D21ACA51F6002D739A /* UIBarButtonItem+DC.m */; };
 		A95D73391AD65560009062AF /* UIImage+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = A95D73371AD65560009062AF /* UIImage+MJ.m */; };
 		A95D733B1AD65960009062AF /* city2.plist in Resources */ = {isa = PBXBuildFile; fileRef = A95D733A1AD65960009062AF /* city2.plist */; };
@@ -253,6 +255,10 @@
 		A95AABF11AE0DE2800897808 /* ZCWedgeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCWedgeModel.m; sourceTree = "<group>"; };
 		A95AABF71AE0F48700897808 /* ZCStatisticalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCStatisticalViewController.h; sourceTree = "<group>"; };
 		A95AABF81AE0F48700897808 /* ZCStatisticalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCStatisticalViewController.m; sourceTree = "<group>"; };
+		A95AABFA1AE108C200897808 /* ZCHomePageStatistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCHomePageStatistics.h; sourceTree = "<group>"; };
+		A95AABFB1AE108C200897808 /* ZCHomePageStatistics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCHomePageStatistics.m; sourceTree = "<group>"; };
+		A95AABFD1AE1179500897808 /* ZCGraphicsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCGraphicsView.h; sourceTree = "<group>"; };
+		A95AABFE1AE1179500897808 /* ZCGraphicsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCGraphicsView.m; sourceTree = "<group>"; };
 		A95B09D11ACA51F6002D739A /* UIBarButtonItem+DC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+DC.h"; sourceTree = "<group>"; };
 		A95B09D21ACA51F6002D739A /* UIBarButtonItem+DC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+DC.m"; sourceTree = "<group>"; };
 		A95D73361AD65560009062AF /* UIImage+MJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MJ.h"; sourceTree = "<group>"; };
@@ -670,6 +676,8 @@
 		A9438A461A7A007B00B55001 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				A95AABFA1AE108C200897808 /* ZCHomePageStatistics.h */,
+				A95AABFB1AE108C200897808 /* ZCHomePageStatistics.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -677,6 +685,8 @@
 		A9438A471A7A007B00B55001 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				A95AABFD1AE1179500897808 /* ZCGraphicsView.h */,
+				A95AABFE1AE1179500897808 /* ZCGraphicsView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1254,6 +1264,7 @@
 				A93DF8991A81D465009623F5 /* ZCScorecarTableViewCell.m in Sources */,
 				A9BE931D1ACBE08600ADFAAF /* ZCScorecardTableViewController.m in Sources */,
 				A98257011ADE239D00DC4B52 /* ZCWedgeViewController.m in Sources */,
+				A95AABFC1AE108C200897808 /* ZCHomePageStatistics.m in Sources */,
 				A9714E6A1A832F1800571CB2 /* ZCAccount.m in Sources */,
 				A9BE93121ACBA69E00ADFAAF /* ZCAKeyToRegisterView.m in Sources */,
 				A911BE1A1AC963EA00819F52 /* MJMethod.m in Sources */,
@@ -1267,6 +1278,7 @@
 				A972DDAB1ADFAC5E0087CE35 /* ZCCueMode.m in Sources */,
 				A95D733E1AD6597A009062AF /* CityPickerView.m in Sources */,
 				A95AABE91AE0BA2E00897808 /* ZCWedgeFirstCell.m in Sources */,
+				A95AABFF1AE1179500897808 /* ZCGraphicsView.m in Sources */,
 				A95AABF21AE0DE2800897808 /* ZCWedgeModel.m in Sources */,
 				A953D9421ACCE868004CA165 /* ZCChooseView.m in Sources */,
 				A94D47E01AA8426300971FAD /* ZCscorecard.m in Sources */,

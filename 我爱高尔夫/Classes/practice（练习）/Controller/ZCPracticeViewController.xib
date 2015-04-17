@@ -33,19 +33,6 @@
                     <color key="textColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NpN-Vs-UyF">
-                    <rect key="frame" x="34" y="352" width="532" height="52"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="52" id="jpE-xu-SZF"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                    <state key="normal" title="简单记分卡" backgroundImage="anniu">
-                        <color key="titleColor" red="0.21176470589999999" green="0.4941176471" blue="0.27058823529999998" alpha="1" colorSpace="calibratedRGB"/>
-                    </state>
-                    <connections>
-                        <action selector="clickQuickScoring" destination="-1" eventType="touchUpInside" id="pki-ld-g9d"/>
-                    </connections>
-                </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="快速开始计分，简单易用" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B6O-HC-rJE">
                     <rect key="frame" x="8" y="426" width="536" height="17"/>
                     <constraints>
@@ -67,6 +54,19 @@
                     </state>
                     <connections>
                         <action selector="chickModifyTheProfessionalScorecard" destination="-1" eventType="touchUpInside" id="oak-1A-Bys"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NpN-Vs-UyF">
+                    <rect key="frame" x="43" y="510" width="532" height="52"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="52" id="jpE-xu-SZF"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                    <state key="normal" title="简单记分卡" backgroundImage="anniu">
+                        <color key="titleColor" red="0.21176470589999999" green="0.4941176471" blue="0.27058823529999998" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="clickQuickScoring" destination="-1" eventType="touchUpInside" id="pki-ld-g9d"/>
                     </connections>
                 </button>
             </subviews>
