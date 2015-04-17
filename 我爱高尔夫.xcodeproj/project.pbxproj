@@ -64,7 +64,7 @@
 		A95AABEC1AE0BA9100897808 /* ZCWedgeSecondCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A95AABEB1AE0BA9100897808 /* ZCWedgeSecondCell.m */; };
 		A95AABEF1AE0D62E00897808 /* ZCWedgeThirdCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A95AABEE1AE0D62E00897808 /* ZCWedgeThirdCell.m */; };
 		A95AABF21AE0DE2800897808 /* ZCWedgeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A95AABF11AE0DE2800897808 /* ZCWedgeModel.m */; };
-		A95AABF51AE0E69700897808 /* ZCStatisticalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A95AABF41AE0E69700897808 /* ZCStatisticalViewController.m */; };
+		A95AABF91AE0F48700897808 /* ZCStatisticalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A95AABF81AE0F48700897808 /* ZCStatisticalViewController.m */; };
 		A95B09D31ACA51F6002D739A /* UIBarButtonItem+DC.m in Sources */ = {isa = PBXBuildFile; fileRef = A95B09D21ACA51F6002D739A /* UIBarButtonItem+DC.m */; };
 		A95D73391AD65560009062AF /* UIImage+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = A95D73371AD65560009062AF /* UIImage+MJ.m */; };
 		A95D733B1AD65960009062AF /* city2.plist in Resources */ = {isa = PBXBuildFile; fileRef = A95D733A1AD65960009062AF /* city2.plist */; };
@@ -251,8 +251,8 @@
 		A95AABEE1AE0D62E00897808 /* ZCWedgeThirdCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCWedgeThirdCell.m; sourceTree = "<group>"; };
 		A95AABF01AE0DE2800897808 /* ZCWedgeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCWedgeModel.h; sourceTree = "<group>"; };
 		A95AABF11AE0DE2800897808 /* ZCWedgeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCWedgeModel.m; sourceTree = "<group>"; };
-		A95AABF31AE0E69700897808 /* ZCStatisticalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZCStatisticalViewController.h; path = ../../../../../../../Documents/ZCStatisticalViewController.h; sourceTree = "<group>"; };
-		A95AABF41AE0E69700897808 /* ZCStatisticalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZCStatisticalViewController.m; path = ../../../../../../../Documents/ZCStatisticalViewController.m; sourceTree = "<group>"; };
+		A95AABF71AE0F48700897808 /* ZCStatisticalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCStatisticalViewController.h; sourceTree = "<group>"; };
+		A95AABF81AE0F48700897808 /* ZCStatisticalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCStatisticalViewController.m; sourceTree = "<group>"; };
 		A95B09D11ACA51F6002D739A /* UIBarButtonItem+DC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+DC.h"; sourceTree = "<group>"; };
 		A95B09D21ACA51F6002D739A /* UIBarButtonItem+DC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+DC.m"; sourceTree = "<group>"; };
 		A95D73361AD65560009062AF /* UIImage+MJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MJ.h"; sourceTree = "<group>"; };
@@ -660,20 +660,11 @@
 		A9438A441A7A007B00B55001 /* statistical（统计） */ = {
 			isa = PBXGroup;
 			children = (
-				A9438A451A7A007B00B55001 /* Controller */,
+				A95AABF61AE0F47800897808 /* Controller */,
 				A9438A461A7A007B00B55001 /* Model */,
 				A9438A471A7A007B00B55001 /* View */,
 			);
 			path = "statistical（统计）";
-			sourceTree = "<group>";
-		};
-		A9438A451A7A007B00B55001 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				A95AABF31AE0E69700897808 /* ZCStatisticalViewController.h */,
-				A95AABF41AE0E69700897808 /* ZCStatisticalViewController.m */,
-			);
-			path = Controller;
 			sourceTree = "<group>";
 		};
 		A9438A461A7A007B00B55001 /* Model */ = {
@@ -819,6 +810,15 @@
 				A95AABEE1AE0D62E00897808 /* ZCWedgeThirdCell.m */,
 			);
 			path = "wedge（切杆 ）";
+			sourceTree = "<group>";
+		};
+		A95AABF61AE0F47800897808 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				A95AABF71AE0F48700897808 /* ZCStatisticalViewController.h */,
+				A95AABF81AE0F48700897808 /* ZCStatisticalViewController.m */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		A95D72091AC8F78700DBD7E4 /* View */ = {
@@ -1198,7 +1198,7 @@
 				A911BE2E1AC9643F00819F52 /* SVProgressHUD.m in Sources */,
 				A967AD271A9EC762009E7468 /* ZCCity.m in Sources */,
 				A969EECD1ACA9D5900F73C37 /* MBProgressHUD.m in Sources */,
-				A95AABF51AE0E69700897808 /* ZCStatisticalViewController.m in Sources */,
+				A95AABF91AE0F48700897808 /* ZCStatisticalViewController.m in Sources */,
 				A969A9111AD4D880000700DD /* ZCPersonalViewController.m in Sources */,
 				A911BE1C1AC963EA00819F52 /* MJTypeEncoding.m in Sources */,
 				A911BE211AC963EA00819F52 /* MJRefreshBaseView.m in Sources */,
