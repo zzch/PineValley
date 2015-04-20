@@ -11,6 +11,7 @@
 #import "AFNetworking.h"
 #import "ZCHomePageStatistics.h"
 #import "ZCGraphicsView.h"
+#import "ZCAnalysisViewController.h"
 @interface ZCStatisticalViewController ()
 @property(nonatomic,strong)ZCHomePageStatistics *homePageStatistics;
 @end
@@ -20,11 +21,24 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    UIBarButtonItem *rightButton=[[UIBarButtonItem alloc] initWithTitle:@"分析" style:UIBarButtonItemStyleDone target:self action:@selector(clickRight)];
+    //改变UIBarButtonItem字体颜色
+    [rightButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor,nil] forState:UIControlStateNormal];
+    self.navigationItem.rightBarButtonItem =rightButton;
+    
+    //网络加载
     [self onlineData];
     
 }
 
+//点击右边
+-(void)clickRight
+{
+    ZCAnalysisViewController *analysisViewController=[[ZCAnalysisViewController alloc] init];
+    analysisViewController.hidesBottomBarWhenPushed=YES;
+    [self.navigationController pushViewController:analysisViewController animated:YES];
 
+}
 //网络请求
 -(void)onlineData
 {

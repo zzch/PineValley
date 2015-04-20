@@ -149,7 +149,7 @@
         }else{
         NSString *str=responseObject[@"user"][@"portrait"][@"url"];
         NSURL *url=[NSURL URLWithString:str];
-        [self.headImage setImageWithURL:url placeholderImage:[UIImage imageNamed:@"20141118042246536.jpg"]];
+        [self.headImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"20141118042246536.jpg"]];
         
         
         // 存储模型数据
