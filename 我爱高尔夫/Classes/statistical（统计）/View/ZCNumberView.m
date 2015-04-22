@@ -7,6 +7,7 @@
 //
 
 #import "ZCNumberView.h"
+#import "ZCResultsViewController.h"
 @interface ZCNumberView()
 @property(nonatomic,weak)UIButton *button1;
 @property(nonatomic,weak)UIButton *button2;
@@ -34,40 +35,65 @@
 {
     UIButton *button1=[[UIButton alloc] init];
     [button1 setTitle:@"最近5场" forState:UIControlStateNormal];
+    button1.tag=4005;
+    [button1 addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
      self.button1=button1;
     [self addSubview:button1];
     
     UIButton *button2=[[UIButton alloc] init];
     [button2 setTitle:@"最近10场" forState:UIControlStateNormal];
+    button2.tag=4010;
+    [button2 addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     self.button2=button2;
     [self addSubview:button2];
 
     
     UIButton *button3=[[UIButton alloc] init];
     [button3 setTitle:@"最近30场" forState:UIControlStateNormal];
+    button3.tag=4030;
+    [button3 addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     self.button3=button3;
     [self addSubview:button3];
 
     
     UIButton *button4=[[UIButton alloc] init];
     [button4 setTitle:@"最近50场" forState:UIControlStateNormal];
+    button4.tag=4050;
+    [button4 addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
+
     self.button4=button4;
     [self addSubview:button4];
 
     
     UIButton *button5=[[UIButton alloc] init];
     [button5 setTitle:@"最近100场" forState:UIControlStateNormal];
+    button5.tag=4100;
+    [button5 addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     self.button5=button5;
     [self addSubview:button5];
 
     
     UIButton *button6=[[UIButton alloc] init];
     [button6 setTitle:@"全部场次" forState:UIControlStateNormal];
+    
+    button6.tag=4101;
+    [button6 addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     self.button6=button6;
     [self addSubview:button6];
 
 
 }
+
+
+//通知控制器  我被点击了
+-(void)clickButton:(UIButton *)button
+{
+    if ([self.delegate respondsToSelector:@selector(numberViewDidClickedButton:didClickButton:)]) {
+        [self.delegate numberViewDidClickedButton:self didClickButton:button];
+    }
+    
+}
+
 
 -(void)layoutSubviews
 {

@@ -10,4 +10,5 @@
 #import "ZCPersonalData.h"
 @interface ZCPersonalInformationViewController : UIViewController
 @property(nonatomic,strong)ZCPersonalData *personalData;
+@property(nonatomic,strong)UIImage *personalImage;
 @end

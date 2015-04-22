@@ -51,7 +51,7 @@
     scrollView.frame=[UIScreen mainScreen].bounds;
     self.scrollView=scrollView;
     [self.view addSubview:scrollView];
-    
+    //self.scrollView.userInteractionEnabled=YES;
     scrollView.contentSize = CGSizeMake(0,SCREEN_HEIGHT+200 );
 
     
@@ -312,7 +312,7 @@
     CGFloat signatureTextFieldH=80;
     signatureTextView.frame=CGRectMake(signatureTextFieldX, signatureTextFieldY, signatureTextFieldW, signatureTextFieldH);
     signatureTextView.backgroundColor=[UIColor yellowColor];
-    signatureTextView.text=self.personalData.desc;
+    signatureTextView.text=[NSString stringWithFormat:@"%@",self.personalData.desc];
     [self.scrollView addSubview:signatureTextView];
     self.signatureTextView=signatureTextView;
     
@@ -435,6 +435,7 @@
     CGFloat photoViewBtnW=SCREEN_WIDTH-(2*photoViewBtnX);
     CGFloat photoViewBtnH=72;
     photoViewBtn.frame=CGRectMake(photoViewBtnX, photoViewBtnY, photoViewBtnW, photoViewBtnH);
+    
     [photoViewBtn addTarget:self action:@selector(clickphotoViewBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.scrollView addSubview:photoViewBtn];
     self.photoViewBtn=photoViewBtn;
@@ -447,6 +448,9 @@
     CGFloat photoViewH=60;
     CGFloat photoViewY=(photoViewBtnH-photoViewH)*0.5;
     photoView.frame=CGRectMake(photoViewX, photoViewY, photoViewW, photoViewH);
+    photoView.layer.masksToBounds = YES;
+    photoView.layer.cornerRadius = 30;
+    photoView.image=self.personalImage;
     [photoViewBtn addSubview:photoView];
     self.photoView=photoView;
     
@@ -501,12 +505,12 @@
              [self presentViewController:pick animated:YES completion:nil];
          
          }else{
-             
+             ZCLog(@"相ji不可用");
          
          }
         
     
-    }else{
+    }else if(buttonIndex == 1){
         
         
               if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
@@ -522,7 +526,7 @@
        
         
                }else{
-                   ZCLog(@"相机不可用");
+                   ZCLog(@"相ce不可用");
         
                    // [FXJDyTool showAlertViewWithMessage:@"相册不可用" delegate:self];
                 }
@@ -647,6 +651,21 @@
     
     
     
+}
+
+
+////点击屏幕
+//-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//    //if (self.datePicker) {
+//        [self.datePicker removeFromSuperview];
+//   // }
+//}
+
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [self.datePicker removeFromSuperview];
+    ZCLog(@"111111111111");
 }
 
 - (void)didReceiveMemoryWarning {

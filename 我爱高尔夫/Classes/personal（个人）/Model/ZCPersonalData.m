@@ -19,10 +19,17 @@
 - (instancetype)initWithDict:(NSDictionary *)dict
 {
     if (self=[super init]) {
-//        if (dict[@"birthday"] is) {
-//            <#statements#>
-//        }
-        self.birthday=[dict[@"birthday"] longValue] ;
+        
+        ZCLog(@"%@",[dict[@"birthday"] class]);
+        if ([dict[@"birthday"] isKindOfClass:[NSNull class]]) {
+           
+            
+        }else
+        {
+            self.birthday=[dict[@"birthday"] longValue] ;
+        }
+        
+        
         self.desc=dict[@"description"];
         self.gender=dict[@"gender"];
         self.handicap=dict[@"handicap"];

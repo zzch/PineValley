@@ -13,6 +13,7 @@
  生日
  */
 @property(nonatomic,assign)long birthday;
+
 /**
  签名
  */

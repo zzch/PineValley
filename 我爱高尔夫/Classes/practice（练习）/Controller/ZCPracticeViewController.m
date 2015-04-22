@@ -59,6 +59,7 @@
     
     ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
     tool.scoring=@"simple";
+    tool.eventType=@"practice";
     
     ZCQuickScoringTableViewController *quickScoringTableViewController=[[ZCQuickScoringTableViewController alloc] init];
     quickScoringTableViewController.hidesBottomBarWhenPushed=YES;
@@ -68,12 +69,24 @@
 }
 - (IBAction)chickModifyTheProfessionalScorecard {
     ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
-    tool.scoring=@"professional";
+     tool.scoring=@"professional";
     
+    tool.eventType=@"practice";
     ZCQuickScoringTableViewController *quickScoringTableViewController=[[ZCQuickScoringTableViewController alloc] init];
     quickScoringTableViewController.hidesBottomBarWhenPushed=YES;
     [self.navigationController pushViewController:quickScoringTableViewController animated:YES];
     
+}
+
+- (IBAction)clickEvent {
+    
+    
+    ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
+   tool.eventType=@"tournament";
+   
+    ZCQuickScoringTableViewController *quickScoringTableViewController=[[ZCQuickScoringTableViewController alloc] init];
+    quickScoringTableViewController.hidesBottomBarWhenPushed=YES;
+    [self.navigationController pushViewController:quickScoringTableViewController animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

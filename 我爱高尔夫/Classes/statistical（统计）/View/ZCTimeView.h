@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@class ZCTimeView;
+@protocol ZCTimeDelegate<NSObject>
+@optional
+- (void)timeViewDidClickedButton:(ZCTimeView *)headerView startTime:(long)startTime  andEndTime:(long)endTime;
+@end
 
 @interface ZCTimeView : UIView
-
+@property (nonatomic, weak) id<ZCTimeDelegate> delegate;
 @end

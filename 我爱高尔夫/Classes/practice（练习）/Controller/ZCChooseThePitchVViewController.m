@@ -18,7 +18,7 @@
 #import "ZCStadiumInformation.h"
 #import "SVProgressHUD.h"
 #import "MBProgressHUD+NJ.h"
-
+#import "ZCEventUuidTool.h"
 @interface ZCChooseThePitchVViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate,CLLocationManagerDelegate>
 
 //搜索栏
@@ -267,6 +267,10 @@ return _dataArray.count;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
+    if ([tool.eventType isEqual:@"practice"]) {
+        
+    
     //取消选中
     //[tableView deselectRowAtIndexPath:indexPath animated:YES];
    ZCSettingTVController *settingView=[[ZCSettingTVController alloc] init];
@@ -281,7 +285,12 @@ return _dataArray.count;
     
     [self.navigationController pushViewController:settingView animated:YES];
     
+    }else
+    {
     
+     
+    
+    }
     
 }
 

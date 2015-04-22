@@ -11,12 +11,17 @@
 @interface ZCTimeView()<ZCDatapickerViewDelegate>
 @property(nonatomic,weak)UIButton *startButton;
 @property(nonatomic,weak)UIButton *endButton;
+@property(nonatomic,weak)UIButton *seeButton;
 @property(nonatomic,weak)UILabel *startTime;
 @property(nonatomic,weak)UILabel *startName;
 @property(nonatomic,weak)UILabel *endTime;
 @property(nonatomic,weak)UILabel *endName;
 @property(nonatomic,weak)ZCDatapickerView *dataPick;
 @property(nonatomic,weak)UIView *alphaView;
+
+@property(nonatomic,assign)long longstartTime;
+@property(nonatomic,assign)long longendTime;
+
 //判断是点击开始按钮 还是 结束按钮
 @property(nonatomic,assign)int index;
 
@@ -50,8 +55,21 @@
     [startButton  addSubview:startName];
     
     UILabel *startTime=[[UILabel alloc] init];
-    self.startTime=startTime;
+     self.startTime=startTime;
     [startButton  addSubview:startTime];
+    
+    // 获取用户通过UIDatePicker设置的日期和时间
+    NSDate *selected = [NSDate date];
+    // 创建一个日期格式器
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    // 为日期格式器设置格式字符串
+    [dateFormatter setDateFormat:@"yyyy年MM月dd日"];
+    // 使用日期格式器格式化日期、时间
+    NSString *destDateString = [dateFormatter stringFromDate:selected];
+    startTime.text=destDateString;
+    //吧时间变成时间濯
+    long time=(long)[selected timeIntervalSince1970];
+    self.longstartTime=time;
     
     //结束
     UIButton *endButton=[[UIButton alloc] init];
@@ -66,13 +84,41 @@
     
     UILabel *endTime=[[UILabel alloc] init];
     self.endTime=endTime;
+    
     [endButton  addSubview:endTime];
+    
+    endTime.text=destDateString;
+    //吧时间变成时间濯
+    long time1=(long)[selected timeIntervalSince1970];
+    self.longendTime=time1;
+
+    
+    
+    
+    UIButton *seeButton=[[UIButton alloc] init];
+    seeButton.backgroundColor=[UIColor redColor];
+    [seeButton setTitle:@"搜索" forState:UIControlStateNormal];
+    [seeButton addTarget:self action:@selector(clickseeButton) forControlEvents:UIControlEventTouchUpInside];
+    self.seeButton=seeButton;
+    [self addSubview:seeButton];
     
     
    
     
 
 }
+
+//点击查看  通知代理
+-(void)clickseeButton
+{
+  
+    if ([self.delegate respondsToSelector:@selector(timeViewDidClickedButton:startTime:andEndTime:)]) {
+        [self.delegate timeViewDidClickedButton:self startTime:self.longstartTime andEndTime:self.longendTime];
+    }
+
+}
+
+
 
 //开始
 -(void)clickStartButton
@@ -137,12 +183,20 @@
     NSString *destDateString = [dateFormatter stringFromDate:selected];
     
     
+    
     if (self.index==1) {
         [self.startTime setText:destDateString ];
+        
+        //吧时间变成时间濯
+        long time=(long)[selected timeIntervalSince1970];
+        self.longstartTime=time;
 
     }else
     {
     [self.endTime setText:destDateString ];
+        //吧时间变成时间濯
+        long time=(long)[selected timeIntervalSince1970];
+        self.longendTime=time;
     }
     
 
@@ -200,7 +254,13 @@
     CGFloat dataPickH=400;
     self.dataPick.frame=CGRectMake(dataPickX, dataPickY, dataPickW, dataPickH);
 
-
+    
+    
+    CGFloat seeButtonX=30;
+    CGFloat seeButtonY=startButtonY+startButtonH+110;
+    CGFloat seeButtonW=100;
+    CGFloat seeButtonH=50;
+    self.seeButton.frame=CGRectMake(seeButtonX, seeButtonY, seeButtonW, seeButtonH);
     
     
     self.alphaView.frame=CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);

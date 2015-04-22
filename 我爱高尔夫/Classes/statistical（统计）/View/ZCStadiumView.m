@@ -106,4 +106,14 @@
 }
 
 
+
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([self.delegater respondsToSelector:@selector(StadiumViewDidClickedcell:uuidStr:andName:)]) {
+        [self.delegater StadiumViewDidClickedcell:self uuidStr:[self.stadiumArray[indexPath.row] uuid] andName:[self.stadiumArray[indexPath.row] name]];
+    }
+
+}
+
 @end

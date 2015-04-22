@@ -23,6 +23,7 @@
 @property(nonatomic,copy)NSString *name;
 @property(nonatomic,weak)UILabel *moodLabel;
 @property(nonatomic,weak)UIImageView *headImage;
+@property(nonatomic,weak)NSString *imagePath;
 @end
 
 @implementation ZCPersonalViewController
@@ -143,19 +144,42 @@
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     params[@"token"]=account.token;
     [mgr GET:URL parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-     
-        if (responseObject[@"user"][@"portrait"]==nil) {
+        ZCLog(@"%@",responseObject);
+        if ([responseObject[@"user"][@"portrait"]  isKindOfClass:[NSNull class]]) {
             
         }else{
         NSString *str=responseObject[@"user"][@"portrait"][@"url"];
         NSURL *url=[NSURL URLWithString:str];
-        [self.headImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"20141118042246536.jpg"]];
+        //[self.headImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"20141118042246536.jpg"]];
+            [self.headImage sd_setImageWithURL:url placeholderImage:nil];
         
         
         // 存储模型数据
-        NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-        NSString *file = [doc stringByAppendingPathComponent:@"image.jpg"];
-        [NSKeyedArchiver archiveRootObject:self.headImage.image toFile:file];
+//        NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+//        NSString *file = [doc stringByAppendingPathComponent:@"image.jpg"];
+//        [NSKeyedArchiver archiveRootObject:self.headImage.image toFile:file];
+            
+            
+            
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+            NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"ImageFile"];   // 保存文件的名称
+            //创建ImageFile的文件夹
+            [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:YES attributes:nil error:nil];
+            self.imagePath=[filePath stringByAppendingPathComponent:@"image.png"];
+            //[UIImagePNGRepresentation(self.headImage.image)writeToFile: filePath    atomically:YES]; // 保存成功会返回YES
+            //把图片转成NSData保存到沙盒文件下
+            UIImage *image2=[UIImage imageNamed:@"wo-xuanzhong" ];
+            NSData *data;
+            if (UIImagePNGRepresentation(image2)) {
+                data=UIImagePNGRepresentation(image2);
+            }else
+            {
+            data=UIImageJPEGRepresentation(image2, 1.0);
+            }
+            //保存
+            [[NSFileManager defaultManager] createFileAtPath:self.imagePath contents:data attributes:nil];
+
+            
         }
 ZCLog(@"网络下载的 ");
         
@@ -191,22 +215,38 @@ ZCLog(@"网络下载的 ");
     CGFloat headImageH=75;
     CGFloat headImageX=(SCREEN_WIDTH-headImageW)*0.5;
     CGFloat headImageY=21;
+   
     headImage.frame=CGRectMake(headImageX, headImageY, headImageW, headImageH);
+    headImage.layer.masksToBounds = YES;
+    headImage.layer.cornerRadius = 37.5;
     [headImageView addSubview:headImage];
     self.headImage=headImage;
     
-    NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *file = [doc stringByAppendingPathComponent:@"image.jpg"];
-    UIImage *image=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
-    if (image==nil) {
-        [self imageData];
-    }else{
-        
-       // UIImage *myImg = [UIImage imageWithData:image];
-        self.headImage.image=image;
-        
-        ZCLog(@"沙盒取得");
-    }
+    [self imageData];
+    
+    
+//    NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+//    NSString *file = [doc stringByAppendingPathComponent:@"image.jpg"];
+//    UIImage *image=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
+//    
+    
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+//    NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"sms.gif"]];   // 保存文件的名称
+//
+    
+//    NSString *fullPath = [[NSHomeDirectory() stringByAppendingPathComponent:@"Docments"] stringByAppendingPathComponent:@"currentImage.png"];
+    //UIImage *savedImage = [[UIImage alloc] initWithContentsOfFile:self.imagePath];
+//    NSData *data = [NSData dataWithContentsOfFile:self.imagePath];
+//    UIImage *savedImage = [[UIImage alloc] initWithData:data];
+//    if (data==nil) {
+//        [self imageData];
+//    }else{
+//        
+//       // UIImage *myImg = [UIImage imageWithData:image];
+//        self.headImage.image=savedImage;
+//        
+//        ZCLog(@"沙盒取得");
+//    }
     
     //名字
     UILabel *nameLabel=[[UILabel alloc] init];
@@ -259,11 +299,35 @@ ZCLog(@"网络下载的 ");
     
     ZCPersonalInformationViewController *PersonalInformation=[[ZCPersonalInformationViewController alloc] init];
     PersonalInformation.personalData=self.personalData;
+    PersonalInformation.personalImage=self.headImage.image;
     [self.navigationController pushViewController:PersonalInformation animated:YES];
     
 
 }
 
+
+
+//-(void)viewWillDisappear:(BOOL)animated
+//{
+//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+//    NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"ImageFile"];   // 保存文件的名称
+//    //创建ImageFile的文件夹
+//    [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:YES attributes:nil error:nil];
+//    self.imagePath=[filePath stringByAppendingPathComponent:@"image.png"];
+//    //[UIImagePNGRepresentation(self.headImage.image)writeToFile: filePath    atomically:YES]; // 保存成功会返回YES
+//    //把图片转成NSData保存到沙盒文件下
+//    NSData *data;
+//    if (UIImagePNGRepresentation(self.headImage.image)) {
+//        data=UIImagePNGRepresentation(self.headImage.image);
+//    }else
+//    {
+//        data=UIImageJPEGRepresentation(self.headImage.image, 1.0);
+//    }
+//    //保存
+//    [[NSFileManager defaultManager] createFileAtPath:self.imagePath contents:data attributes:nil];
+//    
+//
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

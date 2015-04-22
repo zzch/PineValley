@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@class ZCNumberView;
+@protocol ZCNumberDelegate<NSObject>
+@optional
+- (void)numberViewDidClickedButton:(ZCNumberView *)headerView didClickButton:(UIButton *)button;
+@end
 @interface ZCNumberView : UIView
-
+@property (nonatomic, weak) id<ZCNumberDelegate> delegate;
 @end
