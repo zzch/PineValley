@@ -19,6 +19,7 @@
 #import "SVProgressHUD.h"
 #import "MBProgressHUD+NJ.h"
 #import "ZCEventUuidTool.h"
+#import "ZCCompetitiveSetTableViewController.h"
 @interface ZCChooseThePitchVViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate,CLLocationManagerDelegate>
 
 //搜索栏
@@ -266,20 +267,23 @@ return _dataArray.count;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
-    if ([tool.eventType isEqual:@"practice"]) {
-        
-    
-    //取消选中
+{ //取消选中
     //[tableView deselectRowAtIndexPath:indexPath animated:YES];
-   ZCSettingTVController *settingView=[[ZCSettingTVController alloc] init];
-    //点击单个cell时候，发送请求获取单个球场信息   uuid    /v1/matches/show.json
 
+   
+    //点击单个cell时候，发送请求获取单个球场信息   uuid    /v1/matches/show.json
+    
     ZCstadium *stadiumStr=self.dataArray[indexPath.row];
     
     NSString *uuidStr=stadiumStr.uuid;
+
+    ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
+    if ([tool.eventType isEqual:@"practice"]) {
+        
+    ZCSettingTVController *settingView=[[ZCSettingTVController alloc] init];
+        
     
+        
     settingView.uuidStr=uuidStr;
     
     
@@ -287,8 +291,9 @@ return _dataArray.count;
     
     }else
     {
-    
-     
+        ZCCompetitiveSetTableViewController *competitiveSetTableViewController=[[ZCCompetitiveSetTableViewController alloc] init];
+        competitiveSetTableViewController.uuidStr=uuidStr;
+        [self.navigationController pushViewController:competitiveSetTableViewController animated:YES];
     
     }
     

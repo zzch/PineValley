@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ZCCompetitiveSetTableViewController : UITableViewController
-
+//传递过来的模型数据
+@property(nonatomic,copy) NSString *uuidStr;
 @end

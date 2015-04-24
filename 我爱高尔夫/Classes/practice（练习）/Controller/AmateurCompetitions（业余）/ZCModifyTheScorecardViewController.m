@@ -774,6 +774,8 @@
     
 }
 
+
+//观察者调用方法
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     // ZCLog(@"%@",change[@"new"]);

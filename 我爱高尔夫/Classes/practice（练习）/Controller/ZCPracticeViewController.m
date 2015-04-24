@@ -11,6 +11,7 @@
 #import "ZCQuickScoringTableViewController.h"
 #import "AppDelegate.h"
 #import "ZCEventUuidTool.h"
+#import "ZCChooseThePitchVViewController.h"
 
 @interface ZCPracticeViewController ()
 
@@ -84,7 +85,7 @@
     ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
    tool.eventType=@"tournament";
    
-    ZCQuickScoringTableViewController *quickScoringTableViewController=[[ZCQuickScoringTableViewController alloc] init];
+    ZCChooseThePitchVViewController *quickScoringTableViewController=[[ZCChooseThePitchVViewController alloc] init];
     quickScoringTableViewController.hidesBottomBarWhenPushed=YES;
     [self.navigationController pushViewController:quickScoringTableViewController animated:YES];
 }

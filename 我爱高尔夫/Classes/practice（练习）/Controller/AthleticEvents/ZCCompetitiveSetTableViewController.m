@@ -7,7 +7,8 @@
 //
 
 #import "ZCCompetitiveSetTableViewController.h"
-
+#import "ZCAthleticEventTableViewCell.h"
+#import "ZCCreateAGameTableViewController.h"
 @interface ZCCompetitiveSetTableViewController ()
 
 @end
@@ -17,11 +18,32 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"新建" style:UIBarButtonItemStyleDone target:self action:@selector(clickRightBarButton)];
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    self.tableView.delegate=self;
+    self.tableView.dataSource=self;
+    self.tableView.rowHeight=100;
+    
+    
+    [self onlineData];
+    
+}
+
+
+//网络加载
+-(void)onlineData
+{
+
+
+}
+
+//点击新建/v1/venues/matches/tournament.json
+-(void)clickRightBarButton
+{
+    ZCCreateAGameTableViewController *createAGameTableViewController=[[ZCCreateAGameTableViewController alloc] init];
+    createAGameTableViewController.uuidStr=self.uuidStr;
+    [self.navigationController pushViewController:createAGameTableViewController animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -32,26 +54,25 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete method implementation.
+
     // Return the number of rows in the section.
-    return 0;
+    return 5;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
     
-    // Configure the cell...
+    ZCAthleticEventTableViewCell *cell=[ZCAthleticEventTableViewCell cellWithTable:tableView];
+    
     
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.
