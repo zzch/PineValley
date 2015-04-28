@@ -18,10 +18,12 @@
 #import "ZCModifyTheScorecardViewController.h"
 #import "ZCCompetitiveModel.h"
 #import "ZCCompetitiveTableViewCell.h"
-@interface ZCCompetitiveScorecardTableViewController ()<UITableViewDataSource,UITableViewDelegate,ZCScorecarDelegate,ZCModifyTheScorecardViewControllerDelegate>
+#import "ZCRankingTableViewController.h"
+@interface ZCCompetitiveScorecardTableViewController ()<UITableViewDataSource,UITableViewDelegate,ZCScorecarDelegate,ZCModifyTheScorecardViewControllerDelegate,ZCCompetitiveTableViewCellDelagate>
 
 @property (nonatomic, strong) NSMutableArray *scorecards;
 @property (nonatomic, strong) NSIndexPath *indexPath;
+@property(nonatomic,strong)ZCCompetitiveModel *competitiveModel;
 
 @end
 
@@ -29,6 +31,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    //网络加载
+    
+    [self onlineData];
     
 //    // 修改返回按钮
 //    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui-anxia" action:@selector(liftBthClick:) target:self];
@@ -47,6 +53,42 @@
     //self.tableView.rowHeight=125;
 
     
+}
+
+
+//网络加载  /v1/matches/tournament/show.json
+-(void)onlineData
+{
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
+    ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
+    
+    params[@"uuid"]=self.uuid;
+    //ZCLog(@"%@",self.athleticEventsModel.uuid);
+    params[@"token"]=account.token;
+    
+    //发送请求/v1/matches/tournament/participate.json
+    
+    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"matches/tournament/show.json"];
+    ZCLog(@"%@",url);
+    ZCLog(@"%@",self.uuid);
+    ZCLog(@"%@",account.token);
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        
+        ZCLog(@"%@",responseObject);
+        
+        ZCCompetitiveModel *competitiveModel= [ZCCompetitiveModel competitiveModelWithDict:responseObject];
+        self.competitiveModel=competitiveModel;
+        [self.tableView reloadData];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+
+
 }
 
 
@@ -76,7 +118,8 @@
     if (indexPath.section==0) {
         
         ZCCompetitiveTableViewCell *cell=[ZCCompetitiveTableViewCell cellWithTable:tableView];
-        
+        cell.delegate=self;
+        cell.playerModel=self.competitiveModel.player;
         return cell;
     }else
     {
@@ -185,6 +228,18 @@
     
     
 }
+
+
+
+
+
+#pragma mark - ZCCompetitiveTableViewCell代理方法
+-(void)ZCCompetitiveTableViewCell:(ZCCompetitiveTableViewCell *)competitiveTableViewCell didClickrankingButton:(UIButton *)button
+{
+    ZCRankingTableViewController *rankingTableViewController=[[ZCRankingTableViewController alloc] init];
+    [self.navigationController pushViewController:rankingTableViewController animated:YES];
+}
+
 
 
 

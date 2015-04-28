@@ -7,12 +7,15 @@
 //
 
 #import "ZCAthleticEventTableViewCell.h"
+#import "ZCUserModel.h"
+#import "UIImageView+WebCache.h"
 @interface ZCAthleticEventTableViewCell()
 @property(nonatomic,weak)UIImageView *photoView;
 @property(nonatomic,weak)UILabel *personName;
 @property(nonatomic,weak)UILabel *stadiumName;
 @property(nonatomic,weak)UILabel *stadiumtype;
 @property(nonatomic,weak)UILabel *numberPerson;
+@property(nonatomic,weak)UIImageView *rightImage;
 @end
 @implementation ZCAthleticEventTableViewCell
 
@@ -58,12 +61,37 @@
         self.numberPerson=numberPerson;
 
         
+        UIImageView *rightImage=[[UIImageView alloc] init];
+        [self.contentView addSubview:rightImage];
+        rightImage.image=[UIImage imageNamed:@"jfk_youjiantou"];
+        self.rightImage=rightImage;
+        
     }
     return self;
 }
 
 
+-(void)setAthleticEventsModel:(ZCAthleticEventsModel *)athleticEventsModel
+{
+    _athleticEventsModel=athleticEventsModel;
+    if ([athleticEventsModel.user.portrait isKindOfClass:[NSNull class]]) {
+        
+    }else
+    {
+    NSURL *url=[NSURL URLWithString:athleticEventsModel.user.portrait];
+    [self.photoView sd_setImageWithURL:url placeholderImage:nil];
+    }
+    self.personName.text=athleticEventsModel.user.nickname;
+    self.stadiumName.text=athleticEventsModel.name;
+    
+    if ([athleticEventsModel.rule isEqual:@"stroke_play"]) {
+        self.stadiumtype.text=@"比杆赛";
+    }
+    
+    
 
+    self.numberPerson.text=[NSString stringWithFormat:@"%@",athleticEventsModel.players_count];
+}
 
 
 -(void)layoutSubviews
@@ -102,6 +130,16 @@
     CGFloat numberPersonH=20;
     CGFloat numberPersonX=self.frame.size.width-numberPersonW-10;
     self.numberPerson.frame=CGRectMake(numberPersonX, numberPersonY, numberPersonW, numberPersonH);
+    
+    
+    
+    
+    CGFloat rightImageW=20;
+    CGFloat rightImageH=20;
+    CGFloat rightImageX=self.frame.size.width-rightImageW-10;
+    CGFloat rightImageY=(self.frame.size.height-rightImageH)/2;
+    self.rightImage.frame=CGRectMake(rightImageX, rightImageY, rightImageW, rightImageH);
+
 }
 
 

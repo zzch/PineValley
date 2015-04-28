@@ -9,8 +9,16 @@
 #import "ZCCompetitiveSetTableViewController.h"
 #import "ZCAthleticEventTableViewCell.h"
 #import "ZCCreateAGameTableViewController.h"
+#import "AFNetworking.h"
+#import "ZCAccount.h"
+#import "ZCAthleticEventsModel.h"
+#import "ZCUserModel.h"
+#import "ZCToJoinTheGameTableViewController.h"
 @interface ZCCompetitiveSetTableViewController ()
-
+@property(nonatomic,strong)NSMutableArray *athleticEventsModelArray;
+@property(nonatomic,weak)UIView *passwordView;
+@property(nonatomic,weak)UITextField *TextField;
+@property(nonatomic,strong)ZCAthleticEventsModel *athleticEventsModel;
 @end
 
 @implementation ZCCompetitiveSetTableViewController
@@ -34,7 +42,40 @@
 //网络加载
 -(void)onlineData
 {
-
+  
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
+    ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
+    params[@"uuid"]=self.uuidStr;
+    params[@"token"]=account.token;
+    
+    
+    
+    //发送请求/v1/courses/show.json
+    
+    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"venues/matches/tournament.json"];
+    
+//    ZCLog(@"%@",self.uuidStr);
+//    ZCLog(@"%@",account.token);
+//    ZCLog(@"%@",url);
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+      ZCLog(@"%@",responseObject);
+        self.athleticEventsModelArray=[NSMutableArray array];
+        
+        for (NSDictionary *dict in responseObject) {
+            ZCAthleticEventsModel *athleticEventsModel=[ZCAthleticEventsModel athleticEventsModelWithDict:dict];
+            [self.athleticEventsModelArray addObject:athleticEventsModel];
+        }
+        
+        [self.tableView reloadData];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
+    
 
 }
 
@@ -61,16 +102,89 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
     // Return the number of rows in the section.
-    return 5;
+    return self.athleticEventsModelArray.count;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     ZCAthleticEventTableViewCell *cell=[ZCAthleticEventTableViewCell cellWithTable:tableView];
-    
+    cell.athleticEventsModel=self.athleticEventsModelArray[indexPath.row];
     
     return cell;
+}
+
+
+
+
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    
+    self.athleticEventsModel= self.athleticEventsModelArray[indexPath.row] ;
+    
+    
+    UIView *passwordView=[[UIView alloc] init];
+    passwordView.backgroundColor=[[UIColor blackColor] colorWithAlphaComponent:0.4];
+    
+    
+    
+    passwordView.frame=CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+//    [passwordView addTarget:self action:@selector(clickpassView) forControlEvents:UIControlEventTouchUpOutside];
+    
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(coverClick)];
+    [passwordView addGestureRecognizer:tap];
+    
+    self.passwordView=passwordView;
+    UIWindow *wd = [[UIApplication sharedApplication].delegate window];
+    [wd addSubview:passwordView];
+
+    UITextField * TextField=[[UITextField alloc] init];
+    TextField.backgroundColor=[UIColor redColor];
+    TextField.frame=CGRectMake(30, 200, 200, 30);
+    [passwordView addSubview:TextField];
+    self.TextField=TextField;
+    
+    
+    UIButton *button=[[UIButton alloc] init];
+    button.backgroundColor=[UIColor redColor];
+    button.frame=CGRectMake(50, 300, 50, 30);
+    [button addTarget:self action:@selector(didclickButton) forControlEvents:UIControlEventTouchUpInside];
+    [passwordView addSubview:button];
+
+}
+
+
+
+-(void)didclickButton
+{
+    [self.passwordView removeFromSuperview];
+    //  self.TextField.text
+    if ([self.TextField.text isEqual:self.athleticEventsModel.password]) {
+        
+        ZCToJoinTheGameTableViewController *toJoinTheGameTableViewController=[[ZCToJoinTheGameTableViewController alloc] init];
+        
+        toJoinTheGameTableViewController.athleticEventsModel=self.athleticEventsModel;
+        [self.navigationController pushViewController:toJoinTheGameTableViewController animated:YES];
+        
+    }
+    
+}
+
+
+//-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+//{
+//
+//}
+
+
+
+
+-(void)coverClick
+{
+    [self.passwordView removeFromSuperview];
 }
 
 

@@ -167,11 +167,14 @@
         
         ZCLog(@"%@",responseObject);
         
-         ZCCompetitiveModel *competitiveModel= [ZCCompetitiveModel competitiveModelWithDict:responseObject];
+        // ZCCompetitiveModel *competitiveModel= [ZCCompetitiveModel competitiveModelWithDict:responseObject];
         // ZCLog(@"-------%@",totalScorecards.type);
         // scorecardTableView.totalScorecards=totalScorecards;
         //单利模式  为统计页面保存uuid
-        competitiveScorecardTableViewController.competitiveModel=competitiveModel;
+       // competitiveScorecardTableViewController.competitiveModel=competitiveModel;
+        competitiveScorecardTableViewController.uuid=responseObject[@"uuid"];
+        
+        [self.navigationController pushViewController:competitiveScorecardTableViewController animated:YES];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         //ZCLog(@"%@",error);
@@ -179,7 +182,6 @@
     
     
     
-    [self.navigationController pushViewController:competitiveScorecardTableViewController animated:YES];
     
 }
 

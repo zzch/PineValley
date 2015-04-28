@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "ZCEventUuidTool.h"
 #import "ZCChooseThePitchVViewController.h"
+#import "ZCHistoryOfCompetitiveTableViewController.h"
 
 @interface ZCPracticeViewController ()
 
@@ -85,9 +86,14 @@
     ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
    tool.eventType=@"tournament";
    
-    ZCChooseThePitchVViewController *quickScoringTableViewController=[[ZCChooseThePitchVViewController alloc] init];
-    quickScoringTableViewController.hidesBottomBarWhenPushed=YES;
-    [self.navigationController pushViewController:quickScoringTableViewController animated:YES];
+    
+    ZCHistoryOfCompetitiveTableViewController *HistoryOfCompetitiveTableViewController=[[ZCHistoryOfCompetitiveTableViewController alloc] init];
+    HistoryOfCompetitiveTableViewController.hidesBottomBarWhenPushed=YES;
+    [self.navigationController pushViewController:HistoryOfCompetitiveTableViewController animated:YES];
+    
+//    ZCChooseThePitchVViewController *quickScoringTableViewController=[[ZCChooseThePitchVViewController alloc] init];
+//    quickScoringTableViewController.hidesBottomBarWhenPushed=YES;
+//    [self.navigationController pushViewController:quickScoringTableViewController animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

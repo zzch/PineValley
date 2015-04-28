@@ -152,6 +152,26 @@
         NSURL *url=[NSURL URLWithString:str];
         //[self.headImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"20141118042246536.jpg"]];
             [self.headImage sd_setImageWithURL:url placeholderImage:nil];
+            
+            [self.headImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"20141118042246536.jpg"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                
+                
+                
+                NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+                self.imagePath=[[paths objectAtIndex:0] stringByAppendingPathComponent:@"ImageFile"];
+                [[NSFileManager defaultManager] createDirectoryAtPath:self.imagePath withIntermediateDirectories:YES attributes:nil error:nil];
+                
+                NSData *data;
+                if (UIImagePNGRepresentation(image)) {
+                    data=UIImagePNGRepresentation(image);
+                }else
+                {
+                    data=UIImageJPEGRepresentation(image, 1.0);
+                }
+                
+                [data writeToFile:self.imagePath atomically:YES];
+
+            }];
         
         
         // 存储模型数据
@@ -161,27 +181,32 @@
             
             
             
-            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
-            NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"ImageFile"];   // 保存文件的名称
+          //  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+           // NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"ImageFile"];
+            
+           // self.imagePath=[[paths objectAtIndex:0] stringByAppendingPathComponent:@"ImageFile"];
+            // 保存文件的名称
             //创建ImageFile的文件夹
-            [[NSFileManager defaultManager] createDirectoryAtPath:filePath withIntermediateDirectories:YES attributes:nil error:nil];
-            self.imagePath=[filePath stringByAppendingPathComponent:@"image.png"];
+          //  [[NSFileManager defaultManager] createDirectoryAtPath:self.imagePath withIntermediateDirectories:YES attributes:nil error:nil];
+           // self.imagePath=[filePath stringByAppendingPathComponent:@"image.png"];
             //[UIImagePNGRepresentation(self.headImage.image)writeToFile: filePath    atomically:YES]; // 保存成功会返回YES
             //把图片转成NSData保存到沙盒文件下
-            UIImage *image2=[UIImage imageNamed:@"wo-xuanzhong" ];
-            NSData *data;
-            if (UIImagePNGRepresentation(image2)) {
-                data=UIImagePNGRepresentation(image2);
-            }else
-            {
-            data=UIImageJPEGRepresentation(image2, 1.0);
-            }
+            //UIImage *image2=[UIImage imageNamed:@"wo-xuanzhong" ];
+//            NSData *data;
+//            if (UIImagePNGRepresentation(self.headImage.image)) {
+//                data=UIImagePNGRepresentation(self.headImage.image);
+//            }else
+//            {
+//            data=UIImageJPEGRepresentation(self.headImage.image, 1.0);
+//            }
             //保存
-            [[NSFileManager defaultManager] createFileAtPath:self.imagePath contents:data attributes:nil];
+           // [[NSFileManager defaultManager] createFileAtPath:self.imagePath contents:data attributes:nil];
+            
+           // [data writeToFile:self.imagePath atomically:YES];
 
             
         }
-ZCLog(@"网络下载的 ");
+ZCLog(@"网络下的载 ");
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
@@ -222,7 +247,19 @@ ZCLog(@"网络下载的 ");
     [headImageView addSubview:headImage];
     self.headImage=headImage;
     
-    [self imageData];
+    
+    
+    
+    NSData *data = [NSData dataWithContentsOfFile:self.imagePath];
+    if (data) {
+        headImage.image=[UIImage imageWithData:data];
+        ZCLog(@"沙盒取出");
+    }else
+    {
+     [self imageData];
+        
+    }
+    
     
     
 //    NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];

@@ -7,12 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "ZCPlayerModel.h"
 @interface ZCCompetitiveModel : NSObject
 /**
- *  创建球场的UUID
+ *  用户信息
  */
-@property (nonatomic, copy) NSString *uuid;
+@property (nonatomic, strong) ZCPlayerModel *player;
 
 /**
  *  创建球场的type

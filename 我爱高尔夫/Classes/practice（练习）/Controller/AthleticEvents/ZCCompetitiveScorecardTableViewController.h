@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 @class ZCCompetitiveModel;
 @interface ZCCompetitiveScorecardTableViewController : UITableViewController
-@property(nonatomic,strong)ZCCompetitiveModel *competitiveModel;
+
+@property(nonatomic,copy)NSString *uuid;
 @end

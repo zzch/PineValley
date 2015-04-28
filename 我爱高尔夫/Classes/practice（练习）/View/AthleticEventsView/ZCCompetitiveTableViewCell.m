@@ -74,12 +74,14 @@
 
 
         UIImageView *personImageView=[[UIImageView alloc] init];
+        
         [self.contentView addSubview:personImageView];
         self.personImageView=personImageView;
         
         
         UIButton *rankingButton=[[UIButton alloc] init];
         rankingButton.backgroundColor=[UIColor redColor];
+        [rankingButton addTarget:self action:@selector(clickRankingButton:) forControlEvents:UIControlEventTouchUpInside];
         [rankingButton setTitle:@"查看排名" forState:UIControlStateNormal];
         [self.contentView addSubview:rankingButton];
         self.rankingButton=rankingButton;
@@ -96,6 +98,27 @@
 
 
 
+-(void)setPlayerModel:(ZCPlayerModel *)playerModel
+{
+    _playerModel=playerModel;
+    
+    
+    self.nameLabel.text=[NSString stringWithFormat:@"%@",playerModel.user.nickname];
+    self.scoreLabel.text=[NSString stringWithFormat:@"%@",playerModel.score];
+    self.rankingLabel.text=[NSString stringWithFormat:@"%@",playerModel.position];
+    self.distanceParLabel.text=[NSString stringWithFormat:@"%@",playerModel.status];
+    
+
+}
+//点击排名
+-(void)clickRankingButton:(UIButton *)button
+{
+    if ([self.delegate respondsToSelector:@selector(ZCCompetitiveTableViewCell:didClickrankingButton:)]) {
+        
+        
+        [self.delegate ZCCompetitiveTableViewCell:self didClickrankingButton:button];
+    }
+}
 
 
 
@@ -103,7 +126,20 @@
 {
     [super layoutSubviews];
     
-    CGFloat nameLabelX=10;
+    
+    
+    
+    CGFloat personImageViewW=80;
+    CGFloat personImageViewH=80;
+    CGFloat personImageViewX=10;
+    CGFloat personImageViewY=(self.frame.size.height-personImageViewH)/2;
+    
+    self.personImageView.frame=CGRectMake(personImageViewX, personImageViewY, personImageViewW, personImageViewH);
+    
+    
+    
+    
+    CGFloat nameLabelX=personImageViewX+personImageViewW+30;
     CGFloat nameLabelY=10;
     CGFloat nameLabelW=100;
     CGFloat nameLabelH=20;
@@ -153,12 +189,7 @@
     
     
     
-    CGFloat personImageViewW=80;
-    CGFloat personImageViewH=80;
-    CGFloat personImageViewX=SCREEN_WIDTH-personImageViewW-20;
-    CGFloat personImageViewY=(self.frame.size.height-personImageViewH)/2;
-
-    self.personImageView.frame=CGRectMake(personImageViewX, personImageViewY, personImageViewW, personImageViewH);
+   
     
     
     
