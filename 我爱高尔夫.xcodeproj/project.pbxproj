@@ -116,6 +116,10 @@
 		A976B0D01AE4BB6700D8EA92 /* ZCStadiumView.m in Sources */ = {isa = PBXBuildFile; fileRef = A976B0CF1AE4BB6700D8EA92 /* ZCStadiumView.m */; };
 		A976B0D61AE506D500D8EA92 /* ZCStadiumTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A976B0D51AE506D500D8EA92 /* ZCStadiumTableViewCell.m */; };
 		A976B0D91AE5129E00D8EA92 /* ZCHistoryCoursesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A976B0D81AE5129E00D8EA92 /* ZCHistoryCoursesModel.m */; };
+		A97F29551AF08A680077A79A /* ZCHistoryOfCompetitiveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A97F29541AF08A680077A79A /* ZCHistoryOfCompetitiveModel.m */; };
+		A97F29581AF08E230077A79A /* ZCHistoryOfCompetitiveTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A97F29571AF08E230077A79A /* ZCHistoryOfCompetitiveTableViewCell.m */; };
+		A97F295B1AF0B6980077A79A /* ZCCheckTheScorecardTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A97F295A1AF0B6980077A79A /* ZCCheckTheScorecardTableViewController.m */; };
+		A97F295E1AF0BA010077A79A /* ZCCheckTheScorecardTTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A97F295D1AF0BA010077A79A /* ZCCheckTheScorecardTTableViewCell.m */; };
 		A98256FE1ADE165D00DC4B52 /* ZCBunkersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A98256FD1ADE165D00DC4B52 /* ZCBunkersViewController.m */; };
 		A98257011ADE239D00DC4B52 /* ZCWedgeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A98257001ADE239D00DC4B52 /* ZCWedgeViewController.m */; };
 		A98257041ADE496D00DC4B52 /* ZCGreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A98257031ADE496D00DC4B52 /* ZCGreenViewController.m */; };
@@ -385,6 +389,14 @@
 		A976B0D51AE506D500D8EA92 /* ZCStadiumTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCStadiumTableViewCell.m; sourceTree = "<group>"; };
 		A976B0D71AE5129E00D8EA92 /* ZCHistoryCoursesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCHistoryCoursesModel.h; sourceTree = "<group>"; };
 		A976B0D81AE5129E00D8EA92 /* ZCHistoryCoursesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCHistoryCoursesModel.m; sourceTree = "<group>"; };
+		A97F29531AF08A680077A79A /* ZCHistoryOfCompetitiveModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCHistoryOfCompetitiveModel.h; sourceTree = "<group>"; };
+		A97F29541AF08A680077A79A /* ZCHistoryOfCompetitiveModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCHistoryOfCompetitiveModel.m; sourceTree = "<group>"; };
+		A97F29561AF08E230077A79A /* ZCHistoryOfCompetitiveTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCHistoryOfCompetitiveTableViewCell.h; sourceTree = "<group>"; };
+		A97F29571AF08E230077A79A /* ZCHistoryOfCompetitiveTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCHistoryOfCompetitiveTableViewCell.m; sourceTree = "<group>"; };
+		A97F29591AF0B6980077A79A /* ZCCheckTheScorecardTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCCheckTheScorecardTableViewController.h; sourceTree = "<group>"; };
+		A97F295A1AF0B6980077A79A /* ZCCheckTheScorecardTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCCheckTheScorecardTableViewController.m; sourceTree = "<group>"; };
+		A97F295C1AF0BA010077A79A /* ZCCheckTheScorecardTTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCCheckTheScorecardTTableViewCell.h; sourceTree = "<group>"; };
+		A97F295D1AF0BA010077A79A /* ZCCheckTheScorecardTTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCCheckTheScorecardTTableViewCell.m; sourceTree = "<group>"; };
 		A98256FC1ADE165D00DC4B52 /* ZCBunkersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCBunkersViewController.h; sourceTree = "<group>"; };
 		A98256FD1ADE165D00DC4B52 /* ZCBunkersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCBunkersViewController.m; sourceTree = "<group>"; };
 		A98256FF1ADE239D00DC4B52 /* ZCWedgeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCWedgeViewController.h; sourceTree = "<group>"; };
@@ -1027,6 +1039,8 @@
 				A946280E1AEF72A600AE2B9C /* ZCRankingTableViewController.m */,
 				A94628131AEF9A5600AE2B9C /* ZCHistoryOfCompetitiveTableViewController.h */,
 				A94628141AEF9A5600AE2B9C /* ZCHistoryOfCompetitiveTableViewController.m */,
+				A97F29591AF0B6980077A79A /* ZCCheckTheScorecardTableViewController.h */,
+				A97F295A1AF0B6980077A79A /* ZCCheckTheScorecardTableViewController.m */,
 			);
 			path = AthleticEvents;
 			sourceTree = "<group>";
@@ -1042,6 +1056,10 @@
 				A9D7608A1AEA4963008532A4 /* ZCCompetitiveTableViewCell.m */,
 				A94628101AEF76AC00AE2B9C /* ZCRankingTableViewCell.h */,
 				A94628111AEF76AC00AE2B9C /* ZCRankingTableViewCell.m */,
+				A97F29561AF08E230077A79A /* ZCHistoryOfCompetitiveTableViewCell.h */,
+				A97F29571AF08E230077A79A /* ZCHistoryOfCompetitiveTableViewCell.m */,
+				A97F295C1AF0BA010077A79A /* ZCCheckTheScorecardTTableViewCell.h */,
+				A97F295D1AF0BA010077A79A /* ZCCheckTheScorecardTTableViewCell.m */,
 			);
 			path = AthleticEventsView;
 			sourceTree = "<group>";
@@ -1258,6 +1276,8 @@
 				A971488F1AEDE1AA001F7992 /* ZCUserModel.m */,
 				A946280A1AEF438600AE2B9C /* ZCPlayerModel.h */,
 				A946280B1AEF438600AE2B9C /* ZCPlayerModel.m */,
+				A97F29531AF08A680077A79A /* ZCHistoryOfCompetitiveModel.h */,
+				A97F29541AF08A680077A79A /* ZCHistoryOfCompetitiveModel.m */,
 			);
 			path = competitive;
 			sourceTree = "<group>";
@@ -1392,6 +1412,7 @@
 				A9386B651A7B418F00526086 /* ZCChooseTableViewCell.m in Sources */,
 				A96742BA1AE6318600993E35 /* ZCResultsModel.m in Sources */,
 				A911BE2E1AC9643F00819F52 /* SVProgressHUD.m in Sources */,
+				A97F295B1AF0B6980077A79A /* ZCCheckTheScorecardTableViewController.m in Sources */,
 				A967AD271A9EC762009E7468 /* ZCCity.m in Sources */,
 				A969EECD1ACA9D5900F73C37 /* MBProgressHUD.m in Sources */,
 				A95A6FFA1AE8AD2100104811 /* ZCPasswordTableViewCell.m in Sources */,
@@ -1423,6 +1444,7 @@
 				A9F00BFA1A8858E200671AC9 /* ZCShowButton.m in Sources */,
 				A95AABE51AE0A2A500897808 /* ZCProfessionalLandscape.m in Sources */,
 				A971489A1AEE245E001F7992 /* ZCNameJoinTableViewCell.m in Sources */,
+				A97F29581AF08E230077A79A /* ZCHistoryOfCompetitiveTableViewCell.m in Sources */,
 				A957DD8F1AA05FB9008C5ABA /* ZCChildStadium.m in Sources */,
 				A9BE93281ACBECB100ADFAAF /* ZCModifyTheProfessionalScorecardController.m in Sources */,
 				A9438A481A7A007B00B55001 /* AppDelegate.m in Sources */,
@@ -1500,6 +1522,7 @@
 				A98257071ADE626C00DC4B52 /* ZCFairwayViewController.m in Sources */,
 				A96B67D81ABA6A01006D2047 /* ZCstadium.m in Sources */,
 				A94C27CB1AB9834D006A7BA1 /* ZCQuickScoringTableViewController.m in Sources */,
+				A97F295E1AF0BA010077A79A /* ZCCheckTheScorecardTTableViewCell.m in Sources */,
 				A911BE121AC963EA00819F52 /* AFSecurityPolicy.m in Sources */,
 				A9A7034B1AD7CEFF00D84C66 /* NSData+ImageContentType.m in Sources */,
 				A98257041ADE496D00DC4B52 /* ZCGreenViewController.m in Sources */,
@@ -1510,6 +1533,7 @@
 				A972DDA51ADF5DD20087CE35 /* ZCCueTableViewController.m in Sources */,
 				A982570A1ADE715400DC4B52 /* ZCKickOffViewController.m in Sources */,
 				A976B0D01AE4BB6700D8EA92 /* ZCStadiumView.m in Sources */,
+				A97F29551AF08A680077A79A /* ZCHistoryOfCompetitiveModel.m in Sources */,
 				A96EDCE11AE7B849005DC4D7 /* ZCCompetitiveSetTableViewController.m in Sources */,
 				A95A6FF71AE8ABDA00104811 /* ZCNameTableViewCell.m in Sources */,
 				A911BE281AC963F300819F52 /* ZCEventUuidTool.m in Sources */,

@@ -96,8 +96,8 @@
     //返回 
     self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui-anxia" action:@selector(liftBthClick:) target:self];
 
-    //背景颜色
-    self.tableView.backgroundColor=ZCColor(23, 25, 28);
+    //背景颜色suoyou_bj
+    self.tableView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
     
     
     
@@ -109,7 +109,13 @@
     self.tableView.rowHeight=100;
     self.page=1;
     //让分割线不显示
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+  //  self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+   // self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
+    // UITableViewStyleGrouped
+    
+     [self.tableView   setSeparatorColor:ZCColor(240, 208, 122)];
+    
+     self.tableView.tableFooterView = [[UIView alloc] init];
     
     // 1.下拉刷新
     MJRefreshHeaderView *header = [MJRefreshHeaderView header];
@@ -430,7 +436,9 @@
     
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+{//取消选中
+    
+     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     //单利模式  为统计页面保存uuid
     ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
     tool.uuid=[self.eventArray[indexPath.row] uuid];

@@ -10,10 +10,14 @@
 #import "MJRefresh.h"
 #import "ZCAccount.h"
 #import "AFNetworking.h"
+#import "ZCHistoryOfCompetitiveModel.h"
+#import "ZCHistoryOfCompetitiveTableViewCell.h"
+#import "ZCCompetitiveScorecardTableViewController.h"
 @interface ZCHistoryOfCompetitiveTableViewController ()<MJRefreshBaseViewDelegate>
 @property (nonatomic, weak) MJRefreshFooterView *footer;
 @property (nonatomic, weak) MJRefreshHeaderView *header;
-
+//模型数组
+@property(nonatomic,strong)NSMutableArray *eventArray;
 //加载的页数
 @property(nonatomic,assign)int page;
 
@@ -88,16 +92,17 @@
     params[@"token"]=account.token;
     
     NSString *url=[NSString stringWithFormat:@"%@%@",API,@"matches/tournament.json"];
-    //ZCLog(@"%@",url);
+//    ZCLog(@"%@",url);
+//    ZCLog(@"%@",account.token);
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        ZCLog(@"----%@",responseObject);
-//        
-//        NSMutableArray *eventMutableArray=[NSMutableArray array];
-//        for (NSDictionary *dict in responseObject) {
-//            ZCEvent *event=[ZCEvent eventWithDict:dict];
-//            [eventMutableArray addObject:event];
-//        }
-//        self.eventArray=eventMutableArray;
+       // ZCLog(@"----%@",responseObject);
+        
+        NSMutableArray *eventMutableArray=[NSMutableArray array];
+        for (NSDictionary *dict in responseObject) {
+            ZCHistoryOfCompetitiveModel *historyOfCompetitiveModel=[ZCHistoryOfCompetitiveModel historyOfCompetitiveModelWithDict:dict];
+            [eventMutableArray addObject:historyOfCompetitiveModel];
+        }
+        self.eventArray=eventMutableArray;
         
         
         
@@ -160,16 +165,16 @@
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
          ZCLog(@"----%@",responseObject);
         
-//        NSMutableArray *eventMutableArray=[NSMutableArray array];
-//        for (NSDictionary *dict in responseObject) {
-//            ZCEvent *event=[ZCEvent eventWithDict:dict];
-//            [eventMutableArray addObject:event];
-//        }
-//        
-//        
-//        // 添加新数据到旧数据的后面
-//        [self.eventArray addObjectsFromArray:eventMutableArray];
-//        
+        NSMutableArray *eventMutableArray=[NSMutableArray array];
+        for (NSDictionary *dict in responseObject) {
+            ZCHistoryOfCompetitiveModel *HistoryOfCompetitiveModel=[ZCHistoryOfCompetitiveModel historyOfCompetitiveModelWithDict:dict];
+            [eventMutableArray addObject:HistoryOfCompetitiveModel];
+        }
+        
+        
+        // 添加新数据到旧数据的后面
+        [self.eventArray addObjectsFromArray:eventMutableArray];
+        
         
         
         
@@ -217,24 +222,48 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 
     
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
    
-    return 0;
+    return self.eventArray.count;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+   
     
-    // Configure the cell...
+    ZCHistoryOfCompetitiveTableViewCell *cell=[ZCHistoryOfCompetitiveTableViewCell cellWithTable:tableView];
+    cell.historyOfCompetitiveModel= self.eventArray[indexPath.row];
     
     return cell;
 }
-*/
+
+
+
+
+
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+//    //单利模式  为统计页面保存uuid
+//    ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
+//    tool.uuid=[self.eventArray[indexPath.row] uuid];
+//    
+    
+    ZCCompetitiveScorecardTableViewController *scorecardTableView=[[ZCCompetitiveScorecardTableViewController alloc] init];
+   
+    
+    scorecardTableView.uuid=[self.eventArray[indexPath.row] uuid];
+     [self.navigationController pushViewController:scorecardTableView animated:YES];
+    
+    
+    
+}
+
+
 
 /*
 // Override to support conditional editing of the table view.

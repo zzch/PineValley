@@ -88,7 +88,7 @@
     
     [self topviewControls:topView];
     
-    
+   
     //中部View
     ZCGraphicsView *middleView=[[ZCGraphicsView alloc] init];
     //UIView *middleView=[[UIView alloc] init];

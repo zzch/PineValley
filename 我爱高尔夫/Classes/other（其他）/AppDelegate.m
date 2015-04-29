@@ -61,11 +61,11 @@
     //导航栏的背景颜色和字体
     
            UINavigationBar *bar = [UINavigationBar appearance];
-            [bar setBackgroundImage:[UIImage imageNamed:@"daohanglan_bj"] forBarMetrics:UIBarMetricsDefault];
+            [bar setBackgroundImage:[UIImage imageNamed:@"dhl_bj2"] forBarMetrics:UIBarMetricsDefault];
     
             bar.titleTextAttributes=@{UITextAttributeTextColor: [UIColor whiteColor],UITextAttributeFont : [UIFont boldSystemFontOfSize:18]};
 
-   // [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"biaoqianlan_bj"] forBarMetrics:UIBarMetricsDefault];
+  //  [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"biaoqianlan_bj"] forBarMetrics:UIBarMetricsDefault];
     
     
     // 4.显示window

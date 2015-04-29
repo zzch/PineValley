@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 
 @interface UIImage (MJ)
+
++(UIImage *)imageModeAlwaysOriginal:(NSString *) imageName;
+
+
+
+
 /**
  *  加载图片
  *

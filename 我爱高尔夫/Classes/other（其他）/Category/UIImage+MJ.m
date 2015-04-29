@@ -34,4 +34,15 @@
     UIImage *image = [self imageWithName:name];
     return [image stretchableImageWithLeftCapWidth:image.size.width * left topCapHeight:image.size.height * top];
 }
+
+
+
++(UIImage *)imageModeAlwaysOriginal:(NSString *) imageName
+{
+    UIImage *image=[UIImage imageNamed:imageName];
+    image=[image imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    return image;
+}
+
+
 @end

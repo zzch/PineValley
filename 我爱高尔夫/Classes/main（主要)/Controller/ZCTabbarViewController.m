@@ -13,6 +13,7 @@
 #import "ZCAccount.h"
 #import "ZCTabbarViewController.h"
 #import "ZCregisterViewController.h"
+#import "UIImage+MJ.h"
 @interface ZCTabbarViewController ()
 
 @end
@@ -27,8 +28,21 @@
     
     if (self) {
         
-        UIImage *image = [UIImage imageNamed:@"biaoqianlan"];
+        UIImage *image = [UIImage imageNamed:@"tab_bj"];
         [self.tabBar setBackgroundImage:image];
+        
+        
+       
+        
+        UITabBarItem *tabBarItem = [UITabBarItem appearance];
+        // 設置普通狀態下的效果
+        NSMutableDictionary *mdict = [NSMutableDictionary dictionary];
+        mdict[NSForegroundColorAttributeName] =  ZCColor(240, 208, 122);
+        [tabBarItem setTitleTextAttributes:mdict forState:UIControlStateSelected];
+        mdict = nil;
+        mdict[NSForegroundColorAttributeName] = ZCColor(164, 164, 164);
+        [tabBarItem setTitleTextAttributes:mdict forState:UIControlStateNormal];
+        
         
         
 //            //先判断有无存储账号信息
@@ -73,14 +87,14 @@
         
        // [self.navigationController.navigationBarsetBackgroundImage:[UIImageimageNamed:@"bg.jpg"] forBarMetrics:UIBarMetricsDefault]
 //        nav.navigationBar.backgroundColor=ZCColor(44, 49, 54);
-        [self  addOneChildViewController:practice title:@"练习" imageName:@"tabbar_message_center_selected" selectedImageName:@"lianxi"];
+        [self  addOneChildViewController:practice title:@"练习" imageName:@"tab_lianxi_iocn_mr" selectedImageName:@"tab_lianxi_iocn_xz"];
         
-        
+        //[self.tabBarItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor redColor],NSForegroundColorAttributeName, nil] forState:UIControlStateSelected];
         
         //统计
         ZCStatisticalViewController *statistical=[[ZCStatisticalViewController alloc] init];
 //        UINavigationController *nav1=[[UINavigationController alloc] initWithRootViewController:statistical];
-        [self addOneChildViewController:statistical title:@"统计" imageName:@"shape-324" selectedImageName:@"tabbar_discover_selected"];
+        [self addOneChildViewController:statistical title:@"统计" imageName:@"tab_tongji_iocn_mr" selectedImageName:@"tab_tongji_iocn_xz"];
         
         
         
@@ -89,9 +103,9 @@
         //个人
         ZCPersonalViewController *personal=[[ZCPersonalViewController alloc] init];
 //        UINavigationController *nav2=[[UINavigationController alloc] initWithRootViewController:personal];
-        [self addOneChildViewController:personal title:@"个人" imageName:@"user" selectedImageName:@"tabbar_profile_selected"];
+        [self addOneChildViewController:personal title:@"个人" imageName:@"tab_wo_iocn_mr" selectedImageName:@"tab_wo_iocn_xz"];
         
-        
+        //[UITabBar appearance].tintColor=
         
     }
     
@@ -101,13 +115,23 @@
 
 }
 
+//- (UIImage *)imageWithRenderingMode:(UIImageRenderingMode)renderingMode NS_AVAILABLE_IOS(7_0);
+
+
+
+
 -(void)addOneChildViewController:(UIViewController *)childVc  title:(NSString *)title imageName:(NSString *)imageName selectedImageName:(NSString *)selectedImageName
 {
   // childVc.view.backgroundColor=
     
+    
     childVc.tabBarItem.title=title;
+    
     childVc.tabBarItem.image=[UIImage imageNamed:imageName];
-    childVc.tabBarItem.selectedImage=[UIImage imageNamed:selectedImageName];
+    childVc.tabBarItem.selectedImage=[UIImage imageModeAlwaysOriginal:selectedImageName];
+    
+    
+   // [childVc.tabBarItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor redColor],NSForegroundColorAttributeName, nil] forState:UIControlStateSelected];
     
     [self addChildViewController:childVc];
     
