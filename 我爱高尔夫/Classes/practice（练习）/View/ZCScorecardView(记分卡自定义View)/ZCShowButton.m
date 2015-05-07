@@ -59,7 +59,7 @@
 {
     if (self=[super initWithFrame:frame]) {
         
-        [self setBackgroundImage:[UIImage imageNamed:@"jfk_anxia_bj"] forState:UIControlStateHighlighted];
+        [self setBackgroundImage:[UIImage imageNamed:@"suoyou_bj_02"] forState:UIControlStateHighlighted];
 //        //成绩
 //        
 //        UIButton *resultsView=[[UIButton alloc] init];
@@ -69,12 +69,12 @@
         //成绩左
         UILabel *penaltiesLabel=[[UILabel alloc] init];
         [self addSubview:penaltiesLabel];
-        penaltiesLabel.textColor=ZCColor(208, 210, 212);
+        penaltiesLabel.textColor=[UIColor redColor];
         self.penaltiesLabel=penaltiesLabel;
         //总杆数
         UILabel *scoreLabel=[[UILabel alloc] init];
        
-        scoreLabel.textColor=ZCColor(208, 210, 212);
+        scoreLabel.textColor=ZCColor(240, 208, 122);
         scoreLabel.font=[UIFont fontWithName:@"Arial" size:49];
         scoreLabel.textAlignment=NSTextAlignmentCenter;
         [self addSubview:scoreLabel];
@@ -82,7 +82,7 @@
         
         //推杆数 成绩右
         UILabel *puttsLabel=[[UILabel alloc] init];
-        puttsLabel.textColor=ZCColor(208, 210, 212);
+        puttsLabel.textColor=ZCColor(240, 208, 122);
         [self addSubview:puttsLabel];
         self.puttsLabel=puttsLabel;
         
@@ -90,13 +90,13 @@
         UILabel *driving_distance_label=[[UILabel alloc] init];
         [self addSubview:driving_distance_label];
     
-        driving_distance_label.textColor=ZCColor(208, 210, 212);
+        driving_distance_label.textColor=ZCColor(240, 208, 122);
         //driving_distance_label.text=@"dasdsad";
         self.driving_distance_label=driving_distance_label;
         //求道
         UILabel *directionLabel=[[UILabel alloc] init];
         
-        directionLabel.textColor=ZCColor(208, 210, 212);
+        directionLabel.textColor=ZCColor(240, 208, 122);
         //fairwayLabel.text=self.scorecard.fairwayText;
         [self addSubview:directionLabel];
         self.directionLabel=directionLabel;
@@ -107,7 +107,7 @@
         UIImageView *drivingImage=[[UIImageView alloc] init];
         [self addSubview:drivingImage];
         
-        drivingImage.image=[UIImage imageNamed:@"jfk_gaoerfuqiu"];
+        drivingImage.image=[UIImage imageNamed:@"jfk_qiugan"];
         self.drivingImage=drivingImage;
         
         
@@ -128,7 +128,7 @@
         UIImageView *rightImage=[[UIImageView alloc] init];
         [self addSubview:rightImage];
         //drivingImage.backgroundColor=[UIColor blackColor];
-        rightImage.image=[UIImage imageNamed:@"jfk_youjiantou"];
+        rightImage.image=[UIImage imageNamed:@"lsjfk_xiayibu_iocn"];
         self.rightImage=rightImage;
 
 

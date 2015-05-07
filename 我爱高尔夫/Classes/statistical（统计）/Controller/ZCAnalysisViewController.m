@@ -12,6 +12,7 @@
 #import "ZCStadiumView.h"
 #import "ZCResultsViewController.h"
 #import "ZCEventUuidTool.h"
+#import "UIBarButtonItem+DC.h"
 @interface ZCAnalysisViewController ()<ZCNumberDelegate,ZCTimeDelegate,ZCStadiumDelegate>
 @property(nonatomic,weak)UIButton *firstButton;
 @property(nonatomic,weak)UIButton *secondButton;
@@ -20,6 +21,8 @@
 @property(nonatomic,weak)ZCNumberView *numberView;
 @property(nonatomic,weak)ZCTimeView *timeView;
 @property(nonatomic,weak)ZCStadiumView *stadiumView;
+@property(nonatomic,weak)UIImageView *bjImage;
+
 @end
 
 @implementation ZCAnalysisViewController
@@ -27,27 +30,61 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor=[UIColor brownColor];
+    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+    
+    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+    customLab.textAlignment=NSTextAlignmentCenter;
+    [customLab setTextColor:ZCColor(240, 208, 122)];
+    [customLab setText:@"统计分析"];
+    customLab.font = [UIFont boldSystemFontOfSize:20];
+    self.navigationItem.titleView = customLab;
+
+    
+    //返回
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
+    
+    
+    
     [self addControls];
     
 }
 
 
+
+//返回到上个界面
+-(void)liftBthClick:(UIButton *)bth
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 //加载控件
 -(void)addControls
 {
+    
+    
+    
+    
+    UIImageView *bjImage=[[UIImageView alloc] init];
+    bjImage.userInteractionEnabled=YES;
+    bjImage.frame=CGRectMake(10, 12, SCREEN_WIDTH-20, 29);
+    bjImage.image=[UIImage imageNamed:@"tjfx_anbisai"];
+    [self.view addSubview:bjImage];
+    self.bjImage=bjImage;
+    
+    
     UIButton *firstButton=[[UIButton alloc] init];
     CGFloat firstButtonX=0;
     CGFloat firstButtonY=0;
-    CGFloat firstButtonW=SCREEN_WIDTH/3;
-    CGFloat firstButtonH=40;
+    CGFloat firstButtonW=bjImage.frame.size.width/3;
+    CGFloat firstButtonH=29;
     firstButton.frame=CGRectMake(firstButtonX, firstButtonY, firstButtonW, firstButtonH);
-    [firstButton setTitle:@"按场次" forState:UIControlStateNormal];
     
-    [firstButton setBackgroundColor:[UIColor redColor]];
+    [firstButton setTitle:@"按场次" forState:UIControlStateNormal];
+    [firstButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    
     [firstButton addTarget:self action:@selector(clickFirstButton) forControlEvents:UIControlEventTouchUpInside];
     self.firstButton=firstButton;
-    [self.view addSubview:firstButton];
+    [bjImage addSubview:firstButton];
     
     UIButton *secondButton=[[UIButton alloc] init];
     CGFloat secondButtonX=firstButtonW;
@@ -56,9 +93,10 @@
     CGFloat secondButtonH=firstButtonH;
     secondButton.frame=CGRectMake(secondButtonX, secondButtonY, secondButtonW, secondButtonH);
     [secondButton setTitle:@"按时间" forState:UIControlStateNormal];
+    [secondButton setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
     [secondButton addTarget:self action:@selector(clickSecondButton) forControlEvents:UIControlEventTouchUpInside];
     self.secondButton=secondButton;
-    [self.view addSubview:secondButton];
+    [bjImage addSubview:secondButton];
     
     
     UIButton *thirdButton=[[UIButton alloc] init];
@@ -68,20 +106,23 @@
     CGFloat thirdButtonH=firstButtonH;
     thirdButton.frame=CGRectMake(thirdButtonX, thirdButtonY, thirdButtonW, thirdButtonH);
     [thirdButton setTitle:@"按比赛" forState:UIControlStateNormal];
+    [thirdButton setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
     [thirdButton addTarget:self action:@selector(clickThirdButton) forControlEvents:UIControlEventTouchUpInside];
      self.thirdButton=thirdButton;
-    [self.view addSubview:thirdButton];
+    [bjImage addSubview:thirdButton];
     
     
     //添加文字提示语言
     UILabel *titleLabel=[[UILabel alloc] init];
     CGFloat titleLabelX=0;
-    CGFloat titleLabelY=firstButtonY+firstButtonH+10;
+    CGFloat titleLabelY=bjImage.frame.origin.y+bjImage.frame.size.height;
     CGFloat titleLabelW=SCREEN_WIDTH;
-    CGFloat titleLabelH=20;
+    CGFloat titleLabelH=44;
     titleLabel.frame=CGRectMake(titleLabelX, titleLabelY, titleLabelW, titleLabelH);
     titleLabel.text=@"所有统计数据将基于您有完整记分场次计算";
+    titleLabel.textColor=ZCColor(240, 208, 122);
     titleLabel.textAlignment=NSTextAlignmentCenter;
+    titleLabel.font=[UIFont systemFontOfSize:16 ];
     [self.view addSubview:titleLabel];
     self.titleLabel=titleLabel;
     
@@ -98,15 +139,18 @@
     [self.view addSubview:numberView];
 
 
+    
+    
+    
 }
 
 //点击按场次
 -(void)clickFirstButton
 {
-    [self.firstButton setBackgroundColor:[UIColor redColor]];
-    [self.secondButton setBackgroundColor:[UIColor brownColor]];
-    [self.thirdButton setBackgroundColor:[UIColor brownColor]];
-    
+    self.bjImage.image=[UIImage imageNamed:@"tjfx_anbisai"];
+    [self.firstButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.secondButton setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
+    [self.thirdButton setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
     
         self.numberView.hidden=NO;
         self.timeView.hidden=YES;
@@ -118,10 +162,10 @@
 //点击按时间
 -(void)clickSecondButton
 {
-    [self.firstButton setBackgroundColor:[UIColor brownColor]];
-    [self.secondButton setBackgroundColor:[UIColor redColor]];
-    [self.thirdButton setBackgroundColor:[UIColor brownColor]];
-    
+    self.bjImage.image=[UIImage imageNamed:@"tjfx_anshijian"];
+    [self.firstButton setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
+    [self.secondButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [self.thirdButton setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
     
     if (self.timeView==nil) {
         ZCTimeView *timeView=[[ZCTimeView alloc] init];
@@ -135,20 +179,21 @@
         self.timeView=timeView;
         [self.view addSubview:timeView];
         ZCLog(@"22222");
-    }else
-    {
+    }
+    
         self.numberView.hidden=YES;
         self.timeView.hidden=NO;
         self.stadiumView.hidden=YES;
-    }
+    
 
 }
 //点击按比赛
 -(void)clickThirdButton
 {
-    [self.firstButton setBackgroundColor:[UIColor brownColor]];
-    [self.secondButton setBackgroundColor:[UIColor brownColor]];
-    [self.thirdButton setBackgroundColor:[UIColor redColor]];
+    self.bjImage.image=[UIImage imageNamed:@"tjfx_anqiuchang"];
+    [self.firstButton setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
+    [self.secondButton setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
+    [self.thirdButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     
     
     
@@ -165,12 +210,12 @@
         [self.view addSubview:stadiumView];
         
         ZCLog(@"333333");
-    }else
-    {
+    }
+    
         self.numberView.hidden=YES;
         self.timeView.hidden=YES;
         self.stadiumView.hidden=NO;
-    }
+    
 
 
 

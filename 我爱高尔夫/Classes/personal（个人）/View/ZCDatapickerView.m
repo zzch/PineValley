@@ -14,6 +14,12 @@
 {
     if (self =[super initWithFrame:frame]) {
         
+        
+         self.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+        
+        
+        
+        
         UIDatePicker *datePicker=[[UIDatePicker alloc] initWithFrame:CGRectZero];
         //模式
         datePicker.datePickerMode=UIDatePickerModeDate;
@@ -42,6 +48,19 @@
     
     
 }
+
+
+
+
+
+//- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view{
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, pickerView.frame.size.width, 44)];
+//    label.backgroundColor = [UIColor grayColor];
+//    label.textColor = [UIColor whiteColor];
+//    label.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:18];
+//    label.text = [NSString stringWithFormat:@" %d", row+1];
+//    return label; 
+//}
 
 
 @end

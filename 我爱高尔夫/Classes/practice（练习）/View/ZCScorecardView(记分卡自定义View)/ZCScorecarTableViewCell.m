@@ -71,8 +71,8 @@
 
     if (self=[super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         //背景
-         self.backgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jifenka_yihangbeijing"]];
-        
+        // self.backgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jifenka_yihangbeijing"]];
+        self.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
 //        self.selectedBackgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jfk_anxia_bj"]];
         
@@ -85,7 +85,7 @@
         UIView *middleView=[[UIView alloc] init];
         [self.contentView addSubview:middleView];
         self.middleView=middleView;
-        self.middleView.backgroundColor=[UIColor blackColor];
+        self.middleView.backgroundColor=ZCColor(136, 119, 73);
 
         
         //创建球洞编号
@@ -94,14 +94,19 @@
         numberLabel.textAlignment=NSTextAlignmentCenter;
         //ballLabel.font=[UIFont fontWithName:@"Helvetica" size:20];
         
-        numberLabel.font=[UIFont systemFontOfSize:30];
+        numberLabel.font=[UIFont systemFontOfSize:35];
         
+        
+        UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_dong"]];
+        numberLabel.backgroundColor=col;
+        numberLabel.textColor=ZCColor(240, 208, 122);
+     
         self.numberLabel=numberLabel;
        
         //创建标准杆
         UILabel *parLabel=[[UILabel alloc] init];
         [self.liftView addSubview:parLabel];
-        parLabel.textColor=ZCColor(208, 210, 212);
+        parLabel.textColor=ZCColor(240, 208, 122);
         parLabel.textAlignment=NSTextAlignmentCenter;
        // parLabel.font=[UIFont systemFontOfSize:26];
         parLabel.font=[UIFont fontWithName:@"Arial" size:26];
@@ -112,12 +117,12 @@
         distanceLabel.font=[UIFont systemFontOfSize:21];
         self.distanceLabel=distanceLabel;
         self.distanceLabel.font=[UIFont fontWithName:@"Arial" size:26];
-        distanceLabel.textColor=ZCColor(208, 210, 212);
+        distanceLabel.textColor=ZCColor(240, 208, 122);
         //创建小P label
         UILabel *PLabel=[[UILabel alloc] init];
         [self.liftView addSubview:PLabel];
         PLabel.text=@"P";
-        PLabel.textColor=ZCColor(208, 210, 212);
+        PLabel.textColor=ZCColor(240, 208, 122);
        // PLabel.backgroundColor=[UIColor blueColor];
         self.PLabel=PLabel;
         
@@ -125,7 +130,7 @@
         UILabel *YLabel=[[UILabel alloc] init];
         [self.liftView addSubview:YLabel];
         YLabel.text=@"Y";
-        YLabel.textColor=ZCColor(208, 210, 212);
+        YLabel.textColor=ZCColor(240, 208, 122);
        // YLabel.backgroundColor=[UIColor blueColor];
         self.YLabel=YLabel;
         
@@ -139,7 +144,7 @@
            // UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jifenka_yihangbeijing"]];
             //addImage.backgroundColor=col;
             
-            [addImage setImage:[UIImage imageNamed:@"tiejia"] forState:UIControlStateNormal];
+            [addImage setImage:[UIImage imageNamed:@"jfk_tianjia"] forState:UIControlStateNormal];
             [addImage setImage:[UIImage imageNamed:@"jfk_tiejia_anxia"] forState:UIControlStateHighlighted];
             [addImage addTarget:self action:@selector(addImageClick:) forControlEvents:UIControlEventTouchUpInside];
             [self.contentView addSubview:addImage];
@@ -320,36 +325,36 @@
     self.parLabel.text=[NSString stringWithFormat:@"%@",scorecard.par];
     self.distanceLabel.text=[NSString stringWithFormat:@"%@",scorecard.distance_from_hole_to_tee_box];
     
-    if ([scorecard.tee_box_color isEqual:@"red"]) {
-        UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"hongdong"]];
-        self.numberLabel.backgroundColor=col;
-        self.numberLabel.textColor=ZCColor(208, 210, 212);
-        
-    }else if ([scorecard.tee_box_color isEqual:@"white"])
-    {
-      UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_bai"]];
-        self.numberLabel.backgroundColor=col;
-        self.numberLabel.textColor=ZCColor(33, 33, 33);
-    }else if ([scorecard.tee_box_color isEqual:@"blue"])
-    {
-        UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_lan"]];
-        self.numberLabel.backgroundColor=col;
-        self.numberLabel.textColor=ZCColor(208, 210, 212);
-
-    }else if ([scorecard.tee_box_color isEqual:@"black"])
-    {
-        UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_hei"]];
-        self.numberLabel.backgroundColor=col;
-        self.numberLabel.textColor=ZCColor(208, 210, 212);
-
-    }else if ([scorecard.tee_box_color isEqual:@"gold"])
-    {
-        UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jingdong"]];
-        self.numberLabel.backgroundColor=col;
-        self.numberLabel.textColor=ZCColor(33, 33, 33);
-
-    }
-    
+//    if ([scorecard.tee_box_color isEqual:@"red"]) {
+//        UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"hongdong"]];
+//        self.numberLabel.backgroundColor=col;
+//        self.numberLabel.textColor=ZCColor(208, 210, 212);
+//        
+//    }else if ([scorecard.tee_box_color isEqual:@"white"])
+//    {
+//      UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_bai"]];
+//        self.numberLabel.backgroundColor=col;
+//        self.numberLabel.textColor=ZCColor(33, 33, 33);
+//    }else if ([scorecard.tee_box_color isEqual:@"blue"])
+//    {
+//        UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_lan"]];
+//        self.numberLabel.backgroundColor=col;
+//        self.numberLabel.textColor=ZCColor(208, 210, 212);
+//
+//    }else if ([scorecard.tee_box_color isEqual:@"black"])
+//    {
+//        UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_hei"]];
+//        self.numberLabel.backgroundColor=col;
+//        self.numberLabel.textColor=ZCColor(208, 210, 212);
+//
+//    }else if ([scorecard.tee_box_color isEqual:@"gold"])
+//    {
+//        UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jingdong"]];
+//        self.numberLabel.backgroundColor=col;
+//        self.numberLabel.textColor=ZCColor(33, 33, 33);
+//
+//    }
+//    
    
     
 //

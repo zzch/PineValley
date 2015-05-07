@@ -14,6 +14,7 @@
 #import "ZCAnalysisViewController.h"
 @interface ZCStatisticalViewController ()
 @property(nonatomic,strong)ZCHomePageStatistics *homePageStatistics;
+@property(nonatomic,weak)UIScrollView *scrollView;
 @end
 
 @implementation ZCStatisticalViewController
@@ -21,10 +22,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    //背景颜色suoyou_bj
+    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+    
+    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+    customLab.textAlignment=NSTextAlignmentCenter;
+    [customLab setTextColor:ZCColor(240, 208, 122)];
+    [customLab setText:@"统计"];
+    customLab.font = [UIFont boldSystemFontOfSize:20];
+    self.navigationItem.titleView = customLab;
+    
     UIBarButtonItem *rightButton=[[UIBarButtonItem alloc] initWithTitle:@"分析" style:UIBarButtonItemStyleDone target:self action:@selector(clickRight)];
     //改变UIBarButtonItem字体颜色
-    [rightButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor,nil] forState:UIControlStateNormal];
+    [rightButton setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:ZCColor(240, 208, 122), UITextAttributeTextColor,nil] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem =rightButton;
+    
+    
     
     //网络加载
     [self onlineData];
@@ -77,14 +90,24 @@
 
 -(void)addControls
 {
+    
+    UIScrollView *scrollView=[[UIScrollView alloc] init];
+    scrollView.frame=[UIScreen mainScreen].bounds;
+    self.scrollView=scrollView;
+    [self.view addSubview:scrollView];
+    
+    
+    
    //顶部View
-    UIView *topView=[[UIView alloc] init];
-    CGFloat topViewX=0;
+    UIImageView *topView=[[UIImageView alloc] init];
+    CGFloat topViewX=10;
     CGFloat topViewY=10;
-    CGFloat topViewW=SCREEN_WIDTH;
-    CGFloat topViewH=100;
+    CGFloat topViewW=SCREEN_WIDTH-20;
+    CGFloat topViewH=120;
     topView.frame=CGRectMake(topViewX, topViewY, topViewW, topViewH);
-    [self.view addSubview:topView];
+    //topView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"tj_kuang"]];
+    topView.image=[UIImage imageNamed:@"tj_kuang"];
+    [self.scrollView addSubview:topView];
     
     [self topviewControls:topView];
     
@@ -92,29 +115,51 @@
     //中部View
     ZCGraphicsView *middleView=[[ZCGraphicsView alloc] init];
     //UIView *middleView=[[UIView alloc] init];
-    middleView.backgroundColor=[UIColor redColor];
+    //middleView.backgroundColor=[UIColor redColor];
     CGFloat middleViewX=0;
-    CGFloat middleViewY=topViewY+topViewH;
+    CGFloat middleViewY=topViewY+topViewH+20;
     CGFloat middleViewW=SCREEN_WIDTH;
-    CGFloat middleViewH=250;
+    CGFloat middleViewH=200;
     middleView.frame=CGRectMake(middleViewX, middleViewY, middleViewW, middleViewH);
-    [self.view addSubview:middleView];
+    [self.scrollView addSubview:middleView];
+    
+    
+    UILabel *scoreNumber=[[UILabel alloc] init];
+    scoreNumber.frame=CGRectMake((middleView.frame.size.width-20)/2, (middleView.frame.size.height-13)/2-15, 20, 15);
+    scoreNumber.textColor=ZCColor(240, 208, 122);
+    if ([self.homePageStatistics.average_score isKindOfClass:[NSNull class]]) {
+        scoreNumber.text=@"0";
+    }else
+    {
+    scoreNumber.text=[NSString stringWithFormat:@"%@",self.homePageStatistics.average_score];
+    }
+    [middleView addSubview:scoreNumber];
+    scoreNumber.textAlignment=NSTextAlignmentCenter;
+    
+    UILabel *scoreName=[[UILabel alloc] init];
+    scoreName.frame=CGRectMake((middleView.frame.size.width-20)/2-11, (middleView.frame.size.height-10)/2+5, 40, 15);
+    scoreName.textColor=ZCColor(240, 208, 122);
+    scoreName.text=@"平均杆数";
+    scoreName.font=[UIFont systemFontOfSize:10];
+    //scoreName.textAlignment=NSTextAlignmentCenter;
+    [middleView addSubview:scoreName];
+    
     
     
     //底部View
     UIView *bottomView=[[UIView alloc] init];
-    bottomView.backgroundColor=[UIColor yellowColor];
+    //bottomView.backgroundColor=[UIColor yellowColor];
     CGFloat bottomViewX=0;
     CGFloat bottomViewY=middleViewY+middleViewH+20;
     CGFloat bottomViewW=SCREEN_WIDTH;
     CGFloat bottomViewH=150;
     bottomView.frame=CGRectMake(bottomViewX, bottomViewY, bottomViewW, bottomViewH);
-    [self.view addSubview:bottomView];
+    [self.scrollView addSubview:bottomView];
     
     [self bottomviewControls:bottomView];
 
 
-    
+  self.scrollView.contentSize = CGSizeMake(0,bottomViewY+bottomViewH+160 );
 }
 
 
@@ -122,18 +167,17 @@
 -(void)bottomviewControls:(UIView *)bottomView
 {
     UIView *firstView=[[UIView alloc] init];
-    firstView.backgroundColor=[UIColor redColor];
-    CGFloat firstViewX=40;
+        CGFloat firstViewX=0;
     CGFloat firstViewY=0;
-    CGFloat firstViewW=120;
+    CGFloat firstViewW=SCREEN_WIDTH/2;
     CGFloat firstViewH=bottomView.frame.size.height/3;
     firstView.frame=CGRectMake(firstViewX, firstViewY, firstViewW, firstViewH);
     [bottomView addSubview:firstView];
     
-    [self addChildControls:firstView imageStr:@"20141118042246536.jpg" numberStr:[NSString stringWithFormat:@"%@",self.homePageStatistics.double_eagle] nameStr:@"信天翁"];
+    [self addChildControls:firstView imageStr:@"jstj_xintianwen" numberStr:[NSString stringWithFormat:@"%@",self.homePageStatistics.double_eagle] nameStr:@"信天翁"];
     
     UIView *secendView=[[UIView alloc] init];
-    secendView.backgroundColor=[UIColor blackColor];
+    
     CGFloat secendViewX=firstViewX;
     CGFloat secendViewY=firstViewY+firstViewH;
     CGFloat secendViewW=firstViewW;
@@ -141,11 +185,11 @@
     secendView.frame=CGRectMake(secendViewX, secendViewY, secendViewW, secendViewH);
     [bottomView addSubview:secendView];
     
-    [self addChildControls:secendView imageStr:@"20141118042246536.jpg" numberStr:[NSString stringWithFormat:@"%@",self.homePageStatistics.eagle] nameStr:@"老鹰"];
+    [self addChildControls:secendView imageStr:@"jstj_laoying" numberStr:[NSString stringWithFormat:@"%@",self.homePageStatistics.eagle] nameStr:@"老鹰"];
     
     
     UIView *thirdView=[[UIView alloc] init];
-    thirdView.backgroundColor=[UIColor brownColor];
+    
     CGFloat thirdViewX=firstViewX;
     CGFloat thirdViewY=secendViewY+secendViewH;
     CGFloat thirdViewW=firstViewW;
@@ -153,43 +197,43 @@
     thirdView.frame=CGRectMake(thirdViewX, thirdViewY, thirdViewW, thirdViewH);
     [bottomView addSubview:thirdView];
     
-    [self addChildControls:thirdView imageStr:@"20141118042246536.jpg" numberStr:[NSString stringWithFormat:@"%@",self.homePageStatistics.birdie] nameStr:@"小鸟"];
+    [self addChildControls:thirdView imageStr:@"jstj_xiaoniao" numberStr:[NSString stringWithFormat:@"%@",self.homePageStatistics.birdie] nameStr:@"小鸟"];
     
     
     UIView *fourthView=[[UIView alloc] init];
-    fourthView.backgroundColor=[UIColor blackColor];
+    
     CGFloat fourthViewX=bottomView.frame.size.width/2+20;
     CGFloat fourthViewY=firstViewY;
     CGFloat fourthViewW=firstViewW;
     CGFloat fourthViewH=firstViewH;
     fourthView.frame=CGRectMake(fourthViewX, fourthViewY, fourthViewW, fourthViewH);
     [bottomView addSubview:fourthView];
-    [self addChildControls:fourthView imageStr:@"20141118042246536.jpg" numberStr:[NSString stringWithFormat:@"%@",self.homePageStatistics.double_bogey] nameStr:@"双柏忌+"];
+    [self addChildControls:fourthView imageStr:@"jstj_shuangboji" numberStr:[NSString stringWithFormat:@"%@",self.homePageStatistics.double_bogey] nameStr:@"双柏忌+"];
     
     
     
     UIView *fifthView=[[UIView alloc] init];
-    fifthView.backgroundColor=[UIColor redColor];
+    
     CGFloat fifthViewX=fourthViewX;
     CGFloat fifthViewY=fourthViewY+fourthViewH;
     CGFloat fifthViewW=firstViewW;
     CGFloat fifthViewH=firstViewH;
     fifthView.frame=CGRectMake(fifthViewX, fifthViewY, fifthViewW, fifthViewH);
     [bottomView addSubview:fifthView];
-    [self addChildControls:fifthView imageStr:@"20141118042246536.jpg" numberStr:[NSString stringWithFormat:@"%@",self.homePageStatistics.par] nameStr:@"标准"];
+    [self addChildControls:fifthView imageStr:@"jstj_biaozhungan" numberStr:[NSString stringWithFormat:@"%@",self.homePageStatistics.par] nameStr:@"标准"];
     
     
     
     
     UIView *sixthView=[[UIView alloc] init];
-    sixthView.backgroundColor=[UIColor redColor];
+    
     CGFloat sixthViewX=fourthViewX;
     CGFloat sixthViewY=fifthViewY+fifthViewH;
     CGFloat sixthViewW=firstViewW;
     CGFloat sixthViewH=firstViewH;
     sixthView.frame=CGRectMake(sixthViewX, sixthViewY, sixthViewW, sixthViewH);
     [bottomView addSubview:sixthView];
-    [self addChildControls:sixthView imageStr:@"20141118042246536.jpg" numberStr:[NSString stringWithFormat:@"%@",self.homePageStatistics.bogey] nameStr:@"柏忌"];
+    [self addChildControls:sixthView imageStr:@"jstj_boji" numberStr:[NSString stringWithFormat:@"%@",self.homePageStatistics.bogey] nameStr:@"柏忌"];
     
 
 
@@ -201,9 +245,9 @@
 -(void)addChildControls:(UIView *)childView  imageStr:(NSString *)imageStr  numberStr:(NSString *)numberStr  nameStr:(NSString *)nameStr
 {
     UIImageView *imageView=[[UIImageView alloc] init];
-    CGFloat imageViewX=5;
-    CGFloat imageViewW=30;
-    CGFloat imageViewH=30;
+    CGFloat imageViewX=35;
+    CGFloat imageViewW=15;
+    CGFloat imageViewH=15;
     CGFloat imageViewY=(childView.frame.size.height-imageViewH)*0.5;
     imageView.frame=CGRectMake(imageViewX, imageViewY, imageViewW, imageViewH);
     imageView.image=[UIImage imageNamed:imageStr];
@@ -211,21 +255,36 @@
     
     
     UILabel *numberLabel=[[UILabel alloc ] init];
-    CGFloat numberLabelX=imageViewX+imageViewW+10;
-    CGFloat numberLabelW=60;
+    CGFloat numberLabelX=imageViewX+imageViewW+5;
+    CGFloat numberLabelW=30;
     CGFloat numberLabelH=20;
-    CGFloat numberLabelY=5;
+    CGFloat numberLabelY=(childView.frame.size.height-numberLabelH)/2;
     numberLabel.frame=CGRectMake(numberLabelX, numberLabelY, numberLabelW, numberLabelH);
-    numberLabel.text=numberStr;
+    //numberLabel.text=numberStr;
+    numberLabel.textColor=ZCColor(240, 208, 122);
     [childView addSubview:numberLabel];
+    if ([numberStr isEqual:@"<null>"]) {
+         numberLabel.text=@"-";
+    }else
+    {
+    numberLabel.text=[NSString stringWithFormat:@"%@%%",numberStr];
+    }
+     numberLabel.font=[UIFont systemFontOfSize:18];
+    
+    
+    
+    
+    
     
     UILabel *nameLabel=[[UILabel alloc] init];
-    CGFloat nameLabelX=numberLabelX+numberLabelW+10;
+    CGFloat nameLabelX=numberLabelX+numberLabelW;
     CGFloat nameLabelW=60;
     CGFloat nameLabelH=20;
     CGFloat nameLabelY=numberLabelY;
     nameLabel.frame=CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH);
+    nameLabel.textColor=ZCColor(240, 208, 122);
     nameLabel.text=nameStr;
+    nameLabel.font=[UIFont systemFontOfSize:15];
     [childView addSubview:nameLabel];
     
     
@@ -243,6 +302,7 @@
     CGFloat almostViewW=topview.frame.size.width/2;
     CGFloat almostViewH=topview.frame.size.height/2;
     almostView.frame=CGRectMake(almostViewX, almostViewY, almostViewW, almostViewH);
+    
     [topview addSubview:almostView];
     [self addModuleView:almostView numberLabel:[NSString stringWithFormat:@"%@",self.homePageStatistics.handicap] nameLabel:@"差点"];
     
@@ -290,6 +350,7 @@
     CGFloat numberLabelH=view.frame.size.height/2;
     numberLabel.frame=CGRectMake(numberLabelX, numberLabelY, numberLabelW, numberLabelH);
     numberLabel.text=number;
+    numberLabel.textColor=ZCColor(240, 208, 122);
     numberLabel.textAlignment=NSTextAlignmentCenter;
     [view addSubview:numberLabel];
     
@@ -301,6 +362,7 @@
     CGFloat nameLabelH=view.frame.size.height/2;
     nameLabel.frame=CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH);
     nameLabel.text=name;
+    nameLabel.textColor=ZCColor(240, 208, 122);
     nameLabel.textAlignment=NSTextAlignmentCenter;
 
     [view addSubview:nameLabel];

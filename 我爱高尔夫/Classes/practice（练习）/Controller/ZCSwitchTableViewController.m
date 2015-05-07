@@ -35,18 +35,29 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // 修改返回按钮
-    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui-anxia" action:@selector(liftBthClick:) target:self];
+    
+    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+    customLab.textAlignment=NSTextAlignmentCenter;
+    [customLab setTextColor:ZCColor(240, 208, 122)];
+    [customLab setText:@"搜索球场"];
+    customLab.font = [UIFont boldSystemFontOfSize:20];
+    self.navigationItem.titleView = customLab;
+    
+    //返回
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
     
     
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
-    
+    //让下面没内容的分割线不显示
+    self.tableView.tableFooterView = [[UIView alloc] init];
     _resultsData = [NSMutableArray array];
     
     self.tableView.backgroundColor=ZCColor(23, 25, 28);
     //让分割线不显示
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+   // self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    //分割线颜色
+    [self.tableView   setSeparatorColor:ZCColor(240, 208, 122)];
     [self onlineData];
     //搜索
     [self initMysearchBarAndMysearchDisPlay];
@@ -54,6 +65,31 @@
     
     }
 
+
+
+
+//分割线显示全
+-(void)viewDidLayoutSubviews {
+    
+    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+        
+    }
+    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)])  {
+        [self.tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    
+}
+
+//分割线显示全
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPat{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]){
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
 
 //返回到上个界面
 -(void)liftBthClick:(UIButton *)bth
@@ -140,7 +176,7 @@
     //searchDisplayController自身有一个searchResultsTableView，所以在执行操作的时候首先要判断是否是搜索结果的tableView，如果是显示的就是搜索结果的数据，如果不是，则显示原始数据。
     if(tableView == _mySearchDisplayController.searchResultsTableView)
     {
-        tableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        tableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-20);
         //解决上面空出的20个像素
         self.edgesForExtendedLayout = UIRectEdgeNone;
         
@@ -179,7 +215,7 @@
         //ZCCity *city= self.resultsData[indexPath.section];
         ZCCityStadium *stadium = self.resultsData[indexPath.row];
         cell.textLabel.text = stadium.name;
-        cell.detailTextLabel.text= [NSString stringWithFormat:@"address===%zd",indexPath.row];
+        cell.detailTextLabel.text= [NSString stringWithFormat:@"%@",stadium.address];
         
     }
     else
@@ -187,14 +223,21 @@
         ZCCity *city= self.dataArray[indexPath.section];
         ZCCityStadium *stadium = city.venues[indexPath.row];
         cell.textLabel.text = stadium.name;
-        cell.detailTextLabel.text= [NSString stringWithFormat:@"address===%zd",indexPath.row];
+        cell.detailTextLabel.text= [NSString stringWithFormat:@"%@",stadium.address];
 
     }
-    cell.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"ss_beijing"]];
-    cell.textLabel.textColor=ZCColor(208, 210, 212);
-    cell.detailTextLabel.textColor=ZCColor(121, 121, 121);
+    cell.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+    //设置背景图片
+  //  cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+    cell.textLabel.textColor=ZCColor(240, 208, 122);
+    cell.detailTextLabel.textColor=ZCColor(240, 208, 110);
+    cell.textLabel.font=[UIFont systemFontOfSize:20];
+    cell.detailTextLabel.font=[UIFont systemFontOfSize:15];
+    //cell.selectedBackgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sousuo_bj_anxia"]];
     
-    cell.selectedBackgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sousuo_bj_anxia"]];
+    cell.selectedBackgroundView=[[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor=ZCColor(15, 14, 14);
+
     
     return cell;
 
@@ -233,7 +276,7 @@
     UILabel *nameLabel=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 150, 30)];
     ZCCity *city=self.dataArray[section];
     nameLabel.text=city.name;
-    nameLabel.textColor=ZCColor(208, 210, 212);
+    nameLabel.textColor=ZCColor(240, 208, 122);
     [labelView addSubview:nameLabel];
     return labelView;
 
@@ -275,10 +318,13 @@
     _mySearchBar.placeholder=@"请输入球场名称";
     //改变输入字体的颜色
     UITextField *searchField=[_mySearchBar valueForKey:@"_searchField"];
-    searchField.textColor=ZCColor(208, 210, 212);
+    //searchField.textColor=[UIColor redColor];
     
-    [searchField setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
-    [_mySearchBar setSearchFieldBackgroundImage:[UIImage imageNamed:@"ss_sousuokuang"] forState:UIControlStateNormal];
+    [searchField setValue:ZCColor(240, 208, 122) forKeyPath:@"_placeholderLabel.textColor"];
+    [_mySearchBar setSearchFieldBackgroundImage:[UIImage imageNamed:@"sousuokuang"] forState:UIControlStateNormal];
+    //修改提示语左边的图片
+    [_mySearchBar setImage:[UIImage imageNamed:@"sousuo_icon"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
+    
     //移除灰色模板背景
     for (UIView *subview in [[_mySearchBar.subviews firstObject] subviews]) {
         if ([subview isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
@@ -288,13 +334,14 @@
     }
     
    
-    self.tableView.tableHeaderView.backgroundColor=ZCColor(23, 25, 28);
+    self.tableView.tableHeaderView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
 
     
     //加入列表的header里面
     self.tableView.tableHeaderView = _mySearchBar;
     
-    _mySearchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:_mySearchBar contentsController:self];
+    //_mySearchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:_mySearchBar contentsController:self];
+    _mySearchDisplayController = [[UISearchDisplayController alloc] init];
     _mySearchDisplayController.delegate = self;
     // searchResultsDataSource 就是 UITableViewDataSource
     _mySearchDisplayController.searchResultsDataSource = self;
@@ -302,11 +349,11 @@
     _mySearchDisplayController.searchResultsDelegate = self;
    // [self.searchDisplayController setActive:NO animated:NO];
     
-    _mySearchDisplayController.searchResultsTableView.backgroundColor=ZCColor(23, 25, 28);
+    _mySearchDisplayController.searchResultsTableView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
     //让分割线不显示
-    _mySearchDisplayController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//    _mySearchDisplayController.searchBar.tintColor=ZCColor(208, 210, 212);
-//    _mySearchDisplayController.searchBar.barTintColor=ZCColor(23, 25, 28);
+   // _mySearchDisplayController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
+    
 }
 
 #pragma mark UISearchBar and UISearchDisplayController Delegate Methods
@@ -344,8 +391,16 @@
    
     //準備搜尋前，把上面調整的TableView調整回全屏幕的狀態
     [UIView animateWithDuration:1.0 animations:^{
-        self.tableView.frame = CGRectMake(0, 20, SCREEN_WIDTH, SCREEN_HEIGHT-20);
+        self.tableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     }];
+    
+    
+    if (_mySearchBar.isHidden) {
+        _mySearchDisplayController=[[UISearchDisplayController alloc] init];
+    }else
+    {
+    _mySearchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:_mySearchBar contentsController:self];
+    }
     
     return YES;
 }

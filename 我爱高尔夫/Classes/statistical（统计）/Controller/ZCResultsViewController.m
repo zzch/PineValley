@@ -11,6 +11,7 @@
 #import "AFNetworking.h"
 #import "ZCResultsModel.h"
 #import "ZCEventUuidTool.h"
+#import "UIBarButtonItem+DC.h"
 @interface ZCResultsViewController ()
 @property(nonatomic,weak)UIScrollView *scrollView;
 @property(nonatomic,strong)ZCResultsModel *resultsModel;
@@ -20,11 +21,35 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor=[UIColor whiteColor];
+    
+    
+    
+    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+    customLab.textAlignment=NSTextAlignmentCenter;
+    [customLab setTextColor:ZCColor(240, 208, 122)];
+    [customLab setText:@"分析结果"];
+    customLab.font = [UIFont boldSystemFontOfSize:20];
+    self.navigationItem.titleView = customLab;
+
+    
+    //返回
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
+    //背景颜色suoyou_bj
+    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+    
     [self onlineData];
     
     
 }
+
+
+
+//返回到上个界面
+-(void)liftBthClick:(UIButton *)bth
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 
 
 //网络加载
@@ -66,11 +91,13 @@
         ZCLog(@"%@",[responseObject[@"finished_count"] class]);
         
         if ([responseObject[@"finished_count"] intValue] ==0) {
-            ZCLog(@"11111");
+            //ZCLog(@"11111");
             UILabel *label1=[[UILabel alloc] init];
-            label1.text=@"GAME OVER";
+            label1.text=@"您没有数据，请添加完整场次数据";
+            label1.textColor=ZCColor(240, 208, 122);
+            label1.font=[UIFont systemFontOfSize:15];
             label1.textAlignment=NSTextAlignmentCenter;
-            label1.font=[UIFont systemFontOfSize:30];
+            
             label1.frame=self.view.bounds;
             [self.view addSubview:label1];
             
@@ -100,28 +127,32 @@
     self.scrollView=scrollView;
     [self.view addSubview:scrollView];
     
-    self.scrollView.contentSize = CGSizeMake(0, 1000);
+    
     
     
     UIView *topView=[[UIView alloc] init];
     CGFloat topViewX=0;
     CGFloat topViewY=0;
     CGFloat topViewW=SCREEN_WIDTH;
-    CGFloat topViewH=40;
+    CGFloat topViewH=50;
     topView.frame=CGRectMake(topViewX, topViewY, topViewW, topViewH);
     [self.scrollView addSubview:topView];
     
     [self addChildControls:topView firstLabelStr:[NSString stringWithFormat:@"%@",self.name] secondLabelStr:[NSString stringWithFormat:@"完整场次%@场",self.resultsModel.finished_count]];
+    //划线
+    [self blackgroundLine:topView];
     
     UIView *topSecondView=[[UIView alloc] init];
     CGFloat topSecondViewX=topViewX;
     CGFloat topSecondViewY=topViewH;
     CGFloat topSecondViewW=SCREEN_WIDTH;
-    CGFloat topSecondViewH=30;
+    CGFloat topSecondViewH=50;
     topSecondView.frame=CGRectMake(topSecondViewX, topSecondViewY, topSecondViewW, topSecondViewH);
     [self.scrollView addSubview:topSecondView];
     [self addChildControls:topSecondView firstLabelStr:@"平均杆数" secondLabelStr:[NSString stringWithFormat:@"%@",self.resultsModel.score]];
-    
+    //划线
+    [self blackgroundLine:topSecondView];
+
     UIView *topThirdView=[[UIView alloc] init];
     CGFloat topThirdViewX=topViewX;
     CGFloat topThirdViewY=topSecondViewY+topSecondViewH;
@@ -130,14 +161,17 @@
     topThirdView.frame=CGRectMake(topThirdViewX, topThirdViewY, topThirdViewW, topThirdViewH);
     [self.scrollView addSubview:topThirdView];
     [self addChildControls:topThirdView firstLabelStr:@"差点" secondLabelStr:[NSString stringWithFormat:@"%@",self.resultsModel.handicap]];
+    //划线
+    [self blackgroundLine:topThirdView];
     
     
     UIView *forthView=[[UIView alloc] init];
     CGFloat forthViewX=topViewX;
-    CGFloat forthViewY=topThirdViewY+topThirdViewH+30;
+    CGFloat forthViewY=topThirdViewY+topThirdViewH+15;
     CGFloat forthViewW=SCREEN_WIDTH;
-    CGFloat forthViewH=300;
+    CGFloat forthViewH=358;
     forthView.frame=CGRectMake(forthViewX, forthViewY, forthViewW, forthViewH);
+    forthView.backgroundColor=ZCColor(136, 119, 73);
     [self.scrollView addSubview:forthView];
     //添加里面空间
     [self forthViewControls:forthView];
@@ -145,10 +179,11 @@
     
     UIView *fifthView=[[UIView alloc] init];
     CGFloat fifthViewX=topViewX;
-    CGFloat fifthViewY=forthViewY+forthViewH+30;
+    CGFloat fifthViewY=forthViewY+forthViewH+15;
     CGFloat fifthViewW=SCREEN_WIDTH;
-    CGFloat fifthViewH=150;
+    CGFloat fifthViewH=154;
     fifthView.frame=CGRectMake(fifthViewX, fifthViewY, fifthViewW, fifthViewH);
+    fifthView.backgroundColor=ZCColor(136, 119, 73);
     [self.scrollView addSubview:fifthView];
     //添加里面空间
     [self fifthViewControls:fifthView];
@@ -157,17 +192,26 @@
     
     UIView *sixthView=[[UIView alloc] init];
     CGFloat sixthViewX=topViewX;
-    CGFloat sixthViewY=fifthViewY+fifthViewH+30;
+    CGFloat sixthViewY=fifthViewY+fifthViewH+15;
     CGFloat sixthViewW=SCREEN_WIDTH;
-    CGFloat sixthViewH=250;
+    CGFloat sixthViewH=307;
     sixthView.frame=CGRectMake(sixthViewX, sixthViewY, sixthViewW, sixthViewH);
+    sixthView.backgroundColor=ZCColor(136, 119, 73);
     [self.scrollView addSubview:sixthView];
     //添加里面空间
     [self sixthViewControls:sixthView];
 
-    
+    self.scrollView.contentSize = CGSizeMake(0, sixthViewY+sixthViewH+60);
 }
 
+//背景线
+-(void)blackgroundLine:(UIView*)view
+{
+    UIView *bjView=[[UIView alloc] init];
+    bjView.frame=CGRectMake(0, view.frame.size.height-1, SCREEN_WIDTH, 1);
+    bjView.backgroundColor=ZCColor(136, 119, 73);
+    [view addSubview:bjView];
+}
 
 
 //第4个 View里的控件
@@ -179,23 +223,23 @@
     
     // 1.数字的尺寸
     CGFloat appW = SCREEN_WIDTH;
-    CGFloat appH = (view.frame.size.height)/7;
+    CGFloat appH = (view.frame.size.height-8)/7;
     
     // 2.间隙 = (控制器view的宽度 - 3 * 应用宽度) / 4
     //CGFloat marginX = (self.view.frame.size.width - totalColumns * appW) / (totalColumns + 1);
     CGFloat marginX = 0;
-    CGFloat marginY = 0;
+    CGFloat marginY = 1;
     
     for (int index=0; index<7; index++) {
         UIButton *button=[[UIButton alloc] init];
-        
+        [button setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]]];
         // 3.2.计算框框的位置
         // 计算行号和列号
         int row = index / totalColumns;
         int col = index % totalColumns;
         // 计算x和y
         CGFloat appX = marginX + col * (appW + marginX);
-        CGFloat appY = row * (appH + marginY);
+        CGFloat appY = row * (appH + marginY)+marginY;
         // 设置frame
         button.frame = CGRectMake(appX, appY, appW, appH);
         [view addSubview:button];
@@ -205,22 +249,25 @@
         UILabel *Label1=[[UILabel alloc] init];
         Label1.frame=CGRectMake(10,0 , 190, button.frame.size.height);
         
-        Label1.textColor=[UIColor redColor];//ZCColor(208, 210, 212);
+        Label1.textColor=ZCColor(240, 208, 122);
         [button addSubview:Label1];
         
         
         //创建下面文字
         UILabel *Label2=[[UILabel alloc] init];
-        Label2.frame=CGRectMake(button.frame.size.width-100,0 , 50, button.frame.size.height);
+       // Label2.frame=CGRectMake(button.frame.size.width-100,0 , 50, button.frame.size.height);
         
-        Label2.textColor=ZCColor(37, 176, 101);
+        
+        Label2.frame=CGRectMake(button.frame.size.width-60,0 , 50, button.frame.size.height);
+        
+        Label2.textColor=ZCColor(240, 208, 122);
         Label2.textAlignment=NSTextAlignmentRight;
         [button addSubview:Label2];
         
-        UIImageView *rightImage=[[UIImageView alloc] init];
-        rightImage.frame=CGRectMake(Label2.frame.size.width+Label2.frame.origin.x, 0, 40, button.frame.size.height);
-        rightImage.image=[UIImage imageNamed:@"weizhi"];
-        [button addSubview:rightImage];
+//        UIImageView *rightImage=[[UIImageView alloc] init];
+//        rightImage.frame=CGRectMake(Label2.frame.size.width+Label2.frame.origin.x, 0, 40, button.frame.size.height);
+//        rightImage.image=[UIImage imageNamed:@"weizhi"];
+//        [button addSubview:rightImage];
         
         
         
@@ -273,12 +320,12 @@
     
     // 1.数字的尺寸
     CGFloat appW = SCREEN_WIDTH;
-    CGFloat appH = (view.frame.size.height)/3;
+    CGFloat appH = (view.frame.size.height-4)/3;
     
     // 2.间隙 = (控制器view的宽度 - 3 * 应用宽度) / 4
     //CGFloat marginX = (self.view.frame.size.width - totalColumns * appW) / (totalColumns + 1);
     CGFloat marginX = 0;
-    CGFloat marginY = 0;
+    CGFloat marginY = 1;
     
     for (int index=0; index<3; index++) {
         UIButton *button=[[UIButton alloc] init];
@@ -289,32 +336,32 @@
         int col = index % totalColumns;
         // 计算x和y
         CGFloat appX = marginX + col * (appW + marginX);
-        CGFloat appY = row * (appH + marginY);
+        CGFloat appY = row * (appH + marginY)+marginY;
         // 设置frame
         button.frame = CGRectMake(appX, appY, appW, appH);
         [view addSubview:button];
         
-        
+        [button setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]]];
         
         UILabel *Label1=[[UILabel alloc] init];
         Label1.frame=CGRectMake(10,0 , 190, button.frame.size.height);
         
-        Label1.textColor=[UIColor redColor];//ZCColor(208, 210, 212);
+        Label1.textColor=ZCColor(240, 208, 122);
         [button addSubview:Label1];
         
         
         //创建下面文字
         UILabel *Label2=[[UILabel alloc] init];
-        Label2.frame=CGRectMake(button.frame.size.width-100,0 , 50, button.frame.size.height);
-        
-        Label2.textColor=ZCColor(37, 176, 101);
+      //  Label2.frame=CGRectMake(button.frame.size.width-100,0 , 50, button.frame.size.height);
+        Label2.frame=CGRectMake(button.frame.size.width-60,0 , 50, button.frame.size.height);
+        Label2.textColor=ZCColor(240, 208, 122);
         Label2.textAlignment=NSTextAlignmentRight;
         [button addSubview:Label2];
         
-        UIImageView *rightImage=[[UIImageView alloc] init];
-        rightImage.frame=CGRectMake(Label2.frame.size.width+Label2.frame.origin.x, 0, 40, button.frame.size.height);
-        rightImage.image=[UIImage imageNamed:@"weizhi"];
-        [button addSubview:rightImage];
+//        UIImageView *rightImage=[[UIImageView alloc] init];
+//        rightImage.frame=CGRectMake(Label2.frame.size.width+Label2.frame.origin.x, 0, 40, button.frame.size.height);
+//        rightImage.image=[UIImage imageNamed:@"weizhi"];
+//        [button addSubview:rightImage];
         
         
         
@@ -347,12 +394,12 @@
     
     // 1.数字的尺寸
     CGFloat appW = SCREEN_WIDTH;
-    CGFloat appH = (view.frame.size.height)/6;
+    CGFloat appH = (view.frame.size.height-7)/6;
     
     // 2.间隙 = (控制器view的宽度 - 3 * 应用宽度) / 4
     //CGFloat marginX = (self.view.frame.size.width - totalColumns * appW) / (totalColumns + 1);
     CGFloat marginX = 0;
-    CGFloat marginY = 0;
+    CGFloat marginY = 1;
     
     for (int index=0; index<6; index++) {
         UIButton *button=[[UIButton alloc] init];
@@ -363,33 +410,34 @@
         int col = index % totalColumns;
         // 计算x和y
         CGFloat appX = marginX + col * (appW + marginX);
-        CGFloat appY = row * (appH + marginY);
+        CGFloat appY = row * (appH + marginY)+marginY;
         // 设置frame
         button.frame = CGRectMake(appX, appY, appW, appH);
         [view addSubview:button];
         
-        
+        [button setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]]];
         
         UILabel *Label1=[[UILabel alloc] init];
         Label1.frame=CGRectMake(10,0 , 190, button.frame.size.height);
         
-        Label1.textColor=[UIColor redColor];//ZCColor(208, 210, 212);
+        Label1.textColor=ZCColor(240, 208, 122);
         [button addSubview:Label1];
         
         
         //创建下面文字
         UILabel *Label2=[[UILabel alloc] init];
-        Label2.frame=CGRectMake(button.frame.size.width-100,0 , 50, button.frame.size.height);
+       // Label2.frame=CGRectMake(button.frame.size.width-100,0 , 50, button.frame.size.height);
+        Label2.frame=CGRectMake(button.frame.size.width-60,0 , 50, button.frame.size.height);
         
-        Label2.textColor=ZCColor(37, 176, 101);
+        Label2.textColor=ZCColor(240, 208, 122);
         Label2.textAlignment=NSTextAlignmentRight;
         [button addSubview:Label2];
         
-        UIImageView *rightImage=[[UIImageView alloc] init];
-        rightImage.frame=CGRectMake(Label2.frame.size.width+Label2.frame.origin.x, 0, 40, button.frame.size.height);
-        rightImage.image=[UIImage imageNamed:@"weizhi"];
-        [button addSubview:rightImage];
-        
+//        UIImageView *rightImage=[[UIImageView alloc] init];
+//        rightImage.frame=CGRectMake(Label2.frame.size.width+Label2.frame.origin.x, 0, 40, button.frame.size.height);
+//        rightImage.image=[UIImage imageNamed:@"weizhi"];
+//        [button addSubview:rightImage];
+//        
         
         
         
@@ -436,6 +484,7 @@
     CGFloat firstLabelH=view.frame.size.height;
     firstLabel.frame=CGRectMake(firstLabelX, firstLabelY, firstLabelW, firstLabelH);
     firstLabel.text=firstStr;
+    firstLabel.textColor=ZCColor(240, 208, 122);
     [view addSubview:firstLabel];
     
     
@@ -448,6 +497,8 @@
     CGFloat secondLabelX=SCREEN_WIDTH-secondLabelW-10;
     secondLabel.frame=CGRectMake(secondLabelX, secondLabelY, secondLabelW, secondLabelH);
     secondLabel.text=secondStr;
+    secondLabel.textColor=ZCColor(240, 208, 122);
+    secondLabel.textAlignment=NSTextAlignmentRight;
     [view addSubview:secondLabel];
 
 

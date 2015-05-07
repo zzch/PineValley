@@ -14,7 +14,7 @@
 @property (nonatomic, weak) UIImageView *TTaiImage;
 @property (nonatomic, weak) UILabel *TTaiName;
 @property (nonatomic, weak) UIImageView *imageView;
-
+@property (nonatomic, weak) UIView *bjview;
 
 @end
 @implementation ZCSettingHeadView
@@ -33,7 +33,9 @@
 {
     if (self=[super initWithReuseIdentifier:reuseIdentifier]) {
         
-        self.backgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yihangbeijing"]];
+        self.backgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+        
+          //self.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
         
         //添加子控件
         //1.添加按钮
@@ -76,7 +78,7 @@
         //childName.backgroundColor=[UIColor blueColor];
         //居中
        // childName.textAlignment=NSTextAlignmentCenter;
-        childName.textColor=ZCColor(208, 210, 212);
+        childName.textColor=ZCColor(240, 208, 122);
         
         [self addSubview:childName];
         self.childName=childName;
@@ -84,7 +86,7 @@
         //右边
         UILabel *TTaiName=[[UILabel alloc] init];
         
-       TTaiName.textColor=ZCColor(208, 210, 212);
+       TTaiName.textColor=ZCColor(240, 208, 122);
         //居中
         TTaiName.textAlignment=NSTextAlignmentRight;
         
@@ -104,6 +106,13 @@
     
         [self addSubview:TTaiImage];
         self.TTaiImage=TTaiImage;
+        
+        
+        UIView *bjview=[[UIView alloc] init];
+        bjview.backgroundColor=ZCColor(136, 119, 73);
+        [self addSubview:bjview];
+        self.bjview=bjview;
+        
     }
     return self;
     
@@ -232,6 +241,9 @@
 
 
     self.imageView.frame=CGRectMake(imageViewX, imageViewY, imageViewW, imageViewH);
+    
+    
+    self.bjview.frame=CGRectMake(0, self.frame.size.height-1, self.frame.size.width, 1);
 }
 
 

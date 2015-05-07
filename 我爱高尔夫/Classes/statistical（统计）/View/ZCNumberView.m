@@ -15,13 +15,19 @@
 @property(nonatomic,weak)UIButton *button4;
 @property(nonatomic,weak)UIButton *button5;
 @property(nonatomic,weak)UIButton *button6;
+@property(nonatomic,weak)UIScrollView *scrollView;
 @end
 @implementation ZCNumberView
 
 -(instancetype)initWithFrame:(CGRect)frame
 {
     if (self=[super initWithFrame:frame]) {
-        self.backgroundColor=[UIColor redColor ];
+        
+        UIScrollView *scrollView=[[UIScrollView alloc] init];
+        scrollView.frame=[UIScreen mainScreen].bounds;
+        self.scrollView=scrollView;
+        [self addSubview:scrollView];
+  self.scrollView.contentInset = UIEdgeInsetsMake(0, 0, 40, 0);
         
         [self addControls];
         
@@ -33,53 +39,70 @@
 
 -(void)addControls
 {
+    UIImage *image=[UIImage imageNamed:@"yihang_bj" ];
+    // 指定为拉伸模式，伸缩后重新赋值
+    image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(25,25,10,10) resizingMode:UIImageResizingModeStretch];
+    
+    
     UIButton *button1=[[UIButton alloc] init];
     [button1 setTitle:@"最近5场" forState:UIControlStateNormal];
     button1.tag=4005;
     [button1 addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
      self.button1=button1;
-    [self addSubview:button1];
+    [button1 setBackgroundImage:image forState:UIControlStateNormal];
+    [button1 setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
+    [self.scrollView addSubview:button1];
     
     UIButton *button2=[[UIButton alloc] init];
     [button2 setTitle:@"最近10场" forState:UIControlStateNormal];
     button2.tag=4010;
     [button2 addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     self.button2=button2;
-    [self addSubview:button2];
+    [button2 setBackgroundImage:image forState:UIControlStateNormal];
+    [button2 setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
+    [self.scrollView addSubview:button2];
 
     
     UIButton *button3=[[UIButton alloc] init];
     [button3 setTitle:@"最近30场" forState:UIControlStateNormal];
     button3.tag=4030;
+    [button3 setBackgroundImage:image forState:UIControlStateNormal];
+    [button3 setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
     [button3 addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     self.button3=button3;
-    [self addSubview:button3];
+    [self.scrollView addSubview:button3];
 
     
     UIButton *button4=[[UIButton alloc] init];
     [button4 setTitle:@"最近50场" forState:UIControlStateNormal];
     button4.tag=4050;
+    [button4 setBackgroundImage:image forState:UIControlStateNormal];
+    [button4 setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
     [button4 addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
 
     self.button4=button4;
-    [self addSubview:button4];
+    [self.scrollView addSubview:button4];
 
     
     UIButton *button5=[[UIButton alloc] init];
     [button5 setTitle:@"最近100场" forState:UIControlStateNormal];
     button5.tag=4100;
+    [button5 setBackgroundImage:image forState:UIControlStateNormal];
+    [button5 setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
     [button5 addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     self.button5=button5;
-    [self addSubview:button5];
+    [self.scrollView addSubview:button5];
 
     
     UIButton *button6=[[UIButton alloc] init];
     [button6 setTitle:@"全部场次" forState:UIControlStateNormal];
     
     button6.tag=4101;
+    [button6 setBackgroundImage:image forState:UIControlStateNormal];
+    [button6 setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
     [button6 addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     self.button6=button6;
-    [self addSubview:button6];
+    [self.scrollView addSubview:button6];
 
 
 }
@@ -98,10 +121,10 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    CGFloat button1W=80;
-    CGFloat button1H=40;
+    CGFloat button1W=SCREEN_WIDTH-20;
+    CGFloat button1H=69;
     CGFloat button1X=(SCREEN_WIDTH-button1W)*0.5;
-    CGFloat button1Y=30;
+    CGFloat button1Y=0;
     self.button1.frame=CGRectMake(button1X, button1Y, button1W, button1H);
     
     
@@ -109,7 +132,7 @@
     CGFloat button2W=button1W;
     CGFloat button2H=button1H;
     CGFloat button2X=button1X;
-    CGFloat button2Y=button1Y+button1H+20;
+    CGFloat button2Y=button1Y+button1H+10;
     self.button2.frame=CGRectMake(button2X, button2Y, button2W, button2H);
     
     
@@ -141,7 +164,7 @@
 
 
     
-
+self.scrollView.contentSize = CGSizeMake(0,button6Y+button6H+151 );
 
 }
 @end

@@ -8,7 +8,7 @@
 
 #import "ZCTabbarViewController.h"
 #import "ZCStatisticalViewController.h"
-#import "ZCPracticeViewController.h"
+#import "ZCPracticeVController.h"
 #import "ZCPersonalViewController.h"
 #import "ZCAccount.h"
 #import "ZCTabbarViewController.h"
@@ -71,7 +71,7 @@
         
 //        self.tabBar.backgroundColor=ZCColor(44, 49, 54);
         //练习
-        ZCPracticeViewController *practice=[[ZCPracticeViewController alloc] init];
+        ZCPracticeVController *practice=[[ZCPracticeVController alloc] init];
         
 
         //创建导航控制器，并把练习界面设置成跟控制器

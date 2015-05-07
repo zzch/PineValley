@@ -27,9 +27,44 @@
         self.dataSource=self;
         self.delegate=self;
         self.rowHeight=80;
+        self.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+        
+        //分割线颜色
+        [self   setSeparatorColor:ZCColor(240, 208, 122)];
+        //让下面没内容的分割线不显示
+        self.tableFooterView = [[UIView alloc] init];
+        
+        
     }
     return self;
 }
+
+
+
+
+-(void)viewDidLayoutSubviews {
+    
+    if ([self respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self setSeparatorInset:UIEdgeInsetsZero];
+        
+    }
+    if ([self respondsToSelector:@selector(setLayoutMargins:)])  {
+        [self setLayoutMargins:UIEdgeInsetsZero];
+    }
+    
+}
+
+//分割线显示全
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPat{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]){
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
+
+
 
 
 -(NSMutableArray *)stadiumArray

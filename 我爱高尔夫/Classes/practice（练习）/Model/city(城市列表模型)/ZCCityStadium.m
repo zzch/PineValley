@@ -17,7 +17,11 @@
 -(instancetype)initWithDict:(NSDictionary *)dict
 {
     if (self = [super init]) {
-        [self setValuesForKeysWithDictionary:dict];
+        
+        self.uuid=dict[@"uuid"];
+        self.name=dict[@"name"];
+        self.address=dict[@"address"];
+        
     }
     return self;
 

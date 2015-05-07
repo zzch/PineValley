@@ -42,15 +42,30 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title=@"选择球场";
+    
+    
+    
+    
+    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+    customLab.textAlignment=NSTextAlignmentCenter;
+    [customLab setTextColor:ZCColor(240, 208, 122)];
+    [customLab setText:@"选择球场"];
+    customLab.font = [UIFont boldSystemFontOfSize:20];
+    self.navigationItem.titleView = customLab;
+
+    
+    
+    
+    
+    
     
     UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"切换" style:UIBarButtonItemStyleDone target:self action:@selector(switchOtherView)];
     //改变UIBarButtonItem字体颜色
-    [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor,nil] forState:UIControlStateNormal];
+    [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:ZCColor(240, 208, 122), UITextAttributeTextColor,nil] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem =newBar;
     
-    // 修改返回按钮
-     self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui-anxia" action:@selector(liftBthClick:) target:self];
+    //返回
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
     
     
   // self.navigationController.navigationBarHidden = YES;
@@ -132,9 +147,9 @@
     params[@"longitude"] = @(116.300841);
     params[@"latitude"]=@(39.975368);
     params[@"token"]=account.token;
-     NSString *url=[NSString stringWithFormat:@"%@%@",API,@"venues/nearest.json"];
+     NSString *url=[NSString stringWithFormat:@"%@%@",API,@"venues/nearby"];
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-       // ZCLog(@"%@------",responseObject);
+        ZCLog(@"%@------",responseObject);
         //将字典转换成模型数据
         NSMutableArray *stadiunArray=[NSMutableArray array];
         for (NSDictionary *dict in responseObject) {
@@ -204,12 +219,19 @@
     _tableView.backgroundColor = [UIColor whiteColor];
     _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     _tableView.showsVerticalScrollIndicator = NO;
-    _tableView.tableHeaderView = [[UIView alloc] init];
-    _tableView.tableFooterView = [[UIView alloc] init];
-    _tableView.backgroundColor=ZCColor(23, 25, 28);
-    //让分割线不显示
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    _tableView.tableHeaderView = [[UIView alloc] init];
+//    _tableView.tableFooterView = [[UIView alloc] init];
+   
+     
+        //背景颜色suoyou_bj
+        self.tableView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+        [self.tableView   setSeparatorColor:ZCColor(240, 208, 122)];
+    
+        self.tableView.tableFooterView = [[UIView alloc] init];
+        
 
+    
+    
     [self.view addSubview:_tableView];
     
 //    if (is_IOS_7)
@@ -217,11 +239,28 @@
 //        _tableView.separatorInset = UIEdgeInsetsZero;
 }
 
+//分割线显示全
+-(void)viewDidLayoutSubviews {
+    
+    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+        
+    }
+    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)])  {
+        [self.tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    
+}
 
-
-
-
-
+//分割线显示全
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPat{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]){
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
 
 
 

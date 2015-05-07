@@ -18,7 +18,7 @@
 @property(nonatomic,weak)UILabel *endName;
 @property(nonatomic,weak)ZCDatapickerView *dataPick;
 @property(nonatomic,weak)UIView *alphaView;
-
+@property(nonatomic,weak)UIImageView *bjImage;
 @property(nonatomic,assign)long longstartTime;
 @property(nonatomic,assign)long longendTime;
 
@@ -32,7 +32,7 @@
 -(instancetype)initWithFrame:(CGRect)frame
 {
     if (self=[super initWithFrame:frame]) {
-        self.backgroundColor=[UIColor whiteColor ];
+        
         
         [self addControls];
     }
@@ -41,9 +41,16 @@
 }
 
 
-//添加控件
+//添加控件shijian_bj
 -(void)addControls
 {
+    
+    UIImageView *bjImage=[[UIImageView alloc] init];
+    bjImage.image=[UIImage imageNamed:@"shijian_bj"];
+    [self addSubview:bjImage];
+    self.bjImage=bjImage;
+    
+    
     UIButton *startButton=[[UIButton alloc] init];
     [startButton addTarget:self action:@selector(clickStartButton) forControlEvents:UIControlEventTouchUpInside];
     self.startButton=startButton;
@@ -52,10 +59,12 @@
     UILabel *startName=[[UILabel alloc] init];
     self.startName=startName;
     startName.text=@"开始时间";
+    startName.textColor=ZCColor(240, 208, 122);
     [startButton  addSubview:startName];
     
     UILabel *startTime=[[UILabel alloc] init];
      self.startTime=startTime;
+    startTime.textColor=ZCColor(240, 208, 122);
     [startButton  addSubview:startTime];
     
     // 获取用户通过UIDatePicker设置的日期和时间
@@ -80,11 +89,12 @@
     UILabel *endName=[[UILabel alloc] init];
     self.endName=endName;
     endName.text=@"结束时间";
+    endName.textColor=ZCColor(240, 208, 122);
     [endButton  addSubview:endName];
     
     UILabel *endTime=[[UILabel alloc] init];
     self.endTime=endTime;
-    
+    endTime.textColor=ZCColor(240, 208, 122);
     [endButton  addSubview:endTime];
     
     endTime.text=destDateString;
@@ -96,7 +106,7 @@
     
     
     UIButton *seeButton=[[UIButton alloc] init];
-    seeButton.backgroundColor=[UIColor redColor];
+    seeButton.backgroundColor=ZCColor(136, 119, 73);
     [seeButton setTitle:@"搜索" forState:UIControlStateNormal];
     [seeButton addTarget:self action:@selector(clickseeButton) forControlEvents:UIControlEventTouchUpInside];
     self.seeButton=seeButton;
@@ -157,7 +167,7 @@
     
     
     ZCDatapickerView *dataPick=[[ZCDatapickerView alloc] init];
-    dataPick.backgroundColor=[UIColor redColor];
+    
     dataPick.alpha=1.0f;
     dataPick.delegate=self;
     [view addSubview:dataPick];
@@ -208,10 +218,14 @@
 {
     [super layoutSubviews];
     
+    
+    self.bjImage.frame=CGRectMake(0, 20, SCREEN_WIDTH, 123);
+    
+    
     CGFloat startButtonX=0;
     CGFloat startButtonY=20;
     CGFloat startButtonW=SCREEN_WIDTH;
-    CGFloat startButtonH=50;
+    CGFloat startButtonH=61;
     self.startButton.frame=CGRectMake(startButtonX, startButtonY, startButtonW, startButtonH);
     
     CGFloat startNameX=10;
@@ -220,7 +234,7 @@
     CGFloat startNameH=startButtonH;
     self.startName.frame=CGRectMake(startNameX, startNameY, startNameW, startNameH);
 
-    CGFloat startTimeX=startNameX+startNameW+10;
+    CGFloat startTimeX=startNameX+startNameW+30;
     CGFloat startTimeY=0;
     CGFloat startTimeW=180;
     CGFloat startTimeH=startButtonH;
@@ -228,7 +242,7 @@
     
     
     CGFloat endButtonX=0;
-    CGFloat endButtonY=startButtonY+startButtonH+10;
+    CGFloat endButtonY=startButtonY+startButtonH;
     CGFloat endButtonW=SCREEN_WIDTH;
     CGFloat endButtonH=startButtonH;
     self.endButton.frame=CGRectMake(endButtonX, endButtonY, endButtonW, endButtonH);
@@ -240,7 +254,7 @@
     CGFloat endNameH=endButtonH;
     self.endName.frame=CGRectMake(endNameX, endNameY, endNameW, endNameH);
     
-    CGFloat endTimeX=endNameX+endNameW+10;
+    CGFloat endTimeX=endNameX+endNameW+30;
     CGFloat endTimeY=0;
     CGFloat endTimeW=180;
     CGFloat endTimeH=endButtonH;
@@ -256,12 +270,13 @@
 
     
     
-    CGFloat seeButtonX=30;
-    CGFloat seeButtonY=startButtonY+startButtonH+110;
-    CGFloat seeButtonW=100;
-    CGFloat seeButtonH=50;
-    self.seeButton.frame=CGRectMake(seeButtonX, seeButtonY, seeButtonW, seeButtonH);
+    CGFloat seeButtonX=0;
     
+    CGFloat seeButtonW=SCREEN_WIDTH;
+    CGFloat seeButtonH=50;
+    CGFloat seeButtonY=self.frame.size.height-seeButtonH-63;
+    self.seeButton.frame=CGRectMake(seeButtonX, seeButtonY, seeButtonW, seeButtonH);
+    ZCLog(@"%f",self.frame.size.height);
     
     self.alphaView.frame=CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 }

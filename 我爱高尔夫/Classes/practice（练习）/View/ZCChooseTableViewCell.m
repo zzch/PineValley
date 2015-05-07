@@ -36,35 +36,38 @@
     if(self)
     {
        // self.backgroundView  yihangbeijing
-        self.backgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yihangbeijing"]];
-        
-        self.selectedBackgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"xuanzeqiuchang_bj_anxia"]];
+        //设置背景图片
+       // self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+        self.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+        self.selectedBackgroundView=[[UIView alloc] initWithFrame:self.frame];
+        self.selectedBackgroundView.backgroundColor=ZCColor(15, 14, 14);
+
         
        //公司名称
         UILabel *name=[[UILabel alloc] init];
         [self addSubview:name];
         _name=name;
          name.font=[UIFont systemFontOfSize:16];
-        name.textColor=ZCColor(208, 210, 212);
+        name.textColor=ZCColor(240, 208, 122);
 
         UILabel *address=[[UILabel alloc] init];
         [self addSubview:address];
         _address=address;
         address.font=[UIFont systemFontOfSize:14];
-        address.textColor=ZCColor(208, 210, 212);
+        address.textColor=ZCColor(240, 208, 122);
 
 
         UILabel *distance=[[UILabel alloc] init];
         [self addSubview:distance];
         _distance=distance;
-        distance.textColor=ZCColor(37, 176, 28);
+        distance.textColor=ZCColor(240, 208, 122);
 
         
         
         UIImageView *addressImage=[[UIImageView alloc] init];
         [self addSubview:addressImage];
         self.addressImage=addressImage;
-        addressImage.image=[UIImage imageNamed:@"weizhi"];
+        addressImage.image=[UIImage imageNamed:@"xzqc_weizhi_iocn"];
          
     }
     return  self;
@@ -117,8 +120,17 @@
     
     // cell.distance.text =@"11";
     //cell.address.text=stadium.address;
+    
+    if ([stadium.address isKindOfClass:[NSNull class]]) {
+        _addressImage.hidden=YES;
+    }else
+    {
     self.address.text=[NSString stringWithFormat:@"%@",stadium.address];
-    // NSLog(@"%@",stadium.distance);
+    }
+    
+    
+    
+    
     
 
     

@@ -16,7 +16,15 @@
 - (instancetype)initWithDict:(NSDictionary *)dict
 {
     if (self = [super init]) {
-        [self setValuesForKeysWithDictionary:dict];
+       // [self setValuesForKeysWithDictionary:dict];
+        
+        self.uuid=dict[@"uuid"];
+        self.name=dict[@"name"];
+        self.address=dict[@"address"];
+        self.distance=[dict[@"distance"] floatValue];
+        self.holes_count=dict[@"holes_count"];
+        
+        
     }
     return self;
 

@@ -23,7 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj"]];
+    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
     
     self.navigationItem.title=@"我爱高尔夫";
 //    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
@@ -31,7 +31,7 @@
     CGFloat registerX=SCREEN_WIDTH*0.031;
     CGFloat registerY=SCREEN_HEIGHT*0.0484;
     CGFloat registerW=SCREEN_WIDTH-2*registerX;
-    CGFloat registerH=40;
+    CGFloat registerH=49;
     ZCAKeyToRegisterView *Register=[[ZCAKeyToRegisterView alloc] initWithFrame:CGRectMake(registerX, registerY, registerW, registerH)];
     [self.view addSubview:Register];
     
@@ -44,29 +44,38 @@
     CGFloat phoneRegisterH=registerH;
     phoneRegister.frame=CGRectMake(phoneRegisterX, phoneRegisterY, phoneRegisterW, phoneRegisterH);
     [phoneRegister setTitle:@"手机注册" forState:UIControlStateNormal];
-    [phoneRegister setBackgroundImage:[UIImage imageNamed:@"denglu_anniu-1"] forState:UIControlStateNormal];
-    [phoneRegister setBackgroundImage:[UIImage imageNamed:@"denglu_anniu_anxia"] forState:UIControlStateHighlighted];
+    
+    [phoneRegister setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
+    
+    UIImage *image2=[UIImage imageNamed:@"shoujizhuce_bj" ];
+    // 指定为拉伸模式，伸缩后重新赋值
+    image2 = [image2 resizableImageWithCapInsets:UIEdgeInsetsMake(25,25,10,10) resizingMode:UIImageResizingModeStretch];
+    [phoneRegister setBackgroundImage:image2 forState:UIControlStateNormal];
+
+    
+    
+    
     [phoneRegister addTarget:self action:@selector(clickphoneRegister) forControlEvents:UIControlEventTouchUpInside];
     
     [self.view addSubview:phoneRegister];
+    //denglu_fgx
+    UIImageView *bjImage=[[UIImageView alloc] init];
     
-    
+    bjImage.image=[UIImage imageNamed:@"denglu_fgx"];
     //登陆landing
-    UIButton *landingButton=[[UIButton alloc] init];
-    CGFloat landingButtonY=phoneRegisterY+phoneRegisterH+30;
-    CGFloat landingButtonW=60;
-    CGFloat landingButtonH=45;
+    CGFloat landingButtonY=phoneRegisterY+phoneRegisterH+10;
+    CGFloat landingButtonW=287;
+    CGFloat landingButtonH=15;
     CGFloat landingButtonX=(SCREEN_WIDTH-landingButtonW)*0.5;
-    landingButton.frame=CGRectMake(landingButtonX, landingButtonY, landingButtonW, landingButtonH);
-    [landingButton addTarget:self action:@selector(clicklandingButton) forControlEvents:UIControlEventTouchUpInside];
-    [landingButton setTitle:@"登陆" forState:UIControlStateNormal];
-    [self.view addSubview:landingButton];
+    bjImage.frame=CGRectMake(landingButtonX, landingButtonY, landingButtonW,landingButtonH );
+    
+        [self.view addSubview:bjImage];
     
     
     //登陆界面
     ZCPhoneloginView *phoneloginView=[[ZCPhoneloginView alloc] init];
     
-    CGFloat phoneloginViewY=landingButtonY+landingButtonH+40;
+    CGFloat phoneloginViewY=landingButtonY+landingButtonH+60;
     CGFloat phoneloginViewW=SCREEN_WIDTH;
     CGFloat phoneloginViewH=SCREEN_HEIGHT*0.352;
     CGFloat phoneloginViewX=0;
@@ -76,7 +85,62 @@
     
     
     
+    
+    //监听通知中心
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
+    
 }
+
+
+-(void)keyboardWillHide:(NSNotification *)notification
+{
+    NSLog(@"*-----HideKeyBoard");
+    //self.bKeyBoardHide = YES;
+}
+-(void)keyboardWillShow:(NSNotification *)notification
+{
+    NSLog(@"*-----ShowKeyBoard");
+    //self.bKeyBoardHide = NO;
+}
+
+
+
+- (void)keyboardDidChangeFrame:(NSNotification *)noti
+{
+    //改变window的背景颜色
+    //    self.view.window.backgroundColor = self.tableView.backgroundColor;
+    
+    CGRect frame = [noti.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    
+    //键盘实时y
+    CGFloat keyY = frame.origin.y;
+    
+    CGFloat screenH = [[UIScreen mainScreen] bounds].size.height;
+    
+    CGFloat keyDuration = [noti.userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue];
+    
+    [UIView animateWithDuration:keyDuration animations:^{
+        self.view.transform = CGAffineTransformMakeTranslation(0, keyY - screenH );
+    }];
+    
+}
+
+
+
+
+//结束编辑事件  （退出键盘）
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    //     self.bKeyBoardHide = NO;
+    [self.view endEditing:YES];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter]  removeObserver:self];
+}
+
+
 
 //点击登陆
 -(void)clicklandingButton

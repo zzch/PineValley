@@ -25,7 +25,7 @@
 @property(nonatomic,strong) UIView *view;
 @property(nonatomic,strong) NSIndexPath *indexPath;
 
-@property(nonatomic,strong)UIRefreshControl *refreshControl;
+//@property(nonatomic,strong)UIRefreshControl *refreshControl;
 //无内容显示
 @property(nonatomic,weak) UIView *vc;
 @property (nonatomic, weak) MJRefreshFooterView *footer;
@@ -83,18 +83,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
- 
+    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+    customLab.textAlignment=NSTextAlignmentCenter;
+    [customLab setTextColor:ZCColor(240, 208, 122)];
+    [customLab setText:@"快捷记分卡"];
+    customLab.font = [UIFont boldSystemFontOfSize:20];
+    self.navigationItem.titleView = customLab;
     
-    self.navigationItem.title=@"快捷记分卡";
+    
 //    
     UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"新建" style:UIBarButtonItemStyleDone target:self action:@selector(chooseThePitch)];
     //改变UIBarButtonItem字体颜色
-    [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor,nil] forState:UIControlStateNormal];
+    [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:ZCColor(240, 208, 122), UITextAttributeTextColor,nil] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem =newBar;
     
     
-    //返回 
-    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui-anxia" action:@selector(liftBthClick:) target:self];
+    //返回
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
 
     //背景颜色suoyou_bj
     self.tableView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
@@ -114,7 +119,7 @@
     // UITableViewStyleGrouped
     
      [self.tableView   setSeparatorColor:ZCColor(240, 208, 122)];
-    
+    //让下面没内容的分割线不显示
      self.tableView.tableFooterView = [[UIView alloc] init];
     
     // 1.下拉刷新
@@ -184,6 +189,36 @@
     
 }
 
+
+
+
+
+//分割线显示全
+-(void)viewDidLayoutSubviews {
+    
+    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+        
+    }
+    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)])  {
+        [self.tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    
+}
+
+//分割线显示全
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPat{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]){
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
+
+
+
+
 //返回按钮
 -(void)liftBthClick:(UIButton *)bth
 {
@@ -252,12 +287,27 @@
         }
         self.eventArray=eventMutableArray;
         
-        
+        ZCLog(@"%f",SCREEN_HEIGHT);
         
         //无内容时候
         if (self.eventArray.count==0) {
-            UIView *vc=[[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH*0.156, 0, 257, 67)];
-            vc.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"wuneirong"]];
+            UIView *vc=[[UIView alloc] init];
+            if (SCREEN_HEIGHT==736) {
+                vc.frame= CGRectMake(SCREEN_WIDTH-350, 0, 334, 88);
+                vc.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"kjjf_tishi_6-2"]];
+            }else if (SCREEN_HEIGHT==667)
+            {
+            vc.frame= CGRectMake(SCREEN_WIDTH-320, 0, 301, 79);
+                vc.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"kjjf_tishi_6-2"]];
+            }else
+            {
+            vc.frame= CGRectMake(SCREEN_WIDTH-270, 0, 255, 68);
+                vc.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"liebiao_kong"]];
+            }
+            
+            
+            
+            
             self.vc=vc;
             [self.tableView addSubview:vc];
         }else
@@ -436,8 +486,8 @@
     
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{//取消选中
-    
+{
+     //取消选中
      [tableView deselectRowAtIndexPath:indexPath animated:YES];
     //单利模式  为统计页面保存uuid
     ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];

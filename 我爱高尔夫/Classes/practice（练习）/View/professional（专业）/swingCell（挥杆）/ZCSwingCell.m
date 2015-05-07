@@ -38,7 +38,7 @@
 /**
  加号
  */
-@property(nonatomic,weak)UILabel *addLabel;
+@property(nonatomic,weak)UIImageView *addImage;
 
 
 
@@ -51,67 +51,71 @@
 {
     if (self=[super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
 
-        
-       // if (self.selectTheDisplay.club==nil) {
-            
-     
+        self.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+        //取消点击效果
+        self.selectionStyle=UITableViewCellSelectionStyleNone;
 
         
         UIView *valueView=[[UIView alloc] init];
         
-        valueView.frame=CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+        
         self.valueView=valueView;
         [self.contentView addSubview:valueView];
         
         //序号
         UILabel *sequenceLabel=[[UILabel alloc] init];
-        sequenceLabel.frame=CGRectMake(0, 0, 60, self.valueView.frame.size.height);
+        sequenceLabel.textColor=ZCColor(240, 208, 122);
+        sequenceLabel.textAlignment=NSTextAlignmentCenter;
         [valueView addSubview:sequenceLabel];
         self.sequenceLabel=sequenceLabel;
         
         
         //码数
         UILabel *codeLable=[[UILabel alloc] init];
-        codeLable.backgroundColor=[UIColor brownColor];
-        codeLable.frame=CGRectMake(60, 0, 80, self.valueView.frame.size.height);
+       codeLable.textAlignment=NSTextAlignmentCenter;
+        codeLable.textColor=ZCColor(240, 208, 122);
+        codeLable.font=[UIFont systemFontOfSize:16];
         self.codeLable=codeLable;
         [valueView addSubview:codeLable];
         
         
         //状态stateLable
         UILabel *stateLable=[[UILabel alloc] init];
-        stateLable.backgroundColor=[UIColor blueColor];
-        stateLable.frame=CGRectMake(150, 0, 80, self.frame.size.height);
+        stateLable.textColor=ZCColor(240, 208, 122);
+        stateLable.textAlignment=NSTextAlignmentCenter;
+        stateLable.font=[UIFont systemFontOfSize:16];
         self.stateLable=stateLable;
         [valueView addSubview:stateLable];
         
         //罚杆penaltyLable
         UILabel *penaltyLable=[[UILabel alloc] init];
-        penaltyLable.backgroundColor=[UIColor yellowColor];
-
-        penaltyLable.frame=CGRectMake(240, 0, 70, self.frame.size.height);
+        penaltyLable.textColor=ZCColor(240, 208, 122);
+        penaltyLable.textAlignment=NSTextAlignmentCenter;
+        penaltyLable.font=[UIFont systemFontOfSize:16];
         self.penaltyLable=penaltyLable;
         [valueView addSubview:penaltyLable];
         
         
         //球杆cueLable
         UILabel *cueLable=[[UILabel alloc] init];
-        cueLable.backgroundColor=[UIColor redColor];
-        cueLable.frame=CGRectMake(310, 0, 60, self.frame.size.height);
+        cueLable.textAlignment=NSTextAlignmentCenter;
+        cueLable.textColor=ZCColor(240, 208, 122);
+        cueLable.font=[UIFont systemFontOfSize:16];
         self.cueLable=cueLable;
         [valueView addSubview:cueLable];
 
         
       //  }else{
 
-        //如果没值显示加号
+        //如果没值显示加号jfk_tianjia
         
-        UILabel *addLabel=[[UILabel alloc] init];
-            addLabel.frame=CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
-        addLabel.text=@"+++++++++++++";
+        UIImageView *addImage=[[UIImageView alloc] init];
+            addImage.frame=CGRectMake((self.frame.size.width-30)/2, (self.frame.size.height-30)/2, 30, 30);
+        addImage.image=[UIImage imageNamed:@"jfk_tianjia"];
+        //addLabel.text=@"+++++++++++++";
             
-        [self addSubview:addLabel];
-        self.addLabel=addLabel;
+        [self addSubview:addImage];
+        self.addImage=addImage;
     //    }
         
     }
@@ -128,17 +132,66 @@
     _selectTheDisplay=selectTheDisplay;
     
     if (self.selectTheDisplay.distance_from_hole) {
-        self.addLabel.hidden=YES;
+        self.addImage.hidden=YES;
         self.valueView.hidden=NO;
     }else
     {
         self.valueView.hidden=YES;
-    self.addLabel.hidden=NO;
+    self.addImage.hidden=NO;
     }
     
+    if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.distance_from_hole] isEqual:@"0"]) {
+        self.codeLable.text=@"进洞";
+    }else{
     self.codeLable.text=[NSString stringWithFormat:@"%@",self.selectTheDisplay.distance_from_hole];
+    }
+    
+    
+    //球道的转换
+    if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.point_of_fall] isEqual:@"fairway"]) {
+        self.stateLable.text=@"球道";
+    }else if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.point_of_fall] isEqual:@"green"])
+    {
+    self.stateLable.text=@"果岭";
+    }else if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.point_of_fall] isEqual:@"hole"])
+    {
+        self.stateLable.text=@"进洞";
+    }else if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.point_of_fall] isEqual:@"left_rough"])
+    {
+        self.stateLable.text=@"球道外左侧";
+    }else if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.point_of_fall] isEqual:@"right_rough"])
+    {
+        self.stateLable.text=@"球道外右侧";
+    }else if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.point_of_fall] isEqual:@"bunker"])
+    {
+        self.stateLable.text=@"沙坑";
+    }else if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.point_of_fall] isEqual:@"unplayable"])
+    {
+        self.stateLable.text=@"不可打";
+    }else
+    {
     self.stateLable.text=[NSString stringWithFormat:@"%@",self.selectTheDisplay.point_of_fall];
+    
+    }
+
+
+
+
+
+    
+    
+    
+    
+    
+    //罚杆数的转换
+    if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.penalties] isEqual:@"(null)"]) {
+        self.penaltyLable.text=@"0";
+    }else
+    {
     self.penaltyLable.text=[NSString stringWithFormat:@"%@",self.selectTheDisplay.penalties];
+    }
+    
+    
     self.cueLable.text=[NSString stringWithFormat:@"%@",self.selectTheDisplay.club];
    // self.sequenceLabel.text=[NSString stringWithFormat:@"%@",self.selectTheDisplay.sequence];
 
@@ -155,7 +208,20 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    //self.addLabel.frame=CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    self.valueView.frame=CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    
+    //序号
+   self.sequenceLabel.frame=CGRectMake(0, 0, self.frame.size.width*0.153, self.frame.size.height);
+    
+    //码数
+    self.codeLable.frame=CGRectMake(self.sequenceLabel.frame.size.width+self.sequenceLabel.frame.origin.x, 0, self.frame.size.width*0.297-5, self.valueView.frame.size.height);
+    //状态
+    self.stateLable.frame=CGRectMake(self.codeLable.frame.size.width+self.codeLable.frame.origin.x-5, 0, self.frame.size.width*0.227+10, self.frame.size.height);
+    //罚杆
+     self.penaltyLable.frame=CGRectMake(self.stateLable.frame.size.width+self.stateLable.frame.origin.x, 0, self.frame.size.width*0.172, self.frame.size.height);
+    
+    //球杆
+    self.cueLable.frame=CGRectMake(self.penaltyLable.frame.size.width+self.penaltyLable.frame.origin.x, 0, SCREEN_WIDTH-(self.penaltyLable.frame.origin.x+self.penaltyLable.frame.size.width), self.frame.size.height);
 
 }
 

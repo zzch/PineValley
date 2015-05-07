@@ -10,6 +10,7 @@
 #import "AFNetworking.h"
 #import "ZCAccount.h"
 #import "ZCTabbarViewController.h"
+#import "ZCprompt.h"
 @interface ZCPhoneloginView()
 //账号
 @property(nonatomic,weak)UITextField *phoneAccount;
@@ -28,11 +29,14 @@
         
         //账号
         UITextField *phoneAccount=[[UITextField alloc] init];
-        [phoneAccount setTextColor:[UIColor whiteColor]];
+        [phoneAccount setTextColor:ZCColor(240, 208, 122)];
         [phoneAccount setBackground:[UIImage imageNamed:@"denglu_denglukuang"]];
         phoneAccount.placeholder=@"请输入您的手机号";
+        //设置键盘为数字键盘
+        phoneAccount.keyboardType=UIKeyboardTypeNumberPad;
         //修改提示语的字体颜色
-        [phoneAccount setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+        [phoneAccount setValue:ZCColor(136, 119, 73)
+                    forKeyPath:@"_placeholderLabel.textColor"];
         [self addSubview:phoneAccount];
         self.phoneAccount=phoneAccount;
         
@@ -40,12 +44,12 @@
         
         //密码
         UITextField *phonePassword=[[UITextField alloc] init];
-        [phonePassword setTextColor:[UIColor whiteColor]];
+        [phonePassword setTextColor:ZCColor(240, 208, 122)];
         //实现密文形式
         phonePassword.secureTextEntry=YES;
         phonePassword.placeholder=@"请输入您的密码";
         //修改提示语的字体颜色
-        [phonePassword setValue:[UIColor whiteColor] forKeyPath:@"_placeholderLabel.textColor"];
+        [phonePassword setValue:ZCColor(136, 119, 73) forKeyPath:@"_placeholderLabel.textColor"];
         [phonePassword setBackground:[UIImage imageNamed:@"denglu_denglukuang"]];
         [self addSubview:phonePassword];
         self.phonePassword=phonePassword;
@@ -53,6 +57,7 @@
         //忘记密码
         UIButton *forgetBth=[[UIButton alloc] init];
         [forgetBth setTitle:@"忘记密码" forState:UIControlStateNormal];
+        [forgetBth setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
         [self addSubview:forgetBth];
         self.forgetBth=forgetBth;
         
@@ -60,10 +65,18 @@
         //登陆
         UIButton *phoneloginBth=[[UIButton alloc] init];
         [phoneloginBth setTitle:@"登陆" forState:UIControlStateNormal];
-        [phoneloginBth setBackgroundImage:[UIImage imageNamed:@"denglu_anniu-1"] forState:UIControlStateNormal];
-        [phoneloginBth setBackgroundImage:[UIImage imageNamed:@"denglu_anniu_anxia"] forState:UIControlStateHighlighted];
-        [phoneloginBth addTarget:self action:@selector(clickphoneloginBth) forControlEvents:UIControlEventTouchUpInside];
-        [phoneloginBth setBackgroundColor:ZCColor(105, 178, 138) ];
+        
+        
+        UIImage *image2=[UIImage imageNamed:@"shoujizhuce_bj" ];
+        // 指定为拉伸模式，伸缩后重新赋值
+        image2 = [image2 resizableImageWithCapInsets:UIEdgeInsetsMake(25,25,10,10) resizingMode:UIImageResizingModeStretch];
+        [phoneloginBth setBackgroundImage:image2 forState:UIControlStateNormal];
+
+        [phoneloginBth setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
+        
+        
+        [phoneloginBth addTarget:self action:@selector(clickphoneloginBth1) forControlEvents:UIControlEventTouchUpInside];
+        
         phoneloginBth.enabled=NO;
 
         [self addSubview:phoneloginBth];
@@ -102,7 +115,7 @@
 }
 
 
--(void)clickphoneloginBth
+-(void)clickphoneloginBth1
 {
     // AFNetworking\AFN
     // 1.创建请求管理对象/v1/users/sign_in.json
@@ -116,6 +129,15 @@
     [mgr POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         ZCLog(@"%@",responseObject);
         
+        if (responseObject[@"error_code"] ) {
+            
+            [ZCprompt prompt:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+           // [ZCprompt prompt:self andErrorCode:responseObject[@"error_code"]];
+        }else{
+
+        
+        
+        
         
         // 先将字典转为模型
         ZCAccount *account=[ZCAccount accountWithDict:responseObject];
@@ -124,17 +146,17 @@
         NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
         [NSKeyedArchiver archiveRootObject:account toFile:file];
         
-        ZCLog(@"%@",account.token);
+        
         
         
         UIWindow *wd = [[UIApplication sharedApplication].delegate window];
         //去首页
         wd.rootViewController = [[ZCTabbarViewController alloc] init];
 
-        
+        }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        ZCLog(@"%@",error);
+        
     }];
 
 
@@ -169,15 +191,15 @@
     
     CGFloat  forgetBthY=phonePasswordY+phonePasswordH+15;
     CGFloat  forgetBthW=80;
-    CGFloat  forgetBthH=20;
+    CGFloat  forgetBthH=15;
     CGFloat  forgetBthX=SCREEN_WIDTH-forgetBthW-10;
     self.forgetBth.frame=CGRectMake(forgetBthX, forgetBthY, forgetBthW, forgetBthH);
 
     
     //手机登陆
-    CGFloat  phoneloginBthY=phonePasswordY+phonePasswordH+63;
+    CGFloat  phoneloginBthY=forgetBthY+forgetBthH+5;
     CGFloat  phoneloginBthW=phonePasswordW;
-    CGFloat  phoneloginBthH=phonePasswordH;
+    CGFloat  phoneloginBthH=49;
     CGFloat  phoneloginBthX=phonePasswordX;
     self.phoneloginBth.frame=CGRectMake(phoneloginBthX, phoneloginBthY, phoneloginBthW, phoneloginBthH);
 }

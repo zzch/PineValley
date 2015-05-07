@@ -19,7 +19,7 @@
 #import "ZCAmateurStatisticsViewController.h"
 #import "ZCModifyTheScorecardViewController.h"
 #import "ZCProfessionalStatisticalViewController.h"
-@interface ZCScorecardTableViewController ()<UITableViewDataSource,UITableViewDelegate,ZCScorecarDelegate,ZCModifyTheScorecardViewControllerDelegate>
+@interface ZCScorecardTableViewController ()<UITableViewDataSource,UITableViewDelegate,ZCScorecarDelegate,ZCModifyTheScorecardViewControllerDelegate,ZCModifyTheProfessionalScorecardControllerDelegate>
 @property (nonatomic, strong) NSMutableArray *scorecards;
 
 @property (nonatomic, strong) NSIndexPath *indexPath;
@@ -30,23 +30,33 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
        
-    // 修改返回按钮
-    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui-anxia" action:@selector(liftBthClick:) target:self];
+    //返回
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
     
     
     
-    self.navigationItem.title=@"快捷记分卡";
+    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+    customLab.textAlignment=NSTextAlignmentCenter;
+    [customLab setTextColor:ZCColor(240, 208, 122)];
+    [customLab setText:@"修改记分卡"];
+    customLab.font = [UIFont boldSystemFontOfSize:20];
+    self.navigationItem.titleView = customLab;
     
     UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"统计" style:UIBarButtonItemStyleDone target:self action:@selector(clickOnTheStatistics)];
     //改变UIBarButtonItem字体颜色
-    [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor,nil] forState:UIControlStateNormal];
+    [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:ZCColor(240, 208, 122), UITextAttributeTextColor,nil] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem =newBar;
     
     
    
-    self.tableView.backgroundColor=ZCColor(23, 25, 28);
+    //背景颜色suoyou_bj
+    self.tableView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
     //去掉分割线
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    //self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    //分割线颜色
+    [self.tableView   setSeparatorColor:ZCColor(240, 208, 122)];
+
+    
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
    // self.tableView.sectionHeaderHeight=60;
@@ -60,6 +70,32 @@
     
     
  }
+
+
+
+//分割线显示全
+-(void)viewDidLayoutSubviews {
+    
+    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+        
+    }
+    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)])  {
+        [self.tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    
+}
+
+//分割线显示全
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPat{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]){
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
+
 
 
 //返回到上个界面
@@ -205,6 +241,7 @@
     }else
     {
         ZCModifyTheProfessionalScorecardController *professional=[[ZCModifyTheProfessionalScorecardController alloc] init];
+        professional.delegate=self;
         professional.scorecard=scorecard;
         [self.navigationController pushViewController:professional animated:YES];
     }
@@ -235,6 +272,24 @@
     
    
     
+}
+
+
+
+#pragma mark - ZCModifyTheProfessionalScorecardControllerDelegate代理方法
+-(void)modifyTheProfessionalScorecardController:(ZCModifyTheProfessionalScorecardController *)modifyTheProfessionalScorecardController didSaveScorecardt:(ZCscorecard *)scorecard
+{
+
+    // 1.替换模型数据
+    // ZCLog(@"section=%zd--row=%zd",self.indexPath.section,self.indexPath.row);
+    // NSMutableArray *array=[self.totalScorecards.scorecards objectAtIndex:_indexPath.row];
+    [self.totalScorecards.scorecards replaceObjectAtIndex:_indexPath.row withObject:scorecard];
+    
+    // 2.刷新表格
+    
+    [self.tableView reloadData ];
+
+
 }
 
 

@@ -15,6 +15,9 @@
 @property (nonatomic, copy) NSString *address;
 //现距离离球场距离
 @property (nonatomic, assign) float distance;
+//现距离离球场距离
+@property (nonatomic, copy) NSString* holes_count;
+
 
 + (instancetype)stadiumWithDict:(NSDictionary *)dict;
 - (instancetype)initWithDict:(NSDictionary *)dict;

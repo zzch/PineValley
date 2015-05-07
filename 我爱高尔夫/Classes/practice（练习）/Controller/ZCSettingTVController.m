@@ -60,15 +60,32 @@
 - (void)viewDidLoad {
     
     [super viewDidLoad];
-    // 修改返回按钮
-    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui-anxia" action:@selector(liftBthClick:) target:self];
+    //返回
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
+    
+    
+    
+    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+    customLab.textAlignment=NSTextAlignmentCenter;
+    [customLab setTextColor:ZCColor(240, 208, 122)];
+    [customLab setText:@"球场设置"];
+    customLab.font = [UIFont boldSystemFontOfSize:20];
+    self.navigationItem.titleView = customLab;
     
     
     
     //让分割线不显示
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+   // self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    //分割线颜色
+    [self.tableView   setSeparatorColor:ZCColor(240, 208, 122)];
+    //让下面没内容的分割线不显示
+    self.tableView.tableFooterView = [[UIView alloc] init];
+
     
-    self.tableView.backgroundColor=ZCColor(23, 25, 28);
+    
+    
+
+    self.tableView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
     self.tableView.rowHeight=50;
     //加载圈圈
     [MBProgressHUD showMessage:@"加载中..."];
@@ -118,15 +135,16 @@
      CGFloat startButtonX=0;
     
      CGFloat startButtonW=SCREEN_WIDTH;
-     CGFloat startButtonH=50;
+     CGFloat startButtonH=65;
     CGFloat startButtonY=SCREEN_HEIGHT-startButtonH;
     
     startButton.frame=CGRectMake(startButtonX, startButtonY, startButtonW, startButtonH);
     
     // startButton.frame=CGRectMake(0, 300, 317, 40);
     [startButton setTitle:@"开始回合" forState:UIControlStateNormal];
-    startButton.backgroundColor=ZCColor(105, 178, 138);
-    [startButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    startButton.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"tab_bj"]];
+    //[startButton setBackgroundImage:[UIImage imageNamed:@"kedianji_zhuangtai"] forState:UIControlStateNormal];
+    [startButton setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
     [startButton addTarget:self action:@selector(clickDidStartButton) forControlEvents:UIControlEventTouchUpInside];
     UIWindow *wd = [[UIApplication sharedApplication].delegate window];
     [wd addSubview:startButton];
@@ -218,13 +236,16 @@
 {
     
     self.startButton.enabled=NO;
-    self.startButton.backgroundColor=ZCColor(105, 178, 138);
+    self.startButton.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"tab_bj"]];
+    [self.startButton setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
+
      //ZCLog(@"进入该方法了");
     
     if (self.childStadium.holes_count==18) {
         if (self.tee_boxe) {
             self.startButton.enabled=YES;
-            self.startButton.backgroundColor=ZCColor(37, 176, 101);
+            self.startButton.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"dqsz_kedianji"]];
+            [self.startButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
            
             
         }
@@ -234,7 +255,9 @@
             if (self.lastChildName) {
                 if (self.lastTee_boxe) {
                     self.startButton.enabled=YES;
-                    self.startButton.backgroundColor=ZCColor(37, 176, 101);
+                    self.startButton.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"dqsz_kedianji"]];
+                    
+                    [self.startButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                     
                 }
             }
@@ -375,12 +398,39 @@
 
     
     //设置cell的背景
-    cell.backgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cell-bj"]];
-    cell.textLabel.textColor=ZCColor(208, 210, 212);
-    cell.detailTextLabel.textColor=ZCColor(208, 210, 212);
+    //cell.backgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cell-bj"]];
+    cell.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+    cell.textLabel.textColor=ZCColor(240, 208, 122);
+    cell.detailTextLabel.textColor=ZCColor(240, 208, 122);
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
+
+//分割线显示全
+-(void)viewDidLayoutSubviews {
+    
+    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+        
+    }
+    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)])  {
+        [self.tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    
+}
+
+
+//分割线显示全
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPat{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]){
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
+
+
 
 // 设置每一组的头View
 
@@ -397,10 +447,10 @@
         headerView.tag=1001;
         
         if (self.opened1) {
-             headerView.imageName=@"icon_arrowxia";
+             headerView.imageName=@"shangjiantou";
         }else
         {
-           headerView.imageName=@"icon_arrowshang";
+           headerView.imageName=@"xiajiantou";
         }
         
         if (self.firstChildName==nil) {
@@ -423,10 +473,10 @@
         headerView.tag=1002;
         
         if (self.opened2) {
-            headerView.imageName=@"icon_arrowxia";
+            headerView.imageName=@"shangjiantou";
         }else
         {
-            headerView.imageName=@"icon_arrowshang";
+            headerView.imageName=@"xiajiantou";
         }
 
         
@@ -449,10 +499,10 @@
         headerView.tag=1003;
         
         if (self.opened3) {
-            headerView.imageName=@"icon_arrowxia";
+            headerView.imageName=@"shangjiantou";
         }else
         {
-            headerView.imageName=@"icon_arrowshang";
+            headerView.imageName=@"xiajiantou";
         }
 
         
@@ -470,10 +520,10 @@
         
     }else{
         if (self.opened4) {
-            headerView.imageName=@"icon_arrowxia";
+            headerView.imageName=@"shangjiantou";
         }else
         {
-            headerView.imageName=@"icon_arrowshang";
+            headerView.imageName=@"xiajiantou";
         }
 
         

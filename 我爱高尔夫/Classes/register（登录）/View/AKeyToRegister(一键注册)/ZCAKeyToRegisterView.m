@@ -18,14 +18,25 @@
 {
     if (self =[super initWithFrame:frame]) {
         
+        
+        CGFloat top = 25; // 顶端盖高度
+        CGFloat bottom = 25 ; // 底端盖高度
+        CGFloat left = 10; // 左端盖宽度
+        CGFloat right = 10; // 右端盖宽度
+        UIEdgeInsets insets = UIEdgeInsetsMake(top, left, bottom, right);
+        UIImage *image1=[UIImage imageNamed:@"shoujizhuce_bj" ];
+        // 指定为拉伸模式，伸缩后重新赋值
+        image1 = [image1 resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
+        
+        
         //添加一键注册 按钮
        
-        self.backgroundColor=[UIColor grayColor];
+        [self setBackgroundImage:image1 forState:UIControlStateNormal];
        
         [self setTitle:@"一键注册" forState:UIControlStateNormal];
-        [self setBackgroundImage:[UIImage imageNamed:@"denglu_anniu-1"] forState:UIControlStateNormal];
-        [self setBackgroundImage:[UIImage imageNamed:@"denglu_anniu_anxia"] forState:UIControlStateHighlighted];
-        
+//        [self setBackgroundImage:[UIImage imageNamed:@"denglu_anniu-1"] forState:UIControlStateNormal];
+//        [self setBackgroundImage:[UIImage imageNamed:@"denglu_anniu_anxia"] forState:UIControlStateHighlighted];
+        [self setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
         
         [self addTarget:self action:@selector(clickKeyButton) forControlEvents:UIControlEventTouchUpInside];
         
