@@ -33,7 +33,9 @@
 //定位
 @property(nonatomic,retain) CLLocationManager *locationMgr;
 
+@property(nonatomic,assign) double latitude;
 
+@property(nonatomic,assign) double longitude;
 @end
 
 
@@ -73,8 +75,38 @@
    // _resultsData = [NSMutableArray array];
     
    // [self initDataSource];
-    [self initDataSource1];
-    [self initTableView];
+    
+    
+    
+    
+    
+    //1.获取经纬度
+    // 初始化并开始更新
+    self.locationMgr=[[CLLocationManager alloc] init];
+    self.locationMgr.delegate=self;
+    self.locationMgr.desiredAccuracy=kCLLocationAccuracyBest;
+    self.locationMgr.distanceFilter=5.0;
+    if([[UIDevice currentDevice].systemVersion doubleValue] >= 8.0)
+    {
+        NSLog(@"是iOS8");
+        // 主动要求用户对我们的程序授权, 授权状态改变就会通知代理
+        [self.locationMgr requestAlwaysAuthorization]; // 请求前台和后台定位权限
+        [self.locationMgr startUpdatingLocation];
+    }else
+    {
+        NSLog(@"是iOS7");
+        // 3.开始监听(开始获取位置)
+        [self.locationMgr startUpdatingLocation];
+    }
+    
+    //[self.locationMgr startUpdatingLocation];
+    
+
+    
+    
+    
+    
+    
     //[self initMysearchBarAndMysearchDisPlay];
    // [SVProgressHUD show];
     
@@ -102,27 +134,6 @@
 //网络请求数据
 -(void)initDataSource1
 {
-    //1.获取经纬度
-    // 初始化并开始更新
-    self.locationMgr=[[CLLocationManager alloc] init];
-    self.locationMgr.delegate=self;
-    self.locationMgr.desiredAccuracy=kCLLocationAccuracyBest;
-    self.locationMgr.distanceFilter=5.0;
-    if([[UIDevice currentDevice].systemVersion doubleValue] >= 8.0)
-    {
-        NSLog(@"是iOS8");
-        // 主动要求用户对我们的程序授权, 授权状态改变就会通知代理
-        [self.locationMgr requestAlwaysAuthorization]; // 请求前台和后台定位权限
-        [self.locationMgr startUpdatingLocation];
-    }else
-    {
-        NSLog(@"是iOS7");
-        // 3.开始监听(开始获取位置)
-        [self.locationMgr startUpdatingLocation];
-    }
-    
-    //[self.locationMgr startUpdatingLocation];
-    
     
 
     
@@ -144,8 +155,13 @@
     // 说明服务器返回的JSON数据
    // mgr.responseSerializer = [AFJSONResponseSerializer serializer];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    params[@"longitude"] = @(116.300841);
-    params[@"latitude"]=@(39.975368);
+//    params[@"longitude"] = @(116.300841);
+//    params[@"latitude"]=@(39.975368);
+    
+    
+    params[@"longitude"] = @(self.longitude);
+    params[@"latitude"]=@(self.latitude) ;
+
     params[@"token"]=account.token;
      NSString *url=[NSString stringWithFormat:@"%@%@",API,@"venues/nearby"];
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -204,9 +220,29 @@
      freeway drive 高速公路驾车
      */
     CLLocation *location = [locations lastObject];
-    NSLog(@"%f, %f ", location.coordinate.latitude , location.coordinate.longitude);
+    ZCLog(@"%f, %f ", location.coordinate.latitude , location.coordinate.longitude);
+    self.longitude=location.coordinate.longitude;
+    self.latitude=location.coordinate.latitude;
+    
+    
+    
+    
+    [self initDataSource1];
+    [self initTableView];
     
 }
+
+//获取失败时候调用
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
+    ZCLog(@"%@",error);
+   
+    self.longitude=116.300841;
+    self.latitude=39.975368;
+    
+    [self initDataSource1];
+    [self initTableView];
+}
+
 
 //创建tableview
 - (void)initTableView

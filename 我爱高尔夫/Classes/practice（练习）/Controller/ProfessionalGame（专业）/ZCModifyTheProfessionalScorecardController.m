@@ -15,7 +15,7 @@
 #import "ZCProfessionalStatisticalViewController.h"
 #import "ZCprompt.h"
 #import "UIBarButtonItem+DC.h"
-
+#import "MBProgressHUD+NJ.h"
 @interface ZCModifyTheProfessionalScorecardController ()<UITableViewDataSource,UITableViewDelegate,ZCChooseViewDelegate>
 
 //表示行数
@@ -103,6 +103,10 @@
 //点击保存
 -(void)clickOnTheProfessionalSave
 {
+    
+    
+    //加载圈圈
+    [MBProgressHUD showMessage:@"数据保存中..."];
     //selectTheDisplayArray
     NSMutableArray *parameterArray=[NSMutableArray array];
     
@@ -278,9 +282,13 @@
             [self theDataTransfer:responseObject];
         }
         
+        [MBProgressHUD hideHUD];
+        
         ZCLog(@"%@",responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         ZCLog(@"%@",error);
+        
+        [MBProgressHUD hideHUD];
 
     }];
 
@@ -336,6 +344,9 @@
 -(void)online
 {
    
+    
+    //加载圈圈
+    [MBProgressHUD showMessage:@"加载中..."];
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
@@ -368,8 +379,11 @@
        // ZCLog(@"%lu",self.selectTheDisplayArray.count);
         self.index=self.selectTheDisplayArray.count;
         [self.tableView reloadData];
+        
+        [MBProgressHUD hideHUD];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         ZCLog(@"%@",error);
+        [MBProgressHUD hideHUD];
     }];
     
 

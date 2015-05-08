@@ -66,7 +66,7 @@
 /**
  *  标准杆上果岭率
  */
-@property (nonatomic, copy) NSString *greens_in_regulation;
+@property (nonatomic, copy) NSString *gir;
 /**
  *  开球最远距离
  */

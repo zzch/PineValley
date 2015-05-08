@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>74CDE1CF-F6EA-45B7-B1DD-E19415B1B132</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>我爱高尔夫</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>6D0E42AFB3F45746A67EEA8F4801C83FD1FBA77C</key>
 		<string>github.com:zzch/PineValley.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>我爱高尔夫.xcodeproj/project.xcworkspace</string>
+	<string>我爱高尔夫.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>6D0E42AFB3F45746A67EEA8F4801C83FD1FBA77C</key>

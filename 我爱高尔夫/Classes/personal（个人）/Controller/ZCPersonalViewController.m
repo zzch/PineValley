@@ -16,7 +16,8 @@
 #import "ZCExitTableViewController.h"
 #import "UIImage+MJ.h"
 #import "ZCregisterViewController.h"
-@interface ZCPersonalViewController ()<UIActionSheetDelegate,UIAlertViewDelegate>
+#import "MBProgressHUD+NJ.h"
+@interface ZCPersonalViewController ()<UIActionSheetDelegate,UIAlertViewDelegate,ZCPersonalInformationViewControllerDelegate>
 //头像View
 @property(nonatomic,weak)UIButton *headImageView;
 //消息View
@@ -26,6 +27,7 @@
 @property(nonatomic,weak)UILabel *moodLabel;
 @property(nonatomic,weak)UIImageView *headImage;
 @property(nonatomic,weak)NSString *imagePath;
+@property(nonatomic,weak)UILabel *nameLabel;
 @end
 
 @implementation ZCPersonalViewController
@@ -55,7 +57,8 @@
 //网络请求
 -(void)onlineData
 {
-
+    //加载圈圈
+    [MBProgressHUD showMessage:@"加载中..."];
     NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
     ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
@@ -83,10 +86,12 @@
         //设置
         [self initSettingsButton];
 
-        
+        //移除圈圈
+        [MBProgressHUD hideHUD];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         ZCLog(@"%@",error);
+        [MBProgressHUD hideHUD];
     }];
   
  
@@ -155,7 +160,7 @@
 }
 
 //图片下载
--(void)imageData
+-(void)personImageData
 {
     NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
@@ -231,7 +236,7 @@
 
             
         }
-ZCLog(@"网络下的载 ");
+ZCLog(@"网络下的载111122222 ");
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
@@ -292,7 +297,7 @@ ZCLog(@"网络下的载 ");
     headImage.layer.cornerRadius = 37.5;
     [headImageView addSubview:headImage];
     self.headImage=headImage;
-    [self imageData];
+    [self personImageData];
     
     
     
@@ -334,7 +339,7 @@ ZCLog(@"网络下的载 ");
     //名字
     UILabel *nameLabel=[[UILabel alloc] init];
     nameLabel.text=self.name;
-    nameLabel.textColor=[UIColor whiteColor];
+   // nameLabel.textColor=[UIColor whiteColor];
     CGFloat nameLabelW=150;
     CGFloat nameLabelH=25;
     CGFloat nameLabelX=(SCREEN_WIDTH-nameLabelW)*0.5;
@@ -343,11 +348,17 @@ ZCLog(@"网络下的载 ");
     nameLabel.textAlignment=NSTextAlignmentCenter;
     nameLabel.textColor=ZCColor(240, 208, 122);
     [headImageView addSubview:nameLabel];
-    //self.nameLabel=nameLabel;
+    self.nameLabel=nameLabel;
     
     //心情
     UILabel *moodLabel=[[UILabel alloc] init];
+    
+    if ([self.personalData.desc isKindOfClass:[NSNull class]]) {
+        
+    }else
+    {
     moodLabel.text=[NSString stringWithFormat:@"%@",self.personalData.desc];
+    }
     //moodLabel.textColor=[UIColor whiteColor];
     CGFloat moodLabelW=300;
     CGFloat moodLabelH=25;
@@ -401,13 +412,28 @@ ZCLog(@"网络下的载 ");
 //    [sheet showInView:self.view];
     
     ZCPersonalInformationViewController *PersonalInformation=[[ZCPersonalInformationViewController alloc] init];
+    PersonalInformation.delegate=self;
     PersonalInformation.personalData=self.personalData;
     PersonalInformation.personalImage=self.headImage.image;
+    PersonalInformation.name=self.nameLabel.text;
     PersonalInformation.hidesBottomBarWhenPushed=YES;
     [self.navigationController pushViewController:PersonalInformation animated:YES];
     
 
 }
+
+
+
+
+
+//ZCPersonalInformationViewController代理方法
+-(void)ZCPersonalInformationViewController:(ZCPersonalInformationViewController *)ZCPersonalInformationViewController andPersonImage:(UIImage *)personImage andSignatureTextView:(NSString *)SignatureStr andPersonName:(NSString *)name
+{
+    self.headImage.image=personImage;
+    self.moodLabel.text=SignatureStr;
+    self.nameLabel.text=name;
+}
+
 
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex

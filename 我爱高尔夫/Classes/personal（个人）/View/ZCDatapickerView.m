@@ -26,10 +26,20 @@
         datePicker.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
         
         [datePicker addTarget:self action:@selector(dateChange:) forControlEvents:UIControlEventValueChanged];
-       
+       [datePicker setValue:ZCColor(240, 208, 122) forKeyPath:@"textColor"];
         // [ datePicker setDate:[datePicker date] animated:YES];
         [self addSubview:datePicker];
        
+        
+        
+        SEL selector = NSSelectorFromString( @"setHighlightsToday:" );
+        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature :
+                                    [UIDatePicker
+                                     instanceMethodSignatureForSelector:selector]];
+      //  BOOL no = YES;
+        [invocation setSelector:selector];
+       //[invocation setArgument:&no atIndex:6];
+        [invocation invokeWithTarget:datePicker];
         
       // ZCLog(@"%@",[datePicker date]);
         

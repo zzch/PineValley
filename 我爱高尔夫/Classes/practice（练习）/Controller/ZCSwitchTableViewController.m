@@ -13,6 +13,8 @@
 #import "ZCCity.h"
 #import "ZCCityStadium.h"
 #import "UIBarButtonItem+DC.h"
+#import "ZCSettingTVController.h"
+#import "ZCEventUuidTool.h"
 
 #import "MBProgressHUD+NJ.h"
 @interface ZCSwitchTableViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate>
@@ -21,7 +23,7 @@
 //搜索栏
 @property (nonatomic , strong)UISearchDisplayController *mySearchDisplayController;
 @property(strong,nonatomic) UISearchBar *mySearchBar;
-@property(strong,nonatomic) UITableView *tableView;
+@property(weak,nonatomic) UITableView *tableView;
 //数据源
 @property(strong,nonatomic) NSMutableArray *dataArray;
 //搜索结果数据
@@ -49,13 +51,14 @@
     
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
-    //让下面没内容的分割线不显示
-    self.tableView.tableFooterView = [[UIView alloc] init];
+   
     _resultsData = [NSMutableArray array];
     
     self.tableView.backgroundColor=ZCColor(23, 25, 28);
     //让分割线不显示
    // self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    //让下面没内容的分割线不显示
+    self.tableView.tableFooterView = [[UIView alloc] init];
     //分割线颜色
     [self.tableView   setSeparatorColor:ZCColor(240, 208, 122)];
     [self onlineData];
@@ -215,7 +218,11 @@
         //ZCCity *city= self.resultsData[indexPath.section];
         ZCCityStadium *stadium = self.resultsData[indexPath.row];
         cell.textLabel.text = stadium.name;
-        cell.detailTextLabel.text= [NSString stringWithFormat:@"%@",stadium.address];
+        
+        if (![stadium.address isKindOfClass:[NSNull class]]) {
+            cell.detailTextLabel.text= [NSString stringWithFormat:@"%@",stadium.address];
+        }
+        
         
     }
     else
@@ -223,7 +230,12 @@
         ZCCity *city= self.dataArray[indexPath.section];
         ZCCityStadium *stadium = city.venues[indexPath.row];
         cell.textLabel.text = stadium.name;
-        cell.detailTextLabel.text= [NSString stringWithFormat:@"%@",stadium.address];
+        
+        if (![stadium.address isKindOfClass:[NSNull class]]) {
+            cell.detailTextLabel.text= [NSString stringWithFormat:@"%@",stadium.address];
+        }
+
+        //cell.detailTextLabel.text= [NSString stringWithFormat:@"%@",stadium.address];
 
     }
     cell.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
@@ -311,15 +323,15 @@
     _mySearchBar.backgroundColor = ZCColor(23, 25, 28);//[UIColor colorWithPatternImage:[UIImage imageNamed:@"ss_sousuokuang"]];
      _mySearchBar.backgroundImage = [self imageWithColor:[UIColor clearColor] size:_mySearchBar.bounds.size];
    
-    
-    _mySearchBar.tintColor=[UIColor whiteColor];
+    //可以改变取消按钮的颜色
+    _mySearchBar.tintColor=ZCColor(240, 208, 122);
     // _mySearchBar.barTintColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"ss_sousuokuang"]];
 //
     _mySearchBar.placeholder=@"请输入球场名称";
     //改变输入字体的颜色
     UITextField *searchField=[_mySearchBar valueForKey:@"_searchField"];
-    //searchField.textColor=[UIColor redColor];
-    
+    searchField.textColor=ZCColor(240, 208, 122);
+    //提示语的字体颜色
     [searchField setValue:ZCColor(240, 208, 122) forKeyPath:@"_placeholderLabel.textColor"];
     [_mySearchBar setSearchFieldBackgroundImage:[UIImage imageNamed:@"sousuokuang"] forState:UIControlStateNormal];
     //修改提示语左边的图片
@@ -340,8 +352,8 @@
     //加入列表的header里面
     self.tableView.tableHeaderView = _mySearchBar;
     
-    //_mySearchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:_mySearchBar contentsController:self];
-    _mySearchDisplayController = [[UISearchDisplayController alloc] init];
+    _mySearchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:_mySearchBar contentsController:self];
+    //_mySearchDisplayController = [[UISearchDisplayController alloc] init];
     _mySearchDisplayController.delegate = self;
     // searchResultsDataSource 就是 UITableViewDataSource
     _mySearchDisplayController.searchResultsDataSource = self;
@@ -352,6 +364,23 @@
     _mySearchDisplayController.searchResultsTableView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
     //让分割线不显示
    // _mySearchDisplayController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    //让下面没内容的分割线不显示
+    _mySearchDisplayController.searchResultsTableView.tableFooterView = [[UIView alloc] init];
+    //分割线颜色
+    [_mySearchDisplayController.searchResultsTableView   setSeparatorColor:ZCColor(240, 208, 122)];
+    
+    
+    
+    
+   // _mySearchDisplayController.searchBar
+    
+//    //移除灰色模板背景
+//    for (UIView *subview in [[_mySearchDisplayController.searchBar.subviews firstObject] subviews]) {
+//        if ([subview isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
+//            [subview removeFromSuperview];
+//            break;
+//        }
+//    }
 
     
 }
@@ -379,9 +408,12 @@
         if ([view isKindOfClass:[UIButton class]]) {
             UIButton* cancelbutton = (UIButton* )view;
             [cancelbutton setTitle:@"取消" forState:UIControlStateNormal];
+            
             break;
         }
     }
+    
+    
     
     }
 
@@ -391,16 +423,30 @@
    
     //準備搜尋前，把上面調整的TableView調整回全屏幕的狀態
     [UIView animateWithDuration:1.0 animations:^{
-        self.tableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        self.tableView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-20);
     }];
     
     
-    if (_mySearchBar.isHidden) {
-        _mySearchDisplayController=[[UISearchDisplayController alloc] init];
-    }else
-    {
-    _mySearchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:_mySearchBar contentsController:self];
-    }
+    //影藏状态栏
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+    
+//    
+//        //移除灰色模板背景
+//        for (UIView *subview in [[_mySearchDisplayController.searchBar.subviews firstObject] subviews]) {
+//            if ([subview isKindOfClass:NSClassFromString(@"UISearchBarBackground")]) {
+//                [subview removeFromSuperview];
+//                break;
+//            }
+//        }
+
+    
+    
+//    if (_mySearchBar.isHidden) {
+//        _mySearchDisplayController=[[UISearchDisplayController alloc] init];
+//    }else
+//    {
+//    _mySearchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:_mySearchBar contentsController:self];
+//    }
     
     return YES;
 }
@@ -411,6 +457,10 @@
     [UIView animateWithDuration:1.0 animations:^{
         self.tableView.frame = CGRectMake(0, is_IOS_7?64:44, SCREEN_WIDTH, SCREEN_HEIGHT-64);
     }];
+    
+    
+    //显示状态栏
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
     
     return YES;
 }
@@ -491,15 +541,58 @@ shouldReloadTableForSearchScope:(NSInteger)searchOption
     if (tableView == _mySearchDisplayController.searchResultsTableView)
     {
         //[self myAlertViewAccording:[_resultsData[indexPath.row] name]];
-        [self myAlertViewAccording:@"haha"];
+       // [self myAlertViewAccording:@"haha"];
     }
     else
     {
         //NSMutableArray *cityStadium=_dataArray[indexPath.section];
        // [self myAlertViewAccording:[cityStadium[indexPath.row] name]];
         
-        [self myAlertViewAccording:@"hehe"];
+        //[self myAlertViewAccording:@"hehe"];
+        
+//        ZCCity *city= self.dataArray[indexPath.section];
+//        ZCCityStadium *stadium = city.venues[indexPath.row];
+//        
+//        NSString *uuidStr=stadium.uuid;
+//        ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
+//        if ([tool.eventType isEqual:@"practice"]) {
+//            
+//            ZCSettingTVController *settingView=[[ZCSettingTVController alloc] init];
+//            
+//            
+//            
+//            settingView.uuidStr=uuidStr;
+//            
+//            
+//            [self.navigationController pushViewController:settingView animated:YES];
+//
+//        }
+        
     }
+    
+    
+    
+    
+    
+    ZCCity *city= self.dataArray[indexPath.section];
+    ZCCityStadium *stadium = city.venues[indexPath.row];
+    
+    NSString *uuidStr=stadium.uuid;
+    ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
+    if ([tool.eventType isEqual:@"practice"]) {
+        
+        ZCSettingTVController *settingView=[[ZCSettingTVController alloc] init];
+        
+        
+        
+        settingView.uuidStr=uuidStr;
+        
+        
+        [self.navigationController pushViewController:settingView animated:YES];
+        
+    }
+
+    
 }
 
 -(void)myAlertViewAccording:(NSString *)content

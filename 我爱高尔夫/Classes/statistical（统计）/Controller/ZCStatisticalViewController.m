@@ -12,6 +12,7 @@
 #import "ZCHomePageStatistics.h"
 #import "ZCGraphicsView.h"
 #import "ZCAnalysisViewController.h"
+#import "MBProgressHUD+NJ.h"
 @interface ZCStatisticalViewController ()
 @property(nonatomic,strong)ZCHomePageStatistics *homePageStatistics;
 @property(nonatomic,weak)UIScrollView *scrollView;
@@ -55,7 +56,7 @@
 //网络请求
 -(void)onlineData
 {
-    
+    [MBProgressHUD showMessage:@"加载中..."];
     //2.发送网络请求
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     
@@ -79,9 +80,9 @@
         self.homePageStatistics=homePageStatistics;
         //添加控件
         [self addControls];
-        
+        [MBProgressHUD hideHUD];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+        [MBProgressHUD hideHUD];
     }];
 
 
@@ -133,6 +134,7 @@
     {
     scoreNumber.text=[NSString stringWithFormat:@"%@",self.homePageStatistics.average_score];
     }
+    scoreNumber.font=[UIFont systemFontOfSize:13];
     [middleView addSubview:scoreNumber];
     scoreNumber.textAlignment=NSTextAlignmentCenter;
     
@@ -256,7 +258,7 @@
     
     UILabel *numberLabel=[[UILabel alloc ] init];
     CGFloat numberLabelX=imageViewX+imageViewW+5;
-    CGFloat numberLabelW=30;
+    CGFloat numberLabelW=33;
     CGFloat numberLabelH=20;
     CGFloat numberLabelY=(childView.frame.size.height-numberLabelH)/2;
     numberLabel.frame=CGRectMake(numberLabelX, numberLabelY, numberLabelW, numberLabelH);
@@ -267,9 +269,13 @@
          numberLabel.text=@"-";
     }else
     {
-    numberLabel.text=[NSString stringWithFormat:@"%@%%",numberStr];
+        
+      CGFloat number  =[numberStr doubleValue];
+        ZCLog(@"number=%f ",number*100);
+        int number1=number*100 ;
+    numberLabel.text=[NSString stringWithFormat:@"%d%%",number1];
     }
-     numberLabel.font=[UIFont systemFontOfSize:18];
+     numberLabel.font=[UIFont systemFontOfSize:15];
     
     
     
@@ -349,7 +355,13 @@
     CGFloat numberLabelW=view.frame.size.width;
     CGFloat numberLabelH=view.frame.size.height/2;
     numberLabel.frame=CGRectMake(numberLabelX, numberLabelY, numberLabelW, numberLabelH);
+    
+    if ([number isEqual:@"<null>"]) {
+        numberLabel.text=@"0";
+    }else
+    {
     numberLabel.text=number;
+    }
     numberLabel.textColor=ZCColor(240, 208, 122);
     numberLabel.textAlignment=NSTextAlignmentCenter;
     [view addSubview:numberLabel];

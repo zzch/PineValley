@@ -572,7 +572,7 @@
 -(void)ScoringScrollViewControls
 {
     UIView *nameView1=[[UIView alloc] init];
-    nameView1.frame=CGRectMake(0, 0, 79, self.ScoringScrollView.frame.size.height);
+    nameView1.frame=CGRectMake(0, 0, 60, self.ScoringScrollView.frame.size.height);
     nameView1.backgroundColor=ZCColor(136, 119, 73);
     [self.ScoringScrollView addSubview:nameView1];
     ZCLog(@"%f",SCREEN_WIDTH);
@@ -603,7 +603,7 @@
         [nameView1 addSubview:holesResult1];
         holesResult1.textColor=ZCColor(240, 208, 122);
         holesResult1.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
-        holesResult1.font=[UIFont systemFontOfSize:16];
+        holesResult1.font=[UIFont systemFontOfSize:14];
         
 
         if (i==0) {
@@ -679,7 +679,7 @@
         holesResult.frame=CGRectMake(0, 0, labelView.frame.size.width, labelView.frame.size.height);
         holesResult.textColor=ZCColor(240, 208, 122);
         holesResult.textAlignment=NSTextAlignmentCenter;
-        holesResult.font=[UIFont systemFontOfSize:14];
+        holesResult.font=[UIFont systemFontOfSize:11];
         [labelView addSubview:holesResult];
         
         
@@ -777,23 +777,43 @@
                 UILabel *name2=resultsView2.subviews[1];
             
             if (i==0) {
-                name1.text=[NSString stringWithFormat:@"%@",self.statistical.score];
+                if (![[NSString stringWithFormat:@"%@",self.statistical.score] isEqual:@"<null>"])
+                {
+                    name1.text=[NSString stringWithFormat:@"%@",self.statistical.score];
+                }
+                
                 name2.text=@"成绩";
                 
             }else if (i==1)
             {
-                name1.text=[NSString stringWithFormat:@"%@",self.statistical.net];
+                
+                if (![[NSString stringWithFormat:@"%@",self.statistical.net] isEqual:@"<null>"])
+                {
+                    name1.text=[NSString stringWithFormat:@"%@",self.statistical.net];
+                }
+
+                
                 name2.text=@"净杆";
                 
                 
             }else if (i==2)
             {
-                name1.text=[NSString stringWithFormat:@"%@",self.statistical.putts];
+                
+                if (![self.statistical.putts isKindOfClass:[NSNull class]])
+                {
+                  name1.text=[NSString stringWithFormat:@"%@",self.statistical.putts];
+                }
+                
                 name2.text=@"推杆";
                 
             }else if (i==3)
             {
-                name1.text=[NSString stringWithFormat:@"%@",self.statistical.penalties];
+                
+                if (![self.statistical.penalties isKindOfClass:[NSNull class]])
+                {
+                    name1.text=[NSString stringWithFormat:@"%@",self.statistical.penalties];
+                }
+                
                 name2.text=@"罚杆";
                 
             }
@@ -816,40 +836,94 @@
             
             if (i==0) {
                 successLabel1.text=@"开球最远距离";
-                successLabel2.text=[NSString stringWithFormat:@"%@码",self.statistical.longest_drive_length];
+                
+                if (![[NSString stringWithFormat:@"%@",self.statistical.longest_drive_length] isEqual:@"(null)"])
+                {
+                    successLabel2.text=[NSString stringWithFormat:@"%@码",self.statistical.longest_drive_length];
+                }
+
+                
+                
             }else if (i==1)
             {
                 successLabel1.text=@"开球成功率";
-                successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.drive_fairways_hit];
+                
+                
+                if (![[NSString stringWithFormat:@"%@",self.statistical.drive_fairways_hit] isEqual:@"(null)"])
+                {
+                    successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.drive_fairways_hit];
+                }
+
+                
                 
             }else if (i==2)
             {
                 successLabel1.text=@"标准杆上果岭率";
-                successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.greens_in_regulation];
+                
+                
+                if (![[NSString stringWithFormat:@"%@",self.statistical.gir] isEqual:@"(null)"])
+                {
+                   successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.gir];
+                }
+
+                
             }else if (i==3)
             {
                 successLabel1.text=@"救球成功率";
-                successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.scrambles];
+                
+                if (![[NSString stringWithFormat:@"%@",self.statistical.scrambles] isEqual:@"(null)"])
+                {
+                    successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.scrambles];
+                }
+
+                
             }else if (i==4)
             {
                 successLabel1.text=@"反弹率";
-                successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.bounce];
+                
+                
+                if (![[NSString stringWithFormat:@"%@",self.statistical.bounce] isEqual:@"(null)"])
+                {
+                    successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.bounce];
+                }
+
+                
             }else if (i==5)
             {
                 successLabel1.text=@"标准杆上果岭平均推杆数";
-                successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.putts_per_gir];
+                
+                
+                if (![[NSString stringWithFormat:@"%@",self.statistical.putts_per_gir] isEqual:@"(null)"])
+                {
+                    successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.putts_per_gir];
+                }
+
+                
             }else if (i==6)
             {
                 successLabel1.text=@"优势转化率";
-                successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.advantage_transformation];
+                
+                if (![[NSString stringWithFormat:@"%@",self.statistical.advantage_transformation] isEqual:@"(null)"])
+                {
+                   successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.advantage_transformation];
+                }
+
+                
             }else if (i==7)
             {
                 successLabel1.text=@"平均开球距离";
-                successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.average_drive_length];
+                
+                
+                if (![[NSString stringWithFormat:@"%@",self.statistical.average_drive_length] isEqual:@"(null)"])
+                {
+                    successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.average_drive_length];
+                }
+
+               // successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.average_drive_length];
             }
             
             
-            
+            successLabel2.textAlignment=NSTextAlignmentCenter;
         }
         
         
@@ -870,17 +944,35 @@
             UILabel *averageLabel2=averageView.subviews[1];
             if (index==0) {
                 averageLabel1.text=@"PAR3平均得分";
-                averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_3];
+                
+                if (![[NSString stringWithFormat:@"%@",self.statistical.score_par_3] isEqual:@"(null)"])
+                {
+                     averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_3];
+                }
+               
             }else if (index==1)
             {
                 averageLabel1.text=@"PAR4平均得分";
-                averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_4];
+                if (![[NSString stringWithFormat:@"%@",self.statistical.score_par_4] isEqual:@"(null)"])
+                {
+                    averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_4];
+                }
+
+               // averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_4];
                 
             }else if (index==2)
             {
                 averageLabel1.text=@"PAR5平均得分";
-                averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_5];
+                
+                
+                if (![[NSString stringWithFormat:@"%@",self.statistical.score_par_5] isEqual:@"(null)"])
+                {
+                    averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_5];
+                }
+
+               // averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_5];
             }
+            averageLabel2.textAlignment=NSTextAlignmentCenter;
 
         }
  
@@ -949,7 +1041,7 @@
                 
             }
             
-
+ballScoresLabel2.textAlignment=NSTextAlignmentCenter;
             
         }
     }

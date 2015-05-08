@@ -35,7 +35,7 @@
         
         self.backgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"suoyou_bj_02"]];
         
-          //self.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+         // self.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
         
         //添加子控件
         //1.添加按钮

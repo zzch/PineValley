@@ -323,7 +323,8 @@
         
         [self.tableView reloadData];
         [self.header endRefreshing];
-        [self showNewStatusCount];
+        //弹出数据刷新显示
+       // [self showNewStatusCount];
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         ZCLog(@"获取数据失败%@",error);

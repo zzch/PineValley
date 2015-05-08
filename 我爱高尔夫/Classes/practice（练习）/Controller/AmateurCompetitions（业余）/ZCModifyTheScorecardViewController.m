@@ -11,6 +11,7 @@
 #import "ZCAccount.h"
 #import "AFNetworking.h"
 #import "UIBarButtonItem+DC.h"
+#import "MBProgressHUD+NJ.h"
 @interface ZCModifyTheScorecardViewController ()<UIPickerViewDataSource,UIPickerViewDelegate,UIAlertViewDelegate>
 //总杆数 加号
 @property(weak,nonatomic) UIButton *totalLabelAddButton;
@@ -112,9 +113,12 @@
 //   
 //    self.navigationItem.leftBarButtonItem = backItem;dataToModify
     
+    //返回
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(dataToModify:) target:self];
     
-    // 修改返回按钮
-    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia-anxia" action:@selector(dataToModify:) target:self];
+
+//    // 修改返回按钮
+//    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia-anxia" action:@selector(dataToModify:) target:self];
     //注册观察者
     [self registeredObservers];
 
@@ -734,6 +738,9 @@
 -(void)saveOtherView
 {
     
+    
+    //加载圈圈
+    [MBProgressHUD showMessage:@"数据保存中..."];
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
@@ -768,7 +775,7 @@
         
         
         
-        
+        [MBProgressHUD hideHUD];
         
         // 1.关闭当前控制器
         [self.navigationController popViewControllerAnimated:YES];
@@ -794,7 +801,7 @@
         ZCLog(@"1111111%@--",responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         ZCLog(@"%@",error);
-        
+        [MBProgressHUD hideHUD];
     }];
     
     

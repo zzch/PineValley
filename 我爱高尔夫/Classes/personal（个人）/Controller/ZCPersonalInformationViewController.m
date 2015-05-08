@@ -12,6 +12,7 @@
 #import "UIImage+MJ.h"
 #import "CityPickerView.h"
 #import "ZCDatapickerView.h"
+#import "UIBarButtonItem+DC.h"
 @interface ZCPersonalInformationViewController ()<UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,ZCDatapickerViewDelegate>
 //头像
 @property(nonatomic,weak)UIImageView *photoView;
@@ -38,6 +39,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+    customLab.textAlignment=NSTextAlignmentCenter;
+    [customLab setTextColor:ZCColor(240, 208, 122)];
+    [customLab setText:@"修改个人资料"];
+    customLab.font = [UIFont boldSystemFontOfSize:20];
+    self.navigationItem.titleView = customLab;
+    
+    
+    //返回
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
+    
+
     
     UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStyleDone target:self action:@selector(chooseTheDetermine)];
     //改变UIBarButtonItem字体颜色
@@ -83,6 +97,15 @@
 
 }
 
+
+
+
+//返回到上个界面
+-(void)liftBthClick:(UIButton *)bth
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 //点击确定按钮
 -(void)chooseTheDetermine
 {
@@ -112,6 +135,17 @@
    [self withTheNewDataWithURL:genderURL parameter:@"gender" value:[NSString stringWithFormat:@"%@", self.gender]];
     
 
+    
+    
+    
+    
+    if ([self.delegate respondsToSelector:@selector(ZCPersonalInformationViewController:andPersonImage:andSignatureTextView:andPersonName:)]) {
+        
+        [self.delegate ZCPersonalInformationViewController:self andPersonImage:self.photoView.image andSignatureTextView:self.signatureTextView.text andPersonName:self.nameTextField.text];
+    }
+    
+    
+    
     
     [self.navigationController popToRootViewControllerAnimated:YES];
     
@@ -166,6 +200,7 @@
     CGFloat nameTextFieldY=nameLabelY+nameLabelH;
     CGFloat nameTextFieldW=SCREEN_WIDTH-(2*nameTextFieldX);
     CGFloat nameTextFieldH=40;
+    
     nameTextField.frame=CGRectMake(nameTextFieldX, nameTextFieldY, nameTextFieldW, nameTextFieldH);
     
     
@@ -182,6 +217,7 @@
     
     //nameTextField.backgroundColor=[UIColor colorWithPatternImage:image1];
     nameTextField.textColor=ZCColor(240, 208, 122);
+    nameTextField.text=self.name;
     [self.scrollView addSubview:nameTextField];
     self.nameTextField=nameTextField;
     
@@ -218,6 +254,22 @@
     //genderButton.backgroundColor=[UIColor redColor];
      genderButton.contentHorizontalAlignment=UIControlContentHorizontalAlignmentLeft;
     [genderButton setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
+    
+    if (![self.personalData.gender isKindOfClass:[NSNull class]]) {
+        
+        if ([[NSString stringWithFormat:@"%@",self.personalData.gender] isEqual:@"1"]) {
+            [genderButton setTitle:@"男" forState:UIControlStateNormal];
+        }else
+        {
+        [genderButton setTitle:@"女" forState:UIControlStateNormal];
+        }
+        
+        
+        
+        
+        
+    }
+    
     [self.scrollView addSubview:genderButton];
     self.genderButton=genderButton;
     
@@ -373,7 +425,11 @@
     //signatureTextView.
     signatureTextView.backgroundColor=[UIColor blackColor];
     //signatureTextView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"grxx_qianming_bj"]];
-    signatureTextView.text=[NSString stringWithFormat:@"%@",self.personalData.desc];
+    
+    if (![self.personalData.desc isKindOfClass:[NSNull class]]) {
+        signatureTextView.text=[NSString stringWithFormat:@"%@",self.personalData.desc];
+    }
+    
     signatureTextView.textColor=ZCColor(240, 208, 122);
     [self.scrollView addSubview:signatureTextView];
     self.signatureTextView=signatureTextView;

@@ -258,7 +258,7 @@
        // Label2.frame=CGRectMake(button.frame.size.width-100,0 , 50, button.frame.size.height);
         
         
-        Label2.frame=CGRectMake(button.frame.size.width-60,0 , 50, button.frame.size.height);
+        Label2.frame=CGRectMake(button.frame.size.width-80,0 , 70, button.frame.size.height);
         
         Label2.textColor=ZCColor(240, 208, 122);
         Label2.textAlignment=NSTextAlignmentRight;

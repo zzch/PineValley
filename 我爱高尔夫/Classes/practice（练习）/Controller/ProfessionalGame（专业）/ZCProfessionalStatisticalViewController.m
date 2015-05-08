@@ -23,6 +23,7 @@
 #import "ZCCueMode.h"
 #import "ZCTotalGradeViewController.h"
 #import "UIBarButtonItem+DC.h"
+#import "MBProgressHUD+NJ.h"
 @interface ZCProfessionalStatisticalViewController ()
 @property(nonatomic,weak)UIScrollView *scrollView;
 @property(nonatomic,strong)ZCProfessionalStatisticalModel *professionalStatisticalModel;
@@ -67,6 +68,9 @@
 
 -(void)online
 {
+    
+    [MBProgressHUD showMessage:@"加载中..."];
+    
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
@@ -92,8 +96,13 @@
         //加载控件
         [self addControls];
         
+        [MBProgressHUD hideHUD];
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
          ZCLog(@"%@",error);
+        [MBProgressHUD hideHUD];
+        
+        
     }];
 
 //http://123.57.210.52/api/v1/matches/practice/statistics/professional.json?&match_uuid=0be52c98-fb71-4437-a41c-6aaa8dc9e17f&token=j9h6VVq328ccYWn78phb8w

@@ -68,10 +68,10 @@
     
     
     // 修改返回按钮
-    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui-anxia" action:@selector(liftBthClick:) target:self];
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia-anxia" action:@selector(liftBthClick:) target:self];
     
 
-    
+    ZCLog(@"执行了 一次");
     
     
     [MBProgressHUD showMessage:@"加载中..."];
@@ -94,7 +94,7 @@
     mgr.responseSerializer.acceptableContentTypes=[NSSet setWithObjects:@"text/html",@"text/plain",@"application/xhtml+xml",@"application/xml",@"application/json", nil];
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
        
-        //ZCLog(@"%@",responseObject);
+        ZCLog(@"%@",responseObject);
         
         ZCStatistical *statistical=[ZCStatistical statisticalWithDict:responseObject];
 //        ZCLog(@"%@",statistical.score);
@@ -102,55 +102,59 @@
 //
         
         self.statistical=statistical;
-       //隐藏
-        [MBProgressHUD hideHUD];
         
         
-        if ([[UIDevice currentDevice]orientation] == UIInterfaceOrientationLandscapeLeft){
-            
-            [self supportedInterfaceOrientations];
-            
-            self.verticalScreenView.hidden=YES;
-            self.landscapeView.hidden=NO;
-            
-            ZCAmateurStatisticsView *landscapeView=[[ZCAmateurStatisticsView alloc] init];
-            [self.view addSubview:landscapeView];
-            self.landscapeView=landscapeView;
-            
-            ZCLog(@"landscape left");
-        }
-        if ([[UIDevice currentDevice]orientation] == UIInterfaceOrientationLandscapeRight){
-            [self supportedInterfaceOrientations];
-            self.verticalScreenView.hidden=YES;
-            self.landscapeView.hidden=NO;
-            
-            
-            ZCAmateurStatisticsView *landscapeView=[[ZCAmateurStatisticsView alloc] init];
-            [self.view addSubview:landscapeView];
-            self.landscapeView=landscapeView;
-            ZCLog(@"landscape right");
-        }
-        if ([[UIDevice currentDevice]orientation] == UIInterfaceOrientationPortrait){
-            [self supportedInterfaceOrientations];
-            
-            self.verticalScreenView.hidden=NO;
-            self.landscapeView.hidden=YES;
-            
-            
-            UIView *verticalScreenView=[[UIView alloc] initWithFrame: [ UIScreen mainScreen ].bounds];
-            self.verticalScreenView=verticalScreenView;
-            [self.view addSubview:verticalScreenView];
-            
-            
-            [self addControls];
-            
-            
-        }
+//        if ([[UIDevice currentDevice]orientation] == UIInterfaceOrientationLandscapeLeft){
+//            
+//            [self supportedInterfaceOrientations];
+//            
+//            self.verticalScreenView.hidden=YES;
+//            self.landscapeView.hidden=NO;
+//            
+//            ZCAmateurStatisticsView *landscapeView=[[ZCAmateurStatisticsView alloc] init];
+//            [self.view addSubview:landscapeView];
+//            self.landscapeView=landscapeView;
+//            
+//            ZCLog(@"landscape left");
+//        }
+//        if ([[UIDevice currentDevice]orientation] == UIInterfaceOrientationLandscapeRight){
+//            [self supportedInterfaceOrientations];
+//            self.verticalScreenView.hidden=YES;
+//            self.landscapeView.hidden=NO;
+//            
+//            
+//            ZCAmateurStatisticsView *landscapeView=[[ZCAmateurStatisticsView alloc] init];
+//            [self.view addSubview:landscapeView];
+//            self.landscapeView=landscapeView;
+//            ZCLog(@"landscape right");
+//        }
+//        if ([[UIDevice currentDevice]orientation] == UIInterfaceOrientationPortrait){
+//            [self supportedInterfaceOrientations];
+//            
+//            self.verticalScreenView.hidden=NO;
+//            self.landscapeView.hidden=YES;
+//            
+//            
+//            UIView *verticalScreenView=[[UIView alloc] initWithFrame: [ UIScreen mainScreen ].bounds];
+//            self.verticalScreenView=verticalScreenView;
+//            [self.view addSubview:verticalScreenView];
+//            
+//            
+//            [self addControls];
+//            
+//            
+//
+//        }
+//        
         
         
-        
+        UIView *verticalScreenView=[[UIView alloc] initWithFrame: [ UIScreen mainScreen ].bounds];
+                    self.verticalScreenView=verticalScreenView;
+                    [self.view addSubview:verticalScreenView];
+      [self addControls];
 
-        
+        //隐藏
+        [MBProgressHUD hideHUD];
         
         
         
@@ -274,7 +278,7 @@
     UIView *nameScoringScrollView=[[UIView alloc] init];
     CGFloat nameScoringScrollViewX=nameViewX;
     CGFloat nameScoringScrollViewY=nameViewH;
-    CGFloat nameScoringScrollViewW=SCREEN_WIDTH*0.2;
+    CGFloat nameScoringScrollViewW=SCREEN_WIDTH*0.17;
     CGFloat nameScoringScrollViewH=201;
 
     nameScoringScrollView.frame=CGRectMake(nameScoringScrollViewX, nameScoringScrollViewY, nameScoringScrollViewW, nameScoringScrollViewH);
@@ -314,7 +318,7 @@
        // [self.beforeScoringView addSubview:labelView];
         
         labelView.textColor=ZCColor(240, 208, 122);
-        labelView.font=[UIFont systemFontOfSize:15];
+        labelView.font=[UIFont systemFontOfSize:13];
         labelView.textAlignment=NSTextAlignmentCenter;
         //        nameScoringView.font=[UIFont font]
         
@@ -335,7 +339,7 @@
             
         }
 
-  
+       
     
     }
     
@@ -485,7 +489,7 @@
         holesResult.frame=CGRectMake(0, 0, labelView.frame.size.width, labelView.frame.size.height);
         holesResult.textColor=ZCColor(240, 208, 122);
         holesResult.textAlignment=NSTextAlignmentCenter;
-        holesResult.font=[UIFont systemFontOfSize:14];
+        holesResult.font=[UIFont systemFontOfSize:12];
         [labelView addSubview:holesResult];
 
         
@@ -562,7 +566,7 @@
         labelView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
         labelView.textColor=ZCColor(240, 208, 122);
         labelView.textAlignment=NSTextAlignmentCenter;
-        labelView.font=[UIFont systemFontOfSize:14];
+        labelView.font=[UIFont systemFontOfSize:11];
 //        UIView *bjView=[[UIView alloc] init];
 //        bjView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jstj_shutiao"]];
 //        bjView.frame=CGRectMake(0, 0, 1, labelView.frame.size.height);
@@ -728,22 +732,36 @@
         
         //给每个内容赋值
         if (index==0) {
-            resultsLabel1.text=[NSString stringWithFormat:@"%@",self.statistical.score];
+            
+            if (![self.statistical.score isKindOfClass:[NSNull class]]) {
+                resultsLabel1.text=[NSString stringWithFormat:@"%@",self.statistical.score];
+            }
+            
+            
             resultsLabel2.text=@"成绩";
         }else if (index==1)
         {
-            resultsLabel1.text=[NSString stringWithFormat:@"%@",self.statistical.net];
+            if (![self.statistical.net isKindOfClass:[NSNull class]]) {
+                resultsLabel1.text=[NSString stringWithFormat:@"%@",self.statistical.net];
+            }
+            
             resultsLabel2.text=@"净杆";
 
         }else if (index==2)
         {
-            resultsLabel1.text=[NSString stringWithFormat:@"%@",self.statistical.putts];
+            if (![self.statistical.putts isKindOfClass:[NSNull class]]) {
+                resultsLabel1.text=[NSString stringWithFormat:@"%@",self.statistical.putts];
+            }
+//            resultsLabel1.text=[NSString stringWithFormat:@"%@",self.statistical.putts];
             resultsLabel2.text=@"推杆";
 
         
         }else
         {
-            resultsLabel1.text=[NSString stringWithFormat:@"%@",self.statistical.penalties];
+            if (![self.statistical.penalties isKindOfClass:[NSNull class]]) {
+                resultsLabel1.text=[NSString stringWithFormat:@"%@",self.statistical.penalties];
+            }
+            //resultsLabel1.text=[NSString stringWithFormat:@"%@",self.statistical.penalties];
             resultsLabel2.text=@"罚杆";
             
 
@@ -801,36 +819,70 @@
         
         if (index==0) {
             successLabel1.text=@"开球最远距离";
-            successLabel2.text=[NSString stringWithFormat:@"%@码",self.statistical.longest_drive_length];
+            if (![[NSString stringWithFormat:@"%@",self.statistical.longest_drive_length] isEqual:@"(null)"]) {
+                successLabel2.text=[NSString stringWithFormat:@"%@码",self.statistical.longest_drive_length];
+            }
+            
         }else if (index==1)
         {
             successLabel1.text=@"开球成功率";
-            successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.drive_fairways_hit];
+            
+            if (![[NSString stringWithFormat:@"%@",self.statistical.drive_fairways_hit] isEqual:@"(null)"]) {
+                successLabel2.text=[NSString stringWithFormat:@"%@码",self.statistical.drive_fairways_hit];
+            }
+            //successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.drive_fairways_hit];
         
         }else if (index==2)
         {
             successLabel1.text=@"标准杆上果岭率";
-            successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.greens_in_regulation];
+            
+            if (![[NSString stringWithFormat:@"%@",self.statistical.gir] isEqual:@"(null)"]) {
+                successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.gir];
+            }
+
+            
         }else if (index==3)
         {
             successLabel1.text=@"救球成功率";
-            successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.scrambles];
+            
+            if (![[NSString stringWithFormat:@"%@",self.statistical.scrambles] isEqual:@"(null)"]) {
+                successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.scrambles];
+            }
+
+            
         }else if (index==4)
         {
             successLabel1.text=@"反弹率";
-            successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.bounce];
+            
+            if (![[NSString stringWithFormat:@"%@",self.statistical.bounce] isEqual:@"(null)"]) {
+                successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.bounce];
+            }
+            //successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.bounce];
         }else if (index==5)
         {
             successLabel1.text=@"标准杆上果岭平均推杆数";
-            successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.putts_per_gir];
+            
+            if (![[NSString stringWithFormat:@"%@",self.statistical.putts_per_gir] isEqual:@"(null)"]) {
+                successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.putts_per_gir];
+            }
+           // successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.putts_per_gir];
         }else if (index==6)
         {
             successLabel1.text=@"优势转化率";
-            successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.advantage_transformation];
+            if (![[NSString stringWithFormat:@"%@",self.statistical.advantage_transformation] isEqual:@"(null)"]) {
+                successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.advantage_transformation];
+            }
+            //successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.advantage_transformation];
         }else if (index==7)
         {
             successLabel1.text=@"平均开球距离";
-            successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.average_drive_length];
+            
+            
+            if (![[NSString stringWithFormat:@"%@",self.statistical.average_drive_length] isEqual:@"(null)"]) {
+                successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.average_drive_length];
+            }
+
+            //successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.average_drive_length];
         }
 
 
@@ -892,16 +944,29 @@
         
         if (index==0) {
             averageLabel1.text=@"PAR3平均得分";
-            averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_3];
+            
+           if (![[NSString stringWithFormat:@"%@",self.statistical.score_par_3] isEqual:@"(null)"]) {
+               averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_3];
+            }
+
+            
         }else if (index==1)
         {
             averageLabel1.text=@"PAR4平均得分";
-            averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_4];
+            
+            if (![[NSString stringWithFormat:@"%@",self.statistical.score_par_4] isEqual:@"(null)"]) {
+                averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_4];
+            }
+
+           // averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_4];
             
         }else if (index==2)
         {
             averageLabel1.text=@"PAR5平均得分";
-            averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_5];
+            if (![[NSString stringWithFormat:@"%@",self.statistical.score_par_5] isEqual:@"(null)"]) {
+                averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_5];
+            }
+           // averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_5];
         }
     }
    
@@ -960,28 +1025,55 @@
         
         if (index==0) {
             ballScoresLabel1.text=@"信天翁球";
+            
+            if (![[NSString stringWithFormat:@"%@",self.statistical.double_eagle] isEqual:@"(null)"]) {
             ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.double_eagle];
+            }
         }else if (index==1)
         {
             ballScoresLabel1.text=@"老鹰球";
-            ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.eagle];
+            if (![[NSString stringWithFormat:@"%@",self.statistical.eagle] isEqual:@"(null)"]) {
+                ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.eagle];
+            }
+
+            
             
         }else if (index==2)
         {
             ballScoresLabel1.text=@"小鸟球";
-            ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.birdie];
+            
+            if (![[NSString stringWithFormat:@"%@",self.statistical.birdie] isEqual:@"(null)"]) {
+                 ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.birdie];
+            }
+           
         }else if (index==3)
         {
             ballScoresLabel1.text=@"标准杆数";
-            ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.par];
+            
+            if (![[NSString stringWithFormat:@"%@",self.statistical.par] isEqual:@"(null)"]) {
+                ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.par];
+            }
+
+            
         }else if (index==4)
         {
             ballScoresLabel1.text=@"柏忌数";
-            ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.bogey];
+            
+            if (![[NSString stringWithFormat:@"%@",self.statistical.bogey] isEqual:@"(null)"]) {
+                ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.bogey];
+            }
+            
         }else if (index==5)
         {
             ballScoresLabel1.text=@"双柏忌数";
-            ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.double_bogey];
+            
+            
+           // ZCLog(@"%@",self.statistical);
+            if (![[NSString stringWithFormat:@"%@",self.statistical.double_bogey] isEqual:@"(null)"]) {
+                ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.double_bogey];
+            }
+
+           // ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.double_bogey];
         }
 
     }
@@ -1013,35 +1105,35 @@
 //
 //
 //}
-//视图消失时调用
-
--(void)viewWillDisappear:(BOOL)animated
-{
-    
-    AppDelegate *app=  (AppDelegate *)[UIApplication sharedApplication].delegate;
-    [app setAllowRotation:NO];
-    
-    //强制竖屏
-    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
-        SEL selector = NSSelectorFromString(@"setOrientation:");
-        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
-        [invocation setSelector:selector];
-        [invocation setTarget:[UIDevice currentDevice]];
-        int val = UIDeviceOrientationPortrait;
-        [invocation setArgument:&val atIndex:2];
-        [invocation invoke];
-    }
-
-    
-    
-       //[self.startButton removeFromSuperview];
-}
--(void)viewWillAppear:(BOOL)animated
-{
-    AppDelegate *app=  (AppDelegate *)[UIApplication sharedApplication].delegate;
-    [app setAllowRotation:YES];
-
-}
+////视图消失时调用
+//
+//-(void)viewWillDisappear:(BOOL)animated
+//{
+//    
+//    AppDelegate *app=  (AppDelegate *)[UIApplication sharedApplication].delegate;
+//    [app setAllowRotation:NO];
+//    
+//    //强制竖屏
+//    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
+//        SEL selector = NSSelectorFromString(@"setOrientation:");
+//        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
+//        [invocation setSelector:selector];
+//        [invocation setTarget:[UIDevice currentDevice]];
+//        int val = UIDeviceOrientationPortrait;
+//        [invocation setArgument:&val atIndex:2];
+//        [invocation invoke];
+//    }
+//
+//    
+//    
+//       //[self.startButton removeFromSuperview];
+//}
+//-(void)viewWillAppear:(BOOL)animated
+//{
+//    AppDelegate *app=  (AppDelegate *)[UIApplication sharedApplication].delegate;
+//    [app setAllowRotation:YES];
+//
+//}
 
 
 //- (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
@@ -1065,119 +1157,122 @@
 
 
 
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    
-    
-     if (toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight)
-     {
-         
-          ZCLog(@"---%f",SCREEN_WIDTH);
-         self.verticalScreenView.hidden=YES;
-         self.landscapeView.hidden=NO;
-         
-//         if (self.landscapeView==nil) {
-//             ZCAmateurStatisticsView *landscapeView=[[ZCAmateurStatisticsView alloc] init];
-//             [self.view addSubview:landscapeView];
-//             self.landscapeView=landscapeView;
-//             
-//         }else
-//         {
-//             [self.landscapeView removeFromSuperview];
-//             
-//             ZCAmateurStatisticsView *landscapeView=[[ZCAmateurStatisticsView alloc] init];
-//             [self.view addSubview:landscapeView];
-//             self.landscapeView=landscapeView;
-//             
+//- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+//    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+//    
+//    
+//     if (toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight)
+//     {
 //         
-//         }
+//          ZCLog(@"---%f",SCREEN_WIDTH);
+//         self.verticalScreenView.hidden=YES;
+//         self.landscapeView.hidden=NO;
 //         
-//
-         
-         
-         
-     
-     }else if (toInterfaceOrientation == UIInterfaceOrientationPortrait)
-     {
-         self.verticalScreenView.hidden=NO;
-         self.landscapeView.hidden=YES;
-          NSLog(@"书屏将要旋转了?");
-        
-     }
-    
-    
-    ZCLog(@"%ld",toInterfaceOrientation);
-    
-    
-                  
-    
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    NSLog(@"如果让我旋转,我已经旋转完了!");
-    
-
-    
-    
-    
-    
-    if ([[UIDevice currentDevice]orientation] == UIInterfaceOrientationLandscapeLeft||[[UIDevice currentDevice]orientation] == UIInterfaceOrientationLandscapeRight){
-        
-        [self supportedInterfaceOrientations];
-        
-        
+//         [MBProgressHUD hideHUD];
+////         if (self.landscapeView==nil) {
+////             ZCAmateurStatisticsView *landscapeView=[[ZCAmateurStatisticsView alloc] init];
+////             [self.view addSubview:landscapeView];
+////             self.landscapeView=landscapeView;
+////             
+////         }else
+////         {
+////             [self.landscapeView removeFromSuperview];
+////             
+////             ZCAmateurStatisticsView *landscapeView=[[ZCAmateurStatisticsView alloc] init];
+////             [self.view addSubview:landscapeView];
+////             self.landscapeView=landscapeView;
+////             
+////         
+////         }
+////         
+////
+//         
+//         
+//         
+//     
+//     }else if (toInterfaceOrientation == UIInterfaceOrientationPortrait)
+//     {
+//         self.verticalScreenView.hidden=NO;
+//         self.landscapeView.hidden=YES;
+//          NSLog(@"书屏将要旋转了?");
 //        
-//        self.verticalScreenView.hidden=YES;
-//        self.landscapeView.hidden=NO;
-        
-        if (self.landscapeView==nil) {
-           ZCAmateurStatisticsView *landscapeView=[[ZCAmateurStatisticsView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-            
-//            ZCAmateurStatisticsView *landscapeView=[ZCAmateurStatisticsView amateurStatisticsView:self.statistical];
-            [self.view addSubview:landscapeView];
-            //传值
-            landscapeView.statistical=self.statistical;
-
-           self.landscapeView=landscapeView;
-           
-        }else
-        {
-            [self.landscapeView removeFromSuperview];
-
-            ZCAmateurStatisticsView *landscapeView=[[ZCAmateurStatisticsView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-
-            
-            //传值
-           landscapeView.statistical=self.statistical;
-         [self.view addSubview:landscapeView];
-            
-          self.landscapeView=landscapeView;
-          
-            
-            
- }
-        
-
-        
-        
-           }
-    if ([[UIDevice currentDevice]orientation] == UIInterfaceOrientationPortrait){
-        [self supportedInterfaceOrientations];
-        
-//               self.verticalScreenView.hidden=NO;
-//               self.landscapeView.hidden=YES;
-        
-        
-    }
-
-    
-    
-   // ZCLog(@"%f",self.view.frame.size.width);
-    
-}
-
-
+//     }
+//    
+//    
+//   // ZCLog(@"%ld",toInterfaceOrientation);
+//    
+//    
+//                  
+//    
+//}
+//
+//- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+//    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+//    NSLog(@"如果让我旋转,我已经旋转完了!");
+//    
+//
+//    
+//    
+//    
+//    
+//    if ([[UIDevice currentDevice]orientation] == UIInterfaceOrientationLandscapeLeft||[[UIDevice currentDevice]orientation] == UIInterfaceOrientationLandscapeRight){
+//        
+//        [self supportedInterfaceOrientations];
+//        
+//        
+////        
+////        self.verticalScreenView.hidden=YES;
+////        self.landscapeView.hidden=NO;
+//        
+//        if (self.landscapeView==nil) {
+//           ZCAmateurStatisticsView *landscapeView=[[ZCAmateurStatisticsView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+//            
+////            ZCAmateurStatisticsView *landscapeView=[ZCAmateurStatisticsView amateurStatisticsView:self.statistical];
+//            
+//            //传值
+//            landscapeView.statistical=self.statistical;
+//
+//           self.landscapeView=landscapeView;
+//            
+//            [self.view addSubview:landscapeView];
+//           
+//        }else
+//        {
+//            [self.landscapeView removeFromSuperview];
+//
+//            ZCAmateurStatisticsView *landscapeView=[[ZCAmateurStatisticsView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+//
+//            
+//            //传值
+//           landscapeView.statistical=self.statistical;
+//         
+//            
+//          self.landscapeView=landscapeView;
+//          
+//            [self.view addSubview:landscapeView];
+//            
+// }
+//        
+//
+//        
+//        
+//           }
+//    if ([[UIDevice currentDevice]orientation] == UIInterfaceOrientationPortrait){
+//        [self supportedInterfaceOrientations];
+//        
+////               self.verticalScreenView.hidden=NO;
+////               self.landscapeView.hidden=YES;
+//        
+//        
+//    }
+//
+//    
+//    
+//   // ZCLog(@"%f",self.view.frame.size.width);
+//    
+//}
+//
+//
 
 //横屏view
 -(void)landscapeViewContent
