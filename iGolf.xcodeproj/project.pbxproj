@@ -242,7 +242,7 @@
 		A93BCE811A7CB6B90053FD00 /* MTScenicShopCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTScenicShopCell.m; sourceTree = "<group>"; };
 		A93DF8971A81D465009623F5 /* ZCScorecarTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCScorecarTableViewCell.h; sourceTree = "<group>"; };
 		A93DF8981A81D465009623F5 /* ZCScorecarTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCScorecarTableViewCell.m; sourceTree = "<group>"; };
-		A9438A101A79FF6E00B55001 /* 我爱高尔夫.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "我爱高尔夫.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9438A101A79FF6E00B55001 /* igolf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = igolf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9438A141A79FF6E00B55001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9438A151A79FF6E00B55001 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A9438A201A79FF6E00B55001 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -610,8 +610,8 @@
 			children = (
 				A93B45F91A8470E500AF48F0 /* CoreLocation.framework */,
 				A9386B9C1A7B83CA00526086 /* UIKit.framework */,
-				A9438A121A79FF6E00B55001 /* 我爱高尔夫 */,
-				A9438A2C1A79FF6E00B55001 /* 我爱高尔夫Tests */,
+				A9438A121A79FF6E00B55001 /* iGolf */,
+				A9438A2C1A79FF6E00B55001 /* iGolf Tests */,
 				A9438A111A79FF6E00B55001 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -619,20 +619,20 @@
 		A9438A111A79FF6E00B55001 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A9438A101A79FF6E00B55001 /* 我爱高尔夫.app */,
+				A9438A101A79FF6E00B55001 /* igolf.app */,
 				A9438A291A79FF6E00B55001 /* 我爱高尔夫Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A9438A121A79FF6E00B55001 /* 我爱高尔夫 */ = {
+		A9438A121A79FF6E00B55001 /* iGolf */ = {
 			isa = PBXGroup;
 			children = (
 				A9438A391A7A007B00B55001 /* Classes */,
 				A9438A201A79FF6E00B55001 /* Images.xcassets */,
 				A9438A131A79FF6E00B55001 /* Supporting Files */,
 			);
-			path = "我爱高尔夫";
+			path = iGolf;
 			sourceTree = "<group>";
 		};
 		A9438A131A79FF6E00B55001 /* Supporting Files */ = {
@@ -646,13 +646,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		A9438A2C1A79FF6E00B55001 /* 我爱高尔夫Tests */ = {
+		A9438A2C1A79FF6E00B55001 /* iGolf Tests */ = {
 			isa = PBXGroup;
 			children = (
 				A9438A2F1A79FF6E00B55001 /* _____Tests.m */,
 				A9438A2D1A79FF6E00B55001 /* Supporting Files */,
 			);
-			path = "我爱高尔夫Tests";
+			path = "iGolf Tests";
 			sourceTree = "<group>";
 		};
 		A9438A2D1A79FF6E00B55001 /* Supporting Files */ = {
@@ -1315,7 +1315,7 @@
 			);
 			name = "我爱高尔夫";
 			productName = "我爱高尔夫";
-			productReference = A9438A101A79FF6E00B55001 /* 我爱高尔夫.app */;
+			productReference = A9438A101A79FF6E00B55001 /* igolf.app */;
 			productType = "com.apple.product-type.application";
 		};
 		A9438A281A79FF6E00B55001 /* 我爱高尔夫Tests */ = {
@@ -1355,7 +1355,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A9438A0B1A79FF6E00B55001 /* Build configuration list for PBXProject "我爱高尔夫" */;
+			buildConfigurationList = A9438A0B1A79FF6E00B55001 /* Build configuration list for PBXProject "iGolf" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1586,7 +1586,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing iSports Co., Ltd. (5A8BP6W9BZ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing iSports Co., Ltd. (5A8BP6W9BZ)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1606,6 +1607,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "13bdb79f-bf96-411b-b3fb-7495fe5810bd";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1628,7 +1630,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing iSports Co., Ltd. (5A8BP6W9BZ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing iSports Co., Ltd. (5A8BP6W9BZ)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1641,6 +1644,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "13bdb79f-bf96-411b-b3fb-7495fe5810bd";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1651,15 +1655,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing iSports Co., Ltd. (5A8BP6W9BZ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing iSports Co., Ltd. (5A8BP6W9BZ)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/我爱高尔夫/pchFile.pch";
 				INFOPLIST_FILE = "我爱高尔夫/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PRODUCT_NAME = igolf;
+				PROVISIONING_PROFILE = "13bdb79f-bf96-411b-b3fb-7495fe5810bd";
 			};
 			name = Debug;
 		};
@@ -1667,15 +1671,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing iSports Co., Ltd. (5A8BP6W9BZ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing iSports Co., Ltd. (5A8BP6W9BZ)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/我爱高尔夫/pchFile.pch";
 				INFOPLIST_FILE = "我爱高尔夫/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PRODUCT_NAME = igolf;
+				PROVISIONING_PROFILE = "13bdb79f-bf96-411b-b3fb-7495fe5810bd";
 			};
 			name = Release;
 		};
@@ -1716,7 +1720,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A9438A0B1A79FF6E00B55001 /* Build configuration list for PBXProject "我爱高尔夫" */ = {
+		A9438A0B1A79FF6E00B55001 /* Build configuration list for PBXProject "iGolf" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A9438A311A79FF6E00B55001 /* Debug */,
