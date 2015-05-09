@@ -161,6 +161,7 @@
 		A9DDC6B81AD3B167002B89EA /* ZCPhoneloginView.m in Sources */ = {isa = PBXBuildFile; fileRef = A9DDC6B71AD3B167002B89EA /* ZCPhoneloginView.m */; };
 		A9DDC6BB1AD3CAAC002B89EA /* ZCRegisteredViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9DDC6BA1AD3CAAC002B89EA /* ZCRegisteredViewController.m */; };
 		A9F00BFA1A8858E200671AC9 /* ZCShowButton.m in Sources */ = {isa = PBXBuildFile; fileRef = A9F00BF91A8858E200671AC9 /* ZCShowButton.m */; };
+		B7A512E51AFCD41500F87D88 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B7A512E41AFCD41500F87D88 /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -246,7 +247,7 @@
 		A9438A141A79FF6E00B55001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9438A151A79FF6E00B55001 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A9438A201A79FF6E00B55001 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		A9438A291A79FF6E00B55001 /* 我爱高尔夫Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "我爱高尔夫Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9438A291A79FF6E00B55001 /* iGolf Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iGolf Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9438A2E1A79FF6E00B55001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9438A2F1A79FF6E00B55001 /* _____Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "_____Tests.m"; sourceTree = "<group>"; };
 		A9438A3B1A7A007B00B55001 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -482,6 +483,7 @@
 		A9DDC6BA1AD3CAAC002B89EA /* ZCRegisteredViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCRegisteredViewController.m; sourceTree = "<group>"; };
 		A9F00BF81A8858E200671AC9 /* ZCShowButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCShowButton.h; sourceTree = "<group>"; };
 		A9F00BF91A8858E200671AC9 /* ZCShowButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCShowButton.m; sourceTree = "<group>"; };
+		B7A512E41AFCD41500F87D88 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -620,7 +622,7 @@
 			isa = PBXGroup;
 			children = (
 				A9438A101A79FF6E00B55001 /* igolf.app */,
-				A9438A291A79FF6E00B55001 /* 我爱高尔夫Tests.xctest */,
+				A9438A291A79FF6E00B55001 /* iGolf Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -638,6 +640,7 @@
 		A9438A131A79FF6E00B55001 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B7A512E41AFCD41500F87D88 /* Default-568h@2x.png */,
 				A95D733A1AD65960009062AF /* city2.plist */,
 				A9438A141A79FF6E00B55001 /* Info.plist */,
 				A9438A151A79FF6E00B55001 /* main.m */,
@@ -1301,9 +1304,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A9438A0F1A79FF6E00B55001 /* 我爱高尔夫 */ = {
+		A9438A0F1A79FF6E00B55001 /* iGolf */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A9438A331A79FF6E00B55001 /* Build configuration list for PBXNativeTarget "我爱高尔夫" */;
+			buildConfigurationList = A9438A331A79FF6E00B55001 /* Build configuration list for PBXNativeTarget "iGolf" */;
 			buildPhases = (
 				A9438A0C1A79FF6E00B55001 /* Sources */,
 				A9438A0D1A79FF6E00B55001 /* Frameworks */,
@@ -1313,14 +1316,14 @@
 			);
 			dependencies = (
 			);
-			name = "我爱高尔夫";
+			name = iGolf;
 			productName = "我爱高尔夫";
 			productReference = A9438A101A79FF6E00B55001 /* igolf.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A9438A281A79FF6E00B55001 /* 我爱高尔夫Tests */ = {
+		A9438A281A79FF6E00B55001 /* iGolf Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A9438A361A79FF6E00B55001 /* Build configuration list for PBXNativeTarget "我爱高尔夫Tests" */;
+			buildConfigurationList = A9438A361A79FF6E00B55001 /* Build configuration list for PBXNativeTarget "iGolf Tests" */;
 			buildPhases = (
 				A9438A251A79FF6E00B55001 /* Sources */,
 				A9438A261A79FF6E00B55001 /* Frameworks */,
@@ -1331,9 +1334,9 @@
 			dependencies = (
 				A9438A2B1A79FF6E00B55001 /* PBXTargetDependency */,
 			);
-			name = "我爱高尔夫Tests";
+			name = "iGolf Tests";
 			productName = "我爱高尔夫Tests";
-			productReference = A9438A291A79FF6E00B55001 /* 我爱高尔夫Tests.xctest */;
+			productReference = A9438A291A79FF6E00B55001 /* iGolf Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -1343,7 +1346,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0610;
-				ORGANIZATIONNAME = zhongchuang;
+				ORGANIZATIONNAME = "Beijing iSports Co., Ltd.";
 				TargetAttributes = {
 					A9438A0F1A79FF6E00B55001 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -1368,8 +1371,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A9438A0F1A79FF6E00B55001 /* 我爱高尔夫 */,
-				A9438A281A79FF6E00B55001 /* 我爱高尔夫Tests */,
+				A9438A0F1A79FF6E00B55001 /* iGolf */,
+				A9438A281A79FF6E00B55001 /* iGolf Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -1384,6 +1387,7 @@
 				A969EECC1ACA9D5900F73C37 /* MBProgressHUD.bundle in Resources */,
 				A911BE201AC963EA00819F52 /* MJRefresh.bundle in Resources */,
 				A9438A211A79FF6E00B55001 /* Images.xcassets in Resources */,
+				B7A512E51AFCD41500F87D88 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1563,7 +1567,7 @@
 /* Begin PBXTargetDependency section */
 		A9438A2B1A79FF6E00B55001 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A9438A0F1A79FF6E00B55001 /* 我爱高尔夫 */;
+			target = A9438A0F1A79FF6E00B55001 /* iGolf */;
 			targetProxy = A9438A2A1A79FF6E00B55001 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1607,7 +1611,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "13bdb79f-bf96-411b-b3fb-7495fe5810bd";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1644,7 +1648,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "13bdb79f-bf96-411b-b3fb-7495fe5810bd";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1655,15 +1659,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing iSports Co., Ltd. (5A8BP6W9BZ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing iSports Co., Ltd. (5A8BP6W9BZ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SRCROOT)/我爱高尔夫/pchFile.pch";
-				INFOPLIST_FILE = "我爱高尔夫/Info.plist";
+				GCC_PREFIX_HEADER = "$(SRCROOT)/iGolf/pchFile.pch";
+				INFOPLIST_FILE = "$(SRCROOT)/iGolf/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = igolf;
-				PROVISIONING_PROFILE = "13bdb79f-bf96-411b-b3fb-7495fe5810bd";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1671,15 +1676,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Beijing iSports Co., Ltd. (5A8BP6W9BZ)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Beijing iSports Co., Ltd. (5A8BP6W9BZ)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$(SRCROOT)/我爱高尔夫/pchFile.pch";
-				INFOPLIST_FILE = "我爱高尔夫/Info.plist";
+				GCC_PREFIX_HEADER = "$(SRCROOT)/iGolf/pchFile.pch";
+				INFOPLIST_FILE = "$(SRCROOT)/iGolf/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = igolf;
-				PROVISIONING_PROFILE = "13bdb79f-bf96-411b-b3fb-7495fe5810bd";
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -1698,7 +1704,7 @@
 				INFOPLIST_FILE = "我爱高尔夫Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/我爱高尔夫.app/我爱高尔夫";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/igolf.app/igolf";
 			};
 			name = Debug;
 		};
@@ -1713,7 +1719,7 @@
 				INFOPLIST_FILE = "我爱高尔夫Tests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/我爱高尔夫.app/我爱高尔夫";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/igolf.app/igolf";
 			};
 			name = Release;
 		};
@@ -1729,7 +1735,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A9438A331A79FF6E00B55001 /* Build configuration list for PBXNativeTarget "我爱高尔夫" */ = {
+		A9438A331A79FF6E00B55001 /* Build configuration list for PBXNativeTarget "iGolf" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A9438A341A79FF6E00B55001 /* Debug */,
@@ -1738,7 +1744,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A9438A361A79FF6E00B55001 /* Build configuration list for PBXNativeTarget "我爱高尔夫Tests" */ = {
+		A9438A361A79FF6E00B55001 /* Build configuration list for PBXNativeTarget "iGolf Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A9438A371A79FF6E00B55001 /* Debug */,

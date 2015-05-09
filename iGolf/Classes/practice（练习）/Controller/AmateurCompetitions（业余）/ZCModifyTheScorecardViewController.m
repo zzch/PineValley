@@ -328,7 +328,7 @@
     CGFloat  totalLabelNameW=self.punishLabelView.frame.size.width*0.3125;
     CGFloat  totalLabelNameH=self.punishLabelView.frame.size.height;
     totalLabelName.frame=CGRectMake(totalLabelNameX, totalLabelNameY, totalLabelNameW, totalLabelNameH);
-    totalLabelName.text=@"推杆数";
+    totalLabelName.text=@"罚杆数";
     totalLabelName.textAlignment=NSTextAlignmentCenter;
     totalLabelName.font=[UIFont systemFontOfSize:22];
     totalLabelName.textColor=ZCColor(240, 208, 122);
