@@ -72,7 +72,7 @@
         image2 = [image2 resizableImageWithCapInsets:UIEdgeInsetsMake(25,25,10,10) resizingMode:UIImageResizingModeStretch];
         [phoneloginBth setBackgroundImage:image2 forState:UIControlStateNormal];
 
-        [phoneloginBth setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
+        [phoneloginBth setTitleColor:ZCColor(136, 119, 73) forState:UIControlStateNormal];
         
         
         [phoneloginBth addTarget:self action:@selector(clickphoneloginBth1) forControlEvents:UIControlEventTouchUpInside];
@@ -99,13 +99,14 @@
     if (self.phoneAccount.text.length==11&&self.phonePassword.text.length>=6) {
         
         self.phoneloginBth.enabled=YES;
-        [self.phoneloginBth setBackgroundImage:[UIImage imageNamed:@"denglu_anniu-1"] forState:UIControlStateNormal];
-        [self.phoneloginBth setBackgroundImage:[UIImage imageNamed:@"denglu_anniu_anxia"] forState:UIControlStateHighlighted];
-        
+       // [self.phoneloginBth setBackgroundImage:[UIImage imageNamed:@"denglu_anniu-1"] forState:UIControlStateNormal];
+        //[self.phoneloginBth setBackgroundImage:[UIImage imageNamed:@"denglu_anniu_anxia"] forState:UIControlStateHighlighted];
+        [self.phoneloginBth setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
     }else
     {
         self.phoneloginBth.enabled=NO;
-        [self.phoneloginBth setBackgroundColor:ZCColor(105, 178, 138) ];
+        //[self.phoneloginBth setBackgroundColor:ZCColor(105, 178, 138) ];
+        [self.phoneloginBth setTitleColor:ZCColor(136, 119, 73) forState:UIControlStateNormal];
     
     }
 

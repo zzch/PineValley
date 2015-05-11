@@ -250,7 +250,7 @@
         [parameterArray addObject:str];
         
         
-        
+        ZCLog(@"%@",str);
     }
     
     [parameterArray removeLastObject];

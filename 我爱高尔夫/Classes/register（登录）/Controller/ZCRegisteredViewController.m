@@ -12,6 +12,7 @@
 #import "ZCTabbarViewController.h"
 #import "AppDelegate.h"
 #import "ZCprompt.h"
+#import "UIBarButtonItem+DC.h"
 @interface ZCRegisteredViewController ()
 @property(nonatomic,weak)UIButton *getButton;
 @property(nonatomic,weak)UITextField *phoneAccount;
@@ -27,6 +28,14 @@
     [super viewDidLoad];
     
     self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+    
+    
+    //返回
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
+    
+
+    
+    
     
     
     //账号

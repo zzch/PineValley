@@ -1126,7 +1126,7 @@
 //
 //    
 //    
-//       //[self.startButton removeFromSuperview];
+//       //[  removeFromSuperview];
 //}
 //-(void)viewWillAppear:(BOOL)animated
 //{

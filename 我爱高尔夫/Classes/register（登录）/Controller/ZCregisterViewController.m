@@ -25,7 +25,12 @@
     
     self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
     
-    self.navigationItem.title=@"我爱高尔夫";
+    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+    customLab.textAlignment=NSTextAlignmentCenter;
+    [customLab setTextColor:ZCColor(240, 208, 122)];
+    [customLab setText:@"我爱高尔夫"];
+    customLab.font = [UIFont boldSystemFontOfSize:20];
+    self.navigationItem.titleView = customLab;
 //    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
     //一键注册
     CGFloat registerX=SCREEN_WIDTH*0.031;
