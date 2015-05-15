@@ -19,7 +19,11 @@
 #import "ZCAmateurStatisticsViewController.h"
 #import "ZCModifyTheScorecardViewController.h"
 #import "ZCProfessionalStatisticalViewController.h"
-@interface ZCScorecardTableViewController ()<UITableViewDataSource,UITableViewDelegate,ZCScorecarDelegate,ZCModifyTheScorecardViewControllerDelegate,ZCModifyTheProfessionalScorecardControllerDelegate>
+#import "ZCCompetitiveTableViewCell.h"
+#import "ZCScorecarHeadView.h"
+#import "ZCPersonalizedSettingsViewController.h"
+#import "ZCInvitationViewController.h"
+@interface ZCScorecardTableViewController ()<UITableViewDataSource,UITableViewDelegate,ZCScorecarDelegate,ZCModifyTheScorecardViewControllerDelegate,ZCModifyTheProfessionalScorecardControllerDelegate,ZCCompetitiveTableViewCellDelagate,ZCScorecarHeadViewDelagate>
 @property (nonatomic, strong) NSMutableArray *scorecards;
 
 @property (nonatomic, strong) NSIndexPath *indexPath;
@@ -59,7 +63,7 @@
     
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
-   // self.tableView.sectionHeaderHeight=60;
+    self.tableView.sectionHeaderHeight=130;
     
     
     self.tableView.rowHeight=125;
@@ -121,11 +125,16 @@
     params[@"token"]=account.token;
     
     ///v1/matches/show.json
-    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"matches/practice/show"];
+    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"matches/show.json"];
+    
+//    ZCLog(@"%@",url);
+//    ZCLog(@"%@",account.token);
+//    ZCLog(@"%@",self.uuid);
+    
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
        
-        
+        ZCLog(@"%@",responseObject[@"message"]);
         
         ZCTotalScorecards *totalScorecards= [ZCTotalScorecards totalScorecardsWithDict:responseObject];
         
@@ -182,13 +191,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-   
     return 18;
 }
 
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    
     //以indexPath来唯一确定cell
   NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%ld%ld", [indexPath section], [indexPath row]];
    
@@ -207,7 +217,59 @@
     cell.scorecard=scorecards[indexPath.row];
   
     return cell;
+    
 }
+
+
+
+//头部
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    ZCScorecarHeadView *ScorecarHeadView=[[ZCScorecarHeadView alloc] init];
+    ScorecarHeadView.delegate=self;
+    ScorecarHeadView.playerModel=self.totalScorecards.player;
+    return ScorecarHeadView;
+}
+
+
+- (id) _valueOrNil:(id)obj {
+    if (!obj) {
+        return nil;
+    }
+    if (obj == [NSNull null]) {
+        return nil;
+    }
+    return obj;
+}
+
+-(void)ZCScorecarHeadView:(ZCScorecarHeadView *)scorecarHeadView andClickButton:(UIButton *)button
+{
+    if (button.tag==2790) {
+        
+        if ([self _valueOrNil:self.totalScorecards.player.user.portrait]==nil) {
+            
+            ZCLog(@"%@",self.totalScorecards.player.user.portrait);
+            
+            
+            ZCPersonalizedSettingsViewController *ZPersonalizedSettingsViewController=[[ZCPersonalizedSettingsViewController alloc] init];
+            ZPersonalizedSettingsViewController.uuid=self.uuid;
+            [self.navigationController pushViewController:ZPersonalizedSettingsViewController animated:YES];
+            
+        }else
+        {
+            ZCInvitationViewController *InvitationViewController=[[ZCInvitationViewController alloc] init];
+            
+            InvitationViewController.isYes=YES;
+            InvitationViewController.uuid=self.uuid;
+            [self.navigationController pushViewController:InvitationViewController animated:YES];
+
+        }
+        
+        
+    }
+}
+
+
 
 
 //ZCScorecarTableViewCell的代理方法
@@ -229,10 +291,10 @@
     
     NSMutableArray *scorecards=self.totalScorecards.scorecards;
     ZCscorecard *scorecard=scorecards[indexPath.row];
-    
-    //单利
-    ZCEventUuidTool *UuidTool=[ZCEventUuidTool sharedEventUuidTool];
-    if ([UuidTool.scoring isEqual:@"simple"]) {
+//    
+//    //单利
+//    ZCEventUuidTool *UuidTool=[ZCEventUuidTool sharedEventUuidTool];
+    if ([self.totalScorecards.player.scoring_type isEqual:@"simple"]) {
         ZCModifyTheScorecardViewController *fillView=[[ZCModifyTheScorecardViewController alloc] init];
         //传递数据模型给下个控制器
         fillView.scorecard=scorecard;
@@ -260,14 +322,16 @@
 -(void)ZCZCFillViewController:(ZCModifyTheScorecardViewController *)modifyTheScorecardViewController didSaveScorecardt:(ZCscorecard *)scorecard
 {
     
+    
+    [self online];
     // 1.替换模型数据
     // ZCLog(@"section=%zd--row=%zd",self.indexPath.section,self.indexPath.row);
    // NSMutableArray *array=[self.totalScorecards.scorecards objectAtIndex:_indexPath.row];
-    [self.totalScorecards.scorecards replaceObjectAtIndex:_indexPath.row withObject:scorecard];
-
-    // 2.刷新表格
-    
-    [self.tableView reloadData ];
+//    [self.totalScorecards.scorecards replaceObjectAtIndex:_indexPath.row withObject:scorecard];
+//
+//    // 2.刷新表格
+//    
+//    [self.tableView reloadData ];
     
     
    
@@ -280,14 +344,16 @@
 -(void)modifyTheProfessionalScorecardController:(ZCModifyTheProfessionalScorecardController *)modifyTheProfessionalScorecardController didSaveScorecardt:(ZCscorecard *)scorecard
 {
 
+    [self online];
+    
     // 1.替换模型数据
     // ZCLog(@"section=%zd--row=%zd",self.indexPath.section,self.indexPath.row);
     // NSMutableArray *array=[self.totalScorecards.scorecards objectAtIndex:_indexPath.row];
-    [self.totalScorecards.scorecards replaceObjectAtIndex:_indexPath.row withObject:scorecard];
-    
-    // 2.刷新表格
-    
-    [self.tableView reloadData ];
+//    [self.totalScorecards.scorecards replaceObjectAtIndex:_indexPath.row withObject:scorecard];
+//    
+//    // 2.刷新表格
+//    
+//    [self.tableView reloadData ];
 
 
 }

@@ -14,6 +14,19 @@
     return [[self alloc] initWithDict:dict];
 
 }
+
+
+
+- (id) _valueOrNil:(id)obj {
+    if (!obj) {
+        return nil;
+    }
+    if (obj == [NSNull null]) {
+        return nil;
+    }
+    return obj;
+}
+
 - (instancetype)initWithDict:(NSDictionary *)dict
 {
     if (self=[super init]) {
@@ -25,7 +38,11 @@
         
         
         
-        if ([dict[@"portrait"] isKindOfClass:[NSNull class]]) {
+        //if ([dict[@"portrait"] isKindOfClass:[NSNull class]])
+            if ([self _valueOrNil:dict[@"portrait"]]==nil)
+
+            
+        {
             self.portrait=dict[@"portrait"];
         }else
         {

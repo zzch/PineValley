@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "ZCTee_boxes.h"
 @interface ZCscorecard : NSObject
 /**
  *  创建球洞的UUID
@@ -21,14 +21,7 @@
  *  标准杆
  */
 @property (nonatomic, copy) NSString *par;
-/**
- *  T台的颜色
- */
-@property (nonatomic, copy) NSString *tee_box_color;
-/**
- *  距离球洞的码数
- */
-@property (nonatomic, copy) NSString *distance_from_hole_to_tee_box;
+
 /**
  *  总杆数
  */
@@ -49,6 +42,12 @@
  *  方向
  */
 @property (nonatomic, copy) NSString *direction;
+
+/**
+ *  球洞属性
+ */
+@property (nonatomic, strong) NSMutableArray *tee_boxes;
+
 
 
 

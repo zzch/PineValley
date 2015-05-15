@@ -16,7 +16,33 @@
 - (instancetype)initWithDict:(NSDictionary *)dict
 {
     if (self = [super init]) {
-        [self setValuesForKeysWithDictionary:dict];
+        
+        self.uuid=dict[@"uuid"];
+        self.number=dict[@"number"];
+        self.par=dict[@"par"];
+        self.score=dict[@"score"];
+        self.putts=dict[@"putts"];
+        self.penalties=dict[@"penalties"];
+         self.driving_distance=dict[@"driving_distance"];
+         self.direction=dict[@"direction"];
+        
+        self.tee_boxes=[NSMutableArray array];
+        
+        NSDictionary *tee_boxes=dict[@"tee_boxes"];
+        
+        for (NSDictionary *dict in tee_boxes) {
+            
+            ZCTee_boxes *tee_box=[ZCTee_boxes tee_boxesWithDict:dict];
+            
+            [self.tee_boxes addObject:tee_box];
+            
+            
+        }
+        
+        
+        
+        
+        
     }
     return self;
     

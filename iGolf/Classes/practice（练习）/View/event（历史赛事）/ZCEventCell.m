@@ -147,16 +147,29 @@
 }
 
 
--(void)setEvent:(ZCEvent *)event
+
+//判断<nill> 和（null）转换
+- (id) _valueOrNil:(id)obj {
+    if (!obj) {
+        return nil;
+    }
+    if (obj == [NSNull null]) {
+        return nil;
+    }
+    return obj;
+}
+
+
+-(void)setEvent:(ZCHistoricalEventsModel *)event
 {
     _event=event;
     
-    if ([self.event.score isKindOfClass:[NSNull class]]) {
+    if ([self _valueOrNil:self.event.player.total]==nil) {
         self.scoreLabel.text=@"未记录";
         self.scoreLabel.font=[UIFont systemFontOfSize:25];
     }else
     {
-    self.scoreLabel.text=[NSString stringWithFormat:@"%@",self.event.score ];
+    self.scoreLabel.text=[NSString stringWithFormat:@"%@",self.event.player.total ];
     }
   
     self.nameLabel.text=self.event.venue.name;
@@ -169,15 +182,13 @@
     
     self.startedAtLabel.text=confromTimespStr;
     
-    if ([self.event.type isEqual:@"practice"]) {
-        self.typeLabel.text=@"练习赛";
-    }else if([self.event.type isEqual:@"professional"]){
-    self.typeLabel.text=@"专业赛";
-    }
-    // if (![self.event.recorded_scorecards_count isKindOfClass:[NSNull class]]) {
-    
-    // }
-    self.recorded_scorecards_count_label.text=[NSString stringWithFormat:@"%@/18",self.event.recorded_scorecards_count ];
+//    if ([self.event.type isEqual:@"practice"]) {
+//        self.typeLabel.text=@"练习赛";
+//    }else if([self.event.type isEqual:@"professional"]){
+//    self.typeLabel.text=@"专业赛";
+//    }
+    self.typeLabel.text=[NSString stringWithFormat:@"%@人",self.event.players_count];
+    self.recorded_scorecards_count_label.text=[NSString stringWithFormat:@"%@/18",self.event.player.recorded_scorecards_count ];
     
 
     

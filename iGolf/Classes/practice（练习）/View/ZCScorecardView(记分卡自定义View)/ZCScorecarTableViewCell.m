@@ -7,7 +7,7 @@
 //
 
 #import "ZCScorecarTableViewCell.h"
-
+#import "ZCNilButtom.h"
 #import "ZCShowButton.h"
 @interface ZCScorecarTableViewCell()
 /*
@@ -22,22 +22,25 @@
 距离球洞位置
  */
 @property(nonatomic,weak) UILabel *distanceLabel;
+///*
+// 小P的Label
+// */
+//@property(nonatomic,weak) UILabel *PLabel;
+///*
+// 小Y的Label
+// */
+//@property(nonatomic,weak) UILabel *YLabel;
 /*
- 小P的Label
+  parLabel
  */
-@property(nonatomic,weak) UILabel *PLabel;
-/*
- 小Y的Label
- */
-@property(nonatomic,weak) UILabel *YLabel;
-
+@property(nonatomic,weak) UILabel *numberparLabel;
 
 
 
 /*
  加号图片
  */
-@property(nonatomic,weak) UIButton *addImage;
+@property(nonatomic,weak) ZCNilButtom *nilButtom;
 
 /*
  显示值的按钮
@@ -94,61 +97,71 @@
         numberLabel.textAlignment=NSTextAlignmentCenter;
         //ballLabel.font=[UIFont fontWithName:@"Helvetica" size:20];
         
-        numberLabel.font=[UIFont systemFontOfSize:35];
+        numberLabel.font=[UIFont systemFontOfSize:38];
         
         
-        UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_dong"]];
-        numberLabel.backgroundColor=col;
+       // UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_dong"]];
+        //numberLabel.backgroundColor=col;
         numberLabel.textColor=ZCColor(240, 208, 122);
      
         self.numberLabel=numberLabel;
        
-        //创建标准杆
-        UILabel *parLabel=[[UILabel alloc] init];
-        [self.liftView addSubview:parLabel];
-        parLabel.textColor=ZCColor(240, 208, 122);
-        parLabel.textAlignment=NSTextAlignmentCenter;
-       // parLabel.font=[UIFont systemFontOfSize:26];
-        parLabel.font=[UIFont fontWithName:@"Arial" size:26];
-        self.parLabel=parLabel;
-        //创建离球洞距离的Label
-        UILabel *distanceLabel=[[UILabel alloc] init];
-        [self.liftView addSubview:distanceLabel];
-        distanceLabel.font=[UIFont systemFontOfSize:21];
-        self.distanceLabel=distanceLabel;
-        self.distanceLabel.font=[UIFont fontWithName:@"Arial" size:26];
-        distanceLabel.textColor=ZCColor(240, 208, 122);
-        //创建小P label
-        UILabel *PLabel=[[UILabel alloc] init];
-        [self.liftView addSubview:PLabel];
-        PLabel.text=@"P";
-        PLabel.textColor=ZCColor(240, 208, 122);
-       // PLabel.backgroundColor=[UIColor blueColor];
-        self.PLabel=PLabel;
         
-        //创建小Y label
-        UILabel *YLabel=[[UILabel alloc] init];
-        [self.liftView addSubview:YLabel];
-        YLabel.text=@"Y";
-        YLabel.textColor=ZCColor(240, 208, 122);
-       // YLabel.backgroundColor=[UIColor blueColor];
-        self.YLabel=YLabel;
+        UILabel *numberparLabel=[[UILabel alloc] init];
+        numberparLabel.textAlignment=NSTextAlignmentCenter;
+        numberparLabel.textColor=ZCColor(240, 208, 122);
+        numberparLabel.font=[UIFont systemFontOfSize:20];
+        [self.liftView addSubview:numberparLabel];
+        self.numberparLabel=numberparLabel;
         
+        
+//        //创建标准杆
+//        UILabel *parLabel=[[UILabel alloc] init];
+//        [self.liftView addSubview:parLabel];
+//        parLabel.textColor=ZCColor(240, 208, 122);
+//        parLabel.textAlignment=NSTextAlignmentCenter;
+//       // parLabel.font=[UIFont systemFontOfSize:26];
+//        parLabel.font=[UIFont fontWithName:@"Arial" size:26];
+//        self.parLabel=parLabel;
+//        //创建离球洞距离的Label
+//        UILabel *distanceLabel=[[UILabel alloc] init];
+//        [self.liftView addSubview:distanceLabel];
+//        distanceLabel.font=[UIFont systemFontOfSize:21];
+//        self.distanceLabel=distanceLabel;
+//        self.distanceLabel.font=[UIFont fontWithName:@"Arial" size:26];
+//        distanceLabel.textColor=ZCColor(240, 208, 122);
+//        //创建小P label
+//        UILabel *PLabel=[[UILabel alloc] init];
+//        [self.liftView addSubview:PLabel];
+//        PLabel.text=@"P";
+//        PLabel.textColor=ZCColor(240, 208, 122);
+//       // PLabel.backgroundColor=[UIColor blueColor];
+//        self.PLabel=PLabel;
+//        
+//        //创建小Y label
+//        UILabel *YLabel=[[UILabel alloc] init];
+//        [self.liftView addSubview:YLabel];
+//        YLabel.text=@"Y";
+//        YLabel.textColor=ZCColor(240, 208, 122);
+//       // YLabel.backgroundColor=[UIColor blueColor];
+//        self.YLabel=YLabel;
+//        
         //创建可显示信息值的showLabel
         if (self.scorecard.score==nil) {
             
+           // ZCLog(@"%@",self.scorecard.score);
             //创建加号图片
             
-            UIButton *addImage=[[UIButton alloc] init];
+            ZCNilButtom *nilButtom=[[ZCNilButtom alloc] init];
             
            // UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jifenka_yihangbeijing"]];
             //addImage.backgroundColor=col;
             
-            [addImage setImage:[UIImage imageNamed:@"jfk_tianjia"] forState:UIControlStateNormal];
-            [addImage setImage:[UIImage imageNamed:@"jfk_tiejia_anxia"] forState:UIControlStateHighlighted];
-            [addImage addTarget:self action:@selector(addImageClick:) forControlEvents:UIControlEventTouchUpInside];
-            [self.contentView addSubview:addImage];
-            self.addImage=addImage;
+//            [nilButtom setImage:[UIImage imageNamed:@"jfk_tianjia"] forState:UIControlStateNormal];
+//            [nilButtom setImage:[UIImage imageNamed:@"jfk_tiejia_anxia"] forState:UIControlStateHighlighted];
+            [nilButtom addTarget:self action:@selector(addImageClick:) forControlEvents:UIControlEventTouchUpInside];
+            [self.contentView addSubview:nilButtom];
+            self.nilButtom=nilButtom;
             
 //            UIImageView *image=[[UIImageView alloc] init];
 //            
@@ -164,119 +177,7 @@
         self.showButton=showButton;
         }
         
-//        ZCShowButton *showLabel=[[ZCShowButton alloc] init];
-//        [self.contentView addSubview:showLabel];
-//        showLabel.scorecard=self.scorecard;
-//        self.showLabel=showLabel;
-//
         
-     //   showLabel.backgroundColor=[UIColor redColor];
-       
-//        //创建可显示信息值的button
-//        ZCShowButton *showButton=[[ZCShowButton alloc] init];
-//        [self.contentView addSubview:showButton];
-//       // showButton.backgroundColor=[UIColor redColor];
-//        self.showButton=showButton;
-//        showButton.scorecard=self.scorecard;
-//         //ZCLog(@"000000%@",_scorecard.leftText);
-//        [showButton addTarget:self action:@selector(addImageClick:) forControlEvents:UIControlEventTouchUpInside];
-       
-        
-        
-        
-//        //创建加号图片
-//        UIButton *addImage=[[UIButton alloc] init];
-//        [self.contentView addSubview:addImage];
-//        addImage.backgroundColor=[UIColor blueColor];
-//        self.addImage=addImage;
-//        [addImage setTitle:@"+++++" forState:UIControlStateNormal];
-//        [addImage addTarget:self action:@selector(addImageClick:) forControlEvents:UIControlEventTouchUpInside];
-        
-//        BOOL baocun=YES;
-//        if (baocun) {
-//            addImage.hidden=YES;
-//        }else
-//        {
-//            addImage.hidden=NO;
-//        }
-        
-        
-        
-        
-//        //成绩
-//        
-//        UIView *resultsView=[[UIView alloc] init];
-//        [self.showLabel addSubview:resultsView];
-//        resultsView.backgroundColor=[UIColor redColor];
-//        self.resultsView=resultsView;
-//        
-//        //成绩左
-//        UILabel *penaltiesLabel=[[UILabel alloc] initWithFrame:CGRectMake(40, 40, 40, 40)];
-//        [resultsView addSubview:penaltiesLabel];
-//        penaltiesLabel.backgroundColor=[UIColor whiteColor];
-//        penaltiesLabel.textColor=[UIColor blackColor];
-//        self.penaltiesLabel=penaltiesLabel;
-//        //总杆数
-//        UILabel *scoreLabel=[[UILabel alloc] initWithFrame:CGRectMake(80, 10, 40, 50)];
-//        // scoreLabel.backgroundColor=[UIColor blackColor];
-//        scoreLabel.textColor=[UIColor blackColor];
-//        
-//        [resultsView addSubview:scoreLabel];
-//        self.scoreLabel=scoreLabel;
-//        
-//        //推杆数 成绩右
-//        UILabel *puttsLabel=[[UILabel alloc] initWithFrame:CGRectMake(130, 40, 40, 30)];
-//        puttsLabel.backgroundColor=[UIColor whiteColor];
-//        puttsLabel.textColor=[UIColor blackColor];
-//        [resultsView addSubview:puttsLabel];
-//        self.puttsLabel=puttsLabel;
-//        
-//        //开杆距离
-//        UILabel *driving_distance_label=[[UILabel alloc] init];
-//        [self.showLabel addSubview:driving_distance_label];
-//        driving_distance_label.backgroundColor=[UIColor blueColor];
-//        driving_distance_label.textColor=[UIColor blackColor];
-//        //driving_distance_label.text=@"dasdsad";
-//        self.driving_distance_label=driving_distance_label;
-//        //求道
-//        UILabel *directionLabel=[[UILabel alloc] init];
-//        directionLabel.backgroundColor=[UIColor blueColor];
-//        directionLabel.textColor=[UIColor  blackColor];
-//        //fairwayLabel.text=self.scorecard.fairwayText;
-//        [self.showLabel addSubview:directionLabel];
-//        self.directionLabel=directionLabel;
-//        /**
-//         * 开杆距离前图片
-//         */
-//        
-//        UIImageView *drivingImage=[[UIImageView alloc] init];
-//        [self.showLabel addSubview:drivingImage];
-//        drivingImage.backgroundColor=[UIColor blueColor];
-//        drivingImage.image=[UIImage imageNamed:@"qiugan"];
-//        self.drivingImage=drivingImage;
-//        
-//        
-//        /**
-//         * 求道方向前图片
-//         */
-//        
-//        UIImageView *directionImage=[[UIImageView alloc] init];
-//        [self.showLabel addSubview:directionImage];
-//        //drivingImage.backgroundColor=[UIColor blackColor];
-//        directionImage.image=[UIImage imageNamed:@"you"];
-//        self.directionImage=directionImage;
-//        
-//        /**
-//         * 向右箭头前图片
-//         */
-//        
-//        UIImageView *rightImage=[[UIImageView alloc] init];
-//        [self.showLabel addSubview:rightImage];
-//        //drivingImage.backgroundColor=[UIColor blackColor];
-//        rightImage.image=[UIImage imageNamed:@"navigationbar_back_highlighted"];
-//        self.rightImage=rightImage;
-//        
-//
         
         
     }
@@ -296,20 +197,42 @@
 
 }
 
+
+
+
+//判断<nill> 和（null）转换
+- (id) _valueOrNil:(id)obj {
+    if (!obj) {
+        return nil;
+    }
+    if (obj == [NSNull null]) {
+        return nil;
+    }
+    return obj;
+}
+
+
+
+
 -(void)setScorecard:(ZCscorecard *)scorecard
 {
     _scorecard=scorecard;
     
-    if(self.scorecard.score)
+    ZCLog(@"妈的为啥执行上面那行%@",scorecard.score);
+    if([self _valueOrNil:scorecard.score])
     {
-        if (self.addImage) {
-            [self.addImage removeFromSuperview];
+        if (self.nilButtom) {
+          [self.nilButtom removeFromSuperview];
+            
+            ZCLog(@"妈的为啥执行上面那行%@",self.scorecard.score);
+            ZCLog(@"妈的为啥执行上面那行%@",self.scorecard.number);
         }
         if (self.showButton) {
             [self.showButton removeFromSuperview];
         }
         //创建可显示的showLabel
         ZCShowButton *showButton=[[ZCShowButton alloc] init];
+        
         showButton.scorecard=scorecard;
         [self.contentView addSubview:showButton];
         [showButton addTarget:self action:@selector(addImageClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -320,10 +243,10 @@
     }
 
     
-    
+    self.nilButtom.tee_boxes=scorecard.tee_boxes;
     self.numberLabel.text=[NSString stringWithFormat:@"%@",scorecard.number];
-    self.parLabel.text=[NSString stringWithFormat:@"%@",scorecard.par];
-    self.distanceLabel.text=[NSString stringWithFormat:@"%@",scorecard.distance_from_hole_to_tee_box];
+    self.numberparLabel.text=[NSString stringWithFormat:@"Par %@",scorecard.par];
+    //self.distanceLabel.text=[NSString stringWithFormat:@"%@",scorecard.distance_from_hole_to_tee_box];
     
 //    if ([scorecard.tee_box_color isEqual:@"red"]) {
 //        UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"hongdong"]];
@@ -403,7 +326,7 @@
     //创建左边View的frame
     CGFloat liftViewX=0;
     CGFloat liftViewY=0;
-    CGFloat liftViewW=self.frame.size.width*0.39;
+    CGFloat liftViewW=self.frame.size.width*0.29;
     CGFloat liftViewH=self.frame.size.height;
     
     self.liftView.frame=CGRectMake(liftViewX, liftViewY, liftViewW, liftViewH);
@@ -420,41 +343,54 @@
     //创建球洞ballLabel的frame
     
     CGFloat ballLabelW=62;
-    CGFloat ballLabelH=62;
+    CGFloat ballLabelH=32;
     CGFloat ballLabelX=(self.liftView.frame.size.width-ballLabelW)*0.5;
     CGFloat ballLabelY=self.liftView.frame.size.height*0.152;
 
     self.numberLabel.frame=CGRectMake(ballLabelX, ballLabelY, ballLabelW, ballLabelH);
     
-    //parLabel的frame
-    CGFloat parLabelX=self.liftView.frame.size.width*0.192;
-    CGFloat parLabelY=ballLabelY+ballLabelH+10;
-    CGFloat parLabelW=22;
-    CGFloat parLabelH=22;
     
-    self.parLabel.frame=CGRectMake(parLabelX, parLabelY, parLabelW, parLabelH);
+    
+    CGFloat numberparLabelW=62;
+    CGFloat numberparLabelH=62;
+    CGFloat numberparLabelX=(self.liftView.frame.size.width-numberparLabelW)*0.5;
+    CGFloat numberparLabelY=ballLabelY+ballLabelH+10;
+    
+    self.numberparLabel.frame=CGRectMake(numberparLabelX, numberparLabelY, numberparLabelW, numberparLabelH);
 
     
-    //小P得PLabel的frame
-    CGFloat PLabelX=parLabelX+parLabelW-3;
-    CGFloat PLabelY=parLabelY+(parLabelH*0.5);
-    CGFloat PLabelW=15;
-    CGFloat PLabelH=15;
-    self.PLabel.frame=CGRectMake(PLabelX, PLabelY, PLabelW, PLabelH);
-    //距离球洞的距离distanceLabel的frame
     
-    CGFloat distanceLabelX=PLabelX+PLabelW+5;
-    CGFloat distanceLabelY=parLabelY;
-    CGFloat distanceLabelW=45;
-    CGFloat distanceLabelH=22;
-    self.distanceLabel.frame=CGRectMake(distanceLabelX, distanceLabelY, distanceLabelW, distanceLabelH);
-    //小Y得YLabel的frame
-    CGFloat YLabelX=distanceLabelX+distanceLabelW;
-    CGFloat YLabelY=distanceLabelY+(distanceLabelH*0.5);
-    CGFloat YLabelW=15;
-    CGFloat YLabelH=15;
-    self.YLabel.frame=CGRectMake(YLabelX, YLabelY, YLabelW, YLabelH);
     
+//    
+//    //parLabel的frame
+//    CGFloat parLabelX=self.liftView.frame.size.width*0.192;
+//    CGFloat parLabelY=ballLabelY+ballLabelH+10;
+//    CGFloat parLabelW=22;
+//    CGFloat parLabelH=22;
+//    
+//    self.parLabel.frame=CGRectMake(parLabelX, parLabelY, parLabelW, parLabelH);
+//
+//    
+//    //小P得PLabel的frame
+//    CGFloat PLabelX=parLabelX+parLabelW-3;
+//    CGFloat PLabelY=parLabelY+(parLabelH*0.5);
+//    CGFloat PLabelW=15;
+//    CGFloat PLabelH=15;
+//    self.PLabel.frame=CGRectMake(PLabelX, PLabelY, PLabelW, PLabelH);
+//    //距离球洞的距离distanceLabel的frame
+//    
+//    CGFloat distanceLabelX=PLabelX+PLabelW+5;
+//    CGFloat distanceLabelY=parLabelY;
+//    CGFloat distanceLabelW=45;
+//    CGFloat distanceLabelH=22;
+//    self.distanceLabel.frame=CGRectMake(distanceLabelX, distanceLabelY, distanceLabelW, distanceLabelH);
+//    //小Y得YLabel的frame
+//    CGFloat YLabelX=distanceLabelX+distanceLabelW;
+//    CGFloat YLabelY=distanceLabelY+(distanceLabelH*0.5);
+//    CGFloat YLabelW=15;
+//    CGFloat YLabelH=15;
+//    self.YLabel.frame=CGRectMake(YLabelX, YLabelY, YLabelW, YLabelH);
+//    
     //showButton的frame
     CGFloat showLabelX=middleViewX+middleViewW;
     CGFloat showLabelY=0;
@@ -471,16 +407,16 @@
     CGFloat addImageY=0;
     CGFloat addImageW=self.frame.size.width-addImageX;
     CGFloat addImageH=self.frame.size.height;
-    self.addImage.frame=CGRectMake(addImageX, addImageY, addImageW, addImageH);
+    self.nilButtom.frame=CGRectMake(addImageX, addImageY, addImageW, addImageH);
     
     
     
     
-    CGFloat  imageX=(self.addImage.frame.size.width-self.addImage.frame.size.width*0.117)*0.5;
-    CGFloat  imageY=(self.addImage.frame.size.height-self.addImage.frame.size.height*0.24)*0.5;
-    CGFloat  imageW=self.addImage.frame.size.width*0.117;
-    CGFloat  imageH=self.addImage.frame.size.height*0.24;
-    self.image1.frame=CGRectMake(imageX, imageY, imageW, imageH);
+//    CGFloat  imageX=(self.nilButtom.frame.size.width-self.addImage.frame.size.width*0.117)*0.5;
+//    CGFloat  imageY=(self.nilButtom.frame.size.height-self.addImage.frame.size.height*0.24)*0.5;
+//    CGFloat  imageW=self.nilButtom.frame.size.width*0.117;
+//    CGFloat  imageH=self.nilButtom.frame.size.height*0.24;
+//    self.image1.frame=CGRectMake(imageX, imageY, imageW, imageH);
 
     
 //    //成绩frame

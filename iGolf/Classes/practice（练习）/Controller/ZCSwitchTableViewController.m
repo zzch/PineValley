@@ -578,19 +578,41 @@ shouldReloadTableForSearchScope:(NSInteger)searchOption
     ZCCityStadium *stadium = city.venues[indexPath.row];
     
     NSString *uuidStr=stadium.uuid;
-    ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
-    if ([tool.eventType isEqual:@"practice"]) {
+    
+    if ([self.delegaterr respondsToSelector:@selector(ZCSwitchTableViewController:andUuid:)]) {
+        [self.delegaterr ZCSwitchTableViewController:self andUuid:uuidStr];
         
-        ZCSettingTVController *settingView=[[ZCSettingTVController alloc] init];
+        ZCSettingTVController *vc = self.navigationController.viewControllers[2];
         
+        vc.uuidStr=uuidStr;
         
-        
-        settingView.uuidStr=uuidStr;
-        
-        
-        [self.navigationController pushViewController:settingView animated:YES];
-        
+       // ZCSettingTVController *settingView= [self.navigationController.viewControllers objectAtIndex:5];
+        //ZCSettingTVController *settingView=[[ZCSettingTVController alloc] init];
+        //self.delegate=settingView;
+       // self.delegate=settingView;
+        [self.navigationController popToViewController:vc animated:YES
+         ];
     }
+    
+    
+    ZCSettingTVController *vc = self.navigationController.viewControllers[2];
+    vc.uuidStr=uuidStr;
+    [self.navigationController popToViewController:vc animated:YES
+     ];
+    
+//    ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
+//    if ([tool.eventType isEqual:@"practice"]) {
+//        
+//        ZCSettingTVController *settingView=[[ZCSettingTVController alloc] init];
+//        
+//        
+//        
+//        settingView.uuidStr=uuidStr;
+//        
+//        
+//        [self.navigationController pushViewController:settingView animated:YES];
+//        
+//    }
 
     
 }

@@ -351,27 +351,36 @@ return _dataArray.count;
     ZCstadium *stadiumStr=self.dataArray[indexPath.row];
     
     NSString *uuidStr=stadiumStr.uuid;
-
-    ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
-    if ([tool.eventType isEqual:@"practice"]) {
-        
-    ZCSettingTVController *settingView=[[ZCSettingTVController alloc] init];
-        
-    
-        
-    settingView.uuidStr=uuidStr;
     
     
-    [self.navigationController pushViewController:settingView animated:YES];
-    
-    }else
-    {
-        ZCCompetitiveSetTableViewController *competitiveSetTableViewController=[[ZCCompetitiveSetTableViewController alloc] init];
-        competitiveSetTableViewController.uuidStr=uuidStr;
-        [self.navigationController pushViewController:competitiveSetTableViewController animated:YES];
-    
+    if ([self.delegate respondsToSelector:@selector(ZCChooseThePitchVViewController:andUuid:)]) {
+        [self.delegate ZCChooseThePitchVViewController:self andUuid:uuidStr];
     }
+
     
+    [self.navigationController popViewControllerAnimated:YES];
+    
+    
+
+//    ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
+//    if ([tool.eventType isEqual:@"practice"]) {
+//        
+//    //ZCSettingTVController *settingView=[[ZCSettingTVController alloc] init];
+//        
+//        
+//    
+//    
+//    
+//    [self.navigationController pushViewController:settingView animated:YES];
+//    
+//    }else
+//    {
+//        ZCCompetitiveSetTableViewController *competitiveSetTableViewController=[[ZCCompetitiveSetTableViewController alloc] init];
+//        competitiveSetTableViewController.uuidStr=uuidStr;
+//        [self.navigationController pushViewController:competitiveSetTableViewController animated:YES];
+//    
+//    }
+//    
 }
 
 

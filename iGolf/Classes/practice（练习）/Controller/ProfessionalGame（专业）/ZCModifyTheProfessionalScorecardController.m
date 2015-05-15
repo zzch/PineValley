@@ -100,6 +100,16 @@
 
 
 
+- (id) _valueOrNil:(id)obj {
+    if (!obj) {
+        return nil;
+    }
+    if (obj == [NSNull null]) {
+        return nil;
+    }
+    return obj;
+}
+
 //点击保存
 -(void)clickOnTheProfessionalSave
 {
@@ -123,6 +133,11 @@
         
         
         NSString *point_of_fall;
+        
+        if ([selectTheDisplay.distance_from_hole isEqual:@"进洞"])
+        {
+            point_of_fall=@"hole";
+        }else{
         if ([selectTheDisplay.point_of_fall isEqual:@"球道"]) {
             point_of_fall=@"fairway";
 
@@ -141,14 +156,14 @@
         }else if ([selectTheDisplay.point_of_fall isEqual:@"不可打"])
         {
         point_of_fall=@"unplayable";
-        }else if ([selectTheDisplay.distance_from_hole isEqual:@"进洞"])
+        }else
         {
-        point_of_fall=@"hole";
+            point_of_fall=[NSString stringWithFormat:@"%@",selectTheDisplay.distance_from_hole];
         }
         
-        
+        }
         NSString *penalties;
-        if ([selectTheDisplay.penalties isKindOfClass:[NSNull class]]) {
+        if ([self _valueOrNil:selectTheDisplay.penalties]==nil ) {
             penalties=@"0";
         }else{
         penalties=[NSString stringWithFormat:@"%@",selectTheDisplay.penalties];
@@ -222,6 +237,9 @@
         }else if ([selectTheDisplay.club isEqual:@"LW"])
         {
             club=@"lw";
+        }else{
+        
+            club=[NSString stringWithFormat:@"%@",selectTheDisplay.club];
         }
 
 
@@ -257,7 +275,7 @@
     
     
    // ZCLog(@"%lu",parameterArray.count);
-   // ZCLog(@"%@",parameterArray);
+    ZCLog(@"%@",parameterArray);
     
     
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
@@ -408,28 +426,28 @@
     
     //码数
     UILabel *distanceLabel=[[UILabel alloc] initWithFrame:CGRectMake(parLabel.frame.size.width+parLabel.frame.origin.x+SCREEN_WIDTH*0.04, 0, SCREEN_WIDTH*0.156, resultsView.frame.size.height)];
-    distanceLabel.text=[NSString stringWithFormat:@"%@码",self.scorecard.distance_from_hole_to_tee_box];
+   // distanceLabel.text=[NSString stringWithFormat:@"%@码",self.scorecard.distance_from_hole_to_tee_box];
     distanceLabel.textColor=ZCColor(240, 208, 122);
     [resultsView addSubview:distanceLabel];
     self.distanceLabel=distanceLabel;
     
    //T台颜色
     UILabel *tee_box_colorLabel=[[UILabel alloc] initWithFrame:CGRectMake(distanceLabel.frame.size.width+distanceLabel.frame.origin.x+SCREEN_WIDTH*0.02, 0, SCREEN_WIDTH*0.198, resultsView.frame.size.height)];
-    if ([self.scorecard.tee_box_color isEqual:@"white"]) {
-        tee_box_colorLabel.text=@"白T";
-    }else if ([self.scorecard.tee_box_color isEqual:@"red"])
-    {
-    tee_box_colorLabel.text=@"红T";
-    }else if ([self.scorecard.tee_box_color isEqual:@"blue"])
-    {
-     tee_box_colorLabel.text=@"蓝T";
-    }else if ([self.scorecard.tee_box_color isEqual:@"black"])
-    {
-    tee_box_colorLabel.text=@"黑T";
-    }else if ([self.scorecard.tee_box_color isEqual:@"gold"])
-    {
-    tee_box_colorLabel.text=@"金T";
-    }
+//    if ([self.scorecard.tee_box_color isEqual:@"white"]) {
+//        tee_box_colorLabel.text=@"白T";
+//    }else if ([self.scorecard.tee_box_color isEqual:@"red"])
+//    {
+//    tee_box_colorLabel.text=@"红T";
+//    }else if ([self.scorecard.tee_box_color isEqual:@"blue"])
+//    {
+//     tee_box_colorLabel.text=@"蓝T";
+//    }else if ([self.scorecard.tee_box_color isEqual:@"black"])
+//    {
+//    tee_box_colorLabel.text=@"黑T";
+//    }else if ([self.scorecard.tee_box_color isEqual:@"gold"])
+//    {
+//    tee_box_colorLabel.text=@"金T";
+//    }
     
     tee_box_colorLabel.textColor=ZCColor(240, 208, 122);
     [resultsView addSubview:tee_box_colorLabel];

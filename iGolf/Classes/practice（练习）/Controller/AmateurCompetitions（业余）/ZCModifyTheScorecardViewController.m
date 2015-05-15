@@ -649,10 +649,29 @@
     [self.pickView selectRow:1 inComponent:1 animated:YES];
     
 }
+
+
+//判断<nill> 和（null）转换
+- (id) _valueOrNil:(id)obj {
+    if (!obj) {
+        return nil;
+    }
+    if (obj == [NSNull null]) {
+        return nil;
+    }
+    return obj;
+}
+
+
 //push到这个界面的默认值
 -(void)defaultData
 {
-    if (self.scorecard.score==nil) {
+    ZCLog(@"%@",[self _valueOrNil:self.scorecard.score]);
+   
+    
+    
+    
+    if ([self _valueOrNil:self.scorecard.score]==nil) {
         
         if ([self.scorecard.par isEqual:@"3"]) {
             self.totalLabel.text=@"3";
@@ -711,6 +730,8 @@
         }
         
         // self.hitLabel.text=[NSString stringWithFormat:@"%@",self.scorecard.direction];
+        ZCLog(@"%@",self.scorecard.driving_distance);
+        
         int distance=[self.scorecard.driving_distance intValue]/5;
         
         ZCLog(@"%@",self.scorecard.driving_distance);
@@ -770,7 +791,7 @@
     }
     ZCLog(@"%@", params[@"direction"]);
     ///v1/scorecards.json
-    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"scorecards/simple"];
+    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"scorecards/simple.json"];
     [mgr PUT:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         

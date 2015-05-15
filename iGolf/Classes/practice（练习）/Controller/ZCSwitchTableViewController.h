@@ -7,7 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+@class ZCSwitchTableViewController;
+@protocol ZCSwitchTableViewControllerDelegate<NSObject>
+@optional
+-(void)ZCSwitchTableViewController:(ZCSwitchTableViewController *)SwitchTableViewController  andUuid:(NSString *)uuid;
 
+@end
 @interface ZCSwitchTableViewController : UITableViewController
 
+
+@property(nonatomic,strong)id<ZCSwitchTableViewControllerDelegate>delegaterr;
 @end

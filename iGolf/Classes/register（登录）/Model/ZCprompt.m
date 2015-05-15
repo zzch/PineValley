@@ -72,6 +72,12 @@
     }else if ([errorCode isEqualToString:@"20110"])
     {
         [[self alloc] alert:@"没有进洞击球"];
+    }else if ([errorCode isEqualToString:@"20113"])
+    {
+        [[self alloc] alert:@"比赛口令错误"];
+    }else if ([errorCode isEqualToString:@"20107"])
+    {
+        [[self alloc] alert:@"用户重复参加赛事"];
     }
 
 

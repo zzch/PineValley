@@ -19,13 +19,22 @@
 @property (nonatomic, copy) NSString *position;
 
 /**
- *  成绩
+ *  记分卡个数
  */
-@property (nonatomic, copy) NSString *score;
+@property (nonatomic, copy) NSString *recorded_scorecards_count;
+/**
+ *  记分卡类型
+ */
+@property (nonatomic, copy) NSString *scoring_type;
+
+/**
+ * 杆数
+ */
+@property (nonatomic, copy) NSString *strokes;
 /**
  *  分数+1-1
  */
-@property (nonatomic, copy) NSString *status;
+@property (nonatomic, copy) NSString *total;
 
 + (instancetype)playerModelWithDict:(NSDictionary *)dict;
 - (instancetype)initWithDict:(NSDictionary *)dict;

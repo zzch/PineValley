@@ -176,46 +176,46 @@
 
 
 
--(void)setHistoryOfCompetitiveModel:(ZCHistoryOfCompetitiveModel *)historyOfCompetitiveModel
-
-{
-    _historyOfCompetitiveModel=historyOfCompetitiveModel;
-    
-    if ([self.historyOfCompetitiveModel.score isKindOfClass:[NSNull class]]) {
-        self.scoreLabel.text=@"未记录";
-        self.scoreLabel.font=[UIFont systemFontOfSize:25];
-    }else
-    {
-        self.scoreLabel.text=[NSString stringWithFormat:@"%@",self.historyOfCompetitiveModel.score ];
-    }
-    
-    self.nameLabel.text=self.historyOfCompetitiveModel.venue.name;
-    
-    //时间卓转成想要的格式
-    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-    [fmt setDateFormat:@"yyyy年MM月dd日 "];
-    NSDate *confromTimesp=[NSDate dateWithTimeIntervalSince1970:self.historyOfCompetitiveModel.started_at];
-    NSString *confromTimespStr=[fmt stringFromDate:confromTimesp];
-    
-    self.startedAtLabel.text=confromTimespStr;
-    
-    
-    self.personNumberLabel.text=[NSString stringWithFormat:@"(%@人)",self.historyOfCompetitiveModel.players_count];
-    
-    if ([self.historyOfCompetitiveModel.type isEqual:@"tournament"]) {
-        self.typeLabel.text=@"竞技赛";
-    }else if([self.historyOfCompetitiveModel.type isEqual:@"professional"]){
-        self.typeLabel.text=@"专业赛";
-    }
-    // if (![self.event.recorded_scorecards_count isKindOfClass:[NSNull class]]) {
-    
-    // }
-    self.recorded_scorecards_count_label.text=[NSString stringWithFormat:@"%@/18",self.historyOfCompetitiveModel.recorded_scorecards_count ];
-    
-    
-    
-    
-}
+//-(void)setHistoryOfCompetitiveModel:(ZCHistoryOfCompetitiveModel *)historyOfCompetitiveModel
+//
+//{
+//    _historyOfCompetitiveModel=historyOfCompetitiveModel;
+//    
+//    if ([self.historyOfCompetitiveModel.score isKindOfClass:[NSNull class]]) {
+//        self.scoreLabel.text=@"未记录";
+//        self.scoreLabel.font=[UIFont systemFontOfSize:25];
+//    }else
+//    {
+//        self.scoreLabel.text=[NSString stringWithFormat:@"%@",self.historyOfCompetitiveModel.score ];
+//    }
+//    
+//    self.nameLabel.text=self.historyOfCompetitiveModel.venue.name;
+//    
+//    //时间卓转成想要的格式
+//    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+//    [fmt setDateFormat:@"yyyy年MM月dd日 "];
+//    NSDate *confromTimesp=[NSDate dateWithTimeIntervalSince1970:self.historyOfCompetitiveModel.started_at];
+//    NSString *confromTimespStr=[fmt stringFromDate:confromTimesp];
+//    
+//    self.startedAtLabel.text=confromTimespStr;
+//    
+//    
+//    self.personNumberLabel.text=[NSString stringWithFormat:@"(%@人)",self.historyOfCompetitiveModel.players_count];
+//    
+//    if ([self.historyOfCompetitiveModel.type isEqual:@"tournament"]) {
+//        self.typeLabel.text=@"竞技赛";
+//    }else if([self.historyOfCompetitiveModel.type isEqual:@"professional"]){
+//        self.typeLabel.text=@"专业赛";
+//    }
+//    // if (![self.event.recorded_scorecards_count isKindOfClass:[NSNull class]]) {
+//    
+//    // }
+//    self.recorded_scorecards_count_label.text=[NSString stringWithFormat:@"%@/18",self.historyOfCompetitiveModel.recorded_scorecards_count ];
+//    
+//    
+//    
+//    
+//}
 
 
 

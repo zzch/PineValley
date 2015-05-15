@@ -19,12 +19,18 @@
        
         
         self.position=dict[@"position"];
-        self.score=dict[@"score"];
-        self.status=dict[@"status"];
+        self.recorded_scorecards_count=dict[@"recorded_scorecards_count"];
+        self.scoring_type=dict[@"scoring_type"];
+        self.strokes=dict[@"strokes"];
+        self.total=dict[@"total"];
+        
         
         self.user=[ZCUserModel userModelWithDict:dict[@"user"]];
         
-        
+        ZCLog(@"%@",dict[@"total"]);
+        ZCLog(@"%@",dict[@"recorded_scorecards_count"]);
+        ZCLog(@"%@",dict[@"strokes"]);
+        ZCLog(@"%@",dict[@"scoring_type"]);
     }
     return self;
 

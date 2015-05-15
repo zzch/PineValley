@@ -7,15 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ZCStadiumInformation.h"
+@class ZCChooseThePitchVViewController;
 #import <CoreLocation/CoreLocation.h>
-//@protocol  ZCChooseThePitchDelegate<NSObject>
-//@optional
-//-(void)chooseThePitchDidSelectedCell:(ZCStadiumInformation *)stadiumInformation;
+@protocol  ZCChooseThePitchDelegate<NSObject>
+@optional
+-(void)ZCChooseThePitchVViewController:(ZCChooseThePitchVViewController *)ChooseThePitchVViewController andUuid:(NSString *)uuid;
 //
-//@end
+@end
 
 @interface ZCChooseThePitchVViewController : UIViewController
 
-//@property(nonatomic,strong) id<ZCChooseThePitchDelegate> delegate;
+@property(nonatomic,strong) id<ZCChooseThePitchDelegate> delegate;
 @end

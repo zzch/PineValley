@@ -7,26 +7,26 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "ZCPlayerModel.h"
 @interface ZCTotalScorecards : NSObject
 /**
- *  创建球场的UUID
+ *  用户信息
  */
-@property (nonatomic, copy) NSString *uuid;
+@property (nonatomic, strong) ZCPlayerModel *player;
 
-/**
- *  创建球场的type
- */
-@property (nonatomic, copy) NSString *type;
+///**
+// *  创建球场的type
+// */
+//@property (nonatomic, copy) NSString *type;
 /**
  *  创建球场数组模型
  */
 @property (nonatomic, strong) NSMutableArray *scorecards;
 
-/**
- *  是否点击了保存,默认是NO
- */
-@property (nonatomic, assign, getter = isSave) BOOL save;
+///**
+// *  是否点击了保存,默认是NO
+// */
+//@property (nonatomic, assign, getter = isSave) BOOL save;
 
 
 + (instancetype)totalScorecardsWithDict:(NSDictionary *)dict;

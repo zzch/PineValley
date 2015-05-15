@@ -20,7 +20,10 @@
 #import "ZCEventUuidTool.h"
 #import "UIBarButtonItem+DC.h"
 #import "MBProgressHUD+NJ.h"
-@interface ZCSettingTVController ()<UITableViewDelegate,UITableViewDataSource,ZCSettingHeadViewDelegate>
+#import "ZCChooseThePitchVViewController.h"
+#import "ZCSwitchTableViewController.h"
+#import "ZCCheckTheScorecardTableViewController.h"
+@interface ZCSettingTVController ()<UITableViewDelegate,UITableViewDataSource,ZCSettingHeadViewDelegate,CLLocationManagerDelegate,ZCChooseThePitchDelegate,ZCSwitchTableViewControllerDelegate>
 @property(nonatomic,assign) int count;
 
 @property(nonatomic,strong) ZCStadiumInformation *stadiumInformation;
@@ -44,14 +47,27 @@
 @property (nonatomic, assign, getter = isOpened2) BOOL opened2;
 @property (nonatomic, assign, getter = isOpened3) BOOL opened3;
 @property (nonatomic, assign, getter = isOpened4) BOOL opened4;
+@property (nonatomic, assign, getter = isOpened5) BOOL opened5;
 
 @property(nonatomic, strong) ZCSettingHeadView *settingHeadView;
 //保存选中的子场名字
 @property(nonatomic,copy) NSString *firstChildName;
 //保存选中的子场名字
 @property(nonatomic,copy) NSString *lastChildName;
-
+//保存记分卡类型  专业 或者简单
+@property(nonatomic,copy) NSString *type;
 @property(nonatomic,weak) UIButton *startButton;
+
+
+//表头里的球场名字
+@property(nonatomic,weak)UILabel *nameLabel;
+
+//定位
+@property(nonatomic,retain) CLLocationManager *locationMgr;
+
+@property(nonatomic,assign) double latitude;
+
+@property(nonatomic,assign) double longitude;
 
 @end
 
@@ -87,48 +103,20 @@
 
     self.tableView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
     self.tableView.rowHeight=50;
-    //加载圈圈
-    [MBProgressHUD showMessage:@"加载中..."];
-    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
-    ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
-    params[@"uuid"]=self.uuidStr;
-    params[@"token"]=account.token;
-    
-    //发送请求/v1/courses/show.json
-    
-    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"venues/show.json"];
-    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //ZCLog(@"%@",responseObject);
- 
-        
-        ZCStadiumInformation  *stadiumInformation=[ZCStadiumInformation stadiumInformationWithDict:responseObject];
-        
-        self.stadiumInformation=stadiumInformation;
-        //隐藏圈圈
-        [MBProgressHUD hideHUD];
-        // 刷新表格
-        [self.tableView reloadData];
-        
-        
-        
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        ZCLog(@"请求失败%@",error);
-        //隐藏圈圈
-        [MBProgressHUD hideHUD];
-    }];
-    
-
+   
     
     
 
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
     self.tableView.sectionHeaderHeight = 60;
-   // self.tableView.
+    //self.tableView.
+    self.tableView.tableHeaderView=[self tableViewForheaderView];
+    
+    //创建CLLocationManager定位
+    [self initCLLocationManager];
+    
+    
     
     
     UIButton *startButton=[[UIButton alloc] init];
@@ -145,7 +133,7 @@
     startButton.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"tab_bj"]];
     //[startButton setBackgroundImage:[UIImage imageNamed:@"kedianji_zhuangtai"] forState:UIControlStateNormal];
     [startButton setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
-    [startButton addTarget:self action:@selector(clickDidStartButton) forControlEvents:UIControlEventTouchUpInside];
+    [startButton addTarget:self action:@selector(clickTheDidStartButton) forControlEvents:UIControlEventTouchUpInside];
     UIWindow *wd = [[UIApplication sharedApplication].delegate window];
     [wd addSubview:startButton];
    // startButton.userInteractionEnabled=NO;
@@ -155,6 +143,294 @@
  
 
 }
+
+
+
+//表头里面内容
+-(UIView *)tableViewForheaderView
+{
+    UIView *headerView=[[UIView alloc] init];
+    headerView.frame=CGRectMake(0, 0, SCREEN_WIDTH, 50);
+    headerView.backgroundColor=[UIColor redColor];
+    
+    
+    UIButton *chooseBtn=[[UIButton alloc] init];
+    chooseBtn.frame=CGRectMake(0, 0, SCREEN_WIDTH, 50);
+    [chooseBtn addTarget:self action:@selector(clickTheChoose) forControlEvents:UIControlEventTouchUpInside];
+    [headerView addSubview:chooseBtn];
+    
+    UIImageView *imageView=[[UIImageView alloc] init];
+    imageView.image=[UIImage imageNamed:@"xzqc_weizhi_iocn"];
+    imageView.frame=CGRectMake(10, (chooseBtn.frame.size.height-15)*0.5, 10, 15);
+    [chooseBtn addSubview:imageView];
+    
+    UILabel *nameLabel=[[UILabel alloc] initWithFrame:CGRectMake(30, (chooseBtn.frame.size.height-20)*0.5, 180, 20)];
+    self.nameLabel=nameLabel;
+    [chooseBtn addSubview:nameLabel];
+    
+    
+    UIImageView *rightImageView=[[UIImageView alloc] init];
+    
+    rightImageView.frame=CGRectMake(SCREEN_WIDTH-25, (chooseBtn.frame.size.height-15)*0.5, 10, 15);
+    rightImageView.image=[UIImage imageNamed:@"lsjfk_xiayibu_iocn"];
+    [chooseBtn addSubview:rightImageView];
+    
+    
+    
+    
+    return headerView;
+}
+
+
+//点击表头
+-(void)clickTheChoose
+{
+    
+    
+    self.opened1=NO;
+    self.opened2=NO;
+    self.opened3=NO;
+    self.opened4=NO;
+    self.opened5=NO;
+    self.firstChildName=nil;
+    self.tee_boxe=nil;
+    self.lastChildName=nil;
+    self.lastTee_boxe=nil;
+    
+    self.childStadium=nil;
+    self.childStadiumMutableArray=nil;
+    
+    self.lastChildStadium=nil;
+    self.index=0;
+    self.type=nil;
+    self.nameLabel.text=nil;
+    self.count=0;
+    self.stadiumInformation=nil;
+
+    
+    
+    
+    ZCChooseThePitchVViewController *ChooseThePitchVView=[[ZCChooseThePitchVViewController alloc] init];
+    ChooseThePitchVView.delegate=self;
+    [self.navigationController pushViewController:ChooseThePitchVView animated:YES];
+}
+
+
+//ZCSwitchTableView控制器传值过来时候的set方法
+-(void)setUuidStr:(NSString *)uuidStr
+{
+    _uuidStr=uuidStr;
+    
+    [self selectCourseLoadData:uuidStr];
+    
+}
+
+
+//创建定位GPS
+-(void)initCLLocationManager
+{
+    self.locationMgr=[[CLLocationManager alloc] init];
+    self.locationMgr.delegate=self;
+    self.locationMgr.desiredAccuracy=kCLLocationAccuracyBest;
+   // 移动多少米开始重新定位
+    self.locationMgr.distanceFilter=255.0;
+    
+    if([[UIDevice currentDevice].systemVersion doubleValue] >= 8.0)
+
+    {
+        // 主动要求用户对我们的程序授权, 授权状态改变就会通知代理
+        [self.locationMgr requestAlwaysAuthorization]; // 请求前台和后台定位权限
+        [self.locationMgr startUpdatingLocation];
+
+    }else
+    {
+        NSLog(@"是iOS7");
+        // 3.开始监听(开始获取位置)
+        [self.locationMgr startUpdatingLocation];
+    }
+
+    
+}
+
+
+
+
+//刚进来时候根据经纬度获取最近的坐标来显示球场信息
+-(void)initDataLoading
+{
+
+    //加载圈圈
+    [MBProgressHUD showMessage:@"加载中..."];
+    //2.发送网络请求
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    
+    mgr.responseSerializer.acceptableContentTypes=[NSSet setWithObjects:@"text/html",@"text/plain",@"application/xhtml+xml",@"application/xml",@"application/json", nil];
+    // mgr.responseSerializer.acceptableContentTypes = [mgr.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    
+    //    double  latitude=39.975368;
+    //    double  longitude =116.300841;
+    // 2.封装请求参数
+    NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
+    ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
+    
+    // 说明服务器返回的JSON数据
+    // mgr.responseSerializer = [AFJSONResponseSerializer serializer];
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    //    params[@"longitude"] = @(116.300841);
+    //    params[@"latitude"]=@(39.975368);
+    
+    
+    params[@"longitude"] = @(self.longitude);
+    params[@"latitude"]=@(self.latitude) ;
+    
+    params[@"token"]=account.token;
+    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"venues/nearest.json"];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        ZCLog(@"%@------",responseObject);
+        ZCStadiumInformation  *stadiumInformation=[ZCStadiumInformation stadiumInformationWithDict:responseObject];
+        
+        self.stadiumInformation=stadiumInformation;
+        
+        
+        
+        [MBProgressHUD hideHUD];
+        
+        //给表头里的label的名字赋值
+        self.nameLabel.text=self.stadiumInformation.name;
+        //刷新表格
+        [self.tableView reloadData];
+        
+       
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        ZCLog(@"%@",error);
+        //移除
+        //[SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
+        [MBProgressHUD showError:@"cuowu"];
+        
+    }];
+    
+    
+}
+
+
+//选择球场后加载数据
+-(void)selectCourseLoadData:(NSString *)uuid
+{
+   // 加载圈圈
+    [MBProgressHUD showMessage:@"加载中..."];
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
+    ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
+    params[@"uuid"]=uuid;
+    params[@"token"]=account.token;
+    
+    //发送请求/v1/courses/show.json
+    
+    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"venues/show.json"];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        ZCLog(@"%@",responseObject);
+        
+        
+        ZCStadiumInformation  *stadiumInformation=[ZCStadiumInformation stadiumInformationWithDict:responseObject];
+        
+        self.stadiumInformation=stadiumInformation;
+        
+        
+        
+        //给表头里的label的名字赋值
+        self.nameLabel.text=self.stadiumInformation.name;
+        //隐藏圈圈
+        [MBProgressHUD hideHUD];
+        // 刷新表格
+        [self.tableView reloadData];
+        
+        
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        ZCLog(@"请求失败%@",error);
+        //隐藏圈圈
+        [MBProgressHUD hideHUD];
+    }];
+    
+
+
+}
+
+
+//ZCChooseThePitchVViewController代理方法
+-(void)ZCChooseThePitchVViewController:(ZCChooseThePitchVViewController *)ChooseThePitchVViewController andUuid:(NSString *)uuid
+{
+    [self selectCourseLoadData:uuid];
+}
+
+
+////ZCSwitchTableViewController代理方法
+//-(void)ZCSwitchTableViewController:(ZCSwitchTableViewController *)SwitchTableViewController andUuid:(NSString *)uuid
+//{
+//   [self selectCourseLoadData:uuid];
+//}
+//
+
+
+
+
+
+//代理方法实现
+
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    
+    
+    // 如果只需要获取一次, 可以获取到位置之后就停止
+    //  [self.locationMgr stopUpdatingLocation];
+    
+    // 1.获取最后一次的位置
+    /*
+     location.coordinate; 坐标, 包含经纬度
+     location.altitude; 设备海拔高度 单位是米
+     location.course; 设置前进方向 0表示北 90东 180南 270西
+     location.horizontalAccuracy; 水平精准度
+     location.verticalAccuracy; 垂直精准度
+     location.timestamp; 定位信息返回的时间
+     location.speed; 设备移动速度 单位是米/秒, 适用于行车速度而不太适用于不行
+     */
+    /*
+     可以设置模拟器模拟速度
+     bicycle ride 骑车移动
+     run 跑动
+     freeway drive 高速公路驾车
+     */
+    CLLocation *location = [locations lastObject];
+    ZCLog(@"%f, %f ", location.coordinate.latitude , location.coordinate.longitude);
+    self.longitude=location.coordinate.longitude;
+    self.latitude=location.coordinate.latitude;
+    
+    //网络数据加载
+    [self initDataLoading];
+    
+}
+
+
+
+//获取失败时候调用或者用户拒绝时候调用
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error{
+    ZCLog(@"%@",error);
+    
+    self.longitude=116.300841;
+    self.latitude=39.975368;
+    
+    //网络数据加载
+    [self initDataLoading];
+}
+
+
+
 
 
 
@@ -168,7 +444,8 @@
 -(void)viewWillDisappear:(BOOL)animated
 {
   self.startButton.hidden=YES;
-    //[self.startButton removeFromSuperview];
+    
+       //[self.startButton removeFromSuperview];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -176,12 +453,11 @@
 }
 
 
--(void)clickDidStartButton
+-(void)clickTheDidStartButton
 {
     ZCLog(@"--------可以点击Button");
     
     ZCScorecardTableViewController *scorecardTableView=[[ZCScorecardTableViewController alloc] init];
-    
     
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
@@ -197,13 +473,18 @@
     params[@"course_uuids"]= [NSString stringWithFormat:@"%@,%@" , self.uuid,self.lastUuid ];
         params[@"tee_boxes"]=[NSString stringWithFormat:@"%@,%@" , self.tee_boxe,self.lastTee_boxe ];
     }
-    ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
-    ZCLog(@"%@",tool.scoring);
-    params[@"scoring_type"]=tool.scoring;
-    ZCLog(@"%@",tool.scoring);
-    params[@"token"]=account.token;
+    
+    if ([self.type isEqual:@"简单"]) {
+        params[@"scoring_type"]=@"simple";
+    }else
+    {
+    params[@"scoring_type"]=@"professional";
+    }
+    
+
+   params[@"token"]=account.token;
 ///v1/matches/practice.json
-    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"matches/practice.json"];
+    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"matches.json"];
     [mgr POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
       
@@ -221,7 +502,7 @@
         
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //ZCLog(@"%@",error);
+        ZCLog(@"%@",error);
     }];
     
     
@@ -242,7 +523,7 @@
      //ZCLog(@"进入该方法了");
     
     if (self.childStadium.holes_count==18) {
-        if (self.tee_boxe) {
+        if (self.tee_boxe &&self.type) {
             self.startButton.enabled=YES;
             self.startButton.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"dqsz_kedianji"]];
             [self.startButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -251,7 +532,7 @@
         }
     }else if (self.childStadium.holes_count==9)
     {
-        if (self.tee_boxe) {
+        if (self.tee_boxe&&self.type) {
             if (self.lastChildName) {
                 if (self.lastTee_boxe) {
                     self.startButton.enabled=YES;
@@ -277,27 +558,32 @@
     }else if(self.stadiumInformation.courses.count==1)
     {
         //默认调用点击方法
-        [self tableView:tableView didSelectRowAtIndexPath:nil];
         
-        return 2;
+        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:0 inSection:1];
+        [self tableView:tableView didSelectRowAtIndexPath:indexPath];
+        
+        return 3;
     }else
     {
-        return 1;
+        return 2;
     }
     
     
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
     if (section==0) {
+        return (self.opened5? 0:2) ;
+    }
+    
+    else if  (section==1) {
         
         return (self.opened1? 0:self.stadiumInformation.courses.count) ;
-    }else if(section==1){
+    }else if(section==2){
         
         NSLog(@"%zd",self.childStadium.tee_boxes.count);
         return (self.opened2? 0: self.childStadium.tee_boxes.count );
-    }else if (section==2)
+    }else if (section==3)
     {
         return  (self.opened3? 0: self.childStadiumMutableArray.count);
     }else //if(section==3)
@@ -315,7 +601,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 //    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
     
-    NSString *myCell = [NSString stringWithFormat:@"Cell%ld%ld", [indexPath section], [indexPath row]];
+    NSString *myCell = [NSString stringWithFormat:@"Cell%ld%ld", (long)[indexPath section], (long)[indexPath row]];
     UITableViewCell  *cell = [tableView dequeueReusableCellWithIdentifier:myCell];
     
     
@@ -324,11 +610,22 @@
     }
     
     if (indexPath.section==0) {
+        if (indexPath.row==0) {
+            cell.textLabel.text=@"简单";
+        }else
+        {
+            cell.textLabel.text=@"专业";
+
+        }
+        
+        
+    }else if(indexPath.section==1)
+  {
         ZCChildStadium *childStadium=self.stadiumInformation.courses[indexPath.row];
         cell.textLabel.text=childStadium.name;
        // cell.detailTextLabel.text=[NSString stringWithFormat:@"%@",[NSNumber numberWithFloat:childStadium.holes_count]];
         cell.detailTextLabel.text=[NSString stringWithFormat:@"%d洞",childStadium.holes_count];
-    }else if(indexPath.section==1)
+    }else if(indexPath.section==2)
     {
         NSString *tee=self.childStadium.tee_boxes[indexPath.row];
        
@@ -358,7 +655,7 @@
        
         
     
-    }else if (indexPath.section==2)
+    }else if (indexPath.section==3)
     {
         ZCChildStadium *childStadium=self.childStadiumMutableArray[indexPath.row];
         cell.textLabel.text=childStadium.name;
@@ -439,9 +736,30 @@
     //创建一个View
     ZCSettingHeadView *headerView=[ZCSettingHeadView headerViewWithTableView:tableView];
     headerView.delegate=self;
+  
    // 把数据扔给自定义View
     if (section==0) {
-        headerView.cleicedName=self.firstChildName;
+        headerView.nameButton.tag=99;
+        if (self.opened1) {
+            headerView.imageName=@"shangjiantou";
+        }else
+        {
+            headerView.imageName=@"xiajiantou";
+        }
+
+        headerView.cleicedName=self.type;
+        
+        if (self.type==nil) {
+            headerView.liftName=@"请选择计分方式";
+        }else
+        {
+        headerView.liftName=@"计分方式";
+        }
+        
+        
+        
+    }else if (section==1) {
+       
       
         headerView.nameButton.tag=100;
         headerView.tag=1001;
@@ -465,9 +783,11 @@
 
         }
         
-
+   headerView.cleicedName=self.firstChildName;
         
-}else if(section==1)
+        ZCLog(@"%@",self.firstChildName);
+        
+}else if(section==2)
     {
         headerView.nameButton.tag=101;
         headerView.tag=1002;
@@ -491,7 +811,7 @@
         
         headerView.cleicedName=self.tee_boxe;
         
-    }else if (section==2)
+    }else if (section==3)
         
     {
         
@@ -547,8 +867,10 @@
 #pragma mark - ZCSettingHeaderView的代理方法
 -(void)headerViewDidClicked:(ZCSettingHeadView *)headerView didClickButton:(UIButton *)button
 {
-    
-    if (button.tag==100) {
+    if (button.tag==99) {
+        self.opened5=!self.opened5;
+        
+    }else if (button.tag==100) {
         self.opened1=!self.opened1;
 
       
@@ -576,11 +898,23 @@
 
 
 
+
+
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-    
     if (indexPath.section==0) {
+        self.opened5=YES;
+        if (indexPath.row==0) {
+            self.type=@"简单";
+        }else
+        {
+        self.type=@"专业";
+        }
+        
+        
+        
+    }else if (indexPath.section==1) {
         //点击第0组拿到的子场
         self.opened1=YES;
         self.opened2=NO;
@@ -589,8 +923,9 @@
         self.tee_boxe=nil;
         self.lastChildName=nil;
         self.lastTee_boxe=nil;
+        self.lastUuid=nil;
        
-        self.count=2;
+        self.count=3;
         ZCChildStadium *childStadium=self.stadiumInformation.courses[indexPath.row];
         self.childStadium = childStadium;
         NSString *uuidStr=childStadium.uuid;
@@ -603,7 +938,7 @@
        
         self.index=indexPath.row;
 
-    }else if (indexPath.section==1)
+    }else if (indexPath.section==2)
     {//点击第1组拿到的子场的T台，并判断是否是18洞 是开始回合，不是增加一组在重新选择子场
         
         
@@ -625,7 +960,7 @@
             ZCLog(@"----开始回合-----");
         }else
         {
-            self.count=3;
+            self.count=4;
             
             
             
@@ -642,7 +977,7 @@
             
         }
     
-    }else if (indexPath.section==2)
+    }else if (indexPath.section==3)
     {
          self.opened3=YES;
         self.opened4=NO;
@@ -651,7 +986,7 @@
         self.lastTee_boxe=nil;
 
         //点击第3组时候保存子场uuid，并且增加一组选择T台
-        self.count=4;
+        self.count=5;
         
         //拿到选择后场的子场uuid
         ZCChildStadium *lastChildStadium=self.childStadiumMutableArray[indexPath.row];
@@ -660,7 +995,7 @@
         self.lastChildName=lastChildStadium.name;
         
     
-    }else if(indexPath.section==3)
+    }else if(indexPath.section==4)
     {
         self.opened4=YES;        //保存后9洞的T台
         NSString *houTee_box=self.lastChildStadium.tee_boxes[indexPath.row];

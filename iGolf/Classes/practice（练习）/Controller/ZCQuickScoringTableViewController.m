@@ -10,7 +10,7 @@
 #import "ZCChooseThePitchVViewController.h"
 #import "AFNetworking.h"
 #import "ZCAccount.h"
-#import "ZCEvent.h"
+#import "ZCHistoricalEventsModel.h"
 #import "UIBarButtonItem+DC.h"
 #import "ZCScorecardTableViewController.h"
 #import "ZCscorecard.h"
@@ -18,11 +18,13 @@
 #import "ZCEventUuidTool.h"
 #import "ZCEventCell.h"
 #import "UIBarButtonItem+DC.h"
+#import "ZCSettingTVController.h"
+#import "ZCpasswordViewController.h"
 @interface ZCQuickScoringTableViewController ()<MJRefreshBaseViewDelegate>
 //模型数组
 @property(nonatomic,strong)NSMutableArray *eventArray;
 //创建的tableView
-@property(nonatomic,strong) UIView *view;
+//@property(nonatomic,strong) UIView *view;
 @property(nonatomic,strong) NSIndexPath *indexPath;
 
 //@property(nonatomic,strong)UIRefreshControl *refreshControl;
@@ -112,6 +114,9 @@
     self.tableView.dataSource=self;
     self.tableView.delegate=self;
     self.tableView.rowHeight=100;
+    self.tableView.sectionHeaderHeight=225;
+    
+   
     self.page=1;
     //让分割线不显示
   //  self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -275,47 +280,47 @@
     params[@"page"]=@"1";
     params[@"token"]=account.token;
     params[@"scoring_type"]=tool.scoring;
-    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"matches/practice"];
+    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"matches/history.json"];
     //ZCLog(@"%@",url);
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         ZCLog(@"----%@",responseObject);
         
         NSMutableArray *eventMutableArray=[NSMutableArray array];
         for (NSDictionary *dict in responseObject) {
-            ZCEvent *event=[ZCEvent eventWithDict:dict];
+            ZCHistoricalEventsModel *event=[ZCHistoricalEventsModel historicalEventsModelWithDict:dict];
             [eventMutableArray addObject:event];
         }
         self.eventArray=eventMutableArray;
         
         ZCLog(@"%f",SCREEN_HEIGHT);
         
-        //无内容时候
-        if (self.eventArray.count==0) {
-            UIView *vc=[[UIView alloc] init];
-            if (SCREEN_HEIGHT==736) {
-                vc.frame= CGRectMake(SCREEN_WIDTH-350, 0, 334, 88);
-                vc.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"kjjf_tishi_6-2"]];
-            }else if (SCREEN_HEIGHT==667)
-            {
-            vc.frame= CGRectMake(SCREEN_WIDTH-320, 0, 301, 79);
-                vc.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"kjjf_tishi_6-2"]];
-            }else
-            {
-            vc.frame= CGRectMake(SCREEN_WIDTH-270, 0, 255, 68);
-                vc.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"liebiao_kong"]];
-            }
-            
-            
-            
-            
-            self.vc=vc;
-            [self.tableView addSubview:vc];
-        }else
-        {
-            self.vc.hidden=YES;
-        }
-        
-
+//        //无内容时候
+//        if (self.eventArray.count==0) {
+//            UIView *vc=[[UIView alloc] init];
+//            if (SCREEN_HEIGHT==736) {
+//                vc.frame= CGRectMake(SCREEN_WIDTH-350, 0, 334, 88);
+//                vc.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"kjjf_tishi_6-2"]];
+//            }else if (SCREEN_HEIGHT==667)
+//            {
+//            vc.frame= CGRectMake(SCREEN_WIDTH-320, 0, 301, 79);
+//                vc.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"kjjf_tishi_6-2"]];
+//            }else
+//            {
+//            vc.frame= CGRectMake(SCREEN_WIDTH-270, 0, 255, 68);
+//                vc.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"liebiao_kong"]];
+//            }
+//            
+//            
+//            
+//            
+//            self.vc=vc;
+//            [self.tableView addSubview:vc];
+//        }else
+//        {
+//            self.vc.hidden=YES;
+//        }
+//        
+//
         
   
         
@@ -365,7 +370,7 @@
         
         NSMutableArray *eventMutableArray=[NSMutableArray array];
         for (NSDictionary *dict in responseObject) {
-            ZCEvent *event=[ZCEvent eventWithDict:dict];
+            ZCHistoricalEventsModel *event=[ZCHistoricalEventsModel historicalEventsModelWithDict:dict];
             [eventMutableArray addObject:event];
         }
         //self.eventArray=eventMutableArray;
@@ -505,6 +510,98 @@
 }
 
 
+//组头内容
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    
+    UIView *headerView=[[UIView alloc] init];
+    headerView.backgroundColor=[UIColor redColor];
+    
+    
+    //创建新比赛
+    CGFloat newGameBtnX=10;
+    CGFloat newGameBtnY=25;
+    CGFloat newGameBtnW=SCREEN_WIDTH-2*newGameBtnX;
+    CGFloat newGameBtnH=40;
+    UIButton *newGameBtn=[[UIButton alloc] initWithFrame:CGRectMake(newGameBtnX, newGameBtnY, newGameBtnW, newGameBtnH)];
+    [newGameBtn setTitle:@"创建比赛" forState:UIControlStateNormal];
+    [newGameBtn setBackgroundColor:[UIColor blueColor]];
+    [newGameBtn addTarget:self action:@selector(clickTheNewGameBtn) forControlEvents:UIControlEventTouchUpInside];
+    [headerView addSubview:newGameBtn];
+
+    
+    
+    //中间图片
+    CGFloat imageViewX=22;
+    CGFloat imageViewY=newGameBtnY+newGameBtnH+17;
+    CGFloat imageViewW=SCREEN_WIDTH-2*newGameBtnX;
+    CGFloat imageViewH=10;
+    UIImageView *imageView=[[UIImageView alloc] initWithFrame:CGRectMake(imageViewX, imageViewY, imageViewW, imageViewH)];
+    [headerView addSubview:imageView];
+    
+    
+    
+    //加入比赛
+    CGFloat joinGameBthX=10;
+    CGFloat joinGameBthY=imageViewY+imageViewH+17;
+    CGFloat joinGameBthW=SCREEN_WIDTH-2*joinGameBthX;
+    CGFloat joinGameBthH=40;
+    
+    UIButton *joinGameBth=[[UIButton alloc] initWithFrame:CGRectMake(joinGameBthX, joinGameBthY, joinGameBthW, joinGameBthH)];
+    [joinGameBth setBackgroundColor:[UIColor blueColor]];
+    [joinGameBth setTitle:@"加入比赛" forState:UIControlStateNormal];
+    [joinGameBth addTarget:self action:@selector(clickThejoinGameBth) forControlEvents:UIControlEventTouchUpInside];
+    [headerView addSubview:joinGameBth];
+    
+    
+    
+    //历史赛事View
+    CGFloat historyLabelX=0;
+    CGFloat historyLabelY=joinGameBthY+joinGameBthH+25;
+    CGFloat historyLabelW=SCREEN_WIDTH;
+    CGFloat historyLabelH=40;
+    
+    UILabel *historyLabel=[[UILabel alloc] initWithFrame:CGRectMake(historyLabelX, historyLabelY, historyLabelW, historyLabelH)];
+    historyLabel.text=@"历史赛事";
+    historyLabel.backgroundColor=[UIColor yellowColor];
+    [headerView addSubview:historyLabel];
+    
+    
+    return headerView;
+    
+    
+    
+    
+    
+    
+}
+
+
+
+
+
+-(void)clickThejoinGameBth
+{
+    ZCpasswordViewController *passwordViewController=[[ZCpasswordViewController alloc] init];
+    [self.navigationController pushViewController:passwordViewController animated:YES];
+
+}
+
+//点击创建比赛
+-(void)clickTheNewGameBtn
+{
+    ZCSettingTVController *Setting=[[ZCSettingTVController alloc] init];
+    [self.navigationController pushViewController:Setting animated:YES];
+
+}
+
+
+
+
+
+
+
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
@@ -594,6 +691,11 @@
     }];
     
 }
+
+
+
+
+
 
 
 

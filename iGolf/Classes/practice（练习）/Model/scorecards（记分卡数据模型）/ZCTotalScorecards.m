@@ -21,18 +21,23 @@
 {
     if (self=[super init]) {
         
-        self.uuid=dict[@"uuid"];
-        self.type=dict[@"type"];
+        
+        
+        self.player=[ZCPlayerModel playerModelWithDict:dict[@"player"]];
+        
+        
+        
+        
         NSDictionary *scorecards=dict[@"scorecards"];
         self.scorecards=[NSMutableArray array];
         for (NSDictionary *secorecar in scorecards) {
             
             
-    NSString *address = secorecar[@"distance_from_hole_to_tee_box"];
-    NSString *name = secorecar[@"tee_box_color"];
-     NSString *uuid = secorecar[@"par"];
-                      NSLog(@"%@--,%@--,%@--",address,name,uuid);
-            ZCLog(@"%@",secorecar);
+//    NSString *address = secorecar[@"distance_from_hole_to_tee_box"];
+//    NSString *name = secorecar[@"tee_box_color"];
+//     NSString *uuid = secorecar[@"par"];
+//                      NSLog(@"%@--,%@--,%@--",address,name,uuid);
+//            ZCLog(@"%@",secorecar);
     ZCscorecard *scorecard=[ZCscorecard scorecardsWithDict:secorecar];
             [self.scorecards addObject:scorecard];
             

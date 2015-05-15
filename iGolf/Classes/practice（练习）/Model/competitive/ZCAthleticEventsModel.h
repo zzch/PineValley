@@ -4,7 +4,7 @@
 //
 //  Created by hh on 15/4/27.
 //  Copyright (c) 2015年 zhongchuang. All rights reserved.
-//
+// 废弃
 
 #import <Foundation/Foundation.h>
 #import "ZCUserModel.h"

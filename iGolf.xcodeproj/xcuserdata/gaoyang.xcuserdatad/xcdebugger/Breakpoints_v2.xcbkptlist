@@ -46,7 +46,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             scope = "0"
@@ -66,6 +66,86 @@
             startingLineNumber = "186"
             endingLineNumber = "186"
             landmarkName = "-coverClick"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iGolf/Classes/practice&#xff08;&#x7ec3;&#x4e60;&#xff09;/View/ZCScorecardView(&#x8bb0;&#x5206;&#x5361;&#x81ea;&#x5b9a;&#x4e49;View)/ZCScorecarTableViewCell.m"
+            timestampString = "453122350.204141"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "175"
+            endingLineNumber = "175"
+            landmarkName = "-initWithStyle:reuseIdentifier:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iGolf/Classes/practice&#xff08;&#x7ec3;&#x4e60;&#xff09;/Model/competitive/ZCCompetitiveModel.m"
+            timestampString = "453196894.931812"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
+            landmarkName = "-initWithDict:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iGolf/Classes/practice&#xff08;&#x7ec3;&#x4e60;&#xff09;/Controller/AmateurCompetitions&#xff08;&#x4e1a;&#x4f59;&#xff09;/ZCScorecardTableViewController.m"
+            timestampString = "453296510.105779"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
+            landmarkName = "-online"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iGolf/Classes/practice&#xff08;&#x7ec3;&#x4e60;&#xff09;/Model/JoinTheGameSettings(&#x52a0;&#x5165;&#x6bd4;&#x8d5b;&#x6a21;&#x578b;&#x8bbe;&#x7f6e;)/ZCToTheGameModel.m"
+            timestampString = "453375861.853382"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "-initWithDict:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "iGolf/Classes/practice&#xff08;&#x7ec3;&#x4e60;&#xff09;/Model/JoinTheGameSettings(&#x52a0;&#x5165;&#x6bd4;&#x8d5b;&#x6a21;&#x578b;&#x8bbe;&#x7f6e;)/ZCVenue.m"
+            timestampString = "453376214.871143"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "+venueModelWithDict:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

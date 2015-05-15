@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "ZCAthleticEventsModel.h"
 @interface ZCToJoinTheGameTableViewController : UITableViewController
-@property(nonatomic,strong)ZCAthleticEventsModel *athleticEventsModel;
+
+@property(nonatomic,copy)NSString *uuid;
 @end

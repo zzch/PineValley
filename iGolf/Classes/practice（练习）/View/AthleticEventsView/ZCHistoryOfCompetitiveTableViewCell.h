@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ZCHistoryOfCompetitiveModel.h"
+//#import "ZCHistoryOfCompetitiveModel.h"
 @interface ZCHistoryOfCompetitiveTableViewCell : UITableViewCell
-@property(nonatomic,strong)ZCHistoryOfCompetitiveModel *historyOfCompetitiveModel;
+//@property(nonatomic,strong)ZCHistoryOfCompetitiveModel *historyOfCompetitiveModel;
 
 +(instancetype)cellWithTable:(UITableView *)tableView;
 @end

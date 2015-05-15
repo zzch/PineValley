@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ZCEvent.h"
+#import "ZCHistoricalEventsModel.h"
 @interface ZCEventCell : UITableViewCell
-@property(nonatomic,strong)ZCEvent *event;
+@property(nonatomic,strong)ZCHistoricalEventsModel *event;
 @end

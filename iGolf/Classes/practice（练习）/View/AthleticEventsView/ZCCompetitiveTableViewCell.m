@@ -104,9 +104,9 @@
     
     
     self.nameLabel.text=[NSString stringWithFormat:@"%@",playerModel.user.nickname];
-    self.scoreLabel.text=[NSString stringWithFormat:@"%@",playerModel.score];
+   // self.scoreLabel.text=[NSString stringWithFormat:@"%@",playerModel.score];
     self.rankingLabel.text=[NSString stringWithFormat:@"%@",playerModel.position];
-    self.distanceParLabel.text=[NSString stringWithFormat:@"%@",playerModel.status];
+   // self.distanceParLabel.text=[NSString stringWithFormat:@"%@",playerModel.status];
     
 
 }
