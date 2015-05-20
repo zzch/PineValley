@@ -18,6 +18,7 @@
 #import "AFNetworking.h"
 #import "ZCToTheGameModel.h"
 #import "ZCCoursesModel.h"
+#import "ZCScorecardTableViewController.h"
 @interface ZCToJoinTheGameTableViewController ()<UITableViewDataSource,UITableViewDelegate,ZCSettingHeadViewDelegate>
 @property(nonatomic,assign) int count;
 // 标记一下是否展开，YES：展开，NO：收起
@@ -121,7 +122,7 @@
 //点击加入比赛
 -(void)clickDidStartButton
 {
-    ZCCompetitiveScorecardTableViewController *competitiveScorecardTableViewController=[[ZCCompetitiveScorecardTableViewController alloc] init];
+    ZCScorecardTableViewController *ScorecardTableViewController=[[ZCScorecardTableViewController alloc] init];
    
     
     
@@ -153,9 +154,9 @@
         ZCLog(@"%@",responseObject);
         
         //传值
-       // competitiveScorecardTableViewController.uuid=self.athleticEventsModel.uuid;
+        ScorecardTableViewController.uuid=self.uuid;
         
-        [self.navigationController pushViewController:competitiveScorecardTableViewController animated:YES];
+        [self.navigationController pushViewController:ScorecardTableViewController animated:YES];
         
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

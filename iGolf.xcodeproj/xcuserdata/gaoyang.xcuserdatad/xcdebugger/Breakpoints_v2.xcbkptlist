@@ -107,22 +107,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "iGolf/Classes/practice&#xff08;&#x7ec3;&#x4e60;&#xff09;/Controller/AmateurCompetitions&#xff08;&#x4e1a;&#x4f59;&#xff09;/ZCScorecardTableViewController.m"
-            timestampString = "453296510.105779"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "137"
-            endingLineNumber = "137"
-            landmarkName = "-online"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "iGolf/Classes/practice&#xff08;&#x7ec3;&#x4e60;&#xff09;/Model/JoinTheGameSettings(&#x52a0;&#x5165;&#x6bd4;&#x8d5b;&#x6a21;&#x578b;&#x8bbe;&#x7f6e;)/ZCToTheGameModel.m"
             timestampString = "453375861.853382"
             startingColumnNumber = "9223372036854775807"

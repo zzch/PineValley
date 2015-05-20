@@ -23,6 +23,7 @@
 #import "ZCScorecarHeadView.h"
 #import "ZCPersonalizedSettingsViewController.h"
 #import "ZCInvitationViewController.h"
+#import "ZCListViewController.h"
 @interface ZCScorecardTableViewController ()<UITableViewDataSource,UITableViewDelegate,ZCScorecarDelegate,ZCModifyTheScorecardViewControllerDelegate,ZCModifyTheProfessionalScorecardControllerDelegate,ZCCompetitiveTableViewCellDelagate,ZCScorecarHeadViewDelagate>
 @property (nonatomic, strong) NSMutableArray *scorecards;
 
@@ -200,7 +201,7 @@
     
     
     //以indexPath来唯一确定cell
-  NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%ld%ld", [indexPath section], [indexPath row]];
+  NSString *CellIdentifier = [NSString stringWithFormat:@"Cell%ld%ld", (long)[indexPath section], (long)[indexPath row]];
    
     ZCScorecarTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
   
@@ -266,6 +267,11 @@
         }
         
         
+    }else if (button.tag==2789)
+    {
+        ZCListViewController *ListViewController=[[ZCListViewController alloc] init];
+        ListViewController.uuid=self.uuid;
+        [self.navigationController pushViewController:ListViewController animated:YES];
     }
 }
 
