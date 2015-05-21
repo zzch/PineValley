@@ -59,7 +59,7 @@
 {
     if (self=[super initWithFrame:frame]) {
         
-        [self setBackgroundImage:[UIImage imageNamed:@"suoyou_bj_02"] forState:UIControlStateHighlighted];
+       // [self setBackgroundImage:[UIImage imageNamed:@"suoyou_bj_02"] forState:UIControlStateHighlighted];
 //        //成绩
 //        
 //        UIButton *resultsView=[[UIButton alloc] init];
@@ -70,7 +70,7 @@
         UILabel *penaltiesLabel=[[UILabel alloc] init];
         penaltiesLabel.text=@"成绩";
         [self addSubview:penaltiesLabel];
-        penaltiesLabel.textColor=ZCColor(240, 208, 122);
+        penaltiesLabel.textColor=ZCColor(85, 85, 85);
         penaltiesLabel.font=[UIFont systemFontOfSize:19];
         self.penaltiesLabel=penaltiesLabel;
         
@@ -78,7 +78,7 @@
         //总杆数
         UILabel *scoreLabel=[[UILabel alloc] init];
        
-        scoreLabel.textColor=ZCColor(240, 208, 122);
+        scoreLabel.textColor=ZCColor(255, 150, 29);
         scoreLabel.font=[UIFont fontWithName:@"Arial" size:30];
         scoreLabel.textAlignment=NSTextAlignmentCenter;
         [self addSubview:scoreLabel];
@@ -86,7 +86,7 @@
         
         //开球
         UILabel *drivingNameLabel=[[UILabel alloc] init];
-        drivingNameLabel.textColor=ZCColor(240, 208, 122);
+        drivingNameLabel.textColor=ZCColor(85, 85, 85);
         [self addSubview:drivingNameLabel];
         drivingNameLabel.text=@"开球";
         drivingNameLabel.font=[UIFont systemFontOfSize:19];
@@ -96,7 +96,7 @@
         UILabel *driving_distance_label=[[UILabel alloc] init];
         [self addSubview:driving_distance_label];
     
-        driving_distance_label.textColor=ZCColor(240, 208, 122);
+        driving_distance_label.textColor=ZCColor(255, 150, 29);
         //driving_distance_label.text=@"dasdsad";
         self.driving_distance_label=driving_distance_label;
 //        //求道
@@ -134,7 +134,7 @@
         UIImageView *rightImage=[[UIImageView alloc] init];
         [self addSubview:rightImage];
         //drivingImage.backgroundColor=[UIColor blackColor];
-        rightImage.image=[UIImage imageNamed:@"lsjfk_xiayibu_iocn"];
+        rightImage.image=[UIImage imageNamed:@"icon_arrow3"];
         self.rightImage=rightImage;
 
 
@@ -147,22 +147,37 @@
 {
     _scorecard=scorecard;
     
+    if ([scorecard.score intValue]-[scorecard.par intValue]>=0&&[scorecard.score intValue]-[scorecard.par intValue]<2) {
+        
+        self.scoreLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"dayu1"]];
+        
+    }else if ([scorecard.score intValue]-[scorecard.par intValue]>=2)
+    {
+    self.scoreLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_dayu2"]];
+    }else if ([scorecard.score intValue]-[scorecard.par intValue]<0)
+    {
+    self.scoreLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_xiaoyu"]];
+    }
+    
     self.scoreLabel.text=[NSString stringWithFormat:@"%@",scorecard.score];
+    
+    
+    
     //self.puttsLabel.text=[NSString stringWithFormat:@"%@",scorecard.putts];
    // self.penaltiesLabel.text=[NSString stringWithFormat:@"%@",scorecard.penalties];
-    self.driving_distance_label.text=[NSString stringWithFormat:@"%@",scorecard.driving_distance];
+    self.driving_distance_label.text=[NSString stringWithFormat:@"%@码",scorecard.driving_distance];
     
     if ([scorecard.direction isEqual:@"slice"] ||[scorecard.direction isEqual:@"右侧"]) {
         
-        self.directionImage.image=[UIImage imageNamed:@"jfk_hole_right"];
+        self.directionImage.image=[UIImage imageNamed:@"jfk_you_icon"];
         self.directionLabel.text=@"右侧";
     }else if ([scorecard.direction isEqual:@"pure"] ||[scorecard.direction isEqual:@"命中"])
     {
-        self.directionImage.image=[UIImage imageNamed:@"jfk_mingzhong"];
+        self.directionImage.image=[UIImage imageNamed:@"jfk_zhong_icon"];
         self.directionLabel.text=@"命中";
     }else if ([scorecard.direction isEqual:@"hook"] ||[scorecard.direction isEqual:@"左侧"])
     {
-        self.directionImage.image=[UIImage imageNamed:@"jfk_hole_left"];
+        self.directionImage.image=[UIImage imageNamed:@"jfk_zuo_icon"];
         self.directionLabel.text=@"左侧";
     }
     
@@ -194,8 +209,8 @@
     
     //总杆数的frame
     
-    CGFloat scoreLabelW=70;
-    CGFloat scoreLabelH=self.frame.size.height;
+    CGFloat scoreLabelW=50;
+    CGFloat scoreLabelH=50;
     
     CGFloat scoreLabelX=penaltiesLabelX+penaltiesLabelW+10;
     CGFloat scoreLabelY=(self.frame.size.height-scoreLabelH)/2;
@@ -210,7 +225,7 @@
     CGFloat drivingNameLabelW=penaltiesLabelW;
     CGFloat drivingNameLabelH=penaltiesLabelH;
     
-    CGFloat drivingNameLabelX=scoreLabelX+scoreLabelW+10;
+    CGFloat drivingNameLabelX=scoreLabelX+scoreLabelW;
     CGFloat drivingNameLabelY=penaltiesLabelY;
     
     self.drivingNameLabel.frame=CGRectMake(drivingNameLabelX, drivingNameLabelY, drivingNameLabelW, drivingNameLabelH);

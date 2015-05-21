@@ -30,31 +30,41 @@
         UILabel *fristLabel=[[UILabel alloc] init];
         
         [self addSubview:fristLabel];
-        fristLabel.textColor=ZCColor(240, 208, 122);
+        fristLabel.textColor=[UIColor whiteColor];
+        fristLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_hong"]];
+         fristLabel.textAlignment=NSTextAlignmentCenter;
         self.fristLabel=fristLabel;
         
         
         UILabel *secondLabel=[[UILabel alloc] init];
-        secondLabel.textColor=ZCColor(240, 208, 122);
+        //secondLabel.textColor=ZCColor(240, 208, 122);
+        secondLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_bai_zhihui"]];
+         secondLabel.textAlignment=NSTextAlignmentCenter;
         [self addSubview:secondLabel];
         self.secondLabel=secondLabel;
         
         
         UILabel *thirdLabel=[[UILabel alloc] init];
-        thirdLabel.textColor=ZCColor(240, 208, 122);
+        thirdLabel.textColor=[UIColor whiteColor];
+         thirdLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_lan"]];
+         thirdLabel.textAlignment=NSTextAlignmentCenter;
         [self addSubview:thirdLabel];
         self.thirdLabel=thirdLabel;
 
         
         UILabel *fourthLabel=[[UILabel alloc] init];
-        fourthLabel.textColor=ZCColor(240, 208, 122);
+        fourthLabel.textColor=[UIColor whiteColor];
+       
+        fourthLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_hei_zhihui"]];
+         fourthLabel.textAlignment=NSTextAlignmentCenter;
         [self addSubview:fourthLabel];
         self.fourthLabel=fourthLabel;
 
         
         
         UILabel *fifthLabel=[[UILabel alloc] init];
-        fifthLabel.textColor=ZCColor(240, 208, 122);
+        fifthLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_jin_zhihui"]];
+        fifthLabel.textAlignment=NSTextAlignmentCenter;
         [self addSubview:fifthLabel];
         self.fifthLabel=fifthLabel;
 
@@ -68,7 +78,7 @@
         UIImageView *rightImage=[[UIImageView alloc] init];
         [self addSubview:rightImage];
         //drivingImage.backgroundColor=[UIColor blackColor];
-        rightImage.image=[UIImage imageNamed:@"lsjfk_xiayibu_iocn"];
+        rightImage.image=[UIImage imageNamed:@"icon_arrow3"];
         self.rightImage=rightImage;
 
         
@@ -95,8 +105,8 @@
 {
     [super layoutSubviews];
     CGFloat fristLabelX=8;
-    CGFloat fristLabelW=(self.frame.size.width-60)/5;
-    CGFloat fristLabelH=62;
+    CGFloat fristLabelW=36;
+    CGFloat fristLabelH=35;
     CGFloat fristLabelY=(self.frame.size.height-fristLabelH)/2;
     self.fristLabel.frame=CGRectMake(fristLabelX, fristLabelY, fristLabelW, fristLabelH);
 

@@ -35,9 +35,9 @@
 @property (weak, nonatomic)  UILabel *recorded_scorecards_count_label;
 @property (weak, nonatomic)  UIImageView *recorded_scorecards_count_label_View;
 /**
- 球杆图片
+ 成绩背景图片
  */
-@property(weak,nonatomic) UIImageView *qiuganImage;
+@property(weak,nonatomic) UIImageView *scoreImageView;
 /**
  时间前的图片
  */
@@ -59,37 +59,43 @@
     if(self){
         //设置背景图片
         //self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"suoyou_bj_02"]];
-        self.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+       // self.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
         self.selectedBackgroundView=[[UIView alloc] initWithFrame:self.frame];
         self.selectedBackgroundView.backgroundColor=ZCColor(15, 14, 14);
         
         
         //self.selectedBackgroundView
+        
+        UIImageView *scoreImageView=[[UIImageView alloc] init];
+        scoreImageView.image=[UIImage imageNamed:@"jjbs_lsbs"];
+        [self.contentView addSubview:scoreImageView];
+        self.scoreImageView=scoreImageView;
         //总杆数
         UILabel *scoreLabel=[[UILabel alloc] init];
-        [self.contentView addSubview:scoreLabel];
+        
+        [scoreImageView addSubview:scoreLabel];
         self.scoreLabel=scoreLabel;
         scoreLabel.textAlignment=NSTextAlignmentCenter;
         scoreLabel.font=[UIFont systemFontOfSize:34 ];
-        scoreLabel.textColor=ZCColor(240, 208, 122);;
+        scoreLabel.textColor=ZCColor(255, 150, 29);
         
         //球场名称
         UILabel *nameLabel=[[UILabel alloc] init];
         [self.contentView addSubview:nameLabel];
         self.nameLabel=nameLabel;
-        nameLabel.textColor=ZCColor(240, 208, 122);
+        nameLabel.textColor=ZCColor(85, 85, 85);
        // scoreLabel.textAlignment=NSTextAlignmentCenter;
 
         //创建时间
         UILabel *startedAtLabel=[[UILabel alloc] init];
         [self.contentView addSubview:startedAtLabel];
         self.startedAtLabel=startedAtLabel;
-         startedAtLabel.textColor=ZCColor(240, 208, 122);
+         startedAtLabel.textColor=ZCColor(85, 85, 85);
         //赛事类型
         
         UIImageView *typeLabelView=[[UIImageView alloc] init];
         self.typeLabelView=typeLabelView;
-        typeLabelView.image=[UIImage imageNamed:@"lsjfk_bisai_iocn"];
+        typeLabelView.image=[UIImage imageNamed:@"jjbs_renshu_icon"];
         [self.contentView addSubview:typeLabelView];
         
         
@@ -102,11 +108,11 @@
         typeLabel.textAlignment=NSTextAlignmentCenter;
         typeLabel.font=[UIFont fontWithName:@"AppleGothic" size:11];
        // typeLabel.font=[UIFont systemFontOfSize:11 ];
-         typeLabel.textColor=ZCColor(240, 208, 122);
+         typeLabel.textColor=ZCColor(85, 85, 85);
 
         //
         UIImageView *recorded_scorecards_count_label_View=[[UIImageView alloc] init];
-        recorded_scorecards_count_label_View.image=[UIImage imageNamed:@"lsjfk_bisai_iocn"];
+        recorded_scorecards_count_label_View.image=[UIImage imageNamed:@"jjbs_renshu_icon"];
         
         self.recorded_scorecards_count_label_View=recorded_scorecards_count_label_View;
         [self.contentView addSubview:recorded_scorecards_count_label_View];
@@ -118,27 +124,27 @@
 //        recorded_scorecards_count_label.backgroundColor=col;
         recorded_scorecards_count_label.textAlignment=NSTextAlignmentCenter;
         recorded_scorecards_count_label.font=[UIFont systemFontOfSize:14 ];
-         recorded_scorecards_count_label.textColor=ZCColor(240, 208, 122);
+         recorded_scorecards_count_label.textColor=ZCColor(85, 85, 85);
         [recorded_scorecards_count_label_View addSubview:recorded_scorecards_count_label];
         
-        //球杆图片
-        UIImageView *qiuganImage=[[UIImageView alloc] init];
-        [self.contentView addSubview:qiuganImage];
-        self.qiuganImage=qiuganImage;
-        qiuganImage.image=[UIImage imageNamed:@"lsjfk_qiugan_iocn"];
+//        //球杆图片
+//        UIImageView *qiuganImage=[[UIImageView alloc] init];
+//        [self.contentView addSubview:qiuganImage];
+//        self.qiuganImage=qiuganImage;
+//        qiuganImage.image=[UIImage imageNamed:@"lsjfk_qiugan_iocn"];
         
       
         //时间前图片
         UIImageView *timeImage=[[UIImageView alloc] init];
         [self.contentView addSubview:timeImage];
         self.timeImage=timeImage;
-        timeImage.image=[UIImage imageNamed:@"lsjfk_ri_iocn"];
+        timeImage.image=[UIImage imageNamed:@"jjbs_rl_iocn"];
         
         //时间前图片
         UIImageView *rightImage=[[UIImageView alloc] init];
         [self.contentView addSubview:rightImage];
         self.rightImage=rightImage;
-        rightImage.image=[UIImage imageNamed:@"lsjfk_xiayibu_iocn"];
+        rightImage.image=[UIImage imageNamed:@"icon_arrow3"];
         rightImage.contentMode =  UIViewContentModeCenter;
 
         
@@ -208,26 +214,27 @@
     [super layoutSubviews];
     
     //成绩frame
-    CGFloat scoreLabelX=0;
-    CGFloat scoreLabelY=15;
-    CGFloat scoreLabelW=self.frame.size.width*0.34;
-    CGFloat scoreLabelH=self.frame.size.height*0.7;
-    self.scoreLabel.frame=CGRectMake(scoreLabelX, scoreLabelY, scoreLabelW, scoreLabelH);
+    CGFloat scoreLabelX=10;
+    
+    CGFloat scoreLabelW=75;
+    CGFloat scoreLabelH=75;
+    CGFloat scoreLabelY=(self.frame.size.height-scoreLabelH)/2;
+    self.scoreImageView.frame=CGRectMake(scoreLabelX, scoreLabelY, scoreLabelW, scoreLabelH);
     
     //球杆图片frame
     
-    CGFloat qiuganImageX=scoreLabelW*0.53;
-    CGFloat qiuganImageY=scoreLabelH+5;
-    CGFloat qiuganImageW=32;
-    CGFloat qiuganImageH=23;
+//    CGFloat qiuganImageX=scoreLabelW*0.53;
+//    CGFloat qiuganImageY=scoreLabelH+5;
+//    CGFloat qiuganImageW=32;
+//    CGFloat qiuganImageH=23;
     
-    self.qiuganImage.frame=CGRectMake(qiuganImageX, qiuganImageY, qiuganImageW, qiuganImageH);
+    self.scoreLabel.frame=CGRectMake(0, 0, self.scoreImageView.frame.size.width, self.scoreImageView.frame.size.height);
     
     
     
     //nameLabel frame
     
-    CGFloat nameLabelX=scoreLabelW;
+    CGFloat nameLabelX=self.frame.size.width*0.34;
     CGFloat nameLabelY=10;
     CGFloat nameLabelW=self.frame.size.width*0.6;
     CGFloat nameLabelH=23;
@@ -237,7 +244,7 @@
 
     //timeImage frame
     
-    CGFloat timeImageX=scoreLabelW;
+    CGFloat timeImageX=nameLabelX;
     CGFloat timeImageY=nameLabelY+nameLabelH+5;
     CGFloat timeImageW=17;
     CGFloat timeImageH=15;

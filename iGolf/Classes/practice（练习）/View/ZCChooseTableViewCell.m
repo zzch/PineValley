@@ -10,12 +10,13 @@
 @interface ZCChooseTableViewCell()
 ///球场名称
 @property (nonatomic, weak) UILabel *name;
-//球场地址
-@property (nonatomic, weak) UILabel *address;
+//多少洞
+@property (nonatomic, weak) UILabel *holeLabel;
 //距离
 @property (nonatomic, weak) UILabel *distance;
 
-@property (nonatomic, weak) UIImageView *addressImage;
+@property (nonatomic, weak) UIImageView *distanceImage;
+@property (nonatomic, weak) UIImageView *holeImage;
 @end
 @implementation ZCChooseTableViewCell
 
@@ -38,9 +39,11 @@
        // self.backgroundView  yihangbeijing
         //设置背景图片
        // self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"suoyou_bj_02"]];
-        self.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
-        self.selectedBackgroundView=[[UIView alloc] initWithFrame:self.frame];
-        self.selectedBackgroundView.backgroundColor=ZCColor(15, 14, 14);
+        
+        
+       // self.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+//        self.selectedBackgroundView=[[UIView alloc] initWithFrame:self.frame];
+//        self.selectedBackgroundView.backgroundColor=ZCColor(15, 14, 14);
 
         
        //公司名称
@@ -48,26 +51,37 @@
         [self addSubview:name];
         _name=name;
          name.font=[UIFont systemFontOfSize:16];
-        name.textColor=ZCColor(240, 208, 122);
+        name.textColor=ZCColor(34, 34, 34);
 
-        UILabel *address=[[UILabel alloc] init];
-        [self addSubview:address];
-        _address=address;
-        address.font=[UIFont systemFontOfSize:14];
-        address.textColor=ZCColor(240, 208, 122);
+        
+        UIImageView *holeImage=[[UIImageView alloc] init];
+        [self addSubview:holeImage];
+        self.holeImage=holeImage;
+        holeImage.image=[UIImage imageNamed:@"xzqc_qiudong"];
+        
+        
+        UILabel *holeLabel=[[UILabel alloc] init];
+        [self addSubview:holeLabel];
+        _holeLabel=holeLabel;
+        holeLabel.font=[UIFont systemFontOfSize:14];
+        holeLabel.textColor=ZCColor(85, 85, 85);
 
 
+        UIImageView *distanceImage=[[UIImageView alloc] init];
+        distanceImage.image=[UIImage imageNamed:@"xzqc_weizh"];
+        [self.contentView addSubview:distanceImage];
+        self.distanceImage=distanceImage;
+        
+        
+        
         UILabel *distance=[[UILabel alloc] init];
         [self addSubview:distance];
         _distance=distance;
-        distance.textColor=ZCColor(240, 208, 122);
+        distance.textColor=ZCColor(85, 85, 85);
 
         
         
-        UIImageView *addressImage=[[UIImageView alloc] init];
-        [self addSubview:addressImage];
-        self.addressImage=addressImage;
-        addressImage.image=[UIImage imageNamed:@"xzqc_weizhi_iocn"];
+       
          
     }
     return  self;
@@ -78,7 +92,7 @@
     
     CGFloat nameX=self.frame.size.width*0.05 ;
     CGFloat nameY=self.frame.size.height*0.2;
-    CGFloat nameW=self.frame.size.width*0.68;
+    CGFloat nameW=SCREEN_WIDTH-nameX;
     CGFloat nameH=self.frame.size.height-(2*nameY)-(self.frame.size.height*0.15);
     _name.frame=CGRectMake(nameX, nameY, nameW, nameH);
     
@@ -89,19 +103,30 @@
     CGFloat addressImageW=10;
     CGFloat addressImageH=14;
 
-    _addressImage.frame=CGRectMake(addressImageX, addressImageY, addressImageW, addressImageH);
+    self.holeImage.frame=CGRectMake(addressImageX, addressImageY, addressImageW, addressImageH);
     
     
-    CGFloat addressX=addressImageX+15;
+    CGFloat addressX=addressImageX+addressImageW+5;
     CGFloat addressY=addressImageY;
     CGFloat addressW=self.frame.size.width*0.73;
     CGFloat addressH=addressImageH;
-    _address.frame=CGRectMake(addressX, addressY, addressW, addressH);
+    _holeLabel.frame=CGRectMake(addressX, addressY, addressW, addressH);
+    
+    
+    
+    CGFloat distanceImageH=13;
+    CGFloat distanceImageX=self.frame.size.width*0.65;
+    //ZCLog(@"%f------",SCREEN_WIDTH);
+    CGFloat distanceImageY=addressY;//(self.frame.size.height-distanceH)/2;
+    CGFloat distanceImageW=10;
+    _distanceImage.frame=CGRectMake(distanceImageX, distanceImageY, distanceImageW, distanceImageH);
+    
+    
     
     CGFloat distanceH=15;
-    CGFloat distanceX=self.frame.size.width*0.75;
+    CGFloat distanceX=distanceImageX+distanceImageW+5;
     //ZCLog(@"%f------",SCREEN_WIDTH);
-    CGFloat distanceY=(self.frame.size.height-distanceH)/2;
+    CGFloat distanceY=distanceImageY;//(self.frame.size.height-distanceH)/2;
     CGFloat distanceW=80;
     _distance.frame=CGRectMake(distanceX, distanceY, distanceW, distanceH);
 }
@@ -121,14 +146,8 @@
     // cell.distance.text =@"11";
     //cell.address.text=stadium.address;
     
-    if ([stadium.address isKindOfClass:[NSNull class]]) {
-        _addressImage.hidden=YES;
-    }else
-    {
-    self.address.text=[NSString stringWithFormat:@"%@",stadium.address];
-    }
     
-    
+    self.holeLabel.text=[NSString stringWithFormat:@"%@洞",stadium.holes_count];
     
     
     

@@ -93,23 +93,23 @@
     //让分割线不显示
    // self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //分割线颜色
-    [self.tableView   setSeparatorColor:ZCColor(240, 208, 122)];
+    [self.tableView   setSeparatorColor:ZCColor(170, 170, 170)];
     //让下面没内容的分割线不显示
     self.tableView.tableFooterView = [[UIView alloc] init];
 
     
-    
+    self.tableView.backgroundColor=ZCColor(237, 237, 237);
     
 
-    self.tableView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
-    self.tableView.rowHeight=50;
+//    self.tableView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+    self.tableView.rowHeight=45;
    
     
     
 
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
-    self.tableView.sectionHeaderHeight = 60;
+    self.tableView.sectionHeaderHeight = 52;
     //self.tableView.
     self.tableView.tableHeaderView=[self tableViewForheaderView];
     
@@ -130,9 +130,9 @@
     
     // startButton.frame=CGRectMake(0, 300, 317, 40);
     [startButton setTitle:@"开始回合" forState:UIControlStateNormal];
-    startButton.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"tab_bj"]];
+    startButton.backgroundColor=ZCColor(100, 175, 102);
     //[startButton setBackgroundImage:[UIImage imageNamed:@"kedianji_zhuangtai"] forState:UIControlStateNormal];
-    [startButton setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
+    [startButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [startButton addTarget:self action:@selector(clickTheDidStartButton) forControlEvents:UIControlEventTouchUpInside];
     UIWindow *wd = [[UIApplication sharedApplication].delegate window];
     [wd addSubview:startButton];
@@ -151,7 +151,7 @@
 {
     UIView *headerView=[[UIView alloc] init];
     headerView.frame=CGRectMake(0, 0, SCREEN_WIDTH, 50);
-    headerView.backgroundColor=[UIColor redColor];
+    headerView.backgroundColor=ZCColor(60, 57, 78);
     
     
     UIButton *chooseBtn=[[UIButton alloc] init];
@@ -160,11 +160,12 @@
     [headerView addSubview:chooseBtn];
     
     UIImageView *imageView=[[UIImageView alloc] init];
-    imageView.image=[UIImage imageNamed:@"xzqc_weizhi_iocn"];
+    imageView.image=[UIImage imageNamed:@"cjbs_weizhi"];
     imageView.frame=CGRectMake(10, (chooseBtn.frame.size.height-15)*0.5, 10, 15);
     [chooseBtn addSubview:imageView];
     
     UILabel *nameLabel=[[UILabel alloc] initWithFrame:CGRectMake(30, (chooseBtn.frame.size.height-20)*0.5, 180, 20)];
+    nameLabel.textColor=[UIColor whiteColor];
     self.nameLabel=nameLabel;
     [chooseBtn addSubview:nameLabel];
     
@@ -172,7 +173,7 @@
     UIImageView *rightImageView=[[UIImageView alloc] init];
     
     rightImageView.frame=CGRectMake(SCREEN_WIDTH-25, (chooseBtn.frame.size.height-15)*0.5, 10, 15);
-    rightImageView.image=[UIImage imageNamed:@"lsjfk_xiayibu_iocn"];
+    rightImageView.image=[UIImage imageNamed:@"cjbs_shuru"];
     [chooseBtn addSubview:rightImageView];
     
     
@@ -492,9 +493,9 @@
        // ZCTotalScorecards *totalScorecards= [ZCTotalScorecards totalScorecardsWithDict:responseObject];
        // ZCLog(@"-------%@",totalScorecards.type);
        // scorecardTableView.totalScorecards=totalScorecards;
-        //单利模式  为统计页面保存uuid
-        ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
-        tool.uuid=responseObject[@"uuid"];
+//        //单利模式  为统计页面保存uuid
+//        ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
+//        tool.uuid=responseObject[@"uuid"];
         
         scorecardTableView.uuid=responseObject[@"uuid"];
         
@@ -517,16 +518,16 @@
 {
     
     self.startButton.enabled=NO;
-    self.startButton.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"tab_bj"]];
-    [self.startButton setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
+    self.startButton.backgroundColor=ZCColor(100, 175, 102);
+    //[self.startButton setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
 
      //ZCLog(@"进入该方法了");
     
     if (self.childStadium.holes_count==18) {
         if (self.tee_boxe &&self.type) {
             self.startButton.enabled=YES;
-            self.startButton.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"dqsz_kedianji"]];
-            [self.startButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            self.startButton.backgroundColor=ZCColor(9, 133, 12);
+           // [self.startButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
            
             
         }
@@ -536,9 +537,9 @@
             if (self.lastChildName) {
                 if (self.lastTee_boxe) {
                     self.startButton.enabled=YES;
-                    self.startButton.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"dqsz_kedianji"]];
+                    self.startButton.backgroundColor=ZCColor(9, 133, 12);
                     
-                    [self.startButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                   // [self.startButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                     
                 }
             }
@@ -696,9 +697,9 @@
     
     //设置cell的背景
     //cell.backgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cell-bj"]];
-    cell.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
-    cell.textLabel.textColor=ZCColor(240, 208, 122);
-    cell.detailTextLabel.textColor=ZCColor(240, 208, 122);
+   // cell.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+    cell.textLabel.textColor=ZCColor(85, 85, 85);
+    //cell.detailTextLabel.textColor=ZCColor(240, 208, 122);
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -740,11 +741,11 @@
    // 把数据扔给自定义View
     if (section==0) {
         headerView.nameButton.tag=99;
-        if (self.opened1) {
-            headerView.imageName=@"shangjiantou";
+        if (self.opened5) {
+            headerView.imageName=@"icon_shang";
         }else
         {
-            headerView.imageName=@"xiajiantou";
+            headerView.imageName=@"icon_xia";
         }
 
         headerView.cleicedName=self.type;
@@ -765,10 +766,10 @@
         headerView.tag=1001;
         
         if (self.opened1) {
-             headerView.imageName=@"shangjiantou";
+             headerView.imageName=@"icon_shang";
         }else
         {
-           headerView.imageName=@"xiajiantou";
+           headerView.imageName=@"icon_xia";
         }
         
         if (self.firstChildName==nil) {
@@ -793,10 +794,10 @@
         headerView.tag=1002;
         
         if (self.opened2) {
-            headerView.imageName=@"shangjiantou";
+            headerView.imageName=@"icon_shang";
         }else
         {
-            headerView.imageName=@"xiajiantou";
+            headerView.imageName=@"icon_xia";
         }
 
         
@@ -819,10 +820,10 @@
         headerView.tag=1003;
         
         if (self.opened3) {
-            headerView.imageName=@"shangjiantou";
+            headerView.imageName=@"icon_shang";
         }else
         {
-            headerView.imageName=@"xiajiantou";
+            headerView.imageName=@"icon_xia";
         }
 
         
@@ -840,10 +841,10 @@
         
     }else{
         if (self.opened4) {
-            headerView.imageName=@"shangjiantou";
+            headerView.imageName=@"icon_shang";
         }else
         {
-            headerView.imageName=@"xiajiantou";
+            headerView.imageName=@"icon_xia";
         }
 
         

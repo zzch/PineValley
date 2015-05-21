@@ -75,7 +75,7 @@
     if (self=[super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         //背景
         // self.backgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jifenka_yihangbeijing"]];
-        self.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+        //self.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
 //        self.selectedBackgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jfk_anxia_bj"]];
         
@@ -88,7 +88,7 @@
         UIView *middleView=[[UIView alloc] init];
         [self.contentView addSubview:middleView];
         self.middleView=middleView;
-        self.middleView.backgroundColor=ZCColor(136, 119, 73);
+        self.middleView.backgroundColor=RGBACOLOR(170, 170, 170, 0.6);
 
         
         //创建球洞编号
@@ -102,14 +102,14 @@
         
        // UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_dong"]];
         //numberLabel.backgroundColor=col;
-        numberLabel.textColor=ZCColor(240, 208, 122);
+       // numberLabel.textColor=ZCColor(240, 208, 122);
      
         self.numberLabel=numberLabel;
        
         
         UILabel *numberparLabel=[[UILabel alloc] init];
         numberparLabel.textAlignment=NSTextAlignmentCenter;
-        numberparLabel.textColor=ZCColor(240, 208, 122);
+        numberparLabel.textColor=ZCColor(102, 102, 102);
         numberparLabel.font=[UIFont systemFontOfSize:20];
         [self.liftView addSubview:numberparLabel];
         self.numberparLabel=numberparLabel;
@@ -326,7 +326,7 @@
     //创建左边View的frame
     CGFloat liftViewX=0;
     CGFloat liftViewY=0;
-    CGFloat liftViewW=self.frame.size.width*0.29;
+    CGFloat liftViewW=self.frame.size.width*0.25;
     CGFloat liftViewH=self.frame.size.height;
     
     self.liftView.frame=CGRectMake(liftViewX, liftViewY, liftViewW, liftViewH);
@@ -345,7 +345,7 @@
     CGFloat ballLabelW=62;
     CGFloat ballLabelH=32;
     CGFloat ballLabelX=(self.liftView.frame.size.width-ballLabelW)*0.5;
-    CGFloat ballLabelY=self.liftView.frame.size.height*0.152;
+    CGFloat ballLabelY=self.liftView.frame.size.height*0.252;
 
     self.numberLabel.frame=CGRectMake(ballLabelX, ballLabelY, ballLabelW, ballLabelH);
     
@@ -354,7 +354,7 @@
     CGFloat numberparLabelW=62;
     CGFloat numberparLabelH=62;
     CGFloat numberparLabelX=(self.liftView.frame.size.width-numberparLabelW)*0.5;
-    CGFloat numberparLabelY=ballLabelY+ballLabelH+10;
+    CGFloat numberparLabelY=ballLabelY+ballLabelH;
     
     self.numberparLabel.frame=CGRectMake(numberparLabelX, numberparLabelY, numberparLabelW, numberparLabelH);
 

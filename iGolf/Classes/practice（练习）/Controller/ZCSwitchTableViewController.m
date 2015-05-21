@@ -54,13 +54,13 @@
    
     _resultsData = [NSMutableArray array];
     
-    self.tableView.backgroundColor=ZCColor(23, 25, 28);
+    self.tableView.backgroundColor=ZCColor(237, 237, 237);
     //让分割线不显示
    // self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //让下面没内容的分割线不显示
     self.tableView.tableFooterView = [[UIView alloc] init];
     //分割线颜色
-    [self.tableView   setSeparatorColor:ZCColor(240, 208, 122)];
+    [self.tableView   setSeparatorColor:ZCColor(170, 170, 170)];
     [self onlineData];
     //搜索
     [self initMysearchBarAndMysearchDisPlay];
@@ -238,11 +238,11 @@
         //cell.detailTextLabel.text= [NSString stringWithFormat:@"%@",stadium.address];
 
     }
-    cell.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+    //cell.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
     //设置背景图片
   //  cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"suoyou_bj_02"]];
-    cell.textLabel.textColor=ZCColor(240, 208, 122);
-    cell.detailTextLabel.textColor=ZCColor(240, 208, 110);
+    cell.textLabel.textColor=ZCColor(34, 34, 34);
+    cell.detailTextLabel.textColor=ZCColor(85, 85, 85);
     cell.textLabel.font=[UIFont systemFontOfSize:20];
     cell.detailTextLabel.font=[UIFont systemFontOfSize:15];
     //cell.selectedBackgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sousuo_bj_anxia"]];
@@ -284,11 +284,11 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *labelView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 50)];
-    labelView.backgroundColor=ZCColor(19, 21, 23);
+    labelView.backgroundColor=ZCColor(204, 204, 204);
     UILabel *nameLabel=[[UILabel alloc] initWithFrame:CGRectMake(10, 10, 150, 30)];
     ZCCity *city=self.dataArray[section];
     nameLabel.text=city.name;
-    nameLabel.textColor=ZCColor(240, 208, 122);
+    nameLabel.textColor=ZCColor(34, 34, 34);
     [labelView addSubview:nameLabel];
     return labelView;
 
@@ -320,22 +320,22 @@
         //[_mySearchBar setScopeButtonTitles:[NSArray arrayWithObjects:@"First",@"Last",nil]];
    [_mySearchBar setAutocapitalizationType:UITextAutocapitalizationTypeNone];
     [_mySearchBar sizeToFit];
-    _mySearchBar.backgroundColor = ZCColor(23, 25, 28);//[UIColor colorWithPatternImage:[UIImage imageNamed:@"ss_sousuokuang"]];
+    _mySearchBar.backgroundColor = ZCColor(237, 237, 237);//[UIColor colorWithPatternImage:[UIImage imageNamed:@"ss_sousuokuang"]];
      _mySearchBar.backgroundImage = [self imageWithColor:[UIColor clearColor] size:_mySearchBar.bounds.size];
    
     //可以改变取消按钮的颜色
-    _mySearchBar.tintColor=ZCColor(240, 208, 122);
+    _mySearchBar.tintColor=ZCColor(34, 34, 34);
     // _mySearchBar.barTintColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"ss_sousuokuang"]];
 //
     _mySearchBar.placeholder=@"请输入球场名称";
     //改变输入字体的颜色
     UITextField *searchField=[_mySearchBar valueForKey:@"_searchField"];
-    searchField.textColor=ZCColor(240, 208, 122);
+    searchField.textColor=ZCColor(85, 85, 85);
     //提示语的字体颜色
-    [searchField setValue:ZCColor(240, 208, 122) forKeyPath:@"_placeholderLabel.textColor"];
-    [_mySearchBar setSearchFieldBackgroundImage:[UIImage imageNamed:@"sousuokuang"] forState:UIControlStateNormal];
+    [searchField setValue:RGBACOLOR(85, 85, 85, 0.7) forKeyPath:@"_placeholderLabel.textColor"];
+    [_mySearchBar setSearchFieldBackgroundImage:[UIImage imageNamed:@"shurukuang"] forState:UIControlStateNormal];
     //修改提示语左边的图片
-    [_mySearchBar setImage:[UIImage imageNamed:@"sousuo_icon"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
+    [_mySearchBar setImage:[UIImage imageNamed:@"sousuo_iocn1"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
     
     //移除灰色模板背景
     for (UIView *subview in [[_mySearchBar.subviews firstObject] subviews]) {
@@ -346,7 +346,7 @@
     }
     
    
-    self.tableView.tableHeaderView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+   // self.tableView.tableHeaderView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
 
     
     //加入列表的header里面
@@ -361,13 +361,13 @@
     _mySearchDisplayController.searchResultsDelegate = self;
    // [self.searchDisplayController setActive:NO animated:NO];
     
-    _mySearchDisplayController.searchResultsTableView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+    _mySearchDisplayController.searchResultsTableView.backgroundColor=ZCColor(237, 237, 237);
     //让分割线不显示
    // _mySearchDisplayController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //让下面没内容的分割线不显示
     _mySearchDisplayController.searchResultsTableView.tableFooterView = [[UIView alloc] init];
     //分割线颜色
-    [_mySearchDisplayController.searchResultsTableView   setSeparatorColor:ZCColor(240, 208, 122)];
+    [_mySearchDisplayController.searchResultsTableView   setSeparatorColor:ZCColor(170, 170, 170)];
     
     
     

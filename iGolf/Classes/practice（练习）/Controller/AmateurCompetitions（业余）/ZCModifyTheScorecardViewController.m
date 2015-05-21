@@ -76,7 +76,7 @@
     
     
     
-    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+    self.view.backgroundColor=ZCColor(237, 237, 237);
     
     
     UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
@@ -132,7 +132,7 @@
 {
     //创建总杆view
     UIView *totalView=[[UIView alloc] init];
-    //totalView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+    totalView.backgroundColor=[UIColor whiteColor];
     CGFloat  totalViewX=0;
     CGFloat  totalViewY=0;
     CGFloat  totalViewW=SCREEN_WIDTH;//self.view.frame.size.width*0.3125;
@@ -143,7 +143,7 @@
     
     UIView *bjView1=[[UIView alloc] init];
     bjView1.frame=CGRectMake(0, totalViewY+totalViewH, SCREEN_WIDTH, 1);
-    bjView1.backgroundColor=ZCColor(136, 119, 73);
+    bjView1.backgroundColor=ZCColor(170, 170, 170);
     [self.view addSubview:bjView1];
     [self totalViewContent];
     
@@ -151,7 +151,7 @@
     
     //创建推杆View
     UIView *pushLabelView=[[UIView alloc] init];
-    
+    pushLabelView.backgroundColor=[UIColor whiteColor];
     CGFloat  pushLabelViewX=totalViewX;
     CGFloat  pushLabelViewY=bjView1.frame.size.height+bjView1.frame.origin.y;
     CGFloat  pushLabelViewW=totalViewW;
@@ -162,7 +162,7 @@
     
     UIView *bjView2=[[UIView alloc] init];
     bjView2.frame=CGRectMake(0, pushLabelViewY+pushLabelViewH, SCREEN_WIDTH, 1);
-    bjView2.backgroundColor=ZCColor(136, 119, 73);
+    bjView2.backgroundColor=ZCColor(170, 170, 170);
     [self.view addSubview:bjView2];
 
     
@@ -173,6 +173,7 @@
     
     //创建罚杆View
     UIView *punishLabelView=[[UIView alloc] init];
+    punishLabelView.backgroundColor=[UIColor whiteColor];
     CGFloat  punishLabelViewX=pushLabelViewX;
     CGFloat  punishLabelViewY=bjView2.frame.origin.y+bjView2.frame.size.height;
     CGFloat  punishLabelViewW=pushLabelViewW;
@@ -185,7 +186,7 @@
     
     UIView *bjView3=[[UIView alloc] init];
     bjView3.frame=CGRectMake(0, punishLabelViewY+punishLabelViewH, SCREEN_WIDTH, 1);
-    bjView3.backgroundColor=ZCColor(136, 119, 73);
+    bjView3.backgroundColor=ZCColor(170, 170, 170);
     [self.view addSubview:bjView3];
 
     
@@ -197,6 +198,7 @@
     //创建开球显示属性的View
     
     UIView *distanceView=[[UIView alloc] init];
+     distanceView.backgroundColor=[UIColor whiteColor];
     CGFloat  distanceViewX=totalViewX;
     CGFloat  distanceViewY=bjView3.frame.size.height+bjView3.frame.origin.y;
     CGFloat  distanceViewW=totalViewW;
@@ -210,7 +212,7 @@
     
     UIView *bjView4=[[UIView alloc] init];
     bjView4.frame=CGRectMake(0, distanceViewY+distanceViewH, SCREEN_WIDTH, 1);
-    bjView4.backgroundColor=ZCColor(136, 119, 73);
+    bjView4.backgroundColor=ZCColor(170, 170, 170);
     [self.view addSubview:bjView4];
 
     
@@ -218,7 +220,7 @@
     
     //创建pickviec
     UIView *pickerView=[[UIView alloc] init];
-    
+    //pickerView.backgroundColor=[UIColor redColor];
     CGFloat  pickViewY=bjView4.frame.size.height+bjView4.frame.origin.y+20;
     CGFloat  pickViewW=SCREEN_WIDTH;
     CGFloat  pickViewH=SCREEN_HEIGHT-pickViewY;
@@ -245,7 +247,7 @@
     pickView.delegate=self;
     pickView.dataSource = self;
     //pickView.tintColor=[UIColor whiteColor];
-    CGFloat pickViewW=200;
+    CGFloat pickViewW=250;
     CGFloat pickViewH=160;
     CGFloat pickViewX=(self.pickerView.frame.size.width-pickViewW)/2-40;
     CGFloat pickViewY=10;
@@ -269,7 +271,7 @@
     distanceLabelName.frame=CGRectMake(distanceLabelNameX, distanceLabelNameY, distanceLabelNameW, distanceLabelNameH);
     distanceLabelName.text=@"开球距离";
     distanceLabelName.textAlignment=NSTextAlignmentCenter;
-    distanceLabelName.textColor=ZCColor(240, 208, 122);
+    distanceLabelName.textColor=ZCColor(85, 85, 85);
     [self.distanceView addSubview:distanceLabelName];
     
     //显示值
@@ -280,7 +282,7 @@
     CGFloat distanceLabelW=70;
     CGFloat distanceLabelH=20;
     distanceLabel.frame=CGRectMake(distanceLabelX, distanceLabelY, distanceLabelW, distanceLabelH);
-    distanceLabel.textColor=ZCColor(240, 208, 122);
+    distanceLabel.textColor=ZCColor(255, 150, 29);
     distanceLabel.textAlignment=NSTextAlignmentCenter;
     
     self.distanceLabel=distanceLabel;
@@ -297,7 +299,7 @@
     hitLabelName.frame=CGRectMake(hitLabelNameX, hitLabelNameY, hitLabelNameW, hitLabelNameH);
     hitLabelName.text=@"开球命中";
     hitLabelName.textAlignment=NSTextAlignmentCenter;
-    hitLabelName.textColor=ZCColor(240, 208, 122);
+    hitLabelName.textColor=ZCColor(85, 85, 85);
     [self.distanceView addSubview:hitLabelName];
     
     //显示值
@@ -308,7 +310,7 @@
     CGFloat hitLabelW=70;
     CGFloat hitLabelH=20;
     hitLabel.frame=CGRectMake(hitLabelX, hitLabelY, hitLabelW, hitLabelH);
-    hitLabel.textColor=ZCColor(240, 208, 122);
+    hitLabel.textColor=ZCColor(255, 150, 29);
     hitLabel.textAlignment=NSTextAlignmentCenter;
     
     self.hitLabel=hitLabel;
@@ -331,24 +333,24 @@
     totalLabelName.text=@"罚杆数";
     totalLabelName.textAlignment=NSTextAlignmentCenter;
     totalLabelName.font=[UIFont systemFontOfSize:22];
-    totalLabelName.textColor=ZCColor(240, 208, 122);
+    totalLabelName.textColor=ZCColor(85, 85, 85);
     [self.punishLabelView addSubview:totalLabelName ];
     
     UIView *bjView=[[UIView alloc] init];
     bjView.frame=CGRectMake(totalLabelNameW, 0, 1, totalLabelNameH);
     //UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"A5dong_shuxian"]];
-    bjView.backgroundColor=ZCColor(136, 119, 73);
+    bjView.backgroundColor=ZCColor(170, 170, 170);
     [self.punishLabelView addSubview:bjView];
     
     //创建减号
     UIButton *totalLabelMinusButton=[[UIButton alloc] init];
-    CGFloat  totalLabelMinusButtonX=self.punishLabelView.frame.size.width*0.06+totalLabelNameW+1;
+    CGFloat  totalLabelMinusButtonX=totalLabelNameW+1;
     
-    CGFloat  totalLabelMinusButtonW=29;
-    CGFloat  totalLabelMinusButtonH=30;
-    CGFloat  totalLabelMinusButtonY=(self.punishLabelView.frame.size.height-totalLabelMinusButtonW)*0.5;
+    CGFloat  totalLabelMinusButtonW=self.punishLabelView.frame.size.width*0.22;
+    CGFloat  totalLabelMinusButtonH=self.punishLabelView.frame.size.height;
+    CGFloat  totalLabelMinusButtonY=0;//(self.punishLabelView.frame.size.height-totalLabelMinusButtonW)*0.5;
     totalLabelMinusButton.frame=CGRectMake(totalLabelMinusButtonX, totalLabelMinusButtonY, totalLabelMinusButtonW, totalLabelMinusButtonH);
-    [totalLabelMinusButton setImage:[UIImage imageNamed:@"jianshao"] forState:UIControlStateNormal];
+    [totalLabelMinusButton setImage:[UIImage imageNamed:@"jdjf_jian"] forState:UIControlStateNormal];
     //[totalLabelMinusButton setImage:[UIImage imageNamed:@"A5dong_jianshao_anxia"] forState:UIControlStateHighlighted];
     [self.punishLabelView addSubview:totalLabelMinusButton];
     [totalLabelMinusButton addTarget:self action:@selector(punishReduction) forControlEvents:UIControlEventTouchUpInside];
@@ -356,27 +358,27 @@
     
     //创罚杆杆数成绩label
     UILabel *punish=[[UILabel alloc] init];
-    punish.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"shujudong"]];
-    CGFloat totalLabelX=totalLabelMinusButtonX+totalLabelMinusButtonW+self.pushLabelView.frame.size.width*0.1;
-    CGFloat totalLabelW=36;
-    CGFloat totalLabelH=36;
+    punish.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jdjf_dong"]];
+    CGFloat totalLabelX=totalLabelMinusButtonX+totalLabelMinusButtonW+self.pushLabelView.frame.size.width*0.03;
+    CGFloat totalLabelW=35;
+    CGFloat totalLabelH=35;
     CGFloat totalLabelY=(self.punishLabelView.frame.size.height-totalLabelW)*0.5;
     punish.frame=CGRectMake(totalLabelX, totalLabelY, totalLabelW, totalLabelH);
     
-    punish.textColor=ZCColor(240, 208, 122);
+    punish.textColor=ZCColor(250, 150, 29);
     punish.textAlignment=NSTextAlignmentCenter;
     self.punish=punish;
     [self.punishLabelView addSubview:punish];
     
     //创建加号按钮
     UIButton *totalLabelAddButton=[[UIButton alloc] init];
-    CGFloat  totalLabelAddButtonX=self.punishLabelView.frame.size.width*0.1+totalLabelX+totalLabelW;
+    CGFloat  totalLabelAddButtonX=self.punishLabelView.frame.size.width*0.03+totalLabelX+totalLabelW;
     
-    CGFloat  totalLabelAddButtonW=29;//self.punishLabelView.frame.size.width*0.09;
-    CGFloat  totalLabelAddButtonH=30;//self.punishLabelView.frame.size.height*0.483;
-    CGFloat  totalLabelAddButtonY=(self.punishLabelView.frame.size.height-totalLabelAddButtonW)*0.5;
+    CGFloat  totalLabelAddButtonW=self.punishLabelView.frame.size.width*0.24;//self.punishLabelView.frame.size.width*0.09;
+    CGFloat  totalLabelAddButtonH=self.punishLabelView.frame.size.height;//self.punishLabelView.frame.size.height*0.483;
+    CGFloat  totalLabelAddButtonY=0;//(self.punishLabelView.frame.size.height-totalLabelAddButtonW)*0.5;
     totalLabelAddButton.frame=CGRectMake(totalLabelAddButtonX, totalLabelAddButtonY, totalLabelAddButtonW, totalLabelAddButtonH);
-    [totalLabelAddButton setImage:[UIImage imageNamed:@"tiejia"] forState:UIControlStateNormal];
+    [totalLabelAddButton setImage:[UIImage imageNamed:@"jdjf_jia"] forState:UIControlStateNormal];
    // [totalLabelAddButton setImage:[UIImage imageNamed:@"A5dong_zengjia_anxia"] forState:UIControlStateHighlighted];
     
     [self.punishLabelView addSubview:totalLabelAddButton];
@@ -397,52 +399,64 @@
     totalLabelName.text=@"推杆数";
     totalLabelName.textAlignment=NSTextAlignmentCenter;
     totalLabelName.font=[UIFont systemFontOfSize:22];
-    totalLabelName.textColor=ZCColor(240, 208, 122);
+    totalLabelName.textColor=ZCColor(85, 85, 85);
     [self.pushLabelView addSubview:totalLabelName ];
     
     UIView *bjView=[[UIView alloc] init];
     bjView.frame=CGRectMake(totalLabelNameW, 0, 1, totalLabelNameH);
     //UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"A5dong_shuxian"]];
-    bjView.backgroundColor=ZCColor(136, 119, 73);
+    bjView.backgroundColor=ZCColor(170, 170, 170);
     [self.pushLabelView addSubview:bjView];
     
     //创建减号
     UIButton *totalLabelMinusButton=[[UIButton alloc] init];
-    CGFloat  totalLabelMinusButtonX=self.pushLabelView.frame.size.width*0.06+totalLabelNameW+1;
-    
-    CGFloat  totalLabelMinusButtonW=29;
-    CGFloat  totalLabelMinusButtonH=30;
-    CGFloat  totalLabelMinusButtonY=(self.pushLabelView.frame.size.height-totalLabelMinusButtonW)*0.5;
+    CGFloat  totalLabelMinusButtonX=totalLabelNameW+1;
+    ;
+    CGFloat  totalLabelMinusButtonW=(self.pushLabelView.frame.size.width*0.22);
+    CGFloat  totalLabelMinusButtonH=self.pushLabelView.frame.size.height;
+    CGFloat  totalLabelMinusButtonY=0;//(self.pushLabelView.frame.size.height-totalLabelMinusButtonW)*0.5;
     totalLabelMinusButton.frame=CGRectMake(totalLabelMinusButtonX, totalLabelMinusButtonY, totalLabelMinusButtonW, totalLabelMinusButtonH);
-    [totalLabelMinusButton setImage:[UIImage imageNamed:@"jianshao"] forState:UIControlStateNormal];
+    [totalLabelMinusButton setImage:[UIImage imageNamed:@"jdjf_jian"] forState:UIControlStateNormal];
   //  [totalLabelMinusButton setImage:[UIImage imageNamed:@"A5dong_jianshao_anxia"] forState:UIControlStateHighlighted];
     [self.pushLabelView addSubview:totalLabelMinusButton];
     [totalLabelMinusButton addTarget:self action:@selector(pushReduction) forControlEvents:UIControlEventTouchUpInside];
     
     
+    
+    
+    
+//    CGFloat  totalLabelMinusButtonX=self.pushLabelView.frame.size.width*0.06+totalLabelNameW+1;
+//    
+//    CGFloat  totalLabelMinusButtonW=29;
+//    CGFloat  totalLabelMinusButtonH=30;
+//    CGFloat  totalLabelMinusButtonY=(self.pushLabelView.frame.size.height-totalLabelMinusButtonW)*0.5;
+//    
+    
+    
     //创建推杆数成绩label
     UILabel *pushLabel=[[UILabel alloc] init];
-    pushLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"shujudong"]];
-    CGFloat totalLabelX=totalLabelMinusButtonX+totalLabelMinusButtonW+self.pushLabelView.frame.size.width*0.1;
-    CGFloat totalLabelW=36;
-    CGFloat totalLabelH=36;
+    pushLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jdjf_dong"]];
+    CGFloat totalLabelX=totalLabelMinusButtonX+totalLabelMinusButtonW+self.pushLabelView.frame.size.width*0.03;
+    CGFloat totalLabelW=35;
+    CGFloat totalLabelH=35;
     CGFloat totalLabelY=(self.pushLabelView.frame.size.height-totalLabelW)*0.5;
     pushLabel.frame=CGRectMake(totalLabelX, totalLabelY, totalLabelW, totalLabelH);
     
-    pushLabel.textColor=ZCColor(240, 208, 122);
+    pushLabel.textColor=ZCColor(255, 150, 29);
     pushLabel.textAlignment=NSTextAlignmentCenter;
     self.pushLabel=pushLabel;
     [self.pushLabelView addSubview:pushLabel];
     
     //创建加号按钮
     UIButton *totalLabelAddButton=[[UIButton alloc] init];
-    CGFloat  totalLabelAddButtonX=self.pushLabelView.frame.size.width*0.1+totalLabelX+totalLabelW;
     
-    CGFloat  totalLabelAddButtonW=29;//self.pushLabelView.frame.size.width*0.09;
-    CGFloat  totalLabelAddButtonH=30;//self.pushLabelView.frame.size.height*0.483;
-    CGFloat  totalLabelAddButtonY=(self.pushLabelView.frame.size.height-totalLabelAddButtonW)*0.5;
+    CGFloat  totalLabelAddButtonX=self.pushLabelView.frame.size.width*0.03+totalLabelX+totalLabelW;
+    
+    CGFloat  totalLabelAddButtonW=self.pushLabelView.frame.size.width*0.24;//self.pushLabelView.frame.size.width*0.09;
+    CGFloat  totalLabelAddButtonH=self.pushLabelView.frame.size.height;//self.pushLabelView.frame.size.height*0.483;
+    CGFloat  totalLabelAddButtonY=0;//(self.pushLabelView.frame.size.height-totalLabelAddButtonW)*0.5;
     totalLabelAddButton.frame=CGRectMake(totalLabelAddButtonX, totalLabelAddButtonY, totalLabelAddButtonW, totalLabelAddButtonH);
-    [totalLabelAddButton setImage:[UIImage imageNamed:@"tiejia"] forState:UIControlStateNormal];
+    [totalLabelAddButton setImage:[UIImage imageNamed:@"jdjf_jia"] forState:UIControlStateNormal];
    // [totalLabelAddButton setImage:[UIImage imageNamed:@"A5dong_zengjia_anxia"] forState:UIControlStateHighlighted];
     
     [self.pushLabelView addSubview:totalLabelAddButton];
@@ -465,24 +479,24 @@
     totalLabelName.text=@"总杆数";
     totalLabelName.textAlignment=NSTextAlignmentCenter;
     totalLabelName.font=[UIFont systemFontOfSize:22];
-    totalLabelName.textColor=ZCColor(240, 208, 122);
+    totalLabelName.textColor=ZCColor(85, 85, 85);
     [self.totalView addSubview:totalLabelName ];
     
     UIView *bjView=[[UIView alloc] init];
     bjView.frame=CGRectMake(totalLabelNameW, 0, 1, totalLabelNameH);
    // UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"A5dong_shuxian"]];
-    bjView.backgroundColor=ZCColor(136, 119, 73);
+    bjView.backgroundColor=ZCColor(170, 170, 170);
     [self.totalView addSubview:bjView];
     
     //创建减号
     UIButton *totalLabelMinusButton=[[UIButton alloc] init];
-    CGFloat  totalLabelMinusButtonX=self.totalView.frame.size.width*0.06+totalLabelNameW+1;
+    CGFloat  totalLabelMinusButtonX=totalLabelNameW+1;
     
-    CGFloat  totalLabelMinusButtonW=29;
-    CGFloat  totalLabelMinusButtonH=30;
-    CGFloat  totalLabelMinusButtonY=(self.totalView.frame.size.height-totalLabelMinusButtonW)*0.5;
+    CGFloat  totalLabelMinusButtonW=self.totalView.frame.size.width*0.22;
+    CGFloat  totalLabelMinusButtonH=self.totalView.frame.size.height;
+    CGFloat  totalLabelMinusButtonY=0;//(self.totalView.frame.size.height-totalLabelMinusButtonW)*0.5;
     totalLabelMinusButton.frame=CGRectMake(totalLabelMinusButtonX, totalLabelMinusButtonY, totalLabelMinusButtonW, totalLabelMinusButtonH);
-    [totalLabelMinusButton setImage:[UIImage imageNamed:@"jianshao"] forState:UIControlStateNormal];
+    [totalLabelMinusButton setImage:[UIImage imageNamed:@"jdjf_jian"] forState:UIControlStateNormal];
    // [totalLabelMinusButton setImage:[UIImage imageNamed:@"A5dong_jianshao_anxia"] forState:UIControlStateHighlighted];
     [self.totalView addSubview:totalLabelMinusButton];
     [totalLabelMinusButton addTarget:self action:@selector(totaReduction) forControlEvents:UIControlEventTouchUpInside];
@@ -490,27 +504,27 @@
     
     //创建总杆数成绩label
     UILabel *totalLabel=[[UILabel alloc] init];
-    totalLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"shujudong"]];
-    CGFloat totalLabelX=totalLabelMinusButtonX+totalLabelMinusButtonW+self.totalView.frame.size.width*0.1;
-    CGFloat totalLabelW=36;
-    CGFloat totalLabelH=36;
+    totalLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jdjf_dong"]];
+    CGFloat totalLabelX=totalLabelMinusButtonX+totalLabelMinusButtonW+self.totalView.frame.size.width*0.03;
+    CGFloat totalLabelW=35;
+    CGFloat totalLabelH=35;
     CGFloat totalLabelY=(self.totalView.frame.size.height-totalLabelW)*0.5;
     totalLabel.frame=CGRectMake(totalLabelX, totalLabelY, totalLabelW, totalLabelH);
     
-    totalLabel.textColor=ZCColor(240, 208, 122);
+    totalLabel.textColor=ZCColor(255, 150, 29);
     totalLabel.textAlignment=NSTextAlignmentCenter;
      self.totalLabel=totalLabel;
     [self.totalView addSubview:totalLabel];
     
     //创建加号按钮
     UIButton *totalLabelAddButton=[[UIButton alloc] init];
-    CGFloat  totalLabelAddButtonX=self.totalView.frame.size.width*0.1+totalLabelX+totalLabelW;
+    CGFloat  totalLabelAddButtonX=self.totalView.frame.size.width*0.03+totalLabelX+totalLabelW;
     
-    CGFloat  totalLabelAddButtonW=29;//self.totalView.frame.size.width*0.09;
-    CGFloat  totalLabelAddButtonH=30;//self.totalView.frame.size.height*0.483;
-    CGFloat  totalLabelAddButtonY=(self.totalView.frame.size.height-totalLabelAddButtonW)*0.5;
+    CGFloat  totalLabelAddButtonW=self.totalView.frame.size.width*0.24;//self.totalView.frame.size.width*0.09;
+    CGFloat  totalLabelAddButtonH=self.totalView.frame.size.height;//self.totalView.frame.size.height*0.483;
+    CGFloat  totalLabelAddButtonY=0;//(self.totalView.frame.size.height-totalLabelAddButtonW)*0.5;
     totalLabelAddButton.frame=CGRectMake(totalLabelAddButtonX, totalLabelAddButtonY, totalLabelAddButtonW, totalLabelAddButtonH);
-    [totalLabelAddButton setImage:[UIImage imageNamed:@"tiejia"] forState:UIControlStateNormal];
+    [totalLabelAddButton setImage:[UIImage imageNamed:@"jdjf_jia"] forState:UIControlStateNormal];
     //[totalLabelAddButton setImage:[UIImage imageNamed:@"A5dong_zengjia_anxia"] forState:UIControlStateHighlighted];
 
     [self.totalView addSubview:totalLabelAddButton];
@@ -944,11 +958,21 @@
  */
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
+    
+    
+    
+    
     if (component == 0) { //
         self.distanceLabel.text = self.pickArray[component][row];
     } else if (component == 1) { //
         self.hitLabel.text = self.pickArray[component][row];
     }
+    
+    
+   
+    
+    
+    
 }
 
 //改变pickview的字体颜色
@@ -962,7 +986,7 @@
      title = [NSString stringWithFormat:@"%@",self.pickArray[component][row]];
     }
    
-    NSAttributedString *attString = [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName:ZCColor(240, 208, 122)}];
+    NSAttributedString *attString = [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName:ZCColor(85, 85, 85)}];
     
     return attString;
     

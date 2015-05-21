@@ -84,27 +84,29 @@
 //-viewdidappear
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    
+//    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+//    customLab.textAlignment=NSTextAlignmentCenter;
+//    [customLab setTextColor:ZCColor(240, 208, 122)];
+//    [customLab setText:@"快捷记分卡"];
+//    customLab.font = [UIFont boldSystemFontOfSize:20];
+//    self.navigationItem.titleView = customLab;
     
-    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
-    customLab.textAlignment=NSTextAlignmentCenter;
-    [customLab setTextColor:ZCColor(240, 208, 122)];
-    [customLab setText:@"快捷记分卡"];
-    customLab.font = [UIFont boldSystemFontOfSize:20];
-    self.navigationItem.titleView = customLab;
-    
+    self.navigationItem.title=@"历史赛事";
+     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
     
 //    
     UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"新建" style:UIBarButtonItemStyleDone target:self action:@selector(chooseThePitch)];
     //改变UIBarButtonItem字体颜色
-    [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:ZCColor(240, 208, 122), UITextAttributeTextColor,nil] forState:UIControlStateNormal];
+//    [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:ZCColor(240, 208, 122), UITextAttributeTextColor,nil] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem =newBar;
     
     
-    //返回
-    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
+//    //返回
+//    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
 
     //背景颜色suoyou_bj
-    self.tableView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+    self.tableView.backgroundColor=ZCColor(237, 237, 237);
     
     
     
@@ -123,7 +125,7 @@
    // self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
     // UITableViewStyleGrouped
     
-     [self.tableView   setSeparatorColor:ZCColor(240, 208, 122)];
+     [self.tableView   setSeparatorColor:ZCColor(170, 170, 170)];
     //让下面没内容的分割线不显示
      self.tableView.tableFooterView = [[UIView alloc] init];
     
@@ -515,7 +517,7 @@
 {
     
     UIView *headerView=[[UIView alloc] init];
-    headerView.backgroundColor=[UIColor redColor];
+    headerView.backgroundColor=[UIColor whiteColor];
     
     
     //创建新比赛
@@ -524,34 +526,103 @@
     CGFloat newGameBtnW=SCREEN_WIDTH-2*newGameBtnX;
     CGFloat newGameBtnH=40;
     UIButton *newGameBtn=[[UIButton alloc] initWithFrame:CGRectMake(newGameBtnX, newGameBtnY, newGameBtnW, newGameBtnH)];
-    [newGameBtn setTitle:@"创建比赛" forState:UIControlStateNormal];
-    [newGameBtn setBackgroundColor:[UIColor blueColor]];
+    
+    
+  
+    UIImage *image=[UIImage imageNamed:@"anniu_moreng" ];
+    UIImage *image2=[UIImage imageNamed:@"anniu_anxia" ];
+    // 指定为拉伸模式，伸缩后重新赋值
+    image = [image resizableImageWithCapInsets: UIEdgeInsetsMake(25, 10, 25, 10) resizingMode:UIImageResizingModeStretch];
+    image2 = [image2 resizableImageWithCapInsets: UIEdgeInsetsMake(25, 10, 25, 10) resizingMode:UIImageResizingModeStretch];
+    
+    [newGameBtn setBackgroundImage:image forState:UIControlStateNormal];
+    [newGameBtn setBackgroundImage:image2 forState:UIControlStateHighlighted];
+    
+    
+   // [newGameBtn setTitle:@"创建比赛" forState:UIControlStateNormal];
+    
     [newGameBtn addTarget:self action:@selector(clickTheNewGameBtn) forControlEvents:UIControlEventTouchUpInside];
     [headerView addSubview:newGameBtn];
 
     
+    UIImageView *imageView=[[UIImageView alloc] init];
     
-    //中间图片
-    CGFloat imageViewX=22;
-    CGFloat imageViewY=newGameBtnY+newGameBtnH+17;
-    CGFloat imageViewW=SCREEN_WIDTH-2*newGameBtnX;
-    CGFloat imageViewH=10;
-    UIImageView *imageView=[[UIImageView alloc] initWithFrame:CGRectMake(imageViewX, imageViewY, imageViewW, imageViewH)];
-    [headerView addSubview:imageView];
+    CGFloat imageW=16;
+    CGFloat imageH=16;
+    CGFloat imageX=(SCREEN_WIDTH-imageW-80-10)/2;
+    CGFloat imageY=12;
+    imageView.frame=CGRectMake(imageX, imageY, imageW, imageH);
+    imageView.image=[UIImage imageNamed:@"jjbs_tiejia"];
+    [newGameBtn addSubview:imageView];
+    
+    UILabel *textLabel=[[UILabel alloc] initWithFrame:CGRectMake(imageX+imageW+5, 0, 80, newGameBtn.frame.size.height)];
+    textLabel.text=@"创建比赛";
+    textLabel.textColor=[UIColor whiteColor];
+    [newGameBtn addSubview:textLabel];
     
     
+    
+    
+    
+    
+    
+    
+    //中间图片cjbs_huozhe
+    CGFloat imageViewX=SCREEN_WIDTH*0.06875;
+    CGFloat imageViewY=newGameBtnY+newGameBtnH+27;
+    CGFloat imageViewW=SCREEN_WIDTH-2*imageViewX;
+    CGFloat imageViewH=1;
+    UIImageView *middleView=[[UIImageView alloc] initWithFrame:CGRectMake(imageViewX, imageViewY, imageViewW, imageViewH)];
+    middleView.image=[UIImage imageNamed:@"cjbs_huozhe"];
+     [headerView addSubview:middleView];
+    
+    UILabel *huozheLabel=[[UILabel alloc] init];
+    CGFloat huozheLabelW=30;
+    CGFloat huozheLabelH=20;
+    CGFloat huozheLabelX=(SCREEN_WIDTH-huozheLabelW)/2;
+    CGFloat huozheLabelY=imageViewY-10;
+    huozheLabel.frame=CGRectMake(huozheLabelX, huozheLabelY, huozheLabelW, huozheLabelH);
+    huozheLabel.text=@"或者";
+    huozheLabel.textAlignment=NSTextAlignmentCenter;
+    huozheLabel.textColor=ZCColor(85, 85, 85);
+    huozheLabel.font=[UIFont systemFontOfSize:15];
+    [headerView addSubview:huozheLabel];
     
     //加入比赛
     CGFloat joinGameBthX=10;
-    CGFloat joinGameBthY=imageViewY+imageViewH+17;
+    CGFloat joinGameBthY=imageViewY+imageViewH+27;
     CGFloat joinGameBthW=SCREEN_WIDTH-2*joinGameBthX;
     CGFloat joinGameBthH=40;
     
     UIButton *joinGameBth=[[UIButton alloc] initWithFrame:CGRectMake(joinGameBthX, joinGameBthY, joinGameBthW, joinGameBthH)];
-    [joinGameBth setBackgroundColor:[UIColor blueColor]];
-    [joinGameBth setTitle:@"加入比赛" forState:UIControlStateNormal];
+    
+    
+    [joinGameBth setBackgroundImage:image forState:UIControlStateNormal];
+    [joinGameBth setBackgroundImage:image2 forState:UIControlStateHighlighted];
+    
     [joinGameBth addTarget:self action:@selector(clickThejoinGameBth) forControlEvents:UIControlEventTouchUpInside];
     [headerView addSubview:joinGameBth];
+    
+    
+    UIImageView *imageView1=[[UIImageView alloc] init];
+    
+    CGFloat image1W=16;
+    CGFloat image1H=16;
+    CGFloat image1X=(SCREEN_WIDTH-image1W-80-10)/2;
+    CGFloat image1Y=12;
+    imageView1.frame=CGRectMake(image1X, image1Y, image1W, image1H);
+    imageView1.image=[UIImage imageNamed:@"jjbs_jiaru"];
+    [joinGameBth addSubview:imageView1];
+    
+    UILabel *textLabel2=[[UILabel alloc] initWithFrame:CGRectMake(image1X+image1W+5, 0, 80, newGameBtn.frame.size.height)];
+    textLabel2.text=@"加入比赛";
+    textLabel2.textColor=[UIColor whiteColor];
+    [joinGameBth addSubview:textLabel2];
+    
+    
+    
+    
+    
     
     
     
@@ -563,7 +634,8 @@
     
     UILabel *historyLabel=[[UILabel alloc] initWithFrame:CGRectMake(historyLabelX, historyLabelY, historyLabelW, historyLabelH)];
     historyLabel.text=@"历史赛事";
-    historyLabel.backgroundColor=[UIColor yellowColor];
+    historyLabel.backgroundColor=ZCColor(204, 204, 204);
+    historyLabel.textColor=ZCColor(85, 85, 85);
     [headerView addSubview:historyLabel];
     
     

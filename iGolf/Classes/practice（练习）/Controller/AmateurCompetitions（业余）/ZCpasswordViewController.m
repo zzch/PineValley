@@ -23,9 +23,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationItem.title=@"加入比赛";
+    self.view.backgroundColor=ZCColor(237, 237, 237);
     
-    
-    
+   
+
     [self addControls];
     
 }
@@ -46,6 +48,7 @@
     firstLable1.frame=CGRectMake(firstLable1X, firstLable1Y, firstLable1W, firstLable1H);
     firstLable1.text=@"您的比赛口令密码为以下4位数字";
     firstLable1.textAlignment=NSTextAlignmentCenter;
+    firstLable1.textColor=ZCColor(85, 85, 85);
     [self.view addSubview:firstLable1];
     
     //设置影藏的TextField
@@ -63,6 +66,7 @@
     secondLabel.frame=CGRectMake(0, firstLable1Y+firstLable1H+7, firstLable1W, 25);
     secondLabel.textAlignment=NSTextAlignmentCenter;
     secondLabel.text=@"Ta输入后即可加入到您的比赛";
+    secondLabel.textColor=ZCColor(85, 85, 85);
     [self.view addSubview:secondLabel];
     
     
@@ -76,8 +80,8 @@
     
     
     //宽高
-    CGFloat  passLabelW=view1H;
-    CGFloat  passLabelH=view1H;
+    CGFloat  passLabelW=45;
+    CGFloat  passLabelH=45;
     //间距
     CGFloat spacing=(SCREEN_WIDTH-(4*passLabelW))/5;
     
@@ -89,11 +93,16 @@
         [view1 addSubview:passTextField];
         
         [self.passLabelArray addObject:passTextField];
-        passTextField.backgroundColor=[UIColor redColor];
+        //passTextField.backgroundColor=[UIColor redColor];
         passTextField.textAlignment=NSTextAlignmentCenter;
         
+        passTextField.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"yqhy_mima"]];
+        passTextField.font=[UIFont systemFontOfSize:25];
+        passTextField.textColor=ZCColor(255, 150, 29);
        
     }
+    
+    
     }
     
     

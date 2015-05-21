@@ -190,7 +190,7 @@
 //    [self addSubview:pickerView];
     
     UIView *pickView=[[UIView alloc] init];
-    pickView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+    pickView.backgroundColor=[UIColor whiteColor];
     self.pickView=pickView;
     [self.coverView addSubview:pickView];
     
@@ -214,20 +214,20 @@
 {
     //nameView
     UIView *nameView=[[UIView alloc] init];
-    nameView.backgroundColor=[UIColor blackColor];
+    nameView.backgroundColor=ZCColor(237, 237, 237);
     [self.coverView addSubview:nameView];
     self.nameView=nameView;
     
     //显示UILabel
     UILabel *nameLabel1=[[UILabel alloc] init];
-    nameLabel1.textColor=ZCColor(240, 208, 122);
+    nameLabel1.textColor=ZCColor(85, 85, 85);
     nameLabel1.textAlignment=NSTextAlignmentCenter;
     nameLabel1.text=@"距离球洞/码";
     self.nameLabel1=nameLabel1;
     [nameView addSubview:nameLabel1];
     
     UILabel *nameLabel2=[[UILabel alloc] init];
-    nameLabel2.textColor=ZCColor(240, 208, 122);
+    nameLabel2.textColor=ZCColor(85, 85, 85);
     nameLabel2.textAlignment=NSTextAlignmentCenter;
 
     nameLabel2.text=@"球的状态";
@@ -236,7 +236,7 @@
     
     
     UILabel *nameLabel3=[[UILabel alloc] init];
-    nameLabel3.textColor=ZCColor(240, 208, 122);
+    nameLabel3.textColor=ZCColor(85, 85, 85);
     nameLabel3.textAlignment=NSTextAlignmentCenter;
     nameLabel3.text=@"罚杆";
     self.nameLabel3=nameLabel3;
@@ -244,7 +244,7 @@
 
     
     UILabel *nameLabel4=[[UILabel alloc] init];
-    nameLabel4.textColor=ZCColor(240, 208, 122);
+    nameLabel4.textColor=ZCColor(85, 85, 85);
     nameLabel4.textAlignment=NSTextAlignmentCenter;
     nameLabel4.text=@"球杆";
     self.nameLabel4=nameLabel4;
@@ -268,7 +268,7 @@
     //取消按钮
     UIButton *cancelButton=[[UIButton alloc] init];
     [cancelButton setTitle:@"取消" forState:UIControlStateNormal];
-    [cancelButton setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
+    [cancelButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [cancelButton addTarget:self action:@selector(clickcancelButton) forControlEvents:UIControlEventTouchUpInside];
     self.cancelButton=cancelButton;
     [self.cancelView addSubview:cancelButton];
@@ -277,7 +277,7 @@
     
     UIButton *determineButton=[[UIButton alloc] init];
     [determineButton setTitle:@"确定" forState:UIControlStateNormal];
-    [determineButton setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
+    [determineButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [determineButton addTarget:self action:@selector(clickdetermineButton) forControlEvents:UIControlEventTouchUpInside];
     self.determineButton=determineButton;
     [self.cancelView addSubview:determineButton];
@@ -503,6 +503,15 @@
         self.club=self.pickerArray[component][row];
     }
     
+    
+    
+    
+    UILabel *label = (UILabel *)[self.pickerView viewForRow:row forComponent:component];
+    
+    
+    label.textColor=ZCColor(255, 150, 29);
+
+    
    
 }
 
@@ -544,7 +553,7 @@
     
     
     
-    NSAttributedString *attString = [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName:ZCColor(240, 208, 122)}];
+    NSAttributedString *attString = [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName:ZCColor(85, 85, 85)}];
     
     return attString;
     
@@ -559,7 +568,7 @@
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 75, 32)];
     //label.backgroundColor = [UIColor greenColor];
-   label.textColor = ZCColor(240, 208, 122);
+   label.textColor = ZCColor(85, 85, 85);
     label.textAlignment=NSTextAlignmentCenter;
     label.font=[UIFont systemFontOfSize:15];
     if (component==0) {
@@ -584,7 +593,10 @@
 }
 
 
-
+//- (UIView *)viewForRow:(NSInteger)row forComponent:(NSInteger)component
+//{
+//        return label;
+//}
 
 
 

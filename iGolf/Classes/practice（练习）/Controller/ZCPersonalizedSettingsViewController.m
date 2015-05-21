@@ -16,6 +16,9 @@
 @property(nonatomic,weak)UITextField *nameTextField;
 @property(nonatomic,assign)int index;
 @property(nonatomic,weak)UIImage *chooseImage;
+@property(nonatomic,weak)UIButton *manBtn;
+@property(nonatomic,weak)UIButton *wonamBtn;
+@property(nonatomic,weak)UIButton *startBtn;
 @end
 
 @implementation ZCPersonalizedSettingsViewController
@@ -37,7 +40,7 @@
     UILabel *fiestLabel=[[UILabel alloc] init];
     
     CGFloat fiestLabelX=0;
-    CGFloat fiestLabelY=SCREEN_HEIGHT*0.0176;
+    CGFloat fiestLabelY=SCREEN_HEIGHT*0.0457;
     CGFloat fiestLabelW=SCREEN_WIDTH;
     CGFloat fiestLabelH=25;
     fiestLabel.frame=CGRectMake(fiestLabelX, fiestLabelY, fiestLabelW, fiestLabelH);
@@ -47,22 +50,22 @@
     
     
     UIButton *imageButton=[[UIButton alloc] init];
-    CGFloat imageButtonW=90;
-    CGFloat imageButtonH=90;
+    CGFloat imageButtonW=70;
+    CGFloat imageButtonH=70;
     CGFloat imageButtonX=(SCREEN_WIDTH-imageButtonW)/2;
-    CGFloat imageButtonY=(2*fiestLabelY)+fiestLabelH;
+    CGFloat imageButtonY=fiestLabelY+fiestLabelH+SCREEN_HEIGHT*0.0176;
     imageButton.frame=CGRectMake(imageButtonX, imageButtonY, imageButtonW, imageButtonH);
     [imageButton addTarget:self action:@selector(clickTheImageButton) forControlEvents:UIControlEventTouchUpInside];
     imageButton.layer.masksToBounds = YES;
-    imageButton.layer.cornerRadius = 45;
-
+    imageButton.layer.cornerRadius = 35;
+    [imageButton setImage:[UIImage imageNamed:@"gxhsz_touxiang"] forState:UIControlStateNormal];
      [self.view addSubview:imageButton];
     self.imageButton=imageButton;
     
     
     UIView *xian1=[[UIView alloc] init];
-    xian1.frame=CGRectMake(10, imageButtonY+imageButtonH+(SCREEN_HEIGHT*0.0176), SCREEN_WIDTH-20, 1);
-    xian1.backgroundColor=[UIColor redColor];
+    xian1.frame=CGRectMake(10, imageButtonY+imageButtonH+(SCREEN_HEIGHT*0.0271), SCREEN_WIDTH-20, 1);
+    xian1.backgroundColor=ZCColor(170, 170, 170);
     [self.view addSubview:xian1];
     
     
@@ -71,7 +74,7 @@
     UILabel *secondLabel=[[UILabel alloc] init];
     
     CGFloat secondLabelX=0;
-    CGFloat secondLabelY=SCREEN_HEIGHT*0.0264+xian1.frame.size.height+xian1.frame.origin.y;
+    CGFloat secondLabelY=SCREEN_HEIGHT*0.0176+xian1.frame.size.height+xian1.frame.origin.y;
     CGFloat secondLabelW=SCREEN_WIDTH;
     CGFloat secondLabelH=25;
     secondLabel.frame=CGRectMake(secondLabelX, secondLabelY, secondLabelW, secondLabelH);
@@ -84,7 +87,7 @@
     
     UILabel *nameLabel=[[UILabel alloc] init];
     CGFloat nameLabelX=15;
-    CGFloat nameLabelY=secondLabelY+secondLabelH+15;
+    CGFloat nameLabelY=secondLabelY+secondLabelH+SCREEN_HEIGHT*0.0132;
     CGFloat nameLabelW=SCREEN_WIDTH-30;
     CGFloat nameLabelH=20;
 
@@ -93,19 +96,39 @@
     [self.view addSubview:nameLabel];
     
     
-    UITextField *nameTextField=[[UITextField alloc] init];
+   
     CGFloat nameTextFieldX=nameLabelX;
     CGFloat nameTextFieldY=nameLabelY+nameLabelH+10;
     CGFloat nameTextFieldW=nameLabelW;
     CGFloat nameTextFieldH=35;
-    nameTextField.frame=CGRectMake(nameTextFieldX, nameTextFieldY, nameTextFieldW, nameTextFieldH);
-    nameTextField.backgroundColor=[UIColor redColor];
+   
+    
+    
+    CGFloat top = 25; // 顶端盖高度
+    CGFloat bottom = 25 ; // 底端盖高度
+    CGFloat left = 10; // 左端盖宽度
+    CGFloat right = 10; // 右端盖宽度
+    UIEdgeInsets insets = UIEdgeInsetsMake(top, left, bottom, right);
+    UIImage *image=[UIImage imageNamed:@"shurukuang" ];
+    // 指定为拉伸模式，伸缩后重新赋值
+    image = [image resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
+   // nameTextField.backgroundColor=[UIColor colorWithPatternImage:image];
+    
+    UIImageView *imageView=[[UIImageView alloc] initWithFrame:CGRectMake(nameTextFieldX, nameTextFieldY, nameTextFieldW, nameTextFieldH)];
+    imageView.image=image;
+    [self.view addSubview:imageView];
+    
+    
+     UITextField *nameTextField=[[UITextField alloc] init];
+     nameTextField.frame=CGRectMake(nameTextFieldX, nameTextFieldY, nameTextFieldW, nameTextFieldH);
     [self.view addSubview:nameTextField];
     self.nameTextField=nameTextField;
+    [self.nameTextField addTarget:self action:@selector(whetherCanSaveClicks) forControlEvents:UIControlEventEditingChanged];
+
     
     UIView *xian2=[[UIView alloc] init];
     xian2.frame=CGRectMake(10, nameTextFieldY+nameTextFieldH+(SCREEN_HEIGHT*0.04), SCREEN_WIDTH-20, 1);
-    xian2.backgroundColor=[UIColor redColor];
+    xian2.backgroundColor=ZCColor(170, 170, 170);
     [self.view addSubview:xian2];
     
     
@@ -124,26 +147,28 @@
     
     
     UIButton *manBtn=[[UIButton alloc] init];
-    manBtn.backgroundColor=[UIColor redColor];
-    CGFloat manBtnW=100;
-    CGFloat manBtnH=90;
+    
+    CGFloat manBtnW=133;
+    CGFloat manBtnH=75;
     CGFloat manBtnX=(SCREEN_WIDTH-(2*manBtnW))/3;
     CGFloat manBtnY=thirdLabelY+thirdLabelH+SCREEN_HEIGHT*0.03;
     manBtn.frame=CGRectMake(manBtnX, manBtnY, manBtnW, manBtnH);
-    [manBtn setTitle:@"男" forState:UIControlStateNormal];
+    [manBtn setImage:[UIImage imageNamed:@"gxhsz_nan"] forState:UIControlStateNormal];
+    //[manBtn setTitle:@"男" forState:UIControlStateNormal];
     [manBtn addTarget:self action:@selector(clickTheManBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:manBtn];
-    
+    self.manBtn=manBtn;
     
     
     UIButton *wonamBtn=[[UIButton alloc] init];
-    wonamBtn.backgroundColor=[UIColor redColor];
-    CGFloat wonamBtnW=100;
-    CGFloat wonamBtnH=90;
+    
+    CGFloat wonamBtnW=133;
+    CGFloat wonamBtnH=75;
     CGFloat wonamBtnX=(2*manBtnX)+manBtnW;
     CGFloat wonamBtnY=manBtnY;
     wonamBtn.frame=CGRectMake(wonamBtnX, wonamBtnY, wonamBtnW, wonamBtnH);
-    [wonamBtn setTitle:@"女" forState:UIControlStateNormal];
+    [wonamBtn setImage:[UIImage imageNamed:@"gxhsz_nv"] forState:UIControlStateNormal];
+    self.wonamBtn=wonamBtn;
    
     [wonamBtn addTarget:self action:@selector(clickTheWonamBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:wonamBtn];
@@ -157,10 +182,12 @@
     CGFloat startBtnW=SCREEN_WIDTH;
     CGFloat startBtnH=50;
     startBtn.frame=CGRectMake(startBtnX, startBtnY, startBtnW, startBtnH);
-    startBtn.backgroundColor=[UIColor blueColor];
+    startBtn.enabled=NO;
+    startBtn.backgroundColor=ZCColor(100, 175, 102);
     [startBtn setTitle:@"保存" forState:UIControlStateNormal];
     [startBtn addTarget:self action:@selector(clickTheStartBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:startBtn];
+    self.startBtn=startBtn;
     
     
 }
@@ -168,14 +195,49 @@
 //选择男
 -(void)clickTheManBtn:(UIButton *)button
 {
+    
+    [self.manBtn setImage:[UIImage imageNamed:@"nan_xuanzhong"] forState:UIControlStateNormal];
+    [self.wonamBtn setImage:[UIImage imageNamed:@"gxhsz_nv"] forState:UIControlStateNormal];
     self.index=1;
+    
+    
+    
+    [self whetherCanSaveClicks];
 }
 
 
 //选择女
 -(void)clickTheWonamBtn:(UIButton *)button
 {
+    
+    
+    [self.manBtn setImage:[UIImage imageNamed:@"gxhsz_nan"] forState:UIControlStateNormal];
+    [self.wonamBtn setImage:[UIImage imageNamed:@"nv_xuanzhong"] forState:UIControlStateNormal];
     self.index=2;
+    
+    
+    [self whetherCanSaveClicks];
+}
+
+
+//判断保存按钮是否可以点击
+-(void)whetherCanSaveClicks
+{
+    ZCLog(@"------%@",self.nameTextField.text);
+    
+        // [self.startBtn setBackgroundColor:[UIColor redColor]];
+    if (self.index&&![self.nameTextField.text isEqual:@""]&&self.chooseImage) {
+        
+        self.startBtn.enabled=YES;
+        //self.startBtn.backgroundColor=ZCColor(9, 133, 12);
+        [self.startBtn setBackgroundColor:ZCColor(9, 133, 12)];
+    }else{
+        
+        self.startBtn.enabled=NO;
+        self.startBtn.backgroundColor=ZCColor(100, 175, 102);
+
+           }
+
 }
 
 
@@ -256,7 +318,7 @@
     
     // [self saveImage:info[UIImagePickerControllerOriginalImage] WithName:nil];
     //[self pictureUpload];
-    
+    [self whetherCanSaveClicks];
 }
 
 

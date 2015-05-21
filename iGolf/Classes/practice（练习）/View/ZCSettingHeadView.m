@@ -33,10 +33,10 @@
 {
     if (self=[super initWithReuseIdentifier:reuseIdentifier]) {
         
-        self.backgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+       self.backgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yihang_bj232"]];
         
          // self.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
-        
+        self.backgroundColor=[UIColor whiteColor];
         //添加子控件
         //1.添加按钮
         UIButton *nameButton=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -45,7 +45,7 @@
         //       [nameButton setImage:[UIImage imageNamed:@"tabbar_home"] forState:UIControlStateNormal];
         //
         //
-        [nameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        //[nameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         //
         //        // 设置按钮的内容左对齐
         nameButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -78,7 +78,7 @@
         //childName.backgroundColor=[UIColor blueColor];
         //居中
        // childName.textAlignment=NSTextAlignmentCenter;
-        childName.textColor=ZCColor(240, 208, 122);
+        childName.textColor=ZCColor(34, 34, 34);
         
         [self addSubview:childName];
         self.childName=childName;
@@ -86,7 +86,7 @@
         //右边
         UILabel *TTaiName=[[UILabel alloc] init];
         
-       TTaiName.textColor=ZCColor(240, 208, 122);
+       TTaiName.textColor=ZCColor(255, 150, 29);
         //居中
         TTaiName.textAlignment=NSTextAlignmentRight;
         
@@ -107,11 +107,11 @@
         [self addSubview:TTaiImage];
         self.TTaiImage=TTaiImage;
         
-        
-        UIView *bjview=[[UIView alloc] init];
-        bjview.backgroundColor=ZCColor(136, 119, 73);
-        [self addSubview:bjview];
-        self.bjview=bjview;
+//        
+//        UIView *bjview=[[UIView alloc] init];
+//        bjview.backgroundColor=ZCColor(170, 170, 170);
+//        [self addSubview:bjview];
+//        self.bjview=bjview;
         
     }
     return self;

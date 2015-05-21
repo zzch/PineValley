@@ -55,16 +55,16 @@
     
    
     //背景颜色suoyou_bj
-    self.tableView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+    self.tableView.backgroundColor=ZCColor(60, 57, 78);
     //去掉分割线
     //self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //分割线颜色
-    [self.tableView   setSeparatorColor:ZCColor(240, 208, 122)];
+    [self.tableView   setSeparatorColor:ZCColor(170, 170, 170)];
 
     
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
-    self.tableView.sectionHeaderHeight=130;
+    self.tableView.sectionHeaderHeight=145;
     
     
     self.tableView.rowHeight=125;

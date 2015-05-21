@@ -166,7 +166,7 @@
         
         ZCToJoinTheGameTableViewController *toJoinTheGameTableViewController=[[ZCToJoinTheGameTableViewController alloc] init];
         
-        toJoinTheGameTableViewController.athleticEventsModel=self.athleticEventsModel;
+//        toJoinTheGameTableViewController.athleticEventsModel=self.athleticEventsModel;
         [self.navigationController pushViewController:toJoinTheGameTableViewController animated:YES];
         
     }

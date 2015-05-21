@@ -60,16 +60,16 @@
     
     
     //背景颜色suoyou_bj
-    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+    self.view.backgroundColor=ZCColor(237, 237, 237);
 
     
     UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleDone target:self action:@selector(clickOnTheProfessionalSave)];
-    //改变UIBarButtonItem字体颜色
-    [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:ZCColor(240, 208, 122), UITextAttributeTextColor,nil] forState:UIControlStateNormal];
+//    //改变UIBarButtonItem字体颜色
+    [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor,nil] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem =newBar;
     
     
-    
+    //self.navigationItem.backBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
     
     //返回
     self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
@@ -413,13 +413,13 @@
 -(void)initView
 {
     UIView *resultsView=[[UIView alloc] init];
-    
+    resultsView.backgroundColor=ZCColor(60, 57, 78);
     resultsView.frame=CGRectMake(0, 0, SCREEN_WIDTH, 50);
     [self.view addSubview:resultsView];
     //标准杆
     UILabel *parLabel=[[UILabel alloc] initWithFrame:CGRectMake(20, 0, SCREEN_WIDTH*0.197, resultsView.frame.size.height)];
     parLabel.text=[NSString stringWithFormat:@"%@标准杆",self.scorecard.par];
-    parLabel.textColor=ZCColor(240, 208, 122);
+    parLabel.textColor=[UIColor whiteColor];
     [resultsView addSubview:parLabel];
     self.parLabel=parLabel;
     
@@ -427,7 +427,7 @@
     //码数
     UILabel *distanceLabel=[[UILabel alloc] initWithFrame:CGRectMake(parLabel.frame.size.width+parLabel.frame.origin.x+SCREEN_WIDTH*0.04, 0, SCREEN_WIDTH*0.156, resultsView.frame.size.height)];
    // distanceLabel.text=[NSString stringWithFormat:@"%@码",self.scorecard.distance_from_hole_to_tee_box];
-    distanceLabel.textColor=ZCColor(240, 208, 122);
+    distanceLabel.textColor=[UIColor whiteColor];
     [resultsView addSubview:distanceLabel];
     self.distanceLabel=distanceLabel;
     
@@ -449,7 +449,7 @@
 //    tee_box_colorLabel.text=@"金T";
 //    }
     
-    tee_box_colorLabel.textColor=ZCColor(240, 208, 122);
+    tee_box_colorLabel.textColor=[UIColor whiteColor];
     [resultsView addSubview:tee_box_colorLabel];
     self.tee_box_colorLabel=tee_box_colorLabel;
     
@@ -500,9 +500,9 @@
     tableview.dataSource=self;
     tableview.rowHeight=50;
     
-    tableview.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+    tableview.backgroundColor=ZCColor(237, 237, 237);
     
-    [tableview   setSeparatorColor:ZCColor(240, 208, 122)];
+    [tableview   setSeparatorColor:ZCColor(170, 170, 170)];
     //让下面没内容的分割线不显示
     tableview.tableFooterView = [[UIView alloc] init];
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, tableview.rowHeight, 0);
@@ -550,13 +550,13 @@
  
     UIView *view=[[UIView alloc] init];
     view.frame=CGRectMake(0, 0, SCREEN_WIDTH, 35);
-    view.backgroundColor=[UIColor blackColor];
+    //view.backgroundColor=[UIColor blackColor];
 
     UILabel *label1=[[UILabel alloc] init];
     label1.frame=CGRectMake(0, 0, SCREEN_WIDTH*0.153,view.frame.size.height );
     label1.text=@"杆";
     label1.textAlignment=NSTextAlignmentCenter;
-    label1.textColor=ZCColor(240, 208, 122);
+    label1.textColor=ZCColor(85, 85, 85);
     [view addSubview:label1];
     
     
@@ -565,7 +565,7 @@
     label2.frame=CGRectMake(label1.frame.size.width+label1.frame.origin.x, 0, SCREEN_WIDTH*0.297,view.frame.size.height );
     label2.text=@"距离球洞/码";
     label2.textAlignment=NSTextAlignmentCenter;
-    label2.textColor=ZCColor(240, 208, 122);
+    label2.textColor=ZCColor(85, 85, 85);
     [view addSubview:label2];
 
     
@@ -574,7 +574,7 @@
     label3.frame=CGRectMake(label2.frame.size.width+label2.frame.origin.x, 0, SCREEN_WIDTH*0.227,view.frame.size.height );
     label3.text=@"球的状态";
     label3.textAlignment=NSTextAlignmentCenter;
-    label3.textColor=ZCColor(240, 208, 122);
+    label3.textColor=ZCColor(85, 85, 85);
     [view addSubview:label3];
     
     
@@ -582,7 +582,7 @@
     label4.frame=CGRectMake(label3.frame.size.width+label3.frame.origin.x, 0, SCREEN_WIDTH*0.172,view.frame.size.height );
     label4.text=@"罚杆";
     label4.textAlignment=NSTextAlignmentCenter;
-    label4.textColor=ZCColor(240, 208, 122);
+    label4.textColor=ZCColor(85, 85, 85);
     [view addSubview:label4];
     
     
@@ -591,13 +591,13 @@
     label5.frame=CGRectMake(label4.frame.size.width+label4.frame.origin.x, 0, SCREEN_WIDTH-(label4.frame.size.width+label4.frame.origin.x),view.frame.size.height );
     label5.text=@"球杆";
     label5.textAlignment=NSTextAlignmentCenter;
-    label5.textColor=ZCColor(240, 208, 122);
+    label5.textColor=ZCColor(85, 85, 85);
     [view addSubview:label5];
 
     
     UIView *bjView=[[UIView alloc] init];
     bjView.frame=CGRectMake(0, view.frame.size.height-1, SCREEN_WIDTH, 1);
-    bjView.backgroundColor=ZCColor(136, 119, 73);
+    bjView.backgroundColor=ZCColor(170, 170, 170);
     [view addSubview:bjView];
     
     

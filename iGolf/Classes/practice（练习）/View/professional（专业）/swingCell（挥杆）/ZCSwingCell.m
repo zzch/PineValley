@@ -51,7 +51,7 @@
 {
     if (self=[super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
 
-        self.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+       // self.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
         //取消点击效果
         self.selectionStyle=UITableViewCellSelectionStyleNone;
 
@@ -64,7 +64,7 @@
         
         //序号
         UILabel *sequenceLabel=[[UILabel alloc] init];
-        sequenceLabel.textColor=ZCColor(240, 208, 122);
+        sequenceLabel.textColor=ZCColor(85, 85, 85);
         sequenceLabel.textAlignment=NSTextAlignmentCenter;
         [valueView addSubview:sequenceLabel];
         self.sequenceLabel=sequenceLabel;
@@ -73,7 +73,7 @@
         //码数
         UILabel *codeLable=[[UILabel alloc] init];
        codeLable.textAlignment=NSTextAlignmentCenter;
-        codeLable.textColor=ZCColor(240, 208, 122);
+        codeLable.textColor=ZCColor(85, 85, 85);
         codeLable.font=[UIFont systemFontOfSize:16];
         self.codeLable=codeLable;
         [valueView addSubview:codeLable];
@@ -81,7 +81,7 @@
         
         //状态stateLable
         UILabel *stateLable=[[UILabel alloc] init];
-        stateLable.textColor=ZCColor(240, 208, 122);
+        stateLable.textColor=ZCColor(85, 85, 85);
         stateLable.textAlignment=NSTextAlignmentCenter;
         stateLable.font=[UIFont systemFontOfSize:16];
         self.stateLable=stateLable;
@@ -89,7 +89,7 @@
         
         //罚杆penaltyLable
         UILabel *penaltyLable=[[UILabel alloc] init];
-        penaltyLable.textColor=ZCColor(240, 208, 122);
+        penaltyLable.textColor=ZCColor(85, 85, 85);
         penaltyLable.textAlignment=NSTextAlignmentCenter;
         penaltyLable.font=[UIFont systemFontOfSize:16];
         self.penaltyLable=penaltyLable;
@@ -99,7 +99,7 @@
         //球杆cueLable
         UILabel *cueLable=[[UILabel alloc] init];
         cueLable.textAlignment=NSTextAlignmentCenter;
-        cueLable.textColor=ZCColor(240, 208, 122);
+        cueLable.textColor=ZCColor(85, 85, 85);
         cueLable.font=[UIFont systemFontOfSize:16];
         self.cueLable=cueLable;
         [valueView addSubview:cueLable];
@@ -111,7 +111,7 @@
         
         UIImageView *addImage=[[UIImageView alloc] init];
             addImage.frame=CGRectMake((self.frame.size.width-30)/2, (self.frame.size.height-30)/2, 30, 30);
-        addImage.image=[UIImage imageNamed:@"jfk_tianjia"];
+        addImage.image=[UIImage imageNamed:@"zyjf_tiejia"];
         //addLabel.text=@"+++++++++++++";
             
         [self addSubview:addImage];

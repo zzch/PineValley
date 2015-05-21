@@ -61,7 +61,7 @@
     
     
     
-    UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"切换" style:UIBarButtonItemStyleDone target:self action:@selector(switchOtherView)];
+    UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStyleDone target:self action:@selector(switchOtherView)];
     //改变UIBarButtonItem字体颜色
     [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:ZCColor(240, 208, 122), UITextAttributeTextColor,nil] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem =newBar;
@@ -260,8 +260,8 @@
    
      
         //背景颜色suoyou_bj
-        self.tableView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
-        [self.tableView   setSeparatorColor:ZCColor(240, 208, 122)];
+    self.tableView.backgroundColor=ZCColor(237, 237, 237);
+        [self.tableView   setSeparatorColor:ZCColor(170, 170, 170)];
     
         self.tableView.tableFooterView = [[UIView alloc] init];
         

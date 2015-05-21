@@ -23,6 +23,8 @@
     [super viewDidLoad];
     
     
+    self.view.backgroundColor=ZCColor(237, 237, 237);
+    
     //返回
     self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
     
@@ -119,6 +121,7 @@
     firstLable1.frame=CGRectMake(firstLable1X, firstLable1Y, firstLable1W, firstLable1H);
     firstLable1.text=@"您的比赛口令密码为以下4位数字";
     firstLable1.textAlignment=NSTextAlignmentCenter;
+    firstLable1.textColor=ZCColor(85, 85, 85);
     [self.view addSubview:firstLable1];
     
     
@@ -126,6 +129,7 @@
     secondLabel.frame=CGRectMake(0, firstLable1Y+firstLable1H+7, firstLable1W, 25);
     secondLabel.textAlignment=NSTextAlignmentCenter;
     secondLabel.text=@"Ta输入后即可加入到您的比赛";
+    secondLabel.textColor=ZCColor(85, 85, 85);
     [self.view addSubview:secondLabel];
     
     
@@ -139,8 +143,8 @@
     
     
     //宽高
-    CGFloat  passLabelW=view1H;
-    CGFloat  passLabelH=view1H;
+    CGFloat  passLabelW=45;
+    CGFloat  passLabelH=45;
     //间距
     CGFloat spacing=(SCREEN_WIDTH-(4*passLabelW))/5;
     
@@ -152,8 +156,11 @@
         [view1 addSubview:passLabel];
         
         
-        passLabel.backgroundColor=[UIColor redColor];
+        passLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"yqhy_mima"]];
+;
         passLabel.textAlignment=NSTextAlignmentCenter;
+        passLabel.font=[UIFont systemFontOfSize:25];
+        passLabel.textColor=ZCColor(255, 150, 29);
         
         NSString *passwordChar;
         if (index < self.password.length)
@@ -169,40 +176,72 @@
     
     
     
-    
-    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-    [fmt setDateFormat:@"HH时mm分ss秒 "];
-    NSDate *confromTimesp=[NSDate dateWithTimeIntervalSince1970:self.expired_at];
-    NSString *confromTimespStr=[fmt stringFromDate:confromTimesp];
-    ZCLog(@"%@",confromTimespStr);
-    
-    
-    CGFloat thirdLableW=SCREEN_WIDTH;
-    CGFloat thirdLableH=25;
-    CGFloat thirdLableX=0;
-    CGFloat thirdLableY=view1Y+view1H+20;
-    UILabel *thirdLable=[[UILabel alloc] init];
-    thirdLable.frame=CGRectMake(thirdLableX, thirdLableY, thirdLableW, thirdLableH);
-    thirdLable.text=[NSString stringWithFormat:@"口令密码有效期到%@",confromTimespStr];
-    thirdLable.textAlignment=NSTextAlignmentCenter;
-    [self.view addSubview:thirdLable];
-    
-    
-    UILabel *forthLabel=[[UILabel alloc] init];
-    forthLabel.frame=CGRectMake(0, thirdLableY+thirdLableH+7, firstLable1W, 25);
-    forthLabel.textAlignment=NSTextAlignmentCenter;
-    forthLabel.text=@"过期后可继续获取新口令密码";
-    [self.view addSubview:forthLabel];
-    
+//    
+//    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+//    [fmt setDateFormat:@"HH时mm分ss秒 "];
+//    NSDate *confromTimesp=[NSDate dateWithTimeIntervalSince1970:self.expired_at];
+//    NSString *confromTimespStr=[fmt stringFromDate:confromTimesp];
+//    ZCLog(@"%@",confromTimespStr);
+//    
+//    
+//    CGFloat thirdLableW=SCREEN_WIDTH;
+//    CGFloat thirdLableH=25;
+//    CGFloat thirdLableX=0;
+//    CGFloat thirdLableY=view1Y+view1H+20;
+//    UILabel *thirdLable=[[UILabel alloc] init];
+//    thirdLable.frame=CGRectMake(thirdLableX, thirdLableY, thirdLableW, thirdLableH);
+//    thirdLable.text=[NSString stringWithFormat:@"口令密码有效期到%@",confromTimespStr];
+//    thirdLable.textAlignment=NSTextAlignmentCenter;
+//    thirdLable.textColor=ZCColor(85, 85, 85);
+//    [self.view addSubview:thirdLable];
+//    
+//    
+//    UILabel *forthLabel=[[UILabel alloc] init];
+//    forthLabel.frame=CGRectMake(0, thirdLableY+thirdLableH+3, firstLable1W, 25);
+//    forthLabel.textAlignment=NSTextAlignmentCenter;
+//    forthLabel.text=@"过期后可继续获取新口令密码";
+//    forthLabel.textColor=ZCColor(85, 85, 85);
+//    [self.view addSubview:forthLabel];
+//    
     
     
     
     
     
     UIView *xianView=[[UIView alloc] init];
-    xianView.frame=CGRectMake(20, forthLabel.frame.size.height+forthLabel.frame.origin.y+20, SCREEN_WIDTH-40, 1);
-    xianView.backgroundColor=[UIColor redColor];
+    xianView.frame=CGRectMake(20, view1Y+view1H+20, SCREEN_WIDTH-40, 1);
+    xianView.backgroundColor=ZCColor(170, 170, 170);
     [self.view addSubview:xianView];
+    
+    
+    
+    
+    UIImageView *firstImageView=[[UIImageView alloc] init];
+    CGFloat firstImageViewW=254;
+    CGFloat firstImageViewH=102;
+    CGFloat firstImageViewX=(SCREEN_WIDTH-firstImageViewW)/2;
+    CGFloat firstImageViewY=xianView.frame.origin.y+20;
+    firstImageView.frame=CGRectMake(firstImageViewX, firstImageViewY, firstImageViewW, firstImageViewH);
+    
+    firstImageView.image=[UIImage imageNamed:@"yqhy_jiaru"];
+    [self.view addSubview:firstImageView];
+    
+    
+    
+    
+    
+    UIImageView *secondImageView=[[UIImageView alloc] init];
+    CGFloat secondImageViewW=254;
+    CGFloat secondImageViewH=102;
+    CGFloat secondImageViewX=(SCREEN_WIDTH-firstImageViewW)/2;
+    CGFloat secondImageViewY=firstImageViewY+firstImageViewH+10;
+    secondImageView.frame=CGRectMake(secondImageViewX, secondImageViewY, secondImageViewW, secondImageViewH);
+    
+    secondImageView.image=[UIImage imageNamed:@"yqhy_yiqibisai"];
+    [self.view addSubview:secondImageView];
+    
+    
+    
 
 }
 

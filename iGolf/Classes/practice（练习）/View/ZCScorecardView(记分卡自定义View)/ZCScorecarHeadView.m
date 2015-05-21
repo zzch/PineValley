@@ -17,6 +17,9 @@
 @property(nonatomic,weak)UIButton *listBtn;
 @property(nonatomic,weak)UIButton *InviteFriendsBtn;
 @property(nonatomic,weak)UIButton *analysisBtn;
+@property(nonatomic,weak)UIView *bjView;
+@property(nonatomic,weak)UIView *shuBjView1;
+@property(nonatomic,weak)UIView *shuBjView2;
 @end
 @implementation ZCScorecarHeadView
 
@@ -26,7 +29,7 @@
     if (self=[super initWithFrame:frame]) {
         
         
-        self.backgroundColor=[UIColor blackColor];
+        self.backgroundColor=ZCColor(60, 57, 78);
         
         
         UIImageView *personImageView=[[UIImageView alloc] init];
@@ -38,36 +41,44 @@
 
         
         UILabel *nameLabel=[[UILabel alloc] init];
-        nameLabel.textColor=ZCColor(240, 208, 122);
+        nameLabel.textColor=[UIColor whiteColor];
         [self addSubview:nameLabel];
         self.nameLabel=nameLabel;
 
         
         //排名
         UILabel *rankingLabel=[[UILabel alloc] init];
-        rankingLabel.textColor=ZCColor(240, 208, 122);
+        rankingLabel.textColor=[UIColor whiteColor];
         [self addSubview:rankingLabel];
         self.rankingLabel=rankingLabel;
         
         
         //成绩
         UILabel *resultsLabel=[[UILabel alloc] init];
-        resultsLabel.textColor=ZCColor(240, 208, 122);
+        resultsLabel.textColor=[UIColor whiteColor];
         [self addSubview:resultsLabel];
         self.resultsLabel=resultsLabel;
         
         //进度
         UILabel *progressLabel=[[UILabel alloc] init];
-        progressLabel.textColor=ZCColor(240, 208, 122);
-        [self addSubview:progressLabel];
+        progressLabel.textColor=[UIColor whiteColor];        [self addSubview:progressLabel];
         self.progressLabel=progressLabel;
         
         
         //距标准杆
         UILabel *parLabel=[[UILabel alloc] init];
-        parLabel.textColor=ZCColor(240, 208, 122);
+        parLabel.textColor=[UIColor whiteColor];
         [self addSubview:parLabel];
         self.parLabel=parLabel;
+        
+        
+        //背景色横线
+        UIView *bjView=[[UIView alloc] init];
+        bjView.backgroundColor=RGBACOLOR(170, 170, 170, 1);
+        [self addSubview:bjView];
+        self.bjView=bjView;
+
+        
         
         /**
          排行榜
@@ -80,8 +91,14 @@
         [self addSubview:listBtn];
         self.listBtn=listBtn;
         
-        /**
-         *  邀请好友
+        UIView *shuBjView1=[[UIView alloc] init];
+        shuBjView1.backgroundColor=RGBACOLOR(170, 170, 170, 1);
+        [self addSubview:shuBjView1];
+        self.shuBjView1=shuBjView1;
+
+        
+         /**
+         *  邀请好友  shuBjView1
          */
         UIButton *InviteFriendsBtn=[[UIButton alloc] init];
         [InviteFriendsBtn setTitle:@"邀请好友" forState:UIControlStateNormal];
@@ -89,6 +106,12 @@
         [InviteFriendsBtn addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:InviteFriendsBtn];
         self.InviteFriendsBtn=InviteFriendsBtn;
+        
+        
+        UIView *shuBjView2=[[UIView alloc] init];
+        shuBjView2.backgroundColor=RGBACOLOR(170, 170, 170, 1);
+        [self addSubview:shuBjView2];
+        self.shuBjView2=shuBjView2;
 
         /**
          * 技术分析
@@ -119,19 +142,50 @@
 
 
 
-
+- (id) _valueOrNil:(id)obj {
+    if (!obj) {
+        return nil;
+    }
+    if (obj == [NSNull null]) {
+        return nil;
+    }
+    return obj;
+}
 
 -(void)setPlayerModel:(ZCPlayerModel *)playerModel
 {
     _playerModel=playerModel;
     
-    self.nameLabel.text=[NSString stringWithFormat:@"%@",playerModel.user.nickname];
-    self.rankingLabel.text=[NSString stringWithFormat:@"排名: %@",playerModel.position];
-    self.resultsLabel.text=[NSString stringWithFormat:@"成绩: %@杆",playerModel.strokes];
     
+    self.nameLabel.text=[NSString stringWithFormat:@"%@",playerModel.user.nickname];
+    if ([self _valueOrNil:playerModel.position]==nil) {
+         self.rankingLabel.text=[NSString stringWithFormat:@"排名: -"];
+    }else
+    {
+     self.rankingLabel.text=[NSString stringWithFormat:@"排名: %@",playerModel.position];
+    }
+    
+    if ([self _valueOrNil:playerModel.strokes]==nil) {
+        self.resultsLabel.text=[NSString stringWithFormat:@"成绩: -"];
+    }else{
+    self.resultsLabel.text=[NSString stringWithFormat:@"成绩: %@杆",playerModel.strokes];
+    }
+    
+    
+    
+    if ([self _valueOrNil:playerModel.recorded_scorecards_count]==nil) {
+        self.progressLabel.text=[NSString stringWithFormat:@"进度: -/18"];
+    }else{
     self.progressLabel.text=[NSString stringWithFormat:@"进度: %@/18",playerModel.recorded_scorecards_count];
-
+    }
+    
+    
+    
+    if ([self _valueOrNil:playerModel.total]==nil) {
+        self.parLabel.text=[NSString stringWithFormat:@"距标准杆: -"];
+    }else{
     self.parLabel.text=[NSString stringWithFormat:@"距标准杆: %@",playerModel.total];
+    }
 }
 
 
@@ -205,24 +259,30 @@
     self.parLabel.frame=CGRectMake(parLabelX, parLabelY, parLabelW, parLabelH);
     
     
+    self.bjView.frame=CGRectMake(0, parLabelY+parLabelH+9, SCREEN_WIDTH, 1);
+    
     /**
      *  排行榜
      */
     CGFloat  listBtnX=0;
-    CGFloat  listBtnY=personImageViewY+personImageViewH+10;
-    CGFloat  listBtnW=SCREEN_WIDTH/3;
+    CGFloat  listBtnY=parLabelY+parLabelH+10;
+    CGFloat  listBtnW=SCREEN_WIDTH/3-1;
     CGFloat  listBtnH=40;
     self.listBtn.frame=CGRectMake(listBtnX, listBtnY, listBtnW, listBtnH);
     
+    
+     self.shuBjView1.frame=CGRectMake(listBtnW, listBtnY+5, 1, 30);
     
     /**
      *  邀请好友
      */
     CGFloat  InviteFriendsBtnX=listBtnW;
     CGFloat  InviteFriendsBtnY=listBtnY;
-    CGFloat  InviteFriendsBtnW=SCREEN_WIDTH/3;
+    CGFloat  InviteFriendsBtnW=SCREEN_WIDTH/3-1;
     CGFloat  InviteFriendsBtnH=40;
     self.InviteFriendsBtn.frame=CGRectMake(InviteFriendsBtnX, InviteFriendsBtnY, InviteFriendsBtnW, InviteFriendsBtnH);
+    
+    self.shuBjView2.frame=CGRectMake(InviteFriendsBtnX+InviteFriendsBtnW, listBtnY+5, 1, 30);
     
     /**
      *  技术分析
