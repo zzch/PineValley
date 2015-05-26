@@ -35,15 +35,15 @@
     [super viewDidLoad];
     
     
-    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+    self.view.backgroundColor=ZCColor(237, 237, 237);
     
-    
-    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
-    customLab.textAlignment=NSTextAlignmentCenter;
-    [customLab setTextColor:ZCColor(240, 208, 122)];
-    [customLab setText:@"快捷记分卡"];
-    customLab.font = [UIFont boldSystemFontOfSize:20];
-    self.navigationItem.titleView = customLab;
+    self.navigationItem.title=@"技术统计";
+//    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+//    customLab.textAlignment=NSTextAlignmentCenter;
+//    [customLab setTextColor:ZCColor(240, 208, 122)];
+//    [customLab setText:@"快捷记分卡"];
+//    customLab.font = [UIFont boldSystemFontOfSize:20];
+//    self.navigationItem.titleView = customLab;
     
     
     //返回
@@ -78,13 +78,11 @@
     ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
     //params[@"scorecard_uuid"]=self.scorecard.uuid;
     // ZCLog(@"%@",[self.eventArray[indexPath.row] uuid]);
-    ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
+    //ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
     params[@"token"]=account.token;
-    params[@"match_uuid"]=tool.uuid;
-    ZCLog(@"%@",account.token);
-    ZCLog(@"%@",tool.uuid);
-    ///v1/matches/practice/statistics/professional.json
-    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"matches/practice/statistics/professional.json"];
+    params[@"match_uuid"]=self.uuid;
+       ///v1/matches/practice/statistics/professional.json
+    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"statistics/professional.json"];
     ZCLog(@"%@",url);
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
@@ -142,7 +140,7 @@
     [self blackgroundLine:totalGradeBtn];
     NSDictionary *total= self.professionalStatisticalModel.item_01;
     //总成绩里面的内容
-    [self addContent:totalGradeBtn imageView:@"zongganshu" nameLabel:@"总成绩" firstLabel:[NSString stringWithFormat:@"%@",total[@"score"]] secondLabel:[NSString stringWithFormat:@"%@",total[@"putts"]] thirdLabel:[NSString stringWithFormat:@"%@",total[@"net"]] firstNameLabel:@"总杆" secondNameLabel:@"净杆" thirdNameLabel:@"推杆"];
+    [self addContent:totalGradeBtn imageView:@"zongchengji" nameLabel:@"总成绩" firstLabel:[NSString stringWithFormat:@"%@",total[@"score"]] secondLabel:[NSString stringWithFormat:@"%@",total[@"putts"]] thirdLabel:[NSString stringWithFormat:@"%@",total[@"net"]] firstNameLabel:@"总杆" secondNameLabel:@"净杆" thirdNameLabel:@"推杆"];
     
     
     //平均杆
@@ -159,11 +157,11 @@
     [self blackgroundLine:averageBtn];
 
 //    //监听点击
-//    [averageBtn addTarget:self action:@selector(clickaverageBtn) forControlEvents:UIControlEventTouchUpInside];
+//  [averageBtn addTarget:self action:@selector(clickaverageBtn) forControlEvents:UIControlEventTouchUpInside];
     
     NSDictionary *average= self.professionalStatisticalModel.item_02;
     //平均杆里内容
-    [self addContent:averageBtn imageView:@"pingjunganshu" nameLabel:@"平均杆数" firstLabel:[NSString stringWithFormat:@"%@",average[@"average_score_par_3"]] secondLabel:[NSString stringWithFormat:@"%@",average[@"average_score_par_4"]] thirdLabel:[NSString stringWithFormat:@"%@",average[@"average_score_par_5"]] firstNameLabel:@"3杆洞" secondNameLabel:@"4杆洞" thirdNameLabel:@"5杆洞"];
+    [self addContent:averageBtn imageView:@"（2）pingjunganshu" nameLabel:@"平均杆数" firstLabel:[NSString stringWithFormat:@"%@",average[@"average_score_par_3"]] secondLabel:[NSString stringWithFormat:@"%@",average[@"average_score_par_4"]] thirdLabel:[NSString stringWithFormat:@"%@",average[@"average_score_par_5"]] firstNameLabel:@"3杆洞" secondNameLabel:@"4杆洞" thirdNameLabel:@"5杆洞"];
     
     
     //推杆
@@ -185,7 +183,7 @@
     
     NSDictionary *pushRod= self.professionalStatisticalModel.item_03;
     //推杆里内容
-    [self addContent:pushRodBtn imageView:@"tuigan" nameLabel:@"推杆" firstLabel:[NSString stringWithFormat:@"%@",pushRod[@"average_putts"]] secondLabel:[NSString stringWithFormat:@"%@",pushRod[@"putts_per_gir"]] thirdLabel:[NSString stringWithFormat:@"%@",pushRod[@"putts_per_non_gir"]] firstNameLabel:@"平均/洞" secondNameLabel:@"标准杆" thirdNameLabel:@"大于标准杆"];
+    [self addContent:pushRodBtn imageView:@"（3）tuigan" nameLabel:@"推杆" firstLabel:[NSString stringWithFormat:@"%@",pushRod[@"average_putts"]] secondLabel:[NSString stringWithFormat:@"%@",pushRod[@"putts_per_gir"]] thirdLabel:[NSString stringWithFormat:@"%@",pushRod[@"putts_per_non_gir"]] firstNameLabel:@"平均/洞" secondNameLabel:@"标准杆" thirdNameLabel:@"大于标准杆"];
     
     
     
@@ -205,12 +203,12 @@
     
     
     //监听点击
-   // [bunkersBtn addTarget:self action:@selector(clickbunkersBtn) forControlEvents:UIControlEventTouchUpInside];
+  //  [bunkersBtn addTarget:self action:@selector(clickbunkersBtn) forControlEvents:UIControlEventTouchUpInside];
     
     NSDictionary *bunkers= self.professionalStatisticalModel.item_04;
     
     //推杆里内容
-    [self addContent:bunkersBtn imageView:@"shakeng" nameLabel:@"沙坑(40码)" firstLabel:[NSString stringWithFormat:@"%@",bunkers[@"sand_saves"]] secondLabel:[NSString stringWithFormat:@"%@",bunkers[@"bunker_shots"]] thirdLabel:[NSString stringWithFormat:@"%@",bunkers[@"sand_saves_percentage"]] firstNameLabel:@"沙坑救球" secondNameLabel:@"进入次数" thirdNameLabel:@"成功率"];
+    [self addContent:bunkersBtn imageView:@"（4）shakeng" nameLabel:@"沙坑(40码)" firstLabel:[NSString stringWithFormat:@"%@",bunkers[@"sand_saves"]] secondLabel:[NSString stringWithFormat:@"%@",bunkers[@"bunker_shots"]] thirdLabel:[NSString stringWithFormat:@"%@",bunkers[@"sand_saves_percentage"]] firstNameLabel:@"沙坑救球" secondNameLabel:@"进入次数" thirdNameLabel:@"成功率"];
     
     
     
@@ -230,12 +228,12 @@
     [self blackgroundLine:wedgeBtn];
 
     //监听点击
-   // [wedgeBtn addTarget:self action:@selector(clickwedgeBtn) forControlEvents:UIControlEventTouchUpInside];
+  //  [wedgeBtn addTarget:self action:@selector(clickwedgeBtn) forControlEvents:UIControlEventTouchUpInside];
     
     //切杆里内容
     NSDictionary *wedge= self.professionalStatisticalModel.item_05;
     //ZCLog(@"%@",wedge);
-    [self addContent:wedgeBtn imageView:@"qiegan" nameLabel:@"切杆" firstLabel:[NSString stringWithFormat:@"%@",wedge[@"up_and_downs_count"]] secondLabel:[NSString stringWithFormat:@"%@",wedge[@"shots_within_100"]] thirdLabel:[NSString stringWithFormat:@"%@",wedge[@"up_and_downs_percentage"]] firstNameLabel:@"一切一推" secondNameLabel:@"次数" thirdNameLabel:@"成功率"];
+    [self addContent:wedgeBtn imageView:@"（5）qiegan" nameLabel:@"切杆" firstLabel:[NSString stringWithFormat:@"%@",wedge[@"up_and_downs_count"]] secondLabel:[NSString stringWithFormat:@"%@",wedge[@"shots_within_100"]] thirdLabel:[NSString stringWithFormat:@"%@",wedge[@"up_and_downs_percentage"]] firstNameLabel:@"一切一推" secondNameLabel:@"次数" thirdNameLabel:@"成功率"];
     
     
     
@@ -253,11 +251,11 @@
     [self blackgroundLine:greenBtn];
 
     //点击监听
-    //[greenBtn addTarget:self action:@selector(clickBreenBtn) forControlEvents:UIControlEventTouchUpInside];
+  //  [greenBtn addTarget:self action:@selector(clickBreenBtn) forControlEvents:UIControlEventTouchUpInside];
     
     //攻果岭
     NSDictionary *green= self.professionalStatisticalModel.item_06;
-    [self addContent:greenBtn imageView:@"gongguoling" nameLabel:@"攻果岭" firstLabel:[NSString stringWithFormat:@"%@",green[@"gir_percentage"]] secondLabel:[NSString stringWithFormat:@"%@",green[@"non_gir_percentage"]] thirdLabel:nil firstNameLabel:@"命中" secondNameLabel:@"未命中" thirdNameLabel:nil];
+    [self addContent:greenBtn imageView:@"（6）gongguoling" nameLabel:@"攻果岭" firstLabel:[NSString stringWithFormat:@"%@",green[@"gir_percentage"]] secondLabel:[NSString stringWithFormat:@"%@",green[@"non_gir_percentage"]] thirdLabel:nil firstNameLabel:@"命中" secondNameLabel:@"未命中" thirdNameLabel:nil];
     
     
     //球道命中
@@ -274,12 +272,12 @@
     [self blackgroundLine:fairwayBtn];
 
     //点击监听
-    //[fairwayBtn addTarget:self action:@selector(clickFairwayBtn) forControlEvents:UIControlEventTouchUpInside];
+   // [fairwayBtn addTarget:self action:@selector(clickFairwayBtn) forControlEvents:UIControlEventTouchUpInside];
     
     //球道命中
     NSDictionary *fairway= self.professionalStatisticalModel.item_07;
     ZCLog(@"%@",fairway);
-    [self addContent:fairwayBtn imageView:@"qiudao" nameLabel:@"球道命中" firstLabel:[NSString stringWithFormat:@"%@",fairway[@"drive_fairways_hit"]] secondLabel:[NSString stringWithFormat:@"%@",fairway[@"drive_left_roughs_hit"]] thirdLabel:[NSString stringWithFormat:@"%@",fairway[@"drive_right_roughs_hit"]] firstNameLabel:@"命中" secondNameLabel:@"左侧" thirdNameLabel:@"右侧"];
+    [self addContent:fairwayBtn imageView:@"（7）qoudaomingzhong" nameLabel:@"球道命中" firstLabel:[NSString stringWithFormat:@"%@",fairway[@"drive_fairways_hit"]] secondLabel:[NSString stringWithFormat:@"%@",fairway[@"drive_left_roughs_hit"]] thirdLabel:[NSString stringWithFormat:@"%@",fairway[@"drive_right_roughs_hit"]] firstNameLabel:@"命中" secondNameLabel:@"左侧" thirdNameLabel:@"右侧"];
     
 
     
@@ -299,10 +297,10 @@
 
     
     //点击监听
-    //[kickOffBtn addTarget:self action:@selector(clickkickOffBtn) forControlEvents:UIControlEventTouchUpInside];
+  //  [kickOffBtn addTarget:self action:@selector(clickkickOffBtn) forControlEvents:UIControlEventTouchUpInside];
     //开球
     NSDictionary *kickOff= self.professionalStatisticalModel.item_08;
-    [self addContent:kickOffBtn imageView:@"kaiqiu" nameLabel:@"开球" firstLabel:[NSString stringWithFormat:@"%@",kickOff[@"longest_drive_length"]] secondLabel:[NSString stringWithFormat:@"%@",kickOff[@"average_drive_length"]] thirdLabel:[NSString stringWithFormat:@"%@",kickOff[@"good_drives"]] firstNameLabel:@"最远max" secondNameLabel:@"平均" thirdNameLabel:@"max/2"];
+    [self addContent:kickOffBtn imageView:@"（8）kaiqiu" nameLabel:@"开球" firstLabel:[NSString stringWithFormat:@"%@",kickOff[@"longest_drive_length"]] secondLabel:[NSString stringWithFormat:@"%@",kickOff[@"average_drive_length"]] thirdLabel:[NSString stringWithFormat:@"%@",kickOff[@"good_drives"]] firstNameLabel:@"最远max" secondNameLabel:@"平均" thirdNameLabel:@"max/2"];
     
     
     //杆数
@@ -318,11 +316,11 @@
     [self blackgroundLine:rodNumberBtn];
 
     //点击监听
-    //[rodNumberBtn addTarget:self action:@selector(clickRodNumberBtn) forControlEvents:UIControlEventTouchUpInside];
+  //  [rodNumberBtn addTarget:self action:@selector(clickRodNumberBtn) forControlEvents:UIControlEventTouchUpInside];
     
     //杆数
     NSDictionary *rodNumber= self.professionalStatisticalModel.item_09;
-    [self addContent:rodNumberBtn imageView:@"80" nameLabel:@"杆数" firstLabel:[NSString stringWithFormat:@"%@",rodNumber[@"birdie"]] secondLabel:[NSString stringWithFormat:@"%@",rodNumber[@"par"]] thirdLabel:[NSString stringWithFormat:@"%@",rodNumber[@"bogey"]] firstNameLabel:@"小鸟" secondNameLabel:@"标准杆" thirdNameLabel:@"柏忌"];
+    [self addContent:rodNumberBtn imageView:@"jstj_bingtu" nameLabel:@"杆数" firstLabel:[NSString stringWithFormat:@"%@",rodNumber[@"birdie"]] secondLabel:[NSString stringWithFormat:@"%@",rodNumber[@"par"]] thirdLabel:[NSString stringWithFormat:@"%@",rodNumber[@"bogey"]] firstNameLabel:@"小鸟" secondNameLabel:@"标准杆" thirdNameLabel:@"柏忌"];
 
 
     
@@ -338,7 +336,7 @@
     [self.scrollView addSubview:cueButton];
     
     //点击监听
-    //[cueButton addTarget:self action:@selector(clickCueButton) forControlEvents:UIControlEventTouchUpInside];
+  //  [cueButton addTarget:self action:@selector(clickCueButton) forControlEvents:UIControlEventTouchUpInside];
     
     [self addcueButtonContent:cueButton];
     
@@ -358,7 +356,7 @@
 {
     UIView *bjView=[[UIView alloc] init];
     bjView.frame=CGRectMake(0, view.frame.size.height-1, SCREEN_WIDTH, 1);
-    bjView.backgroundColor=ZCColor(136, 119, 73);
+    bjView.backgroundColor=ZCColor(170, 170, 170);
     [view addSubview:bjView];
 }
 
@@ -471,7 +469,7 @@
     
     UIImageView *imageView=[[UIImageView alloc] init];
     CGFloat imageViewW=188;
-    CGFloat imageViewH=120;
+    CGFloat imageViewH=140;
     CGFloat imageViewX=0;
     CGFloat imageViewY=(button.frame.size.height-imageViewH)*0.5;
     imageView.frame=CGRectMake(imageViewX, imageViewY, imageViewW, imageViewH);
@@ -487,7 +485,7 @@
     CGFloat nameLabelX=SCREEN_WIDTH-nameLabelW-10;
     nameLabel.frame=CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH);
     nameLabel.text=nameLabelText;
-    nameLabel.textColor=ZCColor(240, 208, 122);
+    nameLabel.textColor=ZCColor(85, 85, 85);
     nameLabel.font=[UIFont systemFontOfSize:13];
     nameLabel.textAlignment=NSTextAlignmentRight;
     [button addSubview:nameLabel];
@@ -503,7 +501,7 @@
     CGFloat firstNameLabelH=20;
     firstNameLabel.frame=CGRectMake(firstNameLabelX, firstNameLabelY, firstNameLabelW, firstNameLabelH);
     firstNameLabel.text=firstNameLabelText;
-    firstNameLabel.textColor=ZCColor(240, 208, 122);
+    firstNameLabel.textColor=ZCColor(85, 85, 85);
     firstNameLabel.font=[UIFont systemFontOfSize:14];
     [button addSubview:firstNameLabel];
     
@@ -517,7 +515,7 @@
     CGFloat secondNameLabelH=20;
     secondNameLabel.frame=CGRectMake(secondNameLabelX, secondNameLabelY, secondNameLabelW, secondNameLabelH);
     secondNameLabel.text=secondNameLabelText;
-    secondNameLabel.textColor=ZCColor(240, 208, 122);
+    secondNameLabel.textColor=ZCColor(85, 85, 85);
     secondNameLabel.font=[UIFont systemFontOfSize:14];
     [button addSubview:secondNameLabel];
     
@@ -530,7 +528,7 @@
     CGFloat thirdNameLabelH=20;
     thirdNameLabel.frame=CGRectMake(thirdNameLabelX, thirdNameLabelY, thirdNameLabelW, thirdNameLabelH);
     thirdNameLabel.text=thirdNameLabelText;
-    thirdNameLabel.textColor=ZCColor(240, 208, 122);
+    thirdNameLabel.textColor=ZCColor(85, 85, 85);
     thirdNameLabel.font=[UIFont systemFontOfSize:14];
     [button addSubview:thirdNameLabel];
 
@@ -548,7 +546,7 @@
     firstLabel.frame=CGRectMake(firstLabelX, firstLabelY, firstLabelW, firstLabelH);
    
    
-    firstLabel.textColor=ZCColor(240, 208, 122);
+    firstLabel.textColor=ZCColor(85, 85, 85);
     [button addSubview:firstLabel];
     if ([firstLabelText isEqual:@"<null>"]) {
         
@@ -569,7 +567,7 @@
     CGFloat secondLabelH=20;
     secondLabel.frame=CGRectMake(secondLabelX, secondLabelY, secondLabelW, secondLabelH);
     
-    secondLabel.textColor=ZCColor(240, 208, 122);
+    secondLabel.textColor=ZCColor(85, 85, 85);
     [button addSubview:secondLabel];
     if ([secondLabelText isEqual:@"<null>"]) {
         
@@ -588,7 +586,7 @@
     CGFloat thirdLabelH=20;
     thirdLabel.frame=CGRectMake(thirdLabelX, thirdLabelY, thirdLabelW, thirdLabelH);
     
-    thirdLabel.textColor=ZCColor(240, 208, 122);
+    thirdLabel.textColor=ZCColor(85, 85, 85);
     [button addSubview:thirdLabel];
     
     if ([thirdLabelText isEqual:@"<null>"]) {
@@ -641,7 +639,7 @@
     CGFloat nameLabelX=(button.frame.size.width-nameLabelW)*0.5;
     nameLabel.frame=CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH);
     nameLabel.text=@"球杆";
-    nameLabel.textColor=ZCColor(240, 208, 122);
+    nameLabel.textColor=ZCColor(85, 85, 85);
     [button addSubview:nameLabel];
     
     
@@ -655,12 +653,12 @@
     //添加里面内容
     if (cueMutableArray.count>=1) {
         ZCCueMode *cue= cueMutableArray[0];
-        [self addView:firstView topLabel:[NSString stringWithFormat:@"%@",cue.name] cueImageName:@"qiugan" codeNumber:[NSString stringWithFormat:@"%@",cue.maximum_length]];
+        [self addView:firstView topLabel:[NSString stringWithFormat:@"%@",cue.name] cueImageName:@"jstj_qiugan" codeNumber:[NSString stringWithFormat:@"%@",cue.maximum_length]];
         
 
     }else
     {
-      [self addView:firstView topLabel:@"未选取" cueImageName:@"qiugan_wu" codeNumber:@""];
+      [self addView:firstView topLabel:@"未选取" cueImageName:@"jstj_qiugan" codeNumber:@""];
     }
     
     
@@ -677,11 +675,11 @@
     //添加里面内容qiugan_wu
     if (cueMutableArray.count>=2) {
         ZCCueMode *cue= cueMutableArray[1];
-        [self addView:secondView topLabel:[NSString stringWithFormat:@"%@",cue.name] cueImageName:@"qiugan" codeNumber:[NSString stringWithFormat:@"%@",cue.maximum_length]];
+        [self addView:secondView topLabel:[NSString stringWithFormat:@"%@",cue.name] cueImageName:@"jstj_qiugan" codeNumber:[NSString stringWithFormat:@"%@",cue.maximum_length]];
  
         
     }else{
-        [self addView:secondView topLabel:@"未选取" cueImageName:@"qiugan_wu" codeNumber:@""];
+        [self addView:secondView topLabel:@"未选取" cueImageName:@"jstj_qiugan" codeNumber:@""];
     }
 
     
@@ -698,11 +696,11 @@
     //添加里面内容
     if (cueMutableArray.count>=3) {
         ZCCueMode *cue= cueMutableArray[2];
-        [self addView:thirdView topLabel:[NSString stringWithFormat:@"%@",cue.name] cueImageName:@"qiugan" codeNumber:[NSString stringWithFormat:@"%@",cue.maximum_length]];
+        [self addView:thirdView topLabel:[NSString stringWithFormat:@"%@",cue.name] cueImageName:@"jstj_qiugan" codeNumber:[NSString stringWithFormat:@"%@",cue.maximum_length]];
         
         
     }else{
-        [self addView:thirdView topLabel:@"未选取" cueImageName:@"qiugan_wu" codeNumber:@""];
+        [self addView:thirdView topLabel:@"未选取" cueImageName:@"jstj_qiugan" codeNumber:@""];
     }
     
 
@@ -719,11 +717,11 @@
     //添加里面内容
     if (cueMutableArray.count>=4) {
         ZCCueMode *cue= cueMutableArray[3];
-        [self addView:fourthView topLabel:[NSString stringWithFormat:@"%@",cue.name] cueImageName:@"qiugan" codeNumber:[NSString stringWithFormat:@"%@",cue.maximum_length]];
+        [self addView:fourthView topLabel:[NSString stringWithFormat:@"%@",cue.name] cueImageName:@"jstj_qiugan" codeNumber:[NSString stringWithFormat:@"%@",cue.maximum_length]];
         
         
     }else{
-       [self addView:fourthView topLabel:@"未选取" cueImageName:@"qiugan_wu" codeNumber:@""];
+       [self addView:fourthView topLabel:@"未选取" cueImageName:@"jstj_qiugan" codeNumber:@""];
     }
 
     
@@ -768,7 +766,7 @@
     codeNumberLabel.frame=CGRectMake(codeNumberLabelX, codeNumberLabelY, codeNumberLabelW, codeNumberLabelH);
     codeNumberLabel.textAlignment=NSTextAlignmentCenter;
     
-    codeNumberLabel.textColor=ZCColor(240, 208, 122);
+    codeNumberLabel.textColor=ZCColor(85, 85, 85);
     [view addSubview:codeNumberLabel];
     if ([codeNumber isEqual:@"<null>"]) {
         
@@ -789,7 +787,7 @@
     nameLabel.frame=CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH);
     nameLabel.text=cueName;
     nameLabel.textAlignment=NSTextAlignmentCenter;
-    nameLabel.textColor=ZCColor(240, 208, 122);
+    nameLabel.textColor=ZCColor(85, 85, 85);
     nameLabel.font=[UIFont systemFontOfSize:11];
     [view addSubview:nameLabel];
 

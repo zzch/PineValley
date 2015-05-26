@@ -12,7 +12,7 @@
 @property(nonatomic,weak)UIScrollView *scoringScrollView;
 @property(nonatomic,weak)UIButton *beforeButton;
 @property(nonatomic,weak)UIButton *afterButton;
-
+@property(nonatomic,weak)UIImageView *imageView;
 @end
 @implementation ZCResultsView
 
@@ -49,22 +49,30 @@
 {
     
     
+    
+    
+    UIImageView *imageView=[[UIImageView alloc] init];
+    imageView.image=[UIImage imageNamed:@"jstj_qianjiu"];
+    imageView.frame=CGRectMake(SCREEN_WIDTH-(SCREEN_WIDTH-200), 0, 95, 25);
+    imageView.userInteractionEnabled=YES;
+    [self addSubview:imageView];
+    self.imageView=imageView;
         //前九洞
         UIButton *beforeButton=[[UIButton alloc] init];
-        beforeButton.backgroundColor=[UIColor redColor];
-        beforeButton.frame=CGRectMake(SCREEN_WIDTH-(SCREEN_WIDTH-200), 0, 60, 40);
-        [beforeButton setTitle:@"前九洞" forState:UIControlStateNormal];
+    
+        beforeButton.frame=CGRectMake(0, 0, 47, 25);
+        //[beforeButton setTitle:@"前九洞" forState:UIControlStateNormal];
         [beforeButton addTarget:self action:@selector(clickTheBeforeButton) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:beforeButton];
+        [self.imageView addSubview:beforeButton];
         self.beforeButton=beforeButton;
     
         //后九洞
         UIButton *afterButton=[[UIButton alloc] init];
-        afterButton.backgroundColor=[UIColor redColor];
-        afterButton.frame=CGRectMake(SCREEN_WIDTH-(SCREEN_WIDTH-260), 0, 60, 40);
-        [afterButton setTitle:@"后九洞" forState:UIControlStateNormal];
+    
+        afterButton.frame=CGRectMake(47, 0, 48, 25);
+       // [afterButton setTitle:@"后九洞" forState:UIControlStateNormal];
      [afterButton addTarget:self action:@selector(clickTheAfterButton) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:afterButton];
+        [self.imageView addSubview:afterButton];
     self.afterButton=afterButton;
     
     
@@ -74,10 +82,10 @@
     CGFloat nameScoringScrollViewX=0;
     CGFloat nameScoringScrollViewY=60;
     CGFloat nameScoringScrollViewW=SCREEN_WIDTH*0.17;
-    CGFloat nameScoringScrollViewH=201;
+    CGFloat nameScoringScrollViewH=202.5;
     
     nameScoringScrollView.frame=CGRectMake(nameScoringScrollViewX, nameScoringScrollViewY, nameScoringScrollViewW, nameScoringScrollViewH);
-    nameScoringScrollView.backgroundColor=ZCColor(136, 119, 73);
+    nameScoringScrollView.backgroundColor=ZCColor(170, 170, 170);
     //nameScoringScrollView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
     [self addSubview:nameScoringScrollView];
     
@@ -90,12 +98,12 @@
     
     // 1.数字的尺寸
     CGFloat appW = (nameScoringScrollView.frame.size.width-0)/1;
-    CGFloat appH = (nameScoringScrollView.frame.size.height-5)/4;
+    CGFloat appH = (nameScoringScrollView.frame.size.height-2.5)/4;
     
     // 2.间隙 = (控制器view的宽度 - 3 * 应用宽度) / 4
     //CGFloat marginX = (self.view.frame.size.width - totalColumns * appW) / (totalColumns + 1);
     CGFloat marginX = 0;
-    CGFloat marginY = 1;
+    CGFloat marginY = 0.5;
     
     for (int index=0; index<4; index++) {
         UILabel *labelView=[[UILabel alloc] init];
@@ -108,11 +116,11 @@
         CGFloat appY = row * (appH + marginY)+marginY;
         // 设置frame
         labelView.frame = CGRectMake(appX, appY, appW, appH);
-        labelView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+        labelView.backgroundColor=[UIColor whiteColor];
         //holesResult.textColor=ZCColor(208, 210, 212);
         // [self.beforeScoringView addSubview:labelView];
         
-        labelView.textColor=ZCColor(240, 208, 122);
+        labelView.textColor=ZCColor(85, 85, 85);
         labelView.font=[UIFont systemFontOfSize:13];
         labelView.textAlignment=NSTextAlignmentCenter;
         //        nameScoringView.font=[UIFont font]
@@ -158,7 +166,7 @@
     scoringScrollView.contentSize=CGSizeMake(2*scoringScrollViewW, 0);
     //前九洞的view
     UIView *beforeScoringView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, scoringScrollView.frame.size.width, scoringScrollView.frame.size.height)];
-    beforeScoringView.backgroundColor=ZCColor(136, 119, 73);
+    beforeScoringView.backgroundColor=ZCColor(170, 170, 170);
     //beforeScoringView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jstj_yihangbeijing"]];
     [scoringScrollView addSubview:beforeScoringView];
     
@@ -170,7 +178,7 @@
     //后九洞的view
     UIView *afterScoringView=[[UIView alloc] initWithFrame:CGRectMake(beforeScoringView.frame.size.width, 0, scoringScrollView.frame.size.width, scoringScrollView.frame.size.height)];
     
-    afterScoringView.backgroundColor=ZCColor(136, 119, 73);
+    afterScoringView.backgroundColor=ZCColor(170, 170, 170);
     [scoringScrollView addSubview:afterScoringView];
     //self.afterScoringView=afterScoringView;
     //添加后九的显示值
@@ -188,7 +196,7 @@
     
     annotationView.frame=CGRectMake(annotationViewX, annotationViewY, annotationViewW, annotationViewH);
     [self addSubview:annotationView];
-    annotationView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+    annotationView.backgroundColor=[UIColor whiteColor];
     //self.annotationView=annotationView;
     //注释界面里面的内容
     [self annotationContent:annotationView];
@@ -208,13 +216,13 @@
     int totalColumns = 10;
     
     // 1.数字的尺寸
-    CGFloat appW = (beforeScoringView.frame.size.width-10)/10;
-    CGFloat appH = (beforeScoringView.frame.size.height-5)/4;
+    CGFloat appW = (beforeScoringView.frame.size.width-5)/10;
+    CGFloat appH = (beforeScoringView.frame.size.height-2.5)/4;
     
     // 2.间隙 = (控制器view的宽度 - 3 * 应用宽度) / 4
     //CGFloat marginX = (self.view.frame.size.width - totalColumns * appW) / (totalColumns + 1);
-    CGFloat marginX = 1;
-    CGFloat marginY = 1;
+    CGFloat marginX = 0.5;
+    CGFloat marginY = 0.5;
     
     for (int index=0; index<40; index++) {
         UIView *labelView=[[UIView alloc] init];
@@ -227,7 +235,7 @@
         CGFloat appY = row * (appH + marginY)+marginY;
         // 设置frame
         labelView.frame = CGRectMake(appX, appY, appW, appH);
-        labelView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+        labelView.backgroundColor=[UIColor whiteColor];
         //holesResult.textColor=ZCColor(208, 210, 212);
         [beforeScoringView addSubview:labelView];
         // UIView *bjView=[[UIView alloc] init];
@@ -236,7 +244,7 @@
         // [labelView addSubview:bjView];
         UILabel *holesResult=[[UILabel alloc] init];
         holesResult.frame=CGRectMake(0, 0, labelView.frame.size.width, labelView.frame.size.height);
-        holesResult.textColor=ZCColor(240, 208, 122);
+        holesResult.textColor=ZCColor(85, 85, 85);
         holesResult.textAlignment=NSTextAlignmentCenter;
         holesResult.font=[UIFont systemFontOfSize:12];
         [labelView addSubview:holesResult];
@@ -270,6 +278,42 @@
                 holesResult.text=@"";
             }else{
                 holesResult.text=[NSString stringWithFormat:@"%@",self.scorecard.score[index-20]];
+                
+                
+                
+                /***********************************************/
+                //设置成绩背景色
+                
+                int score=[self.scorecard.score[index-20] intValue];
+                int par=[self.scorecard.par[index-20] intValue];
+                //  ZCLog(@"%d",score-par);
+                
+                if ((score-par)==-3 &&(score-par)==-4) {
+                    labelView.backgroundColor=ZCColor(32, 66, 171);
+                }else if ((score-par)==-2){
+                    labelView.backgroundColor=ZCColor(92, 132, 208);
+                }else if ((score-par)==-1)
+                {
+                    labelView.backgroundColor=ZCColor(173, 195, 243);
+                }else if ((score-par)==0)
+                {
+                    
+                    labelView.backgroundColor=ZCColor(212, 212, 212);
+                }else if ((score-par)==1)
+                {
+                    labelView.backgroundColor=ZCColor(213, 181, 58);
+                }else if ((score-par)>=2)
+                {
+                    labelView.backgroundColor=ZCColor(200, 141, 25);
+                }
+                
+                /***********************************************/
+                
+                
+                
+                
+                
+                
             }
             
         }else if(index>=30)
@@ -293,13 +337,13 @@
     int totalColumns = 11;
     
     // 1.数字的尺寸
-    CGFloat appW = (afterScoringView.frame.size.width-11)/11;
-    CGFloat appH = (afterScoringView.frame.size.height-5)/4;
+    CGFloat appW = (afterScoringView.frame.size.width-7)/11;
+    CGFloat appH = (afterScoringView.frame.size.height-2.5)/4;
     
     // 2.间隙 = (控制器view的宽度 - 3 * 应用宽度) / 4
     //CGFloat marginX = (self.view.frame.size.width - totalColumns * appW) / (totalColumns + 1);
-    CGFloat marginX = 1;
-    CGFloat marginY = 1;
+    CGFloat marginX = 0.5;
+    CGFloat marginY = 0.5;
     
     for (int index=0; index<44; index++) {
         UILabel *labelView=[[UILabel alloc] init];
@@ -315,8 +359,8 @@
         // holesResult.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jstj_yihangbeijing"]];
         //holesResult.textColor=ZCColor(208, 210, 212);
         [afterScoringView addSubview:labelView];
-        labelView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
-        labelView.textColor=ZCColor(240, 208, 122);
+        labelView.backgroundColor=[UIColor whiteColor];
+        labelView.textColor=ZCColor(85, 85, 85);
         labelView.textAlignment=NSTextAlignmentCenter;
         labelView.font=[UIFont systemFontOfSize:11];
         //        UIView *bjView=[[UIView alloc] init];
@@ -353,6 +397,33 @@
                 labelView.text=@"";
             }else{
                 labelView.text=[NSString stringWithFormat:@"%@",self.scorecard.score[index-12]];
+    /***********************************************/
+        //设置成绩背景色
+                
+                int score=[self.scorecard.score[index-12] intValue];
+                int par=[self.scorecard.par[index-12] intValue];
+              //  ZCLog(@"%d",score-par);
+                
+                if ((score-par)==-3 &&(score-par)==-4) {
+                    labelView.backgroundColor=ZCColor(32, 66, 171);
+                }else if ((score-par)==-2){
+                labelView.backgroundColor=ZCColor(92, 132, 208);
+                }else if ((score-par)==-1)
+                {
+                labelView.backgroundColor=ZCColor(173, 195, 243);
+                }else if ((score-par)==0)
+                {
+                    
+                 labelView.backgroundColor=ZCColor(212, 212, 212);
+                }else if ((score-par)==1)
+                {
+                labelView.backgroundColor=ZCColor(213, 181, 58);
+                }else if ((score-par)>=2)
+                {
+                    labelView.backgroundColor=ZCColor(200, 141, 25);
+                }
+                
+    /***********************************************/
             }
             
         }else if(index>=33)
@@ -383,7 +454,7 @@
         
         
         label.frame=CGRectMake(20, 15, 40, 20);
-        label.textColor=ZCColor(240, 208, 122);
+        label.textColor=ZCColor(85, 85, 85);
         [tempview addSubview:label];
         
         if (i==0) {
@@ -441,13 +512,13 @@
     
     
     if (page==0) {
-        self.afterButton.backgroundColor=[UIColor redColor];
-        self.beforeButton.backgroundColor=[UIColor blueColor];
+//        self.afterButton.backgroundColor=[UIColor redColor];
+//        self.beforeButton.backgroundColor=[UIColor blueColor];
+        
+         self.imageView.image=[UIImage imageNamed:@"jstj_qianjiu"];
     }else
     {
-        self.afterButton.backgroundColor=[UIColor blueColor];
-        self.beforeButton.backgroundColor=[UIColor redColor];
-    }
+       self.imageView.image=[UIImage imageNamed:@"jstj_houjiu"];    }
 
 
 }
@@ -468,18 +539,19 @@
 //点击后九洞
 -(void)clickTheAfterButton
 {
+    self.imageView.image=[UIImage imageNamed:@"jstj_houjiu"];
     
-    self.afterButton.backgroundColor=[UIColor blueColor];
-    self.beforeButton.backgroundColor=[UIColor redColor];
+//    self.afterButton.backgroundColor=[UIColor blueColor];
+//    self.beforeButton.backgroundColor=[UIColor redColor];
     self.scoringScrollView.contentOffset=CGPointMake(self.scoringScrollView.frame.size.width, 0);
 
 }
 
 -(void)clickTheBeforeButton
 {
-    
-    self.afterButton.backgroundColor=[UIColor redColor];
-    self.beforeButton.backgroundColor=[UIColor blueColor];
+     self.imageView.image=[UIImage imageNamed:@"jstj_qianjiu"];
+//    self.afterButton.backgroundColor=[UIColor redColor];
+//    self.beforeButton.backgroundColor=[UIColor blueColor];
     self.scoringScrollView.contentOffset=CGPointMake(0, 0);
 
 }

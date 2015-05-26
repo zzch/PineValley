@@ -46,7 +46,7 @@
 {
     
     UIImageView *bjImage=[[UIImageView alloc] init];
-    bjImage.image=[UIImage imageNamed:@"shijian_bj"];
+    bjImage.image=[UIImage imageNamed:@"shijian_bj1"];
     [self addSubview:bjImage];
     self.bjImage=bjImage;
     
@@ -59,12 +59,12 @@
     UILabel *startName=[[UILabel alloc] init];
     self.startName=startName;
     startName.text=@"开始时间";
-    startName.textColor=ZCColor(240, 208, 122);
+    startName.textColor=ZCColor(85, 85, 85);
     [startButton  addSubview:startName];
     
     UILabel *startTime=[[UILabel alloc] init];
      self.startTime=startTime;
-    startTime.textColor=ZCColor(240, 208, 122);
+    startTime.textColor=ZCColor(85, 85, 85);
     [startButton  addSubview:startTime];
     
     // 获取用户通过UIDatePicker设置的日期和时间
@@ -89,12 +89,12 @@
     UILabel *endName=[[UILabel alloc] init];
     self.endName=endName;
     endName.text=@"结束时间";
-    endName.textColor=ZCColor(240, 208, 122);
+    endName.textColor=ZCColor(85, 85, 85);
     [endButton  addSubview:endName];
     
     UILabel *endTime=[[UILabel alloc] init];
     self.endTime=endTime;
-    endTime.textColor=ZCColor(240, 208, 122);
+    endTime.textColor=ZCColor(85, 85, 85);
     [endButton  addSubview:endTime];
     
     endTime.text=destDateString;
@@ -106,7 +106,7 @@
     
     
     UIButton *seeButton=[[UIButton alloc] init];
-    seeButton.backgroundColor=ZCColor(136, 119, 73);
+    seeButton.backgroundColor=ZCColor(9, 133, 12);
     [seeButton setTitle:@"搜索" forState:UIControlStateNormal];
     [seeButton addTarget:self action:@selector(clickseeButton) forControlEvents:UIControlEventTouchUpInside];
     self.seeButton=seeButton;

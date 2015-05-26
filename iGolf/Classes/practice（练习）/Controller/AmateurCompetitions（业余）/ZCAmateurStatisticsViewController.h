@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ZCAmateurStatisticsViewController : UIViewController
-
+@property(nonatomic,copy)NSString *uuid;
 @end

@@ -39,49 +39,56 @@
     
     
     
-    
-    if ([[UIDevice currentDevice]orientation] == UIInterfaceOrientationLandscapeLeft){
-        
-        [self supportedInterfaceOrientations];
-        
-        self.verticalScreenView.hidden=YES;
-        self.landscapeView.hidden=NO;
-//        
-       ZCProfessionalLandscape *landscapeView=[[ZCProfessionalLandscape alloc] init];
-       [self.view addSubview:landscapeView];
-        self.landscapeView=landscapeView;
-//        
-//        ZCLog(@"landscape left");
-    }
-    if ([[UIDevice currentDevice]orientation] == UIInterfaceOrientationLandscapeRight){
-        [self supportedInterfaceOrientations];
-        self.verticalScreenView.hidden=YES;
-        self.landscapeView.hidden=NO;
-        
-        
-        ZCProfessionalLandscape *landscapeView=[[ZCProfessionalLandscape alloc] init];
-        [self.view addSubview:landscapeView];
-        self.landscapeView=landscapeView;
-        ZCLog(@"landscape right");
-    }
-    if ([[UIDevice currentDevice]orientation] == UIInterfaceOrientationPortrait){
-        [self supportedInterfaceOrientations];
-        
-        self.verticalScreenView.hidden=NO;
-        self.landscapeView.hidden=YES;
-        
-        
-        UIView *verticalScreenView=[[UIView alloc] initWithFrame: [ UIScreen mainScreen ].bounds];
+    UIView *verticalScreenView=[[UIView alloc] initWithFrame: [ UIScreen mainScreen ].bounds];
         self.verticalScreenView=verticalScreenView;
-        [self.view addSubview:verticalScreenView];
-        
-        
-        [self addControls];
-        
-        
-    }
+         [self.view addSubview:verticalScreenView];
 
+    [self addControls];
     
+    
+    
+//    if ([[UIDevice currentDevice]orientation] == UIInterfaceOrientationLandscapeLeft){
+//        
+//        [self supportedInterfaceOrientations];
+//        
+//        self.verticalScreenView.hidden=YES;
+//        self.landscapeView.hidden=NO;
+////        
+//       ZCProfessionalLandscape *landscapeView=[[ZCProfessionalLandscape alloc] init];
+//       [self.view addSubview:landscapeView];
+//        self.landscapeView=landscapeView;
+////        
+////        ZCLog(@"landscape left");
+//    }
+//    if ([[UIDevice currentDevice]orientation] == UIInterfaceOrientationLandscapeRight){
+//        [self supportedInterfaceOrientations];
+//        self.verticalScreenView.hidden=YES;
+//        self.landscapeView.hidden=NO;
+//        
+//        
+//        ZCProfessionalLandscape *landscapeView=[[ZCProfessionalLandscape alloc] init];
+//        [self.view addSubview:landscapeView];
+//        self.landscapeView=landscapeView;
+//        ZCLog(@"landscape right");
+//    }
+//    if ([[UIDevice currentDevice]orientation] == UIInterfaceOrientationPortrait){
+//        [self supportedInterfaceOrientations];
+//        
+//        self.verticalScreenView.hidden=NO;
+//        self.landscapeView.hidden=YES;
+//        
+//        
+//        UIView *verticalScreenView=[[UIView alloc] initWithFrame: [ UIScreen mainScreen ].bounds];
+//        self.verticalScreenView=verticalScreenView;
+//        [self.view addSubview:verticalScreenView];
+//        
+//        
+//        [self addControls];
+//        
+//        
+//    }
+//
+//    
     
     
 }
@@ -684,155 +691,155 @@
 
 
 
-//视图消失时调用
-
--(void)viewWillDisappear:(BOOL)animated
-{
-    
-    AppDelegate *app=  (AppDelegate *)[UIApplication sharedApplication].delegate;
-    [app setAllowRotation:NO];
-    
-    //强制竖屏
-    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
-        SEL selector = NSSelectorFromString(@"setOrientation:");
-        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
-        [invocation setSelector:selector];
-        [invocation setTarget:[UIDevice currentDevice]];
-        int val = UIDeviceOrientationPortrait;
-        [invocation setArgument:&val atIndex:2];
-        [invocation invoke];
-    }
-    
-    
-    
-    //[self.startButton removeFromSuperview];
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
-    AppDelegate *app=  (AppDelegate *)[UIApplication sharedApplication].delegate;
-    [app setAllowRotation:YES];
-    
-}
-
-
-
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
-    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-    
-    
-    if (toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight)
-    {
-        
-        ZCLog(@"---%f",SCREEN_WIDTH);
-        self.verticalScreenView.hidden=YES;
-        self.landscapeView.hidden=NO;
-        
-        //         if (self.landscapeView==nil) {
-        //             ZCAmateurStatisticsView *landscapeView=[[ZCAmateurStatisticsView alloc] init];
-        //             [self.view addSubview:landscapeView];
-        //             self.landscapeView=landscapeView;
-        //
-        //         }else
-        //         {
-        //             [self.landscapeView removeFromSuperview];
-        //
-        //             ZCAmateurStatisticsView *landscapeView=[[ZCAmateurStatisticsView alloc] init];
-        //             [self.view addSubview:landscapeView];
-        //             self.landscapeView=landscapeView;
-        //
-        //
-        //         }
-        //
-        //
-        
-        
-        
-        
-    }else if (toInterfaceOrientation == UIInterfaceOrientationPortrait)
-    {
-        self.verticalScreenView.hidden=NO;
-        self.landscapeView.hidden=YES;
-        NSLog(@"书屏将要旋转了?");
-        
-    }
-    
-    
-    ZCLog(@"%ld",toInterfaceOrientation);
-    
-    
-    
-    
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
-    NSLog(@"如果让我旋转,我已经旋转完了!");
-    
-    
-    
-    
-    
-    
-    if ([[UIDevice currentDevice]orientation] == UIInterfaceOrientationLandscapeLeft||[[UIDevice currentDevice]orientation] == UIInterfaceOrientationLandscapeRight){
-        
-        [self supportedInterfaceOrientations];
-        
-        
-        //
-        //        self.verticalScreenView.hidden=YES;
-        //        self.landscapeView.hidden=NO;
-        
-        if (self.landscapeView==nil) {
-            ZCProfessionalLandscape *landscapeView=[[ZCProfessionalLandscape alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-           
-            [self.view addSubview:landscapeView];
-            //传值
-            landscapeView.professionalScorecardModel=self.professionalScorecardModel;
-            landscapeView.totalModel=self.totalModel;
-            
-            self.landscapeView=landscapeView;
-            
-        }else
-        {
-            [self.landscapeView removeFromSuperview];
-            
-            ZCProfessionalLandscape *landscapeView=[[ZCProfessionalLandscape alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-            
-            
-            //传值
-            landscapeView.professionalScorecardModel=self.professionalScorecardModel;
-            landscapeView.totalModel=self.totalModel;
-
-            [self.view addSubview:landscapeView];
-            
-            self.landscapeView=landscapeView;
-            
-            
-            
-        }
-        
-        
-        
-        
-    }
-    if ([[UIDevice currentDevice]orientation] == UIInterfaceOrientationPortrait){
-        [self supportedInterfaceOrientations];
-        
-                      self.verticalScreenView.hidden=NO;
-                       self.landscapeView.hidden=YES;
-        
-        
-    }
-    
-    
-    
-    // ZCLog(@"%f",self.view.frame.size.width);
-    
-}
-
-
-
+////视图消失时调用
+//
+//-(void)viewWillDisappear:(BOOL)animated
+//{
+//    
+//    AppDelegate *app=  (AppDelegate *)[UIApplication sharedApplication].delegate;
+//    [app setAllowRotation:NO];
+//    
+//    //强制竖屏
+//    if ([[UIDevice currentDevice] respondsToSelector:@selector(setOrientation:)]) {
+//        SEL selector = NSSelectorFromString(@"setOrientation:");
+//        NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[UIDevice instanceMethodSignatureForSelector:selector]];
+//        [invocation setSelector:selector];
+//        [invocation setTarget:[UIDevice currentDevice]];
+//        int val = UIDeviceOrientationPortrait;
+//        [invocation setArgument:&val atIndex:2];
+//        [invocation invoke];
+//    }
+//    
+//    
+//    
+//    //[self.startButton removeFromSuperview];
+//}
+//
+//-(void)viewWillAppear:(BOOL)animated
+//{
+//    AppDelegate *app=  (AppDelegate *)[UIApplication sharedApplication].delegate;
+//    [app setAllowRotation:YES];
+//    
+//}
+//
+//
+//
+//- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+//    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+//    
+//    
+//    if (toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight)
+//    {
+//        
+//        ZCLog(@"---%f",SCREEN_WIDTH);
+//        self.verticalScreenView.hidden=YES;
+//        self.landscapeView.hidden=NO;
+//        
+//        //         if (self.landscapeView==nil) {
+//        //             ZCAmateurStatisticsView *landscapeView=[[ZCAmateurStatisticsView alloc] init];
+//        //             [self.view addSubview:landscapeView];
+//        //             self.landscapeView=landscapeView;
+//        //
+//        //         }else
+//        //         {
+//        //             [self.landscapeView removeFromSuperview];
+//        //
+//        //             ZCAmateurStatisticsView *landscapeView=[[ZCAmateurStatisticsView alloc] init];
+//        //             [self.view addSubview:landscapeView];
+//        //             self.landscapeView=landscapeView;
+//        //
+//        //
+//        //         }
+//        //
+//        //
+//        
+//        
+//        
+//        
+//    }else if (toInterfaceOrientation == UIInterfaceOrientationPortrait)
+//    {
+//        self.verticalScreenView.hidden=NO;
+//        self.landscapeView.hidden=YES;
+//        NSLog(@"书屏将要旋转了?");
+//        
+//    }
+//    
+//    
+//    ZCLog(@"%ld",toInterfaceOrientation);
+//    
+//    
+//    
+//    
+//}
+//
+//- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+//    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+//    NSLog(@"如果让我旋转,我已经旋转完了!");
+//    
+//    
+//    
+//    
+//    
+//    
+//    if ([[UIDevice currentDevice]orientation] == UIInterfaceOrientationLandscapeLeft||[[UIDevice currentDevice]orientation] == UIInterfaceOrientationLandscapeRight){
+//        
+//        [self supportedInterfaceOrientations];
+//        
+//        
+//        //
+//        //        self.verticalScreenView.hidden=YES;
+//        //        self.landscapeView.hidden=NO;
+//        
+//        if (self.landscapeView==nil) {
+//            ZCProfessionalLandscape *landscapeView=[[ZCProfessionalLandscape alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+//           
+//            [self.view addSubview:landscapeView];
+//            //传值
+//            landscapeView.professionalScorecardModel=self.professionalScorecardModel;
+//            landscapeView.totalModel=self.totalModel;
+//            
+//            self.landscapeView=landscapeView;
+//            
+//        }else
+//        {
+//            [self.landscapeView removeFromSuperview];
+//            
+//            ZCProfessionalLandscape *landscapeView=[[ZCProfessionalLandscape alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+//            
+//            
+//            //传值
+//            landscapeView.professionalScorecardModel=self.professionalScorecardModel;
+//            landscapeView.totalModel=self.totalModel;
+//
+//            [self.view addSubview:landscapeView];
+//            
+//            self.landscapeView=landscapeView;
+//            
+//            
+//            
+//        }
+//        
+//        
+//        
+//        
+//    }
+//    if ([[UIDevice currentDevice]orientation] == UIInterfaceOrientationPortrait){
+//        [self supportedInterfaceOrientations];
+//        
+//                      self.verticalScreenView.hidden=NO;
+//                       self.landscapeView.hidden=YES;
+//        
+//        
+//    }
+//    
+//    
+//    
+//    // ZCLog(@"%f",self.view.frame.size.width);
+//    
+//}
+//
+//
+//
 
 
 

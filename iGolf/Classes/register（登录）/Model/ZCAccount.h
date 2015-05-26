@@ -13,6 +13,7 @@
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *uuid;
 @property (nonatomic, copy) NSString *type;
+@property (nonatomic, copy) NSString *phone;
 
 
 + (instancetype)accountWithDict:(NSDictionary *)dict;

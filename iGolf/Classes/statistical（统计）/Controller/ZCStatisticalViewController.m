@@ -24,14 +24,14 @@
     [super viewDidLoad];
     
     //背景颜色suoyou_bj
-    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
-    
-    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
-    customLab.textAlignment=NSTextAlignmentCenter;
-    [customLab setTextColor:ZCColor(240, 208, 122)];
-    [customLab setText:@"统计"];
-    customLab.font = [UIFont boldSystemFontOfSize:20];
-    self.navigationItem.titleView = customLab;
+    self.view.backgroundColor=ZCColor(237, 237, 237);
+    self.navigationItem.title=@"统计";
+//    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+//    customLab.textAlignment=NSTextAlignmentCenter;
+//    [customLab setTextColor:ZCColor(240, 208, 122)];
+//    [customLab setText:@"统计"];
+//    customLab.font = [UIFont boldSystemFontOfSize:20];
+//    self.navigationItem.titleView = customLab;
     
     UIBarButtonItem *rightButton=[[UIBarButtonItem alloc] initWithTitle:@"分析" style:UIBarButtonItemStyleDone target:self action:@selector(clickRight)];
     //改变UIBarButtonItem字体颜色
@@ -102,12 +102,12 @@
    //顶部View
     UIImageView *topView=[[UIImageView alloc] init];
     CGFloat topViewX=10;
-    CGFloat topViewY=10;
+    CGFloat topViewY=20;
     CGFloat topViewW=SCREEN_WIDTH-20;
     CGFloat topViewH=120;
     topView.frame=CGRectMake(topViewX, topViewY, topViewW, topViewH);
     //topView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"tj_kuang"]];
-    topView.image=[UIImage imageNamed:@"tj_kuang"];
+    topView.image=[UIImage imageNamed:@"tongji_bizhengti"];
     [self.scrollView addSubview:topView];
     
     [self topviewControls:topView];
@@ -127,7 +127,7 @@
     
     UILabel *scoreNumber=[[UILabel alloc] init];
     scoreNumber.frame=CGRectMake((middleView.frame.size.width-20)/2, (middleView.frame.size.height-13)/2-15, 20, 15);
-    scoreNumber.textColor=ZCColor(240, 208, 122);
+    scoreNumber.textColor=ZCColor(255, 150, 29);
     if ([self.homePageStatistics.average_score isKindOfClass:[NSNull class]]) {
         scoreNumber.text=@"0";
     }else
@@ -140,7 +140,7 @@
     
     UILabel *scoreName=[[UILabel alloc] init];
     scoreName.frame=CGRectMake((middleView.frame.size.width-20)/2-11, (middleView.frame.size.height-10)/2+5, 40, 15);
-    scoreName.textColor=ZCColor(240, 208, 122);
+    scoreName.textColor=[UIColor whiteColor];
     scoreName.text=@"平均杆数";
     scoreName.font=[UIFont systemFontOfSize:10];
     //scoreName.textAlignment=NSTextAlignmentCenter;
@@ -263,7 +263,7 @@
     CGFloat numberLabelY=(childView.frame.size.height-numberLabelH)/2;
     numberLabel.frame=CGRectMake(numberLabelX, numberLabelY, numberLabelW, numberLabelH);
     //numberLabel.text=numberStr;
-    numberLabel.textColor=ZCColor(240, 208, 122);
+    numberLabel.textColor=[UIColor blackColor];
     [childView addSubview:numberLabel];
     if ([numberStr isEqual:@"<null>"]) {
          numberLabel.text=@"-";
@@ -288,7 +288,7 @@
     CGFloat nameLabelH=20;
     CGFloat nameLabelY=numberLabelY;
     nameLabel.frame=CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH);
-    nameLabel.textColor=ZCColor(240, 208, 122);
+    nameLabel.textColor=ZCColor(60, 57, 78);
     nameLabel.text=nameStr;
     nameLabel.font=[UIFont systemFontOfSize:15];
     [childView addSubview:nameLabel];
@@ -362,7 +362,7 @@
     {
     numberLabel.text=number;
     }
-    numberLabel.textColor=ZCColor(240, 208, 122);
+    numberLabel.textColor=ZCColor(255, 150, 29);
     numberLabel.textAlignment=NSTextAlignmentCenter;
     [view addSubview:numberLabel];
     
@@ -374,7 +374,7 @@
     CGFloat nameLabelH=view.frame.size.height/2;
     nameLabel.frame=CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH);
     nameLabel.text=name;
-    nameLabel.textColor=ZCColor(240, 208, 122);
+    nameLabel.textColor=ZCColor(85, 85, 85);
     nameLabel.textAlignment=NSTextAlignmentCenter;
 
     [view addSubview:nameLabel];

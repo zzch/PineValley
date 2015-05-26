@@ -17,6 +17,7 @@
 #import "UIImage+MJ.h"
 #import "ZCregisterViewController.h"
 #import "MBProgressHUD+NJ.h"
+#import "ZCAccountSettingsViewController.h"
 @interface ZCPersonalViewController ()<UIActionSheetDelegate,UIAlertViewDelegate,ZCPersonalInformationViewControllerDelegate>
 //头像View
 @property(nonatomic,weak)UIButton *headImageView;
@@ -35,13 +36,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
-    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
-    customLab.textAlignment=NSTextAlignmentCenter;
-    [customLab setTextColor:ZCColor(240, 208, 122)];
-    [customLab setText:@"我爱高尔夫"];
-    customLab.font = [UIFont boldSystemFontOfSize:20];
-    self.navigationItem.titleView = customLab;
+    self.view.backgroundColor=ZCColor(237, 237, 237);
+    self.navigationItem.title=@"我爱高尔夫";
+//    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+//    customLab.textAlignment=NSTextAlignmentCenter;
+//    [customLab setTextColor:ZCColor(240, 208, 122)];
+//    [customLab setText:@"我爱高尔夫"];
+//    customLab.font = [UIFont boldSystemFontOfSize:20];
+//    self.navigationItem.titleView = customLab;
 
     
     
@@ -103,61 +105,114 @@
 -(void)initSettingsButton
 {
     UIButton *settingsButton=[[UIButton alloc] init];
-    CGFloat top = 25; // 顶端盖高度
-    CGFloat bottom = 25 ; // 底端盖高度
-    CGFloat left = 10; // 左端盖宽度
-    CGFloat right = 10; // 右端盖宽度
-    UIEdgeInsets insets = UIEdgeInsetsMake(top, left, bottom, right);
-    UIImage *image=[UIImage imageNamed:@"beijing" ];
-    // 指定为拉伸模式，伸缩后重新赋值
-   image = [image resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
-    
-   [settingsButton setBackgroundImage:image forState:UIControlStateNormal];
-    CGFloat settingsButtonX=10;
-    CGFloat settingsButtonY=self.headImageView.frame.size.height+15;
-    CGFloat settingsButtonW=SCREEN_WIDTH-(2*settingsButtonX);
-    CGFloat settingsButtonH=60;
+//    CGFloat top = 25; // 顶端盖高度
+//    CGFloat bottom = 25 ; // 底端盖高度
+//    CGFloat left = 10; // 左端盖宽度
+//    CGFloat right = 10; // 右端盖宽度
+//    UIEdgeInsets insets = UIEdgeInsetsMake(top, left, bottom, right);
+//    UIImage *image=[UIImage imageNamed:@"beijing" ];
+//    // 指定为拉伸模式，伸缩后重新赋值
+//   image = [image resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
+//    
+//   [settingsButton setBackgroundImage:image forState:UIControlStateNormal];
+    CGFloat settingsButtonX=0;
+    CGFloat settingsButtonY=self.headImageView.frame.size.height+30;
+    CGFloat settingsButtonW=SCREEN_WIDTH;
+    CGFloat settingsButtonH=50;
     settingsButton.frame=CGRectMake(settingsButtonX, settingsButtonY, settingsButtonW, settingsButtonH);
+    settingsButton.backgroundColor=[UIColor whiteColor];
     [settingsButton addTarget:self action:@selector(clicksettingsButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:settingsButton];
     self.settingsButton=settingsButton;
+    [self addChildControls:settingsButton andText:@"账号设置"];
+    
+    UIButton *abountUsBtn=[[UIButton alloc] init];
+    CGFloat abountUsBtnX=0;
+    CGFloat abountUsBtnY=settingsButtonY+settingsButtonH+15;
+    CGFloat abountUsBtnW=SCREEN_WIDTH;
+    CGFloat abountUsBtnH=50;
+    abountUsBtn.frame=CGRectMake(abountUsBtnX, abountUsBtnY, abountUsBtnW, abountUsBtnH);
+    abountUsBtn.backgroundColor=[UIColor whiteColor];
+    [self.view addSubview:abountUsBtn];
+    [self addChildControls:abountUsBtn andText:@"关于我们"];
     
     
-    UIImageView *image1=[[UIImageView alloc] init];
-    CGFloat imageX=10;
     
-    CGFloat imageW=28;
-    CGFloat imageH=28;
-    CGFloat imageY=(settingsButtonH-imageH)*0.5;
-    image1.frame=CGRectMake(imageX, imageY, imageW, imageH);
-    //image1.image=[UIImage imageNamed:@"shezhi_iocn"];
-    [settingsButton addSubview:image1];
+    UIButton *feedbackBtn=[[UIButton alloc] init];
+    CGFloat feedbackBtnX=0;
+    CGFloat feedbackBtnY=abountUsBtnY+abountUsBtnH+1;
+    CGFloat feedbackBtnW=SCREEN_WIDTH;
+    CGFloat feedbackBtnH=50;
+    feedbackBtn.frame=CGRectMake(feedbackBtnX, feedbackBtnY, feedbackBtnW, feedbackBtnH);
+    feedbackBtn.backgroundColor=[UIColor whiteColor];
+    [self.view addSubview:feedbackBtn];
+    [self addChildControls:feedbackBtn andText:@"意见反馈"];
+
     
+    
+    //退出誊录
+    
+    
+    UIButton *LoggedOutBtn=[[UIButton alloc] init];
+    CGFloat LoggedOutBtnX=0;
+    CGFloat LoggedOutBtnY=feedbackBtnY+feedbackBtnH+25;
+    CGFloat LoggedOutBtnW=SCREEN_WIDTH;
+    CGFloat LoggedOutBtnH=50;
+    LoggedOutBtn.frame=CGRectMake(LoggedOutBtnX, LoggedOutBtnY, LoggedOutBtnW, LoggedOutBtnH);
+    LoggedOutBtn.backgroundColor=[UIColor whiteColor];
+    [LoggedOutBtn setTitle:@"退出登陆" forState:UIControlStateNormal];
+    [LoggedOutBtn setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
+    [LoggedOutBtn addTarget:self action:@selector(clickLoggedOutBtn) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:LoggedOutBtn];
+
+    
+    
+//    
+//    UIImageView *image1=[[UIImageView alloc] init];
+//    CGFloat imageX=10;
+//    
+//    CGFloat imageW=28;
+//    CGFloat imageH=28;
+//    CGFloat imageY=(settingsButtonH-imageH)*0.5;
+//    image1.frame=CGRectMake(imageX, imageY, imageW, imageH);
+//    //image1.image=[UIImage imageNamed:@"shezhi_iocn"];
+//    [settingsButton addSubview:image1];
+    
+ }
+
+
+
+-(void)addChildControls:(UIButton *)Button andText:(NSString *)text
+{
     //设置
     UILabel *settingsLabel=[[UILabel alloc] init];
-    CGFloat settingsLabelX=0;//imageW+imageX+15;
-    CGFloat settingsLabelW=SCREEN_WIDTH;
+    CGFloat settingsLabelX=10;//imageW+imageX+15;
+    CGFloat settingsLabelW=SCREEN_WIDTH*0.5;
     CGFloat settingsLabelH=30;
-    CGFloat settingsLabelY=(settingsButtonH-imageH)*0.5;
+    CGFloat settingsLabelY=(Button.frame.size.height-settingsLabelH)*0.5;
     settingsLabel.frame=CGRectMake(settingsLabelX, settingsLabelY, settingsLabelW, settingsLabelH);
-    settingsLabel.text=@"退出登录";
-    settingsLabel.textColor=ZCColor(240, 208, 122);
-    settingsLabel.textAlignment=NSTextAlignmentCenter;
-    [settingsButton addSubview:settingsLabel];
+    settingsLabel.text=text;
+    settingsLabel.textColor=ZCColor(85, 85, 85);
+    //settingsLabel.textAlignment=NSTextAlignmentCenter;
+    [Button addSubview:settingsLabel];
     
-
+    
     //向右箭头
     UIImageView *rightImageView=[[UIImageView alloc] init];
     
     CGFloat rightImageViewW=10;
     CGFloat rightImageViewH=17;
-    CGFloat rightImageViewY=(settingsButtonH-rightImageViewH)*0.5;
-    CGFloat rightImageViewX=settingsButtonW-rightImageViewW-10;
+    CGFloat rightImageViewY=(Button.frame.size.height-rightImageViewH)*0.5;
+    CGFloat rightImageViewX=SCREEN_WIDTH-rightImageViewW-10;
     rightImageView.frame=CGRectMake(rightImageViewX, rightImageViewY, rightImageViewW, rightImageViewH);
-    rightImageView.image=[UIImage imageNamed:@"lsjfk_xiayibu_iocn"];
+    rightImageView.image=[UIImage imageNamed:@"icon_arrow3"];
     
-    [settingsButton addSubview:rightImageView];
+    [Button addSubview:rightImageView];
+
+
+
 }
+
 
 //图片下载
 -(void)personImageData
@@ -248,34 +303,35 @@ ZCLog(@"网络下的载111122222 ");
 -(void)initImageView
 {
     UIButton *headImageView=[[UIButton alloc] init];
-    headImageView.userInteractionEnabled=YES;
+   // headImageView.userInteractionEnabled=YES;
     CGFloat headImageViewX=0;
     CGFloat headImageViewY=0;
     CGFloat headImageViewW=SCREEN_WIDTH;
     
     CGFloat headImageViewH=180;
-    
+    headImageView.frame=CGRectMake(headImageViewX, headImageViewY, headImageViewW, headImageViewH);
+    headImageView.backgroundColor=ZCColor(60, 57, 78);
     [headImageView addTarget:self action:@selector(clickRightButton) forControlEvents:UIControlEventTouchUpInside];
     
     
     
-    if (SCREEN_HEIGHT==667) {
-        headImageViewH=229;
-        
-        headImageView.frame=CGRectMake(headImageViewX, headImageViewY, headImageViewW, headImageViewH);
-        headImageView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"wo_bj"]];
-
-    }else if (SCREEN_HEIGHT==736)
-    {
-    headImageViewH=250;
-        headImageView.frame=CGRectMake(headImageViewX, headImageViewY, headImageViewW, headImageViewH);
-        headImageView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"wo_bj"]];
-
-        
-    }else{
-    headImageView.frame=CGRectMake(headImageViewX, headImageViewY, headImageViewW, headImageViewH);
-        headImageView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bjtu"]];
-    }
+//    if (SCREEN_HEIGHT==667) {
+//        headImageViewH=229;
+//        
+//        headImageView.frame=CGRectMake(headImageViewX, headImageViewY, headImageViewW, headImageViewH);
+//        headImageView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"wo_bj"]];
+//
+//    }else if (SCREEN_HEIGHT==736)
+//    {
+//    headImageViewH=250;
+//        headImageView.frame=CGRectMake(headImageViewX, headImageViewY, headImageViewW, headImageViewH);
+//        headImageView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"wo_bj"]];
+//
+//        
+//    }else{
+//    headImageView.frame=CGRectMake(headImageViewX, headImageViewY, headImageViewW, headImageViewH);
+//        headImageView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bjtu"]];
+//    }
     [self.view addSubview:headImageView];
     self.headImageView=headImageView;
     
@@ -287,14 +343,14 @@ ZCLog(@"网络下的载111122222 ");
     //headImage.image set
     
    // headImage.image=[UIImage imageNamed:@"20141118042246536.jpg"];
-    CGFloat headImageW=75;
-    CGFloat headImageH=75;
+    CGFloat headImageW=100;
+    CGFloat headImageH=100;
     CGFloat headImageX=(SCREEN_WIDTH-headImageW)*0.5;
     CGFloat headImageY=21;
    
     headImage.frame=CGRectMake(headImageX, headImageY, headImageW, headImageH);
     headImage.layer.masksToBounds = YES;
-    headImage.layer.cornerRadius = 37.5;
+    headImage.layer.cornerRadius = 50;
     [headImageView addSubview:headImage];
     self.headImage=headImage;
     [self personImageData];
@@ -338,38 +394,39 @@ ZCLog(@"网络下的载111122222 ");
     
     //名字
     UILabel *nameLabel=[[UILabel alloc] init];
+    nameLabel.font=[UIFont systemFontOfSize:27];
     nameLabel.text=self.name;
    // nameLabel.textColor=[UIColor whiteColor];
     CGFloat nameLabelW=150;
     CGFloat nameLabelH=25;
     CGFloat nameLabelX=(SCREEN_WIDTH-nameLabelW)*0.5;
-    CGFloat nameLabelY=headImageY+headImageH+13;
+    CGFloat nameLabelY=headImageY+headImageH+17;
     nameLabel.frame=CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH);
     nameLabel.textAlignment=NSTextAlignmentCenter;
     nameLabel.textColor=ZCColor(240, 208, 122);
     [headImageView addSubview:nameLabel];
     self.nameLabel=nameLabel;
     
-    //心情
-    UILabel *moodLabel=[[UILabel alloc] init];
-    
-    if ([self.personalData.desc isKindOfClass:[NSNull class]]) {
-        
-    }else
-    {
-    moodLabel.text=[NSString stringWithFormat:@"%@",self.personalData.desc];
-    }
-    //moodLabel.textColor=[UIColor whiteColor];
-    CGFloat moodLabelW=300;
-    CGFloat moodLabelH=25;
-    CGFloat moodLabelX=(SCREEN_WIDTH-moodLabelW)*0.5;
-    CGFloat moodLabelY=nameLabelY+nameLabelH+15;
-    moodLabel.frame=CGRectMake(moodLabelX, moodLabelY, moodLabelW, moodLabelH);
-    moodLabel.textColor=ZCColor(240, 208, 122);
-    moodLabel.textAlignment=NSTextAlignmentCenter;
-    [headImageView addSubview:moodLabel];
-    self.moodLabel=moodLabel;
-    
+//    //心情
+//    UILabel *moodLabel=[[UILabel alloc] init];
+//    
+//    if ([self.personalData.desc isKindOfClass:[NSNull class]]) {
+//        
+//    }else
+//    {
+//    moodLabel.text=[NSString stringWithFormat:@"%@",self.personalData.desc];
+//    }
+//    //moodLabel.textColor=[UIColor whiteColor];
+//    CGFloat moodLabelW=300;
+//    CGFloat moodLabelH=25;
+//    CGFloat moodLabelX=(SCREEN_WIDTH-moodLabelW)*0.5;
+//    CGFloat moodLabelY=nameLabelY+nameLabelH+15;
+//    moodLabel.frame=CGRectMake(moodLabelX, moodLabelY, moodLabelW, moodLabelH);
+//    moodLabel.textColor=ZCColor(240, 208, 122);
+//    moodLabel.textAlignment=NSTextAlignmentCenter;
+//    [headImageView addSubview:moodLabel];
+//    self.moodLabel=moodLabel;
+//    
     
     //向右的小箭头
     UIButton *rightButton=[[UIButton alloc] init];
@@ -379,24 +436,26 @@ ZCLog(@"网络下的载111122222 ");
     CGFloat rightButtonY=(headImageViewH-rightButtonH)*0.5;
     rightButton.frame=CGRectMake(rightButtonX, rightButtonY, rightButtonW, rightButtonH);
     //[rightButton setTitle:@"1212" forState:UIControlStateNormal];
-    [rightButton setImage:[UIImage imageNamed:@"lsjfk_xiayibu_iocn"] forState:UIControlStateNormal];
+    [rightButton setImage:[UIImage imageNamed:@"icon_arrow3"] forState:UIControlStateNormal];
     //[rightButton addTarget:self action:@selector(clickRightButton) forControlEvents:UIControlEventTouchUpInside];
     [headImageView addSubview:rightButton];
 
 }
 
 
-
-//点击设置按钮
+//点击设置
 -(void)clicksettingsButton
+{
+    ZCAccountSettingsViewController *AccountSettings=[[ZCAccountSettingsViewController alloc] init];
+    [self.navigationController  pushViewController:AccountSettings animated:YES];
+}
+
+//点击设置按钮clickLoggedOutBtn
+-(void)clickLoggedOutBtn
 {
 //    ZCExitTableViewController *exitTableViewController=[[ZCExitTableViewController alloc] init];
 //   exitTableViewController.hidesBottomBarWhenPushed=YES;
 //    [self.navigationController pushViewController:exitTableViewController animated:YES];
-    
-    
-    
-    
     
     
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"退出登录",nil];

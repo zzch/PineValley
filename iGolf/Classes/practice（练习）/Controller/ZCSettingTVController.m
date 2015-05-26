@@ -22,7 +22,7 @@
 #import "MBProgressHUD+NJ.h"
 #import "ZCChooseThePitchVViewController.h"
 #import "ZCSwitchTableViewController.h"
-#import "ZCCheckTheScorecardTableViewController.h"
+
 @interface ZCSettingTVController ()<UITableViewDelegate,UITableViewDataSource,ZCSettingHeadViewDelegate,CLLocationManagerDelegate,ZCChooseThePitchDelegate,ZCSwitchTableViewControllerDelegate>
 @property(nonatomic,assign) int count;
 

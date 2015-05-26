@@ -52,6 +52,8 @@
     [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:ZCColor(240, 208, 122), UITextAttributeTextColor,nil] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem =newBar;
     
+    //让tableView没有弹簧效果
+    self.tableView.bounces=NO;
     
    
     //背景颜色suoyou_bj
@@ -272,6 +274,27 @@
         ZCListViewController *ListViewController=[[ZCListViewController alloc] init];
         ListViewController.uuid=self.uuid;
         [self.navigationController pushViewController:ListViewController animated:YES];
+    }else if (button.tag==2791)
+    {
+        
+        
+        if ([self.totalScorecards.player.scoring_type isEqual:@"simple"]){
+            ZCAmateurStatisticsViewController *statisticsViewController=[[ZCAmateurStatisticsViewController alloc] init];
+            statisticsViewController.uuid=self.uuid;
+            [self.navigationController pushViewController:statisticsViewController animated:YES];
+            
+        }else{
+            
+            ZCProfessionalStatisticalViewController *ProfessionalStatistical=[[ZCProfessionalStatisticalViewController alloc] init];
+            ProfessionalStatistical.uuid=self.uuid;
+            [self.navigationController pushViewController:ProfessionalStatistical animated:YES];
+            
+        }
+
+        
+        
+        
+    
     }
 }
 

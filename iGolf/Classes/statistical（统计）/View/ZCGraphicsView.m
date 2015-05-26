@@ -20,7 +20,7 @@
         UIImageView *imageView=[[UIImageView alloc] init];
         
         
-        imageView.image=[UIImage imageNamed:@"tj_tubiao"];
+        imageView.image=[UIImage imageNamed:@"orange"];
         [self addSubview:imageView];
         self.imageView=imageView;
     }

@@ -16,7 +16,11 @@
 - (instancetype)initWithDict:(NSDictionary *)dict
 {
     if (self = [super init]) {
-        [self setValuesForKeysWithDictionary:dict];
+        self.nickname=dict[@"nickname"];
+        self.token=dict[@"token"];
+        self.type=dict[@"type"];
+        self.uuid=dict[@"uuid"];
+        self.phone=dict[@"phone"];
     }
     return self;
 
@@ -33,6 +37,7 @@
         self.nickname = [decoder decodeObjectForKey:@"nickname"];
         self.uuid = [decoder decodeObjectForKey:@"uuid"];
         self.type = [decoder decodeObjectForKey:@"type"];
+        self.phone=[decoder decodeObjectForKey:@"phone"];
         
     }
     return self;
@@ -47,6 +52,7 @@
     [encoder encodeObject:self.nickname forKey:@"nickname"];
     [encoder encodeObject:self.uuid forKey:@"uuid"];
     [encoder encodeObject:self.type forKey:@"type"];
+    [encoder encodeObject:self.phone forKey:@"phone"];
     
 }
 

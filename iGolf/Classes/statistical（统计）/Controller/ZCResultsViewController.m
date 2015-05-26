@@ -23,19 +23,19 @@
     [super viewDidLoad];
     
     
-    
-    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
-    customLab.textAlignment=NSTextAlignmentCenter;
-    [customLab setTextColor:ZCColor(240, 208, 122)];
-    [customLab setText:@"分析结果"];
-    customLab.font = [UIFont boldSystemFontOfSize:20];
-    self.navigationItem.titleView = customLab;
+    self.navigationItem.title=@"分析结果";
+//    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+//    customLab.textAlignment=NSTextAlignmentCenter;
+//    [customLab setTextColor:ZCColor(240, 208, 122)];
+//    [customLab setText:@"分析结果"];
+//    customLab.font = [UIFont boldSystemFontOfSize:20];
+//    self.navigationItem.titleView = customLab;
 
     
     //返回
     self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
     //背景颜色suoyou_bj
-    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+    self.view.backgroundColor=ZCColor(237, 237, 237);
     
     [self onlineData];
     
@@ -94,7 +94,7 @@
             //ZCLog(@"11111");
             UILabel *label1=[[UILabel alloc] init];
             label1.text=@"您没有数据，请添加完整场次数据";
-            label1.textColor=ZCColor(240, 208, 122);
+            label1.textColor=ZCColor(85, 85, 85);
             label1.font=[UIFont systemFontOfSize:15];
             label1.textAlignment=NSTextAlignmentCenter;
             
@@ -136,6 +136,7 @@
     CGFloat topViewW=SCREEN_WIDTH;
     CGFloat topViewH=50;
     topView.frame=CGRectMake(topViewX, topViewY, topViewW, topViewH);
+    topView.backgroundColor=[UIColor whiteColor];
     [self.scrollView addSubview:topView];
     
     [self addChildControls:topView firstLabelStr:[NSString stringWithFormat:@"%@",self.name] secondLabelStr:[NSString stringWithFormat:@"完整场次%@场",self.resultsModel.finished_count]];
@@ -147,6 +148,7 @@
     CGFloat topSecondViewY=topViewH;
     CGFloat topSecondViewW=SCREEN_WIDTH;
     CGFloat topSecondViewH=50;
+    topSecondView.backgroundColor=[UIColor whiteColor];
     topSecondView.frame=CGRectMake(topSecondViewX, topSecondViewY, topSecondViewW, topSecondViewH);
     [self.scrollView addSubview:topSecondView];
     [self addChildControls:topSecondView firstLabelStr:@"平均杆数" secondLabelStr:[NSString stringWithFormat:@"%@",self.resultsModel.score]];
@@ -159,6 +161,7 @@
     CGFloat topThirdViewW=SCREEN_WIDTH;
     CGFloat topThirdViewH=topViewH;
     topThirdView.frame=CGRectMake(topThirdViewX, topThirdViewY, topThirdViewW, topThirdViewH);
+    topThirdView.backgroundColor=[UIColor whiteColor];
     [self.scrollView addSubview:topThirdView];
     [self addChildControls:topThirdView firstLabelStr:@"差点" secondLabelStr:[NSString stringWithFormat:@"%@",self.resultsModel.handicap]];
     //划线
@@ -171,7 +174,7 @@
     CGFloat forthViewW=SCREEN_WIDTH;
     CGFloat forthViewH=358;
     forthView.frame=CGRectMake(forthViewX, forthViewY, forthViewW, forthViewH);
-    forthView.backgroundColor=ZCColor(136, 119, 73);
+    forthView.backgroundColor=ZCColor(170, 170, 170);
     [self.scrollView addSubview:forthView];
     //添加里面空间
     [self forthViewControls:forthView];
@@ -183,7 +186,7 @@
     CGFloat fifthViewW=SCREEN_WIDTH;
     CGFloat fifthViewH=154;
     fifthView.frame=CGRectMake(fifthViewX, fifthViewY, fifthViewW, fifthViewH);
-    fifthView.backgroundColor=ZCColor(136, 119, 73);
+    fifthView.backgroundColor=ZCColor(170, 170, 170);
     [self.scrollView addSubview:fifthView];
     //添加里面空间
     [self fifthViewControls:fifthView];
@@ -196,7 +199,7 @@
     CGFloat sixthViewW=SCREEN_WIDTH;
     CGFloat sixthViewH=307;
     sixthView.frame=CGRectMake(sixthViewX, sixthViewY, sixthViewW, sixthViewH);
-    sixthView.backgroundColor=ZCColor(136, 119, 73);
+    sixthView.backgroundColor=ZCColor(170, 170, 170);
     [self.scrollView addSubview:sixthView];
     //添加里面空间
     [self sixthViewControls:sixthView];
@@ -209,7 +212,7 @@
 {
     UIView *bjView=[[UIView alloc] init];
     bjView.frame=CGRectMake(0, view.frame.size.height-1, SCREEN_WIDTH, 1);
-    bjView.backgroundColor=ZCColor(136, 119, 73);
+    bjView.backgroundColor=ZCColor(170, 170, 170);
     [view addSubview:bjView];
 }
 
@@ -232,7 +235,7 @@
     
     for (int index=0; index<7; index++) {
         UIButton *button=[[UIButton alloc] init];
-        [button setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]]];
+       // [button setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]]];
         // 3.2.计算框框的位置
         // 计算行号和列号
         int row = index / totalColumns;
@@ -249,10 +252,10 @@
         UILabel *Label1=[[UILabel alloc] init];
         Label1.frame=CGRectMake(10,0 , 190, button.frame.size.height);
         
-        Label1.textColor=ZCColor(240, 208, 122);
+        Label1.textColor=ZCColor(34, 34, 34);
         [button addSubview:Label1];
         
-        
+        [button setBackgroundColor:[UIColor whiteColor]];
         //创建下面文字
         UILabel *Label2=[[UILabel alloc] init];
        // Label2.frame=CGRectMake(button.frame.size.width-100,0 , 50, button.frame.size.height);
@@ -260,7 +263,7 @@
         
         Label2.frame=CGRectMake(button.frame.size.width-80,0 , 70, button.frame.size.height);
         
-        Label2.textColor=ZCColor(240, 208, 122);
+        Label2.textColor=ZCColor(34, 34, 34);
         Label2.textAlignment=NSTextAlignmentRight;
         [button addSubview:Label2];
         
@@ -341,12 +344,12 @@
         button.frame = CGRectMake(appX, appY, appW, appH);
         [view addSubview:button];
         
-        [button setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]]];
+       [button setBackgroundColor:[UIColor whiteColor]];
         
         UILabel *Label1=[[UILabel alloc] init];
         Label1.frame=CGRectMake(10,0 , 190, button.frame.size.height);
         
-        Label1.textColor=ZCColor(240, 208, 122);
+        Label1.textColor=ZCColor(34, 34, 34);
         [button addSubview:Label1];
         
         
@@ -354,7 +357,7 @@
         UILabel *Label2=[[UILabel alloc] init];
       //  Label2.frame=CGRectMake(button.frame.size.width-100,0 , 50, button.frame.size.height);
         Label2.frame=CGRectMake(button.frame.size.width-60,0 , 50, button.frame.size.height);
-        Label2.textColor=ZCColor(240, 208, 122);
+        Label2.textColor=ZCColor(34, 34, 34);
         Label2.textAlignment=NSTextAlignmentRight;
         [button addSubview:Label2];
         
@@ -415,12 +418,12 @@
         button.frame = CGRectMake(appX, appY, appW, appH);
         [view addSubview:button];
         
-        [button setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]]];
+        [button setBackgroundColor:[UIColor whiteColor]];
         
         UILabel *Label1=[[UILabel alloc] init];
         Label1.frame=CGRectMake(10,0 , 190, button.frame.size.height);
         
-        Label1.textColor=ZCColor(240, 208, 122);
+        Label1.textColor=ZCColor(34, 34, 34);
         [button addSubview:Label1];
         
         
@@ -429,7 +432,7 @@
        // Label2.frame=CGRectMake(button.frame.size.width-100,0 , 50, button.frame.size.height);
         Label2.frame=CGRectMake(button.frame.size.width-60,0 , 50, button.frame.size.height);
         
-        Label2.textColor=ZCColor(240, 208, 122);
+        Label2.textColor=ZCColor(34, 34, 34);
         Label2.textAlignment=NSTextAlignmentRight;
         [button addSubview:Label2];
         
@@ -484,7 +487,7 @@
     CGFloat firstLabelH=view.frame.size.height;
     firstLabel.frame=CGRectMake(firstLabelX, firstLabelY, firstLabelW, firstLabelH);
     firstLabel.text=firstStr;
-    firstLabel.textColor=ZCColor(240, 208, 122);
+    firstLabel.textColor=ZCColor(34, 34, 34);
     [view addSubview:firstLabel];
     
     
@@ -497,7 +500,7 @@
     CGFloat secondLabelX=SCREEN_WIDTH-secondLabelW-10;
     secondLabel.frame=CGRectMake(secondLabelX, secondLabelY, secondLabelW, secondLabelH);
     secondLabel.text=secondStr;
-    secondLabel.textColor=ZCColor(240, 208, 122);
+    secondLabel.textColor=ZCColor(34, 34, 34);
     secondLabel.textAlignment=NSTextAlignmentRight;
     [view addSubview:secondLabel];
 

@@ -7,14 +7,14 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>D96EC8F1-B277-4C47-9922-FC591BE4F124</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>iGolf</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>6D0E42AFB3F45746A67EEA8F4801C83FD1FBA77C</key>
 		<string>github.com:zzch/PineValley.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>iGolf.xcodeproj/project.xcworkspace</string>
+	<string>iGolf.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>6D0E42AFB3F45746A67EEA8F4801C83FD1FBA77C</key>

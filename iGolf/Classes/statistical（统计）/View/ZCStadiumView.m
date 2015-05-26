@@ -27,10 +27,10 @@
         self.dataSource=self;
         self.delegate=self;
         self.rowHeight=80;
-        self.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+        self.backgroundColor=ZCColor(237, 237, 237);
         
         //分割线颜色
-        [self   setSeparatorColor:ZCColor(240, 208, 122)];
+        [self   setSeparatorColor:ZCColor(170, 170, 170)];
         //让下面没内容的分割线不显示
         self.tableFooterView = [[UIView alloc] init];
         
@@ -145,6 +145,9 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+  [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    
     if ([self.delegater respondsToSelector:@selector(StadiumViewDidClickedcell:uuidStr:andName:)]) {
         [self.delegater StadiumViewDidClickedcell:self uuidStr:[self.stadiumArray[indexPath.row] uuid] andName:[self.stadiumArray[indexPath.row] name]];
     }

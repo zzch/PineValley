@@ -78,7 +78,23 @@
     }else if ([errorCode isEqualToString:@"20107"])
     {
         [[self alloc] alert:@"用户重复参加赛事"];
+    }else if ([errorCode isEqualToString:@"20303"])
+    {
+        [[self alloc] alert:@"用户重复注册"];
+    }else if ([errorCode isEqualToString:@"20301"])
+    {
+        [[self alloc] alert:@"用户频繁操作"];
+    }else if ([errorCode isEqualToString:@"20315"])
+    {
+        [[self alloc] alert:@"用户一天请求已经达到15次"];
+    }else if ([errorCode isEqualToString:@"20316"])
+    {
+        [[self alloc] alert:@"您已经是会员了"];
     }
+
+
+
+
 
 
 

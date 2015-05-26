@@ -39,13 +39,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
-    customLab.textAlignment=NSTextAlignmentCenter;
-    [customLab setTextColor:ZCColor(240, 208, 122)];
-    [customLab setText:@"修改个人资料"];
-    customLab.font = [UIFont boldSystemFontOfSize:20];
-    self.navigationItem.titleView = customLab;
+    self.navigationItem.title=@"修改个人资料";
+//    
+//    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+//    customLab.textAlignment=NSTextAlignmentCenter;
+//    [customLab setTextColor:ZCColor(240, 208, 122)];
+//    [customLab setText:@"修改个人资料"];
+//    customLab.font = [UIFont boldSystemFontOfSize:20];
+//    self.navigationItem.titleView = customLab;
     
     
     //返回
@@ -55,7 +56,7 @@
     
     UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStyleDone target:self action:@selector(chooseTheDetermine)];
     //改变UIBarButtonItem字体颜色
-    [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:ZCColor(240, 208, 122), UITextAttributeTextColor,nil] forState:UIControlStateNormal];
+    [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], UITextAttributeTextColor,nil] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem =newBar;
 
     
@@ -72,7 +73,7 @@
     [self.view addSubview:scrollView];
     //self.scrollView.userInteractionEnabled=YES;
    
-    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+    self.view.backgroundColor=ZCColor(237, 237, 237);
     
     //跟换头像View
     [self changePhotoView];
@@ -84,13 +85,6 @@
     
     
     
-//    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
-//    [fmt setDateFormat:@"yyyy-MM-dd "];
-//    NSDate *confromTimesp=[NSDate dateWithTimeIntervalSince1970:self.personalData.birthday];
-//    NSString *confromTimespStr=[fmt stringFromDate:confromTimesp];
-//    //[birthdayButton setTitle:confromTimespStr forState:UIControlStateNormal];
-//    ZCLog(@"%@,%@",confromTimespStr,confromTimesp);
-
     
     
     
@@ -192,11 +186,11 @@
     CGFloat nameLabelH=40;
     nameLabel.frame=CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH);
     nameLabel.text=@"名字";
-    nameLabel.textColor=ZCColor(240, 208, 122);
+    nameLabel.textColor=ZCColor(85, 85, 85);
     [self.scrollView addSubview:nameLabel];
     
     UITextField *nameTextField=[[UITextField alloc] init];
-    CGFloat nameTextFieldX=10;
+    CGFloat nameTextFieldX=0;
     CGFloat nameTextFieldY=nameLabelY+nameLabelH;
     CGFloat nameTextFieldW=SCREEN_WIDTH-(2*nameTextFieldX);
     CGFloat nameTextFieldH=40;
@@ -205,18 +199,18 @@
     
     
     
-    CGFloat top = 25; // 顶端盖高度
-    CGFloat bottom = 25 ; // 底端盖高度
-    CGFloat left = 10; // 左端盖宽度
-    CGFloat right = 10; // 右端盖宽度
-    UIEdgeInsets insets = UIEdgeInsetsMake(top, left, bottom, right);
-    UIImage *image1=[UIImage imageNamed:@"denglu_denglukuang" ];
-    // 指定为拉伸模式，伸缩后重新赋值
-    image1 = [image1 resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
-    [nameTextField setBackground:image1];
+//    CGFloat top = 25; // 顶端盖高度
+//    CGFloat bottom = 25 ; // 底端盖高度
+//    CGFloat left = 10; // 左端盖宽度
+//    CGFloat right = 10; // 右端盖宽度
+//    UIEdgeInsets insets = UIEdgeInsetsMake(top, left, bottom, right);
+//    UIImage *image1=[UIImage imageNamed:@"denglu_denglukuang" ];
+//    // 指定为拉伸模式，伸缩后重新赋值
+//    image1 = [image1 resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
+//    [nameTextField setBackground:image1];
     
-    //nameTextField.backgroundColor=[UIColor colorWithPatternImage:image1];
-    nameTextField.textColor=ZCColor(240, 208, 122);
+    nameTextField.backgroundColor=[UIColor whiteColor];
+    nameTextField.textColor=ZCColor(85, 85, 85);
     nameTextField.text=self.name;
     [self.scrollView addSubview:nameTextField];
     self.nameTextField=nameTextField;
@@ -229,15 +223,16 @@
     CGFloat genderLabelH=40;
     genderLabel.frame=CGRectMake(genderLabelX, genderLabelY, genderLabelW, genderLabelH);
     genderLabel.text=@"性别";
-    genderLabel.textColor=ZCColor(240, 208, 122);
+    genderLabel.textColor=ZCColor(85, 85, 85);
     [self.scrollView addSubview:genderLabel];
     
     //选择性别
     UIButton *genderButton=[[UIButton alloc] init];
-    CGFloat genderButtonX=10;
+    CGFloat genderButtonX=0;
     CGFloat genderButtonY=genderLabelY+genderLabelH;
     CGFloat genderButtonW=SCREEN_WIDTH-(2*genderButtonX);
     CGFloat genderButtonH=49;
+    genderButton.backgroundColor=[UIColor whiteColor];
     genderButton.frame=CGRectMake(genderButtonX, genderButtonY, genderButtonW, genderButtonH);
     [genderButton addTarget:self action:@selector(chickGenderButton) forControlEvents:UIControlEventTouchUpInside];
     
@@ -247,13 +242,15 @@
 //    CGFloat left = 10; // 左端盖宽度
 //    CGFloat right = 10; // 右端盖宽度
 //    UIEdgeInsets insets = UIEdgeInsetsMake(top, left, bottom, right);
-    UIImage *image2=[UIImage imageNamed:@"grxx_anniu_bj" ];
-    // 指定为拉伸模式，伸缩后重新赋值
-    image2 = [image2 resizableImageWithCapInsets:UIEdgeInsetsMake(25,25,10,10) resizingMode:UIImageResizingModeStretch];
-    [genderButton setBackgroundImage:image2 forState:UIControlStateNormal];
+//    UIImage *image2=[UIImage imageNamed:@"grxx_anniu_bj" ];
+//    // 指定为拉伸模式，伸缩后重新赋值
+//    image2 = [image2 resizableImageWithCapInsets:UIEdgeInsetsMake(25,25,10,10) resizingMode:UIImageResizingModeStretch];
+//    [genderButton setBackgroundImage:image2 forState:UIControlStateNormal];
     //genderButton.backgroundColor=[UIColor redColor];
-     genderButton.contentHorizontalAlignment=UIControlContentHorizontalAlignmentLeft;
-    [genderButton setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
+    genderButton.contentHorizontalAlignment=UIControlContentHorizontalAlignmentLeft;
+    //让button的里的内容从左往右移动10像素
+    genderButton.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
+    [genderButton setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
     
     if (![self.personalData.gender isKindOfClass:[NSNull class]]) {
         
@@ -294,24 +291,24 @@
     CGFloat birthdayLabelH=40;
     birthdayLabel.frame=CGRectMake(birthdayLabelX, birthdayLabelY, birthdayLabelW, birthdayLabelH);
     birthdayLabel.text=@"生日";
-    birthdayLabel.textColor=ZCColor(240, 208, 122);
+    birthdayLabel.textColor=ZCColor(85, 85, 85);
     [self.scrollView addSubview:birthdayLabel];
     
     
     //选择生日
     UIButton *birthdayButton=[[UIButton alloc] init];
-    CGFloat birthdayButtonX=10;
+    CGFloat birthdayButtonX=0;
     CGFloat birthdayButtonY=birthdayLabelY+birthdayLabelH;
     CGFloat birthdayButtonW=SCREEN_WIDTH-(2*birthdayButtonX);
     CGFloat birthdayButtonH=49;
     birthdayButton.frame=CGRectMake(birthdayButtonX, birthdayButtonY, birthdayButtonW, birthdayButtonH);
     
     
-    UIImage *image3=[UIImage imageNamed:@"grxx_anniu_bj" ];
-    // 指定为拉伸模式，伸缩后重新赋值
-    image3 = [image3 resizableImageWithCapInsets:UIEdgeInsetsMake(25,25,10,10) resizingMode:UIImageResizingModeStretch];
-    [birthdayButton setBackgroundImage:image2 forState:UIControlStateNormal];
-    
+//    UIImage *image3=[UIImage imageNamed:@"grxx_anniu_bj" ];
+//    // 指定为拉伸模式，伸缩后重新赋值
+//    image3 = [image3 resizableImageWithCapInsets:UIEdgeInsetsMake(25,25,10,10) resizingMode:UIImageResizingModeStretch];
+   // [birthdayButton setBackgroundImage:image2 forState:UIControlStateNormal];
+    birthdayButton.backgroundColor=[UIColor whiteColor];
     
     [birthdayButton addTarget:self action:@selector(chickBirthdayButton) forControlEvents:UIControlEventTouchUpInside];
    // birthdayButton.backgroundColor=[UIColor blueColor];
@@ -321,9 +318,11 @@
     NSDate *confromTimesp=[NSDate dateWithTimeIntervalSince1970:self.personalData.birthday];
     NSString *confromTimespStr=[fmt stringFromDate:confromTimesp];
     [birthdayButton setTitle:confromTimespStr forState:UIControlStateNormal];
-    [birthdayButton setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
+    [birthdayButton setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
         //居左
     birthdayButton.contentHorizontalAlignment=UIControlContentHorizontalAlignmentLeft;
+    //让button的里的内容从左往右移动10像素
+    birthdayButton.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
         [self.scrollView addSubview:birthdayButton];
     self.birthdayButton=birthdayButton;
     
@@ -342,25 +341,26 @@
     CGFloat ageLabelH=40;
     ageLabel.frame=CGRectMake(ageLabelX, ageLabelY, ageLabelW, ageLabelH);
     ageLabel.text=@"年龄";
-    ageLabel.textColor=ZCColor(240, 208, 122);
+    ageLabel.textColor=ZCColor(85, 85, 85);
     [self.scrollView addSubview:ageLabel];
     
     UIButton *ageNumLabel=[[UIButton alloc] init];
     CGFloat ageNumLabelY=ageLabelY+ageLabelH;
-    CGFloat ageNumLabelX=10;
+    CGFloat ageNumLabelX=0;
     
     CGFloat ageNumLabelW=SCREEN_WIDTH-(2*ageNumLabelX);
     CGFloat ageNumLabelH=49;
     ageNumLabel.frame=CGRectMake(ageNumLabelX, ageNumLabelY, ageNumLabelW, ageNumLabelH);
    // ageNumLabel.text=@"24";
     
-    UIImage *image4=[UIImage imageNamed:@"grxx_anniu_bj" ];
-    // 指定为拉伸模式，伸缩后重新赋值
-    image4 = [image4 resizableImageWithCapInsets:UIEdgeInsetsMake(25,25,10,10) resizingMode:UIImageResizingModeStretch];
+//    UIImage *image4=[UIImage imageNamed:@"grxx_anniu_bj" ];
+//    // 指定为拉伸模式，伸缩后重新赋值
+//    image4 = [image4 resizableImageWithCapInsets:UIEdgeInsetsMake(25,25,10,10) resizingMode:UIImageResizingModeStretch];
     //[ageNumLabel setBackgroundImage:image2 forState:UIControlStateNormal];
-    [ageNumLabel setBackgroundImage:image4 forState:UIControlStateNormal];
-    
-    [ageNumLabel setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
+    //[ageNumLabel setBackgroundImage:image4 forState:UIControlStateNormal];
+    [ageNumLabel setBackgroundColor:[UIColor whiteColor]];
+    ageNumLabel.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
+    [ageNumLabel setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
     
     [self.scrollView addSubview:ageNumLabel];
     
@@ -403,17 +403,17 @@
     CGFloat signatureLabelH=40;
     signatureLabel.frame=CGRectMake(signatureLabelX, signatureLabelY, signatureLabelW, signatureLabelH);
     signatureLabel.text=@"签名";
-    signatureLabel.textColor=ZCColor(240, 208, 122);
+    signatureLabel.textColor=ZCColor(85, 85, 85);
     [self.scrollView addSubview:signatureLabel];
 
     
     //输入签名
     
     UITextView *signatureTextView=[[UITextView alloc] init];
-    CGFloat signatureTextFieldX=10;
+    CGFloat signatureTextFieldX=0;
     CGFloat signatureTextFieldY=signatureLabelY+signatureLabelH;
     CGFloat signatureTextFieldW=SCREEN_WIDTH-(2*signatureTextFieldX);
-    CGFloat signatureTextFieldH=80;
+    CGFloat signatureTextFieldH=70;
     signatureTextView.frame=CGRectMake(signatureTextFieldX, signatureTextFieldY, signatureTextFieldW, signatureTextFieldH);
     
     
@@ -423,18 +423,18 @@
 //    image5 = [image5 resizableImageWithCapInsets:UIEdgeInsetsMake(25,25,10,10) resizingMode:UIImageResizingModeStretch];
 
     //signatureTextView.
-    signatureTextView.backgroundColor=[UIColor blackColor];
+    signatureTextView.backgroundColor=[UIColor whiteColor];
     //signatureTextView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"grxx_qianming_bj"]];
     
     if (![self.personalData.desc isKindOfClass:[NSNull class]]) {
         signatureTextView.text=[NSString stringWithFormat:@"%@",self.personalData.desc];
     }
     
-    signatureTextView.textColor=ZCColor(240, 208, 122);
+    signatureTextView.textColor=ZCColor(85, 85, 85);
     [self.scrollView addSubview:signatureTextView];
     self.signatureTextView=signatureTextView;
     
-    self.scrollView.contentSize = CGSizeMake(0,signatureTextFieldY+signatureTextFieldH+60 );
+    self.scrollView.contentSize = CGSizeMake(0,signatureTextFieldY+signatureTextFieldH+70 );
 }
 
 ////chickAddressButton
@@ -495,7 +495,7 @@
         CGFloat genderViewW=SCREEN_WIDTH;
         CGFloat genderViewH=50;
         genderView.frame=CGRectMake(genderViewX, genderViewY, genderViewW, genderViewH);
-        genderView.backgroundColor=[UIColor blackColor];
+        genderView.backgroundColor=[UIColor whiteColor];
         [self.scrollView addSubview:genderView];
         self.genderView=genderView;
         
@@ -506,7 +506,7 @@
         CGFloat  manBtnY=(genderViewH-manBtnH)*0.5;
         manBtn.frame=CGRectMake(manBtnX, manBtnY, manBtnW, manBtnH);
         [manBtn setTitle:@"男" forState:UIControlStateNormal];
-        [manBtn setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
+        [manBtn setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
         [manBtn addTarget:self action:@selector(chooseTheMan) forControlEvents:UIControlEventTouchUpInside];
         [genderView addSubview:manBtn];
         
@@ -517,7 +517,7 @@
         CGFloat  womanBtnY=(genderViewH-manBtnH)*0.5;
         womanBtn.frame=CGRectMake(womanBtnX, womanBtnY, womanBtnW, womanBtnH);
         [womanBtn setTitle:@"女" forState:UIControlStateNormal];
-        [womanBtn setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
+        [womanBtn setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
         [womanBtn addTarget:self action:@selector(chooseTheWoman) forControlEvents:UIControlEventTouchUpInside];
         [genderView addSubview:womanBtn];
 
@@ -551,24 +551,24 @@
 -(void)changePhotoView
 {
     UIButton *photoViewBtn=[[UIButton alloc] init];
-    CGFloat photoViewBtnX=10;
+    CGFloat photoViewBtnX=0;
     CGFloat photoViewBtnY=20;
     CGFloat photoViewBtnW=SCREEN_WIDTH-(2*photoViewBtnX);
     CGFloat photoViewBtnH=82;
     photoViewBtn.frame=CGRectMake(photoViewBtnX, photoViewBtnY, photoViewBtnW, photoViewBtnH);
     
     
-    CGFloat top = 25; // 顶端盖高度
-    CGFloat bottom = 25 ; // 底端盖高度
-    CGFloat left = 10; // 左端盖宽度
-    CGFloat right = 10; // 右端盖宽度
-    UIEdgeInsets insets = UIEdgeInsetsMake(top, left, bottom, right);
-    UIImage *image=[UIImage imageNamed:@"grxx_ghtx_bj" ];
-    // 指定为拉伸模式，伸缩后重新赋值
-    image = [image resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
-    [photoViewBtn setBackgroundImage:image forState:UIControlStateNormal];
-    
-    
+//    CGFloat top = 25; // 顶端盖高度
+//    CGFloat bottom = 25 ; // 底端盖高度
+//    CGFloat left = 10; // 左端盖宽度
+//    CGFloat right = 10; // 右端盖宽度
+//    UIEdgeInsets insets = UIEdgeInsetsMake(top, left, bottom, right);
+//    UIImage *image=[UIImage imageNamed:@"grxx_ghtx_bj" ];
+//    // 指定为拉伸模式，伸缩后重新赋值
+//    image = [image resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
+//    [photoViewBtn setBackgroundImage:image forState:UIControlStateNormal];
+//    
+    [photoViewBtn setBackgroundColor:[UIColor whiteColor]];
     
     [photoViewBtn addTarget:self action:@selector(clickphotoViewBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.scrollView addSubview:photoViewBtn];
@@ -597,7 +597,7 @@
     CGFloat photoLabelY=(photoViewBtnH-photoLabelH)*0.5;
     photoLabel.frame=CGRectMake(photoLabelX, photoLabelY, photoLabelW, photoLabelH);
     photoLabel.text=@"更换头像";
-    photoLabel.textColor=ZCColor(240, 208, 122);
+    photoLabel.textColor=ZCColor(85, 85, 85);
     [photoViewBtn addSubview:photoLabel];
     
 
@@ -610,7 +610,7 @@
     CGFloat rightImageViewY=(photoViewBtnH-rightImageViewH)*0.5;
     CGFloat rightImageViewX=photoViewBtnW-rightImageViewW-10;
     rightImageView.frame=CGRectMake(rightImageViewX, rightImageViewY, rightImageViewW, rightImageViewH);
-    rightImageView.image=[UIImage imageNamed:@"lsjfk_xiayibu_iocn"];
+    rightImageView.image=[UIImage imageNamed:@"icon_arrow3"];
     
     [photoViewBtn addSubview:rightImageView];
 }

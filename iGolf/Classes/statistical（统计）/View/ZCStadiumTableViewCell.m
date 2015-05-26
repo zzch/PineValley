@@ -23,19 +23,19 @@
     if (self=[super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
         
-        self.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+      //  self.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
         self.selectedBackgroundView=[[UIView alloc] initWithFrame:self.frame];
-        self.selectedBackgroundView.backgroundColor=ZCColor(15, 14, 14);
+        self.selectedBackgroundView.backgroundColor=ZCColor(194, 194, 194);
         
         
         UILabel *nameLabel=[[UILabel alloc] init];
-        nameLabel.textColor=ZCColor(240, 208, 122);
+        nameLabel.textColor=ZCColor(85, 85, 85);
         self.nameLabel=nameLabel;
         [self.contentView addSubview:nameLabel];
         
         
         UILabel *addressLabel=[[UILabel alloc] init];
-        addressLabel.textColor=ZCColor(240, 208, 122);
+        addressLabel.textColor=ZCColor(85, 85, 85);
         self.addressLabel=addressLabel;
         [self.contentView addSubview:addressLabel];
 
@@ -47,7 +47,7 @@
         
         
         UILabel *typeLabel=[[UILabel alloc] init];
-        typeLabel.textColor=ZCColor(240, 208, 122);
+        typeLabel.textColor=ZCColor(85, 85, 85);
         self.typeLabel=typeLabel;
         [self.contentView addSubview:typeLabel];
         
