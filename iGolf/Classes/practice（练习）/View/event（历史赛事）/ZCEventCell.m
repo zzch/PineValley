@@ -61,7 +61,7 @@
         //self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"suoyou_bj_02"]];
        // self.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
         self.selectedBackgroundView=[[UIView alloc] initWithFrame:self.frame];
-        self.selectedBackgroundView.backgroundColor=ZCColor(15, 14, 14);
+        self.selectedBackgroundView.backgroundColor=ZCColor(204, 204, 204);
         
         
         //self.selectedBackgroundView

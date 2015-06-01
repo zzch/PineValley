@@ -78,6 +78,8 @@
 		A957DD8F1AA05FB9008C5ABA /* ZCChildStadium.m in Sources */ = {isa = PBXBuildFile; fileRef = A957DD8E1AA05FB9008C5ABA /* ZCChildStadium.m */; };
 		A957DD921AA067BD008C5ABA /* ZCSettingTVController.m in Sources */ = {isa = PBXBuildFile; fileRef = A957DD911AA067BD008C5ABA /* ZCSettingTVController.m */; };
 		A957DD951AA068D0008C5ABA /* ZCStadiumInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = A957DD941AA068D0008C5ABA /* ZCStadiumInformation.m */; };
+		A9584A5F1B156738007E3A17 /* ZCChangePhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9584A5E1B156738007E3A17 /* ZCChangePhoneViewController.m */; };
+		A9584A621B15967E007E3A17 /* ZCChangethePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9584A611B15967E007E3A17 /* ZCChangethePasswordViewController.m */; };
 		A95A64F91B14161D004DE1F0 /* ZCValidationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A95A64F81B14161D004DE1F0 /* ZCValidationViewController.m */; };
 		A95A6FF31AE8A4D200104811 /* ZCCreateAGameTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A95A6FF21AE8A4D200104811 /* ZCCreateAGameTableViewController.m */; };
 		A95A6FF71AE8ABDA00104811 /* ZCNameTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A95A6FF61AE8ABDA00104811 /* ZCNameTableViewCell.m */; };
@@ -333,6 +335,10 @@
 		A957DD911AA067BD008C5ABA /* ZCSettingTVController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCSettingTVController.m; sourceTree = "<group>"; };
 		A957DD931AA068D0008C5ABA /* ZCStadiumInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCStadiumInformation.h; sourceTree = "<group>"; };
 		A957DD941AA068D0008C5ABA /* ZCStadiumInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCStadiumInformation.m; sourceTree = "<group>"; };
+		A9584A5D1B156738007E3A17 /* ZCChangePhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCChangePhoneViewController.h; sourceTree = "<group>"; };
+		A9584A5E1B156738007E3A17 /* ZCChangePhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCChangePhoneViewController.m; sourceTree = "<group>"; };
+		A9584A601B15967E007E3A17 /* ZCChangethePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCChangethePasswordViewController.h; sourceTree = "<group>"; };
+		A9584A611B15967E007E3A17 /* ZCChangethePasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCChangethePasswordViewController.m; sourceTree = "<group>"; };
 		A95A64F71B14161D004DE1F0 /* ZCValidationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCValidationViewController.h; sourceTree = "<group>"; };
 		A95A64F81B14161D004DE1F0 /* ZCValidationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCValidationViewController.m; sourceTree = "<group>"; };
 		A95A6FF11AE8A4D200104811 /* ZCCreateAGameTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCCreateAGameTableViewController.h; sourceTree = "<group>"; };
@@ -1095,6 +1101,10 @@
 				A942BCE11B131E8900AF8D71 /* ZCMobilePhoneViewController.m */,
 				A95A64F71B14161D004DE1F0 /* ZCValidationViewController.h */,
 				A95A64F81B14161D004DE1F0 /* ZCValidationViewController.m */,
+				A9584A5D1B156738007E3A17 /* ZCChangePhoneViewController.h */,
+				A9584A5E1B156738007E3A17 /* ZCChangePhoneViewController.m */,
+				A9584A601B15967E007E3A17 /* ZCChangethePasswordViewController.h */,
+				A9584A611B15967E007E3A17 /* ZCChangethePasswordViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1610,6 +1620,7 @@
 				A93A79C71B01EB01000AC9BF /* ZCTee_boxes.m in Sources */,
 				A9BE93121ACBA69E00ADFAAF /* ZCAKeyToRegisterView.m in Sources */,
 				A95A6FFD1AE8AD5C00104811 /* ZCModelTableViewCell.m in Sources */,
+				A9584A5F1B156738007E3A17 /* ZCChangePhoneViewController.m in Sources */,
 				A911BE1A1AC963EA00819F52 /* MJMethod.m in Sources */,
 				A93BCE821A7CB6B90053FD00 /* MTScenicShopCell.m in Sources */,
 				A9386B9B1A7B7F2900526086 /* ZCChooseThePitchVViewController.m in Sources */,
@@ -1622,6 +1633,7 @@
 				A972DDAB1ADFAC5E0087CE35 /* ZCCueMode.m in Sources */,
 				A9C308931AFB5C72009C635D /* ZCPracticeVController.m in Sources */,
 				A95D733E1AD6597A009062AF /* CityPickerView.m in Sources */,
+				A9584A621B15967E007E3A17 /* ZCChangethePasswordViewController.m in Sources */,
 				A9285F1E1B09FA2600AC7CD1 /* ZCViewTheResultsViewController.m in Sources */,
 				A95AABE91AE0BA2E00897808 /* ZCWedgeFirstCell.m in Sources */,
 				A95AABFF1AE1179500897808 /* ZCGraphicsView.m in Sources */,

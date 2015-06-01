@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ZCQuickScoringTableViewController : UITableViewController
+@interface ZCQuickScoringTableViewController : UIViewController
 
 @end

@@ -10,6 +10,7 @@
 #import "ZCTabbarViewController.h"
 #import "ZCregisterViewController.h"
 #import "ZCAccount.h"
+#import "ZCPracticeVController.h"
 @interface AppDelegate ()
 
 @end
@@ -43,9 +44,10 @@
     ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
 
     if (account) {//之前登陆成功
-         ZCTabbarViewController *tabBarVc=[[ZCTabbarViewController alloc] init];
+         ZCPracticeVController *tabBarVc=[[ZCPracticeVController alloc] init];
+        UINavigationController *nav=[[UINavigationController alloc] initWithRootViewController:tabBarVc];
         
-         self.window.rootViewController=tabBarVc;
+         self.window.rootViewController=nav;
     }else
     {// 之前没有登录成功
         //设置跟控制器

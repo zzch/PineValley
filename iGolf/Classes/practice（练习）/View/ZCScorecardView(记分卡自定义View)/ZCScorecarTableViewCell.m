@@ -88,7 +88,7 @@
         UIView *middleView=[[UIView alloc] init];
         [self.contentView addSubview:middleView];
         self.middleView=middleView;
-        self.middleView.backgroundColor=RGBACOLOR(170, 170, 170, 0.6);
+       // self.middleView.backgroundColor=RGBACOLOR(170, 170, 170, 0.6);
 
         
         //创建球洞编号
@@ -326,7 +326,7 @@
     //创建左边View的frame
     CGFloat liftViewX=0;
     CGFloat liftViewY=0;
-    CGFloat liftViewW=self.frame.size.width*0.25;
+    CGFloat liftViewW=self.frame.size.width*0.21;
     CGFloat liftViewH=self.frame.size.height;
     
     self.liftView.frame=CGRectMake(liftViewX, liftViewY, liftViewW, liftViewH);

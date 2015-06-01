@@ -27,15 +27,21 @@
 {
     if (self=[super initWithFrame:frame]) {
         
+        
+        UIImage *image1=[UIImage imageNamed:@"shurukuang" ];
+        // 指定为拉伸模式，伸缩后重新赋值
+        image1 = [image1 resizableImageWithCapInsets:UIEdgeInsetsMake(25,25,10,10) resizingMode:UIImageResizingModeStretch];
+        
+        
         //账号
         UITextField *phoneAccount=[[UITextField alloc] init];
-        [phoneAccount setTextColor:ZCColor(240, 208, 122)];
-        [phoneAccount setBackground:[UIImage imageNamed:@"denglu_denglukuang"]];
+        [phoneAccount setTextColor:ZCColor(85, 85, 85)];
+        [phoneAccount setBackground:image1];
         phoneAccount.placeholder=@"请输入您的手机号";
         //设置键盘为数字键盘
         phoneAccount.keyboardType=UIKeyboardTypeNumberPad;
         //修改提示语的字体颜色
-        [phoneAccount setValue:ZCColor(136, 119, 73)
+        [phoneAccount setValue:ZCColor(102, 102, 102)
                     forKeyPath:@"_placeholderLabel.textColor"];
         [self addSubview:phoneAccount];
         self.phoneAccount=phoneAccount;
@@ -44,20 +50,20 @@
         
         //密码
         UITextField *phonePassword=[[UITextField alloc] init];
-        [phonePassword setTextColor:ZCColor(240, 208, 122)];
+        [phonePassword setTextColor:ZCColor(85, 85, 85)];
         //实现密文形式
         phonePassword.secureTextEntry=YES;
         phonePassword.placeholder=@"请输入您的密码";
         //修改提示语的字体颜色
-        [phonePassword setValue:ZCColor(136, 119, 73) forKeyPath:@"_placeholderLabel.textColor"];
-        [phonePassword setBackground:[UIImage imageNamed:@"denglu_denglukuang"]];
+        [phonePassword setValue:ZCColor(102, 102, 102) forKeyPath:@"_placeholderLabel.textColor"];
+        [phonePassword setBackground:image1];
         [self addSubview:phonePassword];
         self.phonePassword=phonePassword;
         
         //忘记密码
         UIButton *forgetBth=[[UIButton alloc] init];
         [forgetBth setTitle:@"忘记密码" forState:UIControlStateNormal];
-        [forgetBth setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
+        [forgetBth setTitleColor:ZCColor(102, 102, 102) forState:UIControlStateNormal];
         [self addSubview:forgetBth];
         self.forgetBth=forgetBth;
         
@@ -67,12 +73,12 @@
         [phoneloginBth setTitle:@"登陆" forState:UIControlStateNormal];
         
         
-        UIImage *image2=[UIImage imageNamed:@"shoujizhuce_bj" ];
+        UIImage *image2=[UIImage imageNamed:@"anniu_dianji" ];
         // 指定为拉伸模式，伸缩后重新赋值
         image2 = [image2 resizableImageWithCapInsets:UIEdgeInsetsMake(25,25,10,10) resizingMode:UIImageResizingModeStretch];
         [phoneloginBth setBackgroundImage:image2 forState:UIControlStateNormal];
 
-        [phoneloginBth setTitleColor:ZCColor(136, 119, 73) forState:UIControlStateNormal];
+        [phoneloginBth setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         
         
         [phoneloginBth addTarget:self action:@selector(clickphoneloginBth1) forControlEvents:UIControlEventTouchUpInside];
@@ -101,12 +107,12 @@
         self.phoneloginBth.enabled=YES;
        // [self.phoneloginBth setBackgroundImage:[UIImage imageNamed:@"denglu_anniu-1"] forState:UIControlStateNormal];
         //[self.phoneloginBth setBackgroundImage:[UIImage imageNamed:@"denglu_anniu_anxia"] forState:UIControlStateHighlighted];
-        [self.phoneloginBth setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
+       // [self.phoneloginBth setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
     }else
     {
         self.phoneloginBth.enabled=NO;
         //[self.phoneloginBth setBackgroundColor:ZCColor(105, 178, 138) ];
-        [self.phoneloginBth setTitleColor:ZCColor(136, 119, 73) forState:UIControlStateNormal];
+       // [self.phoneloginBth setTitleColor:ZCColor(136, 119, 73) forState:UIControlStateNormal];
     
     }
 

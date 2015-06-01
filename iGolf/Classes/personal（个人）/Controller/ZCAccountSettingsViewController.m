@@ -9,6 +9,8 @@
 #import "ZCAccountSettingsViewController.h"
 #import "ZCMobilePhoneViewController.h"
 #import "ZCAccount.h"
+#import "ZCChangePhoneViewController.h"
+#import "ZCChangethePasswordViewController.h"
 @interface ZCAccountSettingsViewController ()
 
 @end
@@ -24,8 +26,14 @@
     NSString *doc=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES) lastObject];
     NSString *file=[doc stringByAppendingPathComponent:@"account.data"];
     ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
-    ZCLog(@"--------%@",account.uuid);
     
+    NSString *photo;
+    if ([self _valueOrNil:account.phone]==nil) {
+        photo=@"";
+    }else
+    {
+    photo= account.phone;
+    }
     UIButton *photoNumberBtn=[[UIButton alloc] init];
     CGFloat  photoNumberBtnX=0;
     CGFloat  photoNumberBtnY=25;
@@ -35,7 +43,7 @@
     photoNumberBtn.backgroundColor=[UIColor whiteColor];
     [photoNumberBtn addTarget:self action:@selector(clickThephotoNumberBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:photoNumberBtn];
-    [self addChildControls:photoNumberBtn andText:@"手机号" andOther:[NSString stringWithFormat:@"%@",account.phone]];
+    [self addChildControls:photoNumberBtn andText:@"手机号" andOther:[NSString stringWithFormat:@"%@",photo]];
     
     
     
@@ -47,12 +55,21 @@
     CGFloat  accountPasswordH=50;
     accountPassword.frame=CGRectMake(accountPasswordX, accountPasswordY, accountPasswordW, accountPasswordH);
     accountPassword.backgroundColor=[UIColor whiteColor];
+    [accountPassword addTarget:self action:@selector(clickTheAccountPassword) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:accountPassword];
     [self addChildControls:accountPassword andText:@"账号密码" andOther:nil];
     
 }
 
-
+- (id) _valueOrNil:(id)obj {
+    if (!obj) {
+        return nil;
+    }
+    if (obj == [NSNull null]) {
+        return nil;
+    }
+    return obj;
+}
 
 -(void)addChildControls:(UIButton *)Button andText:(NSString *)text andOther:(NSString *)str
 {
@@ -123,10 +140,37 @@
 -(void)clickThephotoNumberBtn
 {
 
-    ZCMobilePhoneViewController *MobilePhone=[[ZCMobilePhoneViewController alloc] init];
-    [self.navigationController pushViewController:MobilePhone animated:YES];
+    NSString *doc=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES) lastObject];
+    NSString *file=[doc stringByAppendingPathComponent:@"account.data"];
+    ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
+
+    if ([self _valueOrNil:account.phone]==nil) {
+        ZCMobilePhoneViewController *MobilePhone=[[ZCMobilePhoneViewController alloc] init];
+        [self.navigationController pushViewController:MobilePhone animated:YES];
+    }else
+    {
+        ZCChangePhoneViewController *ChangePhoneViewController=[[ZCChangePhoneViewController alloc] init];
+        ChangePhoneViewController.phoneNumber=account.phone;
+        [self.navigationController pushViewController:ChangePhoneViewController animated:YES];
+    
+    }
+    
+   
 
 }
+
+
+//点击AccountPassword、、账号密码
+
+-(void)clickTheAccountPassword
+{
+
+    ZCChangethePasswordViewController *ChangethePassword=[[ZCChangethePasswordViewController alloc] init];
+    [self.navigationController pushViewController:ChangethePassword animated:YES];
+
+}
+
+
 
 
 

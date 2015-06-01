@@ -10,6 +10,7 @@
 #import "ZCAccount.h"
 #import "AFNetworking.h"
 #import "ZCInvitationViewController.h"
+#import "MBProgressHUD+NJ.h"
 @interface ZCPersonalizedSettingsViewController ()<UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 @property(nonatomic,weak)UIButton *imageButton;
 @property(nonatomic,assign,getter=isOpen) BOOL bKeyBoardHide;
@@ -27,7 +28,7 @@
     [super viewDidLoad];
     
     self.view.backgroundColor=[UIColor whiteColor];
-    
+    self.navigationItem.title=@"个性化设置";
     
     //监听通知中心
    
@@ -178,7 +179,7 @@
     
     UIButton *startBtn=[[UIButton alloc] init];
     CGFloat startBtnX=0;
-    CGFloat startBtnY=SCREEN_HEIGHT-104;
+    CGFloat startBtnY=SCREEN_HEIGHT-114;
     CGFloat startBtnW=SCREEN_WIDTH;
     CGFloat startBtnH=50;
     startBtn.frame=CGRectMake(startBtnX, startBtnY, startBtnW, startBtnH);
@@ -365,6 +366,8 @@
 -(void)clickTheStartBtn
 {
 
+    //显示圈圈
+    [MBProgressHUD showMessage:@"上传中..."];
     NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
     ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
@@ -399,11 +402,15 @@
         [self.navigationController pushViewController:InvitationViewController animated:YES];
         
         
-        
+        //隐藏圈圈
+        [MBProgressHUD hideHUD];
+
         
         // success
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        // failure
+        //隐藏圈圈
+        [MBProgressHUD hideHUD];
+
     }];
     
     // fire the request

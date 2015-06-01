@@ -152,23 +152,23 @@
      _cleicedName=cleicedName;
     if ([cleicedName isEqual:@"white"]) {
         [self.TTaiImage setImage:[UIImage imageNamed:@"bai"]];
-        self.TTaiName.text=@"白色T台";
+        self.TTaiName.text=@"白色";
     }else if([cleicedName isEqual:@"red"])
     {
        [self.TTaiImage setImage:[UIImage imageNamed:@"hong"]];
-        self.TTaiName.text=@"红色T台";
+        self.TTaiName.text=@"红色";
     }else if([cleicedName isEqual:@"blue"])
     {
       [self.TTaiImage setImage:[UIImage imageNamed:@"lan"]];
-       self.TTaiName.text=@"蓝色T台";
+       self.TTaiName.text=@"蓝色";
     }else if ([cleicedName isEqual:@"black"])
     {
       [self.TTaiImage setImage:[UIImage imageNamed:@"hei"]];
-        self.TTaiName.text=@"黑色T台";
+        self.TTaiName.text=@"黑色";
     }else if ([cleicedName isEqual:@"gold"])
     {
       [self.TTaiImage setImage:[UIImage imageNamed:@"huang"]];
-        self.TTaiName.text=@"金色色T台";
+        self.TTaiName.text=@"金色";
     }else
     {
        self.TTaiName.text=cleicedName;

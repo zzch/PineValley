@@ -104,20 +104,22 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
+    
+    CGFloat mager=(self.frame.size.width-20-5*36)/5;
     CGFloat fristLabelX=8;
     CGFloat fristLabelW=36;
     CGFloat fristLabelH=35;
     CGFloat fristLabelY=(self.frame.size.height-fristLabelH)/2;
     self.fristLabel.frame=CGRectMake(fristLabelX, fristLabelY, fristLabelW, fristLabelH);
 
-    CGFloat secondLabelX=fristLabelX+fristLabelW+6;
+    CGFloat secondLabelX=fristLabelX+fristLabelW+mager;
     CGFloat secondLabelW=fristLabelW;
     CGFloat secondLabelH=fristLabelH;
     CGFloat secondLabelY=(self.frame.size.height-fristLabelH)/2;
     self.secondLabel.frame=CGRectMake(secondLabelX, secondLabelY, secondLabelW, secondLabelH);
     
     
-    CGFloat thirdLabelX=secondLabelX+fristLabelW+6;
+    CGFloat thirdLabelX=secondLabelX+fristLabelW+mager;
     CGFloat thirdLabelW=fristLabelW;
     CGFloat thirdLabelH=fristLabelH;
     CGFloat thirdLabelY=(self.frame.size.height-fristLabelH)/2;
@@ -125,14 +127,14 @@
     
     
     
-    CGFloat fourthLabelX=thirdLabelX+fristLabelW+6;
+    CGFloat fourthLabelX=thirdLabelX+fristLabelW+mager;
     CGFloat fourthLabelW=fristLabelW;
     CGFloat fourthLabelH=fristLabelH;
     CGFloat fourthLabelY=(self.frame.size.height-fristLabelH)/2;
     self.fourthLabel.frame=CGRectMake(fourthLabelX, fourthLabelY, fourthLabelW, fourthLabelH);
     
     
-    CGFloat fifthLabelX=fourthLabelX+fristLabelW+6;
+    CGFloat fifthLabelX=fourthLabelX+fristLabelW+mager;
     CGFloat fifthLabelW=fristLabelW;
     CGFloat fifthLabelH=fristLabelH;
     CGFloat fifthLabelY=(self.frame.size.height-fristLabelH)/2;

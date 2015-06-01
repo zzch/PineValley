@@ -11,8 +11,8 @@
 #import "AppDelegate.h"
 #import "ZCEventUuidTool.h"
 #import "ZCChooseThePitchVViewController.h"
-
-
+#import "ZCStatisticalViewController.h"
+#import "ZCPersonalViewController.h"
 @interface ZCPracticeVController ()
 
 @end
@@ -37,80 +37,138 @@
     
     
     //背景颜色suoyou_bj
-    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
-    
-    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
-    customLab.textAlignment=NSTextAlignmentCenter;
-    [customLab setTextColor:ZCColor(240, 208, 122)];
-    [customLab setText:@"选择记分卡"];
-    customLab.font = [UIFont boldSystemFontOfSize:20];
-    self.navigationItem.titleView = customLab;
-    
-
-    //简单
-    UIButton *practice=[[UIButton alloc] init];
-    CGFloat practiceW=259;
-    CGFloat practiceH=59;
-    CGFloat practiceY=SCREEN_HEIGHT*0.5465;
-    CGFloat practiceX=(SCREEN_WIDTH-practiceW)/2;
-    
-    practice.frame=CGRectMake(practiceX, practiceY, practiceW, practiceH);
-    
-    [practice setBackgroundImage:[UIImage imageNamed:@"xzjfk_jdjfk_anniu"] forState:UIControlStateNormal];
-    [practice addTarget:self action:@selector(clickThePractice) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:practice ];
+    self.view.backgroundColor=ZCColor(237, 237, 237);
     
     
-    //描述
-    UILabel *describeLabel1=[[UILabel alloc] init];
-    describeLabel1.frame=CGRectMake(0, practiceY+practiceH+10, SCREEN_WIDTH, 20);
-    describeLabel1.textColor=ZCColor(136, 119, 73);
-    describeLabel1.text=@"快速开始计分，简单易用";
-    describeLabel1.font=[UIFont systemFontOfSize:15];
-    describeLabel1.textAlignment=NSTextAlignmentCenter;
-    [self.view addSubview:describeLabel1];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
     
     
+//    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+//    customLab.textAlignment=NSTextAlignmentCenter;
+//    [customLab setTextColor:ZCColor(240, 208, 122)];
+//    [customLab setText:@"选择记分卡"];
+//    customLab.font = [UIFont boldSystemFontOfSize:20];
+//    self.navigationItem.titleView = customLab;
     
 
     
+    UIImageView *persinImage=[[UIImageView alloc] init];
+    
+    CGFloat  persinImageY=60;
+    CGFloat  persinImageW=70;
+    CGFloat  persinImageH=70;
+    CGFloat  persinImageX=(SCREEN_WIDTH-persinImageW)/2;
+    persinImage.frame=CGRectMake(persinImageX, persinImageY, persinImageW, persinImageH);
+    persinImage.image=[UIImage imageNamed:@"tubiao"];
+    [self.view addSubview:persinImage];
+//    persinImage.layer.cornerRadius=10;//设置圆角的半径为10
+//    persinImage.layer.masksToBounds=YES;
+    
+    UILabel *nameLabel=[[UILabel alloc] init];
+    CGFloat  nameLabelY=persinImageY+persinImageH+20;
+    CGFloat  nameLabelW=150;
+    CGFloat  nameLabelH=25;
+    CGFloat  nameLabelX=(SCREEN_WIDTH-nameLabelW)/2;
+    nameLabel.frame=CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH);
+    nameLabel.text=@"我 爱 高 尔 夫";
+    nameLabel.textColor=ZCColor(85, 85, 85);
+    nameLabel.textAlignment=NSTextAlignmentCenter;
+    [self.view addSubview:nameLabel];
+    
+    //竞技比赛
+    UIButton *sportsCompetition=[[UIButton alloc] init];
+    CGFloat sportsCompetitionX=0;
+    CGFloat sportsCompetitionY=SCREEN_HEIGHT*0.4;
+    CGFloat sportsCompetitionW=SCREEN_WIDTH;
+    CGFloat sportsCompetitionH=SCREEN_HEIGHT*0.2;
+    sportsCompetition.frame=CGRectMake(sportsCompetitionX, sportsCompetitionY, sportsCompetitionW, sportsCompetitionH);
+    sportsCompetition.backgroundColor=ZCColor(0, 194, 123);
+    [sportsCompetition setTitle:@"竞技比赛" forState:UIControlStateNormal];
+    [sportsCompetition addTarget:self action:@selector(clickThesportsCompetition) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:sportsCompetition];
     
     
     
-    //专业
-    UIButton *professional=[[UIButton alloc] init];
-    CGFloat professionalW=259;
-    CGFloat professionalH=59;
-    CGFloat professionalY=SCREEN_HEIGHT*0.134;
-    CGFloat professionalX=(SCREEN_WIDTH-professionalW)/2;
     
-    professional.frame=CGRectMake(professionalX, professionalY, professionalW, professionalH);
     
-    [professional setBackgroundImage:[UIImage imageNamed:@"xzjfk_zyjfk_anniu"] forState:UIControlStateNormal];
-    [professional addTarget:self action:@selector(clickTheprofessional) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:professional ];
+    
+    //技术统计
+    UIButton *technicalStatistics=[[UIButton alloc] init];
+    CGFloat technicalStatisticsX=0;
+    CGFloat technicalStatisticsY=SCREEN_HEIGHT*0.6;
+    CGFloat technicalStatisticsW=SCREEN_WIDTH;
+    CGFloat technicalStatisticsH=SCREEN_HEIGHT*0.2;
+    technicalStatistics.frame=CGRectMake(technicalStatisticsX, technicalStatisticsY, technicalStatisticsW, technicalStatisticsH);
+    technicalStatistics.backgroundColor=ZCColor(72, 172, 204);
+    [technicalStatistics setTitle:@"技术统计" forState:UIControlStateNormal];
+    [technicalStatistics addTarget:self action:@selector(clickTheTechnicalStatistics) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:technicalStatistics];
+
+    
+    //个人中心
+    UIButton *personalCenter=[[UIButton alloc] init];
+    CGFloat personalCenterX=0;
+    CGFloat personalCenterY=SCREEN_HEIGHT*0.8;
+    CGFloat personalCenterW=SCREEN_WIDTH;
+    CGFloat personalCenterH=SCREEN_HEIGHT*0.2;
+    personalCenter.frame=CGRectMake(personalCenterX, personalCenterY, personalCenterW, personalCenterH);
+    personalCenter.backgroundColor=ZCColor(226, 159, 64);
+    [personalCenter setTitle:@"个人中心" forState:UIControlStateNormal];
+    [personalCenter addTarget:self action:@selector(clickThePersonalCenter) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:personalCenter];
 
     
     
-    UILabel *describeLabel2=[[UILabel alloc] init];
-    describeLabel2.frame=CGRectMake(0, professional.frame.size.height+professional.frame.origin.y+20, SCREEN_WIDTH, 20);
-    describeLabel2.textColor=ZCColor(136, 119, 73);
-    describeLabel2.text=@"记录更加精准";
-    describeLabel2.font=[UIFont systemFontOfSize:15];
-    describeLabel2.textAlignment=NSTextAlignmentCenter;
-    [self.view addSubview:describeLabel2];
     
     
+}
+
+
+
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    //影藏状态栏
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+ self.navigationController.navigationBarHidden=YES;
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    //影藏状态栏
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+self.navigationController.navigationBarHidden=NO;
+}
+
+//点击竞技比赛
+-(void)clickThesportsCompetition
+{
+
+     ZCQuickScoringTableViewController *quickScoringTableViewController=[[ZCQuickScoringTableViewController alloc] init];
+
     
-    UILabel *describeLabel3=[[UILabel alloc] init];
-    describeLabel3.frame=CGRectMake(0, describeLabel2.frame.origin.y+describeLabel2.frame.size.height+5, SCREEN_WIDTH, 20);
-    describeLabel3.textColor=ZCColor(136, 119, 73);
-    describeLabel3.text=@"能得到多维度的数据分析";
-    describeLabel3.font=[UIFont systemFontOfSize:15];
-    describeLabel3.textAlignment=NSTextAlignmentCenter;
-    [self.view addSubview:describeLabel3];
+    [self.navigationController pushViewController:quickScoringTableViewController animated:YES];
     
+    // [self presentModalViewController:nav animated:YES];
     
+
+}
+
+
+//点击技术统计
+-(void)clickTheTechnicalStatistics
+{
+
+    ZCStatisticalViewController *statistical=[[ZCStatisticalViewController alloc] init];
+    [self.navigationController pushViewController:statistical animated:YES];
+    
+}
+
+//点击个人中心
+-(void)clickThePersonalCenter
+{
+   ZCPersonalViewController *personal=[[ZCPersonalViewController alloc] init];
+    [self.navigationController pushViewController:personal animated:YES];
+
 }
 
 //专业

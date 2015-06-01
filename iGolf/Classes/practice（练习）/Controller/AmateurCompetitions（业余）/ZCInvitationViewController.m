@@ -24,9 +24,10 @@
     
     
     self.view.backgroundColor=ZCColor(237, 237, 237);
+    self.navigationItem.title=@"邀请好友";
     
     //返回
-    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(liftBthClick:) target:self];
     
 
     

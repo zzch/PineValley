@@ -23,15 +23,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
-    
+    self.view.backgroundColor=ZCColor(237, 237, 237);
+   // self.navigationController.title=@"我爱高尔夫";
     UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
     customLab.textAlignment=NSTextAlignmentCenter;
-    [customLab setTextColor:ZCColor(240, 208, 122)];
+    [customLab setTextColor:[UIColor whiteColor]];
     [customLab setText:@"我爱高尔夫"];
     customLab.font = [UIFont boldSystemFontOfSize:20];
     self.navigationItem.titleView = customLab;
-//    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
     //一键注册
     CGFloat registerX=SCREEN_WIDTH*0.031;
     CGFloat registerY=SCREEN_HEIGHT*0.0484;
@@ -50,9 +50,9 @@
     phoneRegister.frame=CGRectMake(phoneRegisterX, phoneRegisterY, phoneRegisterW, phoneRegisterH);
     [phoneRegister setTitle:@"手机注册" forState:UIControlStateNormal];
     
-    [phoneRegister setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
+    [phoneRegister setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
-    UIImage *image2=[UIImage imageNamed:@"shoujizhuce_bj" ];
+    UIImage *image2=[UIImage imageNamed:@"anniu_dianji" ];
     // 指定为拉伸模式，伸缩后重新赋值
     image2 = [image2 resizableImageWithCapInsets:UIEdgeInsetsMake(25,25,10,10) resizingMode:UIImageResizingModeStretch];
     [phoneRegister setBackgroundImage:image2 forState:UIControlStateNormal];

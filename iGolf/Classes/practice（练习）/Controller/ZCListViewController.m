@@ -22,8 +22,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor=ZCColor(237, 237, 237);
+    self.navigationItem.title=@"排行榜";
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
     
-    
+   
     [self onlineData];
     
     
@@ -88,9 +91,43 @@
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
     self.tableView.rowHeight=100;
-    
+    self.tableView.backgroundColor=ZCColor(237, 237, 237);
+    //让下面没内容的分割线不显示
+    self.tableView.tableFooterView = [[UIView alloc] init];
+    //分割线颜色
+    [self.tableView   setSeparatorColor:ZCColor(170, 170, 170)];
    
 }
+
+
+
+
+
+//分割线显示全
+-(void)viewDidLayoutSubviews {
+    
+    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+        
+    }
+    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)])  {
+        [self.tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    
+}
+
+//分割线显示全
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPat{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]){
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
+
+
+
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

@@ -24,7 +24,7 @@
         CGFloat left = 10; // 左端盖宽度
         CGFloat right = 10; // 右端盖宽度
         UIEdgeInsets insets = UIEdgeInsetsMake(top, left, bottom, right);
-        UIImage *image1=[UIImage imageNamed:@"shoujizhuce_bj" ];
+        UIImage *image1=[UIImage imageNamed:@"anniu_dianji" ];
         // 指定为拉伸模式，伸缩后重新赋值
         image1 = [image1 resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
         
@@ -36,7 +36,7 @@
         [self setTitle:@"一键注册" forState:UIControlStateNormal];
 //        [self setBackgroundImage:[UIImage imageNamed:@"denglu_anniu-1"] forState:UIControlStateNormal];
 //        [self setBackgroundImage:[UIImage imageNamed:@"denglu_anniu_anxia"] forState:UIControlStateHighlighted];
-        [self setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
+        [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         
         [self addTarget:self action:@selector(clickKeyButton) forControlEvents:UIControlEventTouchUpInside];
         

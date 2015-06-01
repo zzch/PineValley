@@ -25,6 +25,8 @@
 #import "ZCInvitationViewController.h"
 #import "ZCListViewController.h"
 @interface ZCScorecardTableViewController ()<UITableViewDataSource,UITableViewDelegate,ZCScorecarDelegate,ZCModifyTheScorecardViewControllerDelegate,ZCModifyTheProfessionalScorecardControllerDelegate,ZCCompetitiveTableViewCellDelagate,ZCScorecarHeadViewDelagate>
+
+@property(nonatomic,weak)UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *scorecards;
 
 @property (nonatomic, strong) NSIndexPath *indexPath;
@@ -36,33 +38,55 @@
     [super viewDidLoad];
        
     //返回
-    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
+   // self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
     
-    
-    
-    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
-    customLab.textAlignment=NSTextAlignmentCenter;
-    [customLab setTextColor:ZCColor(240, 208, 122)];
-    [customLab setText:@"修改记分卡"];
-    customLab.font = [UIFont boldSystemFontOfSize:20];
-    self.navigationItem.titleView = customLab;
-    
+    self.view.backgroundColor=[UIColor whiteColor];
+    self.navigationItem.title=@"记分卡";
+//    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+//    customLab.textAlignment=NSTextAlignmentCenter;
+//    [customLab setTextColor:ZCColor(240, 208, 122)];
+//    [customLab setText:@"修改记分卡"];
+//    customLab.font = [UIFont boldSystemFontOfSize:20];
+//    self.navigationItem.titleView = customLab;
+     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
     UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"统计" style:UIBarButtonItemStyleDone target:self action:@selector(clickOnTheStatistics)];
     //改变UIBarButtonItem字体颜色
-    [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:ZCColor(240, 208, 122), UITextAttributeTextColor,nil] forState:UIControlStateNormal];
+   // [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:ZCColor(240, 208, 122), UITextAttributeTextColor,nil] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem =newBar;
+    
+    
+    
+    
+    
+    
+    [self online];
+
+    
+    
+ }
+
+
+
+
+-(void)initTableView
+{
+    UITableView  *tableView=[[UITableView alloc] init];
+    tableView.frame=CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    [self.view addSubview: tableView];
+    self.tableView=tableView;
+    
     
     //让tableView没有弹簧效果
     self.tableView.bounces=NO;
     
-   
+    
     //背景颜色suoyou_bj
     self.tableView.backgroundColor=ZCColor(60, 57, 78);
     //去掉分割线
     //self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //分割线颜色
     [self.tableView   setSeparatorColor:ZCColor(170, 170, 170)];
-
+    
     
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
@@ -71,12 +95,17 @@
     
     self.tableView.rowHeight=125;
     
-    
-    [self online];
 
     
     
- }
+
+}
+
+
+
+
+
+
 
 
 
@@ -142,11 +171,17 @@
         ZCTotalScorecards *totalScorecards= [ZCTotalScorecards totalScorecardsWithDict:responseObject];
         
         self.totalScorecards=totalScorecards;
-        //隐藏圈圈
-        [MBProgressHUD hideHUD];
+        
+        
+        //创建tableView
+        [self initTableView];
+        
+        
+        
         [self.tableView reloadData ];
         
-        
+        //隐藏圈圈
+        [MBProgressHUD hideHUD];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         //隐藏圈圈
         [MBProgressHUD hideHUD];

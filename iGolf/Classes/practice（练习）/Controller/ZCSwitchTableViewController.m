@@ -23,7 +23,7 @@
 //搜索栏
 @property (nonatomic , strong)UISearchDisplayController *mySearchDisplayController;
 @property(strong,nonatomic) UISearchBar *mySearchBar;
-@property(weak,nonatomic) UITableView *tableView;
+//@property(weak,nonatomic) UITableView *tableView;
 //数据源
 @property(strong,nonatomic) NSMutableArray *dataArray;
 //搜索结果数据
@@ -38,15 +38,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
-    customLab.textAlignment=NSTextAlignmentCenter;
-    [customLab setTextColor:ZCColor(240, 208, 122)];
-    [customLab setText:@"搜索球场"];
-    customLab.font = [UIFont boldSystemFontOfSize:20];
-    self.navigationItem.titleView = customLab;
+//    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+//    customLab.textAlignment=NSTextAlignmentCenter;
+//    [customLab setTextColor:ZCColor(240, 208, 122)];
+//    [customLab setText:@"搜索球场"];
+//    customLab.font = [UIFont boldSystemFontOfSize:20];
+//    self.navigationItem.titleView = customLab;
     
     //返回
-    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
+   // self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
+    
+    self.navigationItem.title=@"搜索球场";
     
     
     self.tableView.delegate=self;

@@ -21,6 +21,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    self.view.backgroundColor=ZCColor(237, 237, 237);
     [self initonlineData];
     
     

@@ -77,14 +77,14 @@
     
     
     self.view.backgroundColor=ZCColor(237, 237, 237);
+    self.navigationItem.title=[NSString stringWithFormat:@"%@洞",self.scorecard.number];
     
-    
-    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
-    customLab.textAlignment=NSTextAlignmentCenter;
-    [customLab setTextColor:ZCColor(240, 208, 122)];
-    [customLab setText:[NSString stringWithFormat:@"%@洞",self.scorecard.number]];
-    customLab.font = [UIFont boldSystemFontOfSize:20];
-    self.navigationItem.titleView = customLab;
+//    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+//    customLab.textAlignment=NSTextAlignmentCenter;
+//    [customLab setTextColor:ZCColor(240, 208, 122)];
+//    [customLab setText:[NSString stringWithFormat:@"%@洞",self.scorecard.number]];
+//    customLab.font = [UIFont boldSystemFontOfSize:20];
+//    self.navigationItem.titleView = customLab;
 
     
     
@@ -96,7 +96,7 @@
     
     UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleDone target:self action:@selector(saveOtherView)];
     //改变UIBarButtonItem字体颜色
-    [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:ZCColor(240, 208, 122), UITextAttributeTextColor,nil] forState:UIControlStateNormal];
+   // [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:ZCColor(240, 208, 122), UITextAttributeTextColor,nil] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem =newBar;
     
 
@@ -114,9 +114,9 @@
 //    self.navigationItem.leftBarButtonItem = backItem;dataToModify
     
     //返回
-    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(dataToModify:) target:self];
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(dataToModify:) target:self];
     
-
+   // self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:self action:@selector(dataToModify:)];
 //    // 修改返回按钮
 //    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia-anxia" action:@selector(dataToModify:) target:self];
     //注册观察者

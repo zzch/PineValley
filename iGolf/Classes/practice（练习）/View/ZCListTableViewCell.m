@@ -49,11 +49,17 @@
     //排名的图片
     UILabel *rankingLabel=[[UILabel alloc ] init];
     [self.contentView addSubview:rankingLabel];
+    rankingLabel.backgroundColor=ZCColor(55, 57, 59);
+    rankingLabel.textColor=[UIColor whiteColor];
+    rankingLabel.font=[UIFont systemFontOfSize:30];
+    rankingLabel.textAlignment=NSTextAlignmentCenter;
     self.rankingLabel=rankingLabel;
     
     //用户头像
     UIImageView *userImageView=[[UIImageView alloc] init];
     [self.contentView addSubview:userImageView];
+    userImageView.layer.masksToBounds = YES;
+    userImageView.layer.cornerRadius = 40;
     self.userImageView=userImageView;
     
     //用户名字
@@ -65,6 +71,8 @@
     UILabel *resultsLabel=[[UILabel alloc] init];
     [self.contentView addSubview:resultsLabel];
     resultsLabel.textAlignment=NSTextAlignmentCenter;
+    resultsLabel.textColor=ZCColor(225, 150, 29);
+    resultsLabel.font=[UIFont systemFontOfSize:28];
     self.resultsLabel=resultsLabel;
     
     
@@ -74,7 +82,20 @@
     progressLabel.textAlignment=NSTextAlignmentCenter;
     self.progressLabel=progressLabel;
 
-    progressLabel.backgroundColor=[UIColor redColor];
+   
+}
+
+
+
+
+- (id) _valueOrNil:(id)obj {
+    if (!obj) {
+        return nil;
+    }
+    if (obj == [NSNull null]) {
+        return nil;
+    }
+    return obj;
 }
 
 
@@ -83,19 +104,33 @@
 {
     _listModel=listModel;
     
+    if ([self _valueOrNil:listModel.position]==nil) {
+        self.rankingLabel.text=@"-";
+    }else
+    {
     self.rankingLabel.text=[NSString stringWithFormat:@"%@",listModel.position];
-    
+    }
+ 
     [self.userImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",listModel.user.portrait]] placeholderImage:[UIImage imageNamed:@"touxiang"]];
     
     
     self.userLabel.text=[NSString stringWithFormat:@"%@",listModel.user.nickname];
+    
+    if ([self _valueOrNil:listModel.total]==nil) {
+        self.resultsLabel.text=@"-";
+    }else
+    {
     self.resultsLabel.text=[NSString stringWithFormat:@"%@",listModel.total];
+    }
+    
     self.progressLabel.text=[NSString stringWithFormat:@"%@/18",listModel.recorded_scorecards_count];
     
     
     if ([[NSString stringWithFormat:@"%@",listModel.isself] isEqual:@"1"]) {
         
-        self.backgroundColor=[UIColor redColor];
+        self.backgroundColor=ZCColor(55, 57, 59);
+        self.userLabel.textColor=[UIColor whiteColor];
+        self.progressLabel.textColor=[UIColor whiteColor];
     }
 
 }
@@ -116,9 +151,10 @@
     
     
     CGFloat  userImageViewX=rankingLabelW+5;
-    CGFloat  userImageViewY=0;
-    CGFloat  userImageViewW=self.frame.size.width*0.219;
-    CGFloat  userImageViewH=self.frame.size.height;
+    
+    CGFloat  userImageViewW=80;
+    CGFloat  userImageViewH=80;
+    CGFloat  userImageViewY=(self.frame.size.height-userImageViewH)*0.5;
     self.userImageView.frame=CGRectMake(userImageViewX, userImageViewY, userImageViewW, userImageViewH);
     
     

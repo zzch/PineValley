@@ -20,13 +20,13 @@
 #import "UIBarButtonItem+DC.h"
 #import "ZCSettingTVController.h"
 #import "ZCpasswordViewController.h"
-@interface ZCQuickScoringTableViewController ()<MJRefreshBaseViewDelegate>
+@interface ZCQuickScoringTableViewController ()<MJRefreshBaseViewDelegate,UITableViewDataSource,UITableViewDelegate>
 //模型数组
 @property(nonatomic,strong)NSMutableArray *eventArray;
 //创建的tableView
 //@property(nonatomic,strong) UIView *view;
 @property(nonatomic,strong) NSIndexPath *indexPath;
-
+@property(nonatomic,weak)UITableView *tableView;
 //@property(nonatomic,strong)UIRefreshControl *refreshControl;
 //无内容显示
 @property(nonatomic,weak) UIView *vc;
@@ -84,64 +84,39 @@
 //-viewdidappear
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    
-//    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
-//    customLab.textAlignment=NSTextAlignmentCenter;
-//    [customLab setTextColor:ZCColor(240, 208, 122)];
-//    [customLab setText:@"快捷记分卡"];
-//    customLab.font = [UIFont boldSystemFontOfSize:20];
-//    self.navigationItem.titleView = customLab;
+
     
     self.navigationItem.title=@"历史赛事";
      self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
     
 //    
-    UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"新建" style:UIBarButtonItemStyleDone target:self action:@selector(chooseThePitch)];
+   // UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"新建" style:UIBarButtonItemStyleDone target:self action:@selector(chooseThePitch)];
     //改变UIBarButtonItem字体颜色
 //    [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:ZCColor(240, 208, 122), UITextAttributeTextColor,nil] forState:UIControlStateNormal];
-    self.navigationItem.rightBarButtonItem =newBar;
+  //  self.navigationItem.rightBarButtonItem =newBar;
     
     
 //    //返回
-//    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
+//   self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthisClick) target:self];
 
-    //背景颜色suoyou_bj
-    self.tableView.backgroundColor=ZCColor(237, 237, 237);
+    [self initTopView];
+    [self initTableView];
+    
+    
     
     
     
 //    // 修改下一个界面返回按钮的文字
 //    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
 
-    self.tableView.dataSource=self;
-    self.tableView.delegate=self;
-    self.tableView.rowHeight=100;
-    self.tableView.sectionHeaderHeight=225;
+  
     
    
-    self.page=1;
+   
     //让分割线不显示
   //  self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
    // self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLineEtched;
     // UITableViewStyleGrouped
-    
-     [self.tableView   setSeparatorColor:ZCColor(170, 170, 170)];
-    //让下面没内容的分割线不显示
-     self.tableView.tableFooterView = [[UIView alloc] init];
-    
-    // 1.下拉刷新
-    MJRefreshHeaderView *header = [MJRefreshHeaderView header];
-    header.scrollView = self.tableView;
-    header.delegate = self;
-    // 自动进入刷新状态
-    [header beginRefreshing];
-    self.header = header;
-    
-    // 2.上拉刷新(上拉加载更多数据)
-    MJRefreshFooterView *footer = [MJRefreshFooterView footer];
-    footer.scrollView = self.tableView;
-    footer.delegate = self;
-    self.footer = footer;
     
 
     
@@ -200,6 +175,54 @@
 
 
 
+
+//创建tableView
+-(void)initTableView
+{
+
+    UITableView *tableView=[[UITableView alloc]init];
+    tableView.frame=CGRectMake(0, 225, self.view.frame.size.width, self.view.frame.size.height-225);
+    [self.view addSubview:tableView];
+    
+    self.tableView=tableView;
+    
+    
+    //背景颜色suoyou_bj
+    self.tableView.backgroundColor=ZCColor(237, 237, 237);
+
+    self.tableView.dataSource=self;
+    self.tableView.delegate=self;
+    self.tableView.rowHeight=100;
+    //self.tableView.sectionHeaderHeight=225;
+     self.page=1;
+    
+    
+    
+    
+    [self.tableView   setSeparatorColor:ZCColor(170, 170, 170)];
+    //让下面没内容的分割线不显示
+    self.tableView.tableFooterView = [[UIView alloc] init];
+    
+    // 1.下拉刷新
+    MJRefreshHeaderView *header = [MJRefreshHeaderView header];
+    header.scrollView = self.tableView;
+    header.delegate = self;
+    // 自动进入刷新状态
+    [header beginRefreshing];
+    self.header = header;
+    
+    // 2.上拉刷新(上拉加载更多数据)
+    MJRefreshFooterView *footer = [MJRefreshFooterView footer];
+    footer.scrollView = self.tableView;
+    footer.delegate = self;
+    self.footer = footer;
+
+    
+}
+
+
+
+
 //分割线显示全
 -(void)viewDidLayoutSubviews {
     
@@ -253,13 +276,13 @@
 
 
 
-//点击新建时候调用
--(void)chooseThePitch
-{
-    ZCChooseThePitchVViewController *chooes=[[ZCChooseThePitchVViewController alloc] init];
-    [self.navigationController pushViewController:chooes animated:YES];
-
-}
+////点击新建时候调用
+//-(void)chooseThePitch
+//{
+//    ZCChooseThePitchVViewController *chooes=[[ZCChooseThePitchVViewController alloc] init];
+//    [self.navigationController pushViewController:chooes animated:YES];
+//
+//}
 
 //服务器数据请求
 -(void)serverData
@@ -278,10 +301,10 @@
     // 说明服务器返回的JSON数据
     // mgr.responseSerializer = [AFJSONResponseSerializer serializer];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
+   // ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
     params[@"page"]=@"1";
     params[@"token"]=account.token;
-    params[@"scoring_type"]=tool.scoring;
+   // params[@"scoring_type"]=tool.scoring;
     NSString *url=[NSString stringWithFormat:@"%@%@",API,@"matches/history.json"];
     //ZCLog(@"%@",url);
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -498,8 +521,8 @@
      //取消选中
      [tableView deselectRowAtIndexPath:indexPath animated:YES];
     //单利模式  为统计页面保存uuid
-    ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
-    tool.uuid=[self.eventArray[indexPath.row] uuid];
+//    ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
+//    tool.uuid=[self.eventArray[indexPath.row] uuid];
     
     
      ZCScorecardTableViewController *scorecardTableView=[[ZCScorecardTableViewController alloc] init];
@@ -512,14 +535,14 @@
 }
 
 
-//组头内容
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//顶部内容
+-(void)initTopView
 {
     
     UIView *headerView=[[UIView alloc] init];
     headerView.backgroundColor=[UIColor whiteColor];
-    
-    
+    headerView.frame=CGRectMake(0, 0, SCREEN_WIDTH, 225);
+    [self.view addSubview:headerView];
     //创建新比赛
     CGFloat newGameBtnX=10;
     CGFloat newGameBtnY=25;
@@ -639,7 +662,7 @@
     [headerView addSubview:historyLabel];
     
     
-    return headerView;
+   
     
     
     

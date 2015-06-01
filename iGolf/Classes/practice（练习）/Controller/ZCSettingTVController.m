@@ -26,6 +26,8 @@
 @interface ZCSettingTVController ()<UITableViewDelegate,UITableViewDataSource,ZCSettingHeadViewDelegate,CLLocationManagerDelegate,ZCChooseThePitchDelegate,ZCSwitchTableViewControllerDelegate>
 @property(nonatomic,assign) int count;
 
+//创建的tableView
+@property(nonatomic,weak)UITableView *tableView;
 @property(nonatomic,strong) ZCStadiumInformation *stadiumInformation;
 //保存用户选择球场的uuid
 @property(nonatomic,copy) NSString *uuid;
@@ -77,53 +79,82 @@
     
     [super viewDidLoad];
     //返回
-    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
+//    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
+    
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
+    self.navigationItem.title=@"球场设置";
+//    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+//    customLab.textAlignment=NSTextAlignmentCenter;
+//    [customLab setTextColor:ZCColor(240, 208, 122)];
+//    [customLab setText:@"球场设置"];
+//    customLab.font = [UIFont boldSystemFontOfSize:20];
+//    self.navigationItem.titleView = customLab;
+    
+    
+    self.view.backgroundColor=ZCColor(237, 237, 237);
     
     
     
-    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
-    customLab.textAlignment=NSTextAlignmentCenter;
-    [customLab setTextColor:ZCColor(240, 208, 122)];
-    [customLab setText:@"球场设置"];
-    customLab.font = [UIFont boldSystemFontOfSize:20];
-    self.navigationItem.titleView = customLab;
+    //创建CLLocationManager定位
+    [self initCLLocationManager];
+
+}
+
+-(void)dealloc
+{
+
+    ZCLog(@"#3333333333333333333");
+}
+
+
+
+//创建tableView
+-(void)initTableView
+{
+
+    
+    //创建tabelView
+    UITableView *tableView=[[UITableView alloc] init];
+    tableView.frame=CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
+    ;
+    [self.view addSubview:tableView];
+    self.tableView=tableView;
     
     
     
     //让分割线不显示
-   // self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    // self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //分割线颜色
     [self.tableView   setSeparatorColor:ZCColor(170, 170, 170)];
     //让下面没内容的分割线不显示
     self.tableView.tableFooterView = [[UIView alloc] init];
-
+    
     
     self.tableView.backgroundColor=ZCColor(237, 237, 237);
     
-
-//    self.tableView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+    
+    //    self.tableView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
     self.tableView.rowHeight=45;
-   
     
     
-
+    
+    
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
     self.tableView.sectionHeaderHeight = 52;
     //self.tableView.
     self.tableView.tableHeaderView=[self tableViewForheaderView];
     
-    //创建CLLocationManager定位
-    [self initCLLocationManager];
+   
     
     
     
     
     UIButton *startButton=[[UIButton alloc] init];
-     CGFloat startButtonX=0;
+    CGFloat startButtonX=0;
     
-     CGFloat startButtonW=SCREEN_WIDTH;
-     CGFloat startButtonH=65;
+    CGFloat startButtonW=SCREEN_WIDTH;
+    CGFloat startButtonH=65;
     CGFloat startButtonY=SCREEN_HEIGHT-startButtonH;
     
     startButton.frame=CGRectMake(startButtonX, startButtonY, startButtonW, startButtonH);
@@ -136,13 +167,16 @@
     [startButton addTarget:self action:@selector(clickTheDidStartButton) forControlEvents:UIControlEventTouchUpInside];
     UIWindow *wd = [[UIApplication sharedApplication].delegate window];
     [wd addSubview:startButton];
-   // startButton.userInteractionEnabled=NO;
+    // startButton.userInteractionEnabled=NO;
     startButton.enabled=NO;
     self.startButton=startButton;
     
- 
+
+    
 
 }
+
+
 
 
 
@@ -188,26 +222,26 @@
 {
     
     
-    self.opened1=NO;
-    self.opened2=NO;
-    self.opened3=NO;
-    self.opened4=NO;
-    self.opened5=NO;
-    self.firstChildName=nil;
-    self.tee_boxe=nil;
-    self.lastChildName=nil;
-    self.lastTee_boxe=nil;
-    
-    self.childStadium=nil;
-    self.childStadiumMutableArray=nil;
-    
-    self.lastChildStadium=nil;
-    self.index=0;
-    self.type=nil;
-    self.nameLabel.text=nil;
-    self.count=0;
-    self.stadiumInformation=nil;
-
+//    self.opened1=NO;
+//    self.opened2=NO;
+//    self.opened3=NO;
+//    self.opened4=NO;
+//    self.opened5=NO;
+//    self.firstChildName=nil;
+//    self.tee_boxe=nil;
+//    self.lastChildName=nil;
+//    self.lastTee_boxe=nil;
+//    
+//    self.childStadium=nil;
+//    self.childStadiumMutableArray=nil;
+//    
+//    self.lastChildStadium=nil;
+//    self.index=0;
+//    self.type=nil;
+//    self.nameLabel.text=nil;
+//    self.count=0;
+//    self.stadiumInformation=nil;
+//
     
     
     
@@ -293,16 +327,17 @@
         
         self.stadiumInformation=stadiumInformation;
         
+        //加载tableView
+        [self initTableView];
         
-        
-        [MBProgressHUD hideHUD];
+       
         
         //给表头里的label的名字赋值
         self.nameLabel.text=self.stadiumInformation.name;
         //刷新表格
         [self.tableView reloadData];
         
-       
+        [MBProgressHUD hideHUD];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         ZCLog(@"%@",error);
@@ -436,10 +471,10 @@
 
 
 //返回到上个界面
--(void)liftBthClick:(UIButton *)bth
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
+//-(void)liftBthClick:(UIButton *)bth
+//{
+//    [self.navigationController popViewControllerAnimated:YES];
+//}
 
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -450,6 +485,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    [self.tableView reloadData];
     self.startButton.hidden=NO;
 }
 
@@ -631,24 +667,24 @@
         NSString *tee=self.childStadium.tee_boxes[indexPath.row];
        
         if ([tee isEqual:@"white"]) {
-            cell.textLabel.text=@"白色T台";
+            cell.textLabel.text=@"白色";
             cell.imageView.image=[UIImage imageNamed:@"bai"];
         }else if ([tee isEqual:@"red"])
         {
-            cell.textLabel.text=@"红色T台";
+            cell.textLabel.text=@"红色";
             cell.imageView.image=[UIImage imageNamed:@"hong"];
         }else if ([tee isEqual:@"blue"])
         {
-            cell.textLabel.text=@"蓝色T台";
+            cell.textLabel.text=@"蓝色";
             cell.imageView.image=[UIImage imageNamed:@"lan"];
 
         }else if ([tee isEqual:@"black"])
         {
-            cell.textLabel.text=@"黑色T台";
+            cell.textLabel.text=@"黑色";
             cell.imageView.image=[UIImage imageNamed:@"hei"];
         }else if ([tee isEqual:@"gold"])
         {
-            cell.textLabel.text=@"金色T台";
+            cell.textLabel.text=@"金色";
             cell.imageView.image=[UIImage imageNamed:@"huang"];
 
         }
@@ -667,24 +703,24 @@
         NSString *tee=self.lastChildStadium.tee_boxes[indexPath.row];
         
         if ([tee isEqual:@"white"]) {
-            cell.textLabel.text=@"白色T台";
+            cell.textLabel.text=@"白色";
             cell.imageView.image=[UIImage imageNamed:@"bai"];
         }else if ([tee isEqual:@"red"])
         {
-            cell.textLabel.text=@"红色T台";
+            cell.textLabel.text=@"红色";
             cell.imageView.image=[UIImage imageNamed:@"hong"];
         }else if ([tee isEqual:@"blue"])
         {
-            cell.textLabel.text=@"蓝色T台";
+            cell.textLabel.text=@"蓝色";
             cell.imageView.image=[UIImage imageNamed:@"lan"];
             
         }else if ([tee isEqual:@"black"])
         {
-            cell.textLabel.text=@"黑色T台";
+            cell.textLabel.text=@"黑色";
             cell.imageView.image=[UIImage imageNamed:@"hei"];
         }else if ([tee isEqual:@"gold"])
         {
-            cell.textLabel.text=@"金色T台";
+            cell.textLabel.text=@"金色";
             cell.imageView.image=[UIImage imageNamed:@"huang"];
             
         }
@@ -751,7 +787,7 @@
         headerView.cleicedName=self.type;
         
         if (self.type==nil) {
-            headerView.liftName=@"请选择计分方式";
+            headerView.liftName=@"选择计分方式";
         }else
         {
         headerView.liftName=@"计分方式";
@@ -777,7 +813,7 @@
         }else
         {
             if (self.childStadium.holes_count==18) {
-                headerView.liftName=@"18洞";
+                headerView.liftName=@"球场";
             }else{
                 headerView.liftName=@"前九洞";
             }
@@ -971,7 +1007,7 @@
                     
                     [childStadiums removeObject:childStadium];
                 }
-                ZCLog(@"%lu",childStadiums.count);
+               // ZCLog(@"%lu",childStadiums.count);
                 self.childStadiumMutableArray=childStadiums;
                 
             }

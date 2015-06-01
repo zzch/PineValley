@@ -72,6 +72,7 @@
         [self addSubview:penaltiesLabel];
         penaltiesLabel.textColor=ZCColor(85, 85, 85);
         penaltiesLabel.font=[UIFont systemFontOfSize:19];
+        penaltiesLabel.textAlignment=NSTextAlignmentCenter;
         self.penaltiesLabel=penaltiesLabel;
         
         
@@ -90,6 +91,7 @@
         [self addSubview:drivingNameLabel];
         drivingNameLabel.text=@"开球";
         drivingNameLabel.font=[UIFont systemFontOfSize:19];
+        drivingNameLabel.textAlignment=NSTextAlignmentCenter;
         self.drivingNameLabel=drivingNameLabel;
         
         //开杆距离
@@ -200,8 +202,8 @@
     CGFloat penaltiesLabelW=40;
     CGFloat penaltiesLabelH=15;
     
-    CGFloat penaltiesLabelX=8;
-    CGFloat penaltiesLabelY=8;
+    CGFloat penaltiesLabelX=self.frame.size.width*0.0125;//self.frame.size.width*0.0625;
+    CGFloat penaltiesLabelY=(self.frame.size.height-penaltiesLabelH)/2;
     
     self.penaltiesLabel.frame=CGRectMake(penaltiesLabelX, penaltiesLabelY, penaltiesLabelW, penaltiesLabelH);
     
@@ -212,7 +214,7 @@
     CGFloat scoreLabelW=50;
     CGFloat scoreLabelH=50;
     
-    CGFloat scoreLabelX=penaltiesLabelX+penaltiesLabelW+10;
+    CGFloat scoreLabelX=penaltiesLabelX+penaltiesLabelW+self.frame.size.width*0.0625;
     CGFloat scoreLabelY=(self.frame.size.height-scoreLabelH)/2;
     
     
@@ -225,7 +227,7 @@
     CGFloat drivingNameLabelW=penaltiesLabelW;
     CGFloat drivingNameLabelH=penaltiesLabelH;
     
-    CGFloat drivingNameLabelX=scoreLabelX+scoreLabelW;
+    CGFloat drivingNameLabelX=scoreLabelX+scoreLabelW+self.frame.size.width*0.0625;
     CGFloat drivingNameLabelY=penaltiesLabelY;
     
     self.drivingNameLabel.frame=CGRectMake(drivingNameLabelX, drivingNameLabelY, drivingNameLabelW, drivingNameLabelH);

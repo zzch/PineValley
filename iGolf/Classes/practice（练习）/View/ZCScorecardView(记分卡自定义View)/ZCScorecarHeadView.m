@@ -74,7 +74,7 @@
         
         //背景色横线
         UIView *bjView=[[UIView alloc] init];
-        bjView.backgroundColor=RGBACOLOR(170, 170, 170, 1);
+        //bjView.backgroundColor=RGBACOLOR(170, 170, 170, 1);
         [self addSubview:bjView];
         self.bjView=bjView;
 
@@ -87,7 +87,7 @@
         listBtn.tag=2789;
         [listBtn addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
         [listBtn setTitle:@"排行榜" forState:UIControlStateNormal];
-        
+        listBtn.backgroundColor=ZCColor(90, 190, 99);
         [self addSubview:listBtn];
         self.listBtn=listBtn;
         
@@ -104,6 +104,7 @@
         [InviteFriendsBtn setTitle:@"邀请好友" forState:UIControlStateNormal];
         InviteFriendsBtn.tag=2790;
         [InviteFriendsBtn addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
+        InviteFriendsBtn.backgroundColor=ZCColor(234, 173, 67);
         [self addSubview:InviteFriendsBtn];
         self.InviteFriendsBtn=InviteFriendsBtn;
         
@@ -120,7 +121,7 @@
         [analysisBtn setTitle:@"技术分析" forState:UIControlStateNormal];
         analysisBtn.tag=2791;
         [analysisBtn addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
-        
+        analysisBtn.backgroundColor=ZCColor(73, 172, 214);
         [self addSubview:analysisBtn];
         self.analysisBtn=analysisBtn;
     }

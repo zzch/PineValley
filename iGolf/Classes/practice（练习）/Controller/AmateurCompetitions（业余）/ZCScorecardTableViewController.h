@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "ZCTotalScorecards.h"
-@interface ZCScorecardTableViewController : UITableViewController
+@interface ZCScorecardTableViewController : UIViewController
 @property(nonatomic,strong)ZCTotalScorecards *totalScorecards;
 @property(nonatomic,copy)NSString *uuid;
 //@property(nonatomic,copy)NSString *tee_box;
