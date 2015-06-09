@@ -24,6 +24,7 @@
 #import "ZCPersonalizedSettingsViewController.h"
 #import "ZCInvitationViewController.h"
 #import "ZCListViewController.h"
+#import "ZCQuickScoringTableViewController.h"
 @interface ZCScorecardTableViewController ()<UITableViewDataSource,UITableViewDelegate,ZCScorecarDelegate,ZCModifyTheScorecardViewControllerDelegate,ZCModifyTheProfessionalScorecardControllerDelegate,ZCCompetitiveTableViewCellDelagate,ZCScorecarHeadViewDelagate>
 
 @property(nonatomic,weak)UITableView *tableView;
@@ -38,7 +39,7 @@
     [super viewDidLoad];
        
     //返回
-   // self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(liftBthTheClick:) target:self];
     
     self.view.backgroundColor=[UIColor whiteColor];
     self.navigationItem.title=@"记分卡";
@@ -48,11 +49,11 @@
 //    [customLab setText:@"修改记分卡"];
 //    customLab.font = [UIFont boldSystemFontOfSize:20];
 //    self.navigationItem.titleView = customLab;
-     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
-    UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"统计" style:UIBarButtonItemStyleDone target:self action:@selector(clickOnTheStatistics)];
-    //改变UIBarButtonItem字体颜色
-   // [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:ZCColor(240, 208, 122), UITextAttributeTextColor,nil] forState:UIControlStateNormal];
-    self.navigationItem.rightBarButtonItem =newBar;
+//     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
+//    UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"统计" style:UIBarButtonItemStyleDone target:self action:@selector(clickOnTheStatistics)];
+//    //改变UIBarButtonItem字体颜色
+//   // [newBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:ZCColor(240, 208, 122), UITextAttributeTextColor,nil] forState:UIControlStateNormal];
+//    self.navigationItem.rightBarButtonItem =newBar;
     
     
     
@@ -135,9 +136,17 @@
 
 
 //返回到上个界面
--(void)liftBthClick:(UIButton *)bth
+-(void)liftBthTheClick:(UIButton *)bth
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    for (id viewController in self.navigationController.viewControllers) {
+     
+        if ([viewController isKindOfClass:[ZCQuickScoringTableViewController class]]) {
+            [self.navigationController popToViewController:viewController animated:YES];
+            break;
+        }
+    }
+    
+  
 }
 
 //网络加载
@@ -165,7 +174,7 @@
     
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-       
+        ZCLog(@"%@",responseObject);
         ZCLog(@"%@",responseObject[@"message"]);
         
         ZCTotalScorecards *totalScorecards= [ZCTotalScorecards totalScorecardsWithDict:responseObject];
@@ -288,7 +297,8 @@
             
             ZCLog(@"%@",self.totalScorecards.player.user.portrait);
             
-            
+            ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
+            tool.isJoin=NO;
             ZCPersonalizedSettingsViewController *ZPersonalizedSettingsViewController=[[ZCPersonalizedSettingsViewController alloc] init];
             ZPersonalizedSettingsViewController.uuid=self.uuid;
             [self.navigationController pushViewController:ZPersonalizedSettingsViewController animated:YES];

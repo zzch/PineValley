@@ -477,69 +477,69 @@
 
 
 
--(void)setProfessionalScorecardModel:(ZCProfessionalScorecardModel *)professionalScorecardModel
-{
-    _professionalScorecardModel=professionalScorecardModel;
-    
-    //计分赋值
-    for (int index=0; index<self.nameView2.subviews.count; index++) {
-        UIView *holeView=self.nameView2.subviews[index];
-        for (int i=0; i<holeView.subviews.count; i++) {
-            UILabel *holeLabel=holeView.subviews[1];
-            
-            
-            if (index>=0&&index<9) {
-                
-                
-                holeLabel.text=[NSString stringWithFormat:@"%d",index+1];
-            }else if(index==9)
-            {
-                holeLabel.text=@"前九";
-            }
-            else if (index>9&&index<19)
-            {
-                holeLabel.text=[NSString stringWithFormat:@"%d",index-1];
-            }else if (index==19)
-            {
-                holeLabel.text=@"IN";
-            }else if (index==20)
-            {
-                holeLabel.text=@"TOT";
-            }else if (index>20&&index<42)
-            {
-                
-                
-                holeLabel.text=[NSString stringWithFormat:@"%@",self.professionalScorecardModel.par[index-21]];
-            }else if (index>=42&&index<63)
-            {
-                if ( [self.professionalScorecardModel.score[index-42]  isKindOfClass:[NSNull class]]) {
-                    holeLabel.text=@"";
-                }else{
-                    holeLabel.text=[NSString stringWithFormat:@"%@",self.professionalScorecardModel.score[index-42]];
-                }
-                
-                //holeLabel.text=[NSString stringWithFormat:@"%d",index];
-            }else if (index>=63&&index<84)
-            {
-                
-                if ( [self.professionalScorecardModel.status[index-63]  isKindOfClass:[NSNull class]]) {
-                    holeLabel.text=@"";
-                }else{
-                    holeLabel.text=[NSString stringWithFormat:@"%@",self.professionalScorecardModel.status[index-63]];
-                }
-                
-                
-            }
-            
-            
-        }
-        
-    }
-    
-
-
-}
-
+//-(void)setProfessionalScorecardModel:(ZCProfessionalScorecardModel *)professionalScorecardModel
+//{
+//    _professionalScorecardModel=professionalScorecardModel;
+//    
+//    //计分赋值
+//    for (int index=0; index<self.nameView2.subviews.count; index++) {
+//        UIView *holeView=self.nameView2.subviews[index];
+//        for (int i=0; i<holeView.subviews.count; i++) {
+//            UILabel *holeLabel=holeView.subviews[1];
+//            
+//            
+//            if (index>=0&&index<9) {
+//                
+//                
+//                holeLabel.text=[NSString stringWithFormat:@"%d",index+1];
+//            }else if(index==9)
+//            {
+//                holeLabel.text=@"前九";
+//            }
+//            else if (index>9&&index<19)
+//            {
+//                holeLabel.text=[NSString stringWithFormat:@"%d",index-1];
+//            }else if (index==19)
+//            {
+//                holeLabel.text=@"IN";
+//            }else if (index==20)
+//            {
+//                holeLabel.text=@"TOT";
+//            }else if (index>20&&index<42)
+//            {
+//                
+//                
+//                holeLabel.text=[NSString stringWithFormat:@"%@",self.professionalScorecardModel.par[index-21]];
+//            }else if (index>=42&&index<63)
+//            {
+//                if ( [self.professionalScorecardModel.score[index-42]  isKindOfClass:[NSNull class]]) {
+//                    holeLabel.text=@"";
+//                }else{
+//                    holeLabel.text=[NSString stringWithFormat:@"%@",self.professionalScorecardModel.score[index-42]];
+//                }
+//                
+//                //holeLabel.text=[NSString stringWithFormat:@"%d",index];
+//            }else if (index>=63&&index<84)
+//            {
+//                
+//                if ( [self.professionalScorecardModel.status[index-63]  isKindOfClass:[NSNull class]]) {
+//                    holeLabel.text=@"";
+//                }else{
+//                    holeLabel.text=[NSString stringWithFormat:@"%@",self.professionalScorecardModel.status[index-63]];
+//                }
+//                
+//                
+//            }
+//            
+//            
+//        }
+//        
+//    }
+//    
+//
+//
+//}
+//
 
 -(void)setTotalModel:(NSDictionary *)totalModel
 {

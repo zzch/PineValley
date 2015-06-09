@@ -19,8 +19,23 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
   
+    
+    
+    self.navigationItem.title=@"平均杆数";
+    //返回
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(liftBthClick:) target:self];
+
+    self.view.backgroundColor=ZCColor(237, 237, 237);
+    
     [self addControls];
     
+}
+
+//返回
+-(void)liftBthClick:(UIButton *)btn
+{
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -31,25 +46,32 @@
     CGFloat topViewX=0;
     CGFloat topViewY=0;
     CGFloat topViewW=SCREEN_WIDTH;
-    CGFloat topViewH=150;
+    CGFloat topViewH=100;
     topView.frame=CGRectMake(topViewX, topViewY, topViewW, topViewH);
+    topView.backgroundColor=ZCColor(60, 57, 78);
     [self.view addSubview:topView];
     
     
     UIView *firstView=[[UIView alloc] init];
     CGFloat firstViewX=0;
-    CGFloat firstViewY=10;
-    CGFloat firstViewW=120;
-    CGFloat firstViewH=50;
+    CGFloat firstViewY=0;
+    CGFloat firstViewW=SCREEN_WIDTH/3-1;
+    CGFloat firstViewH=100;
     firstView.frame=CGRectMake(firstViewX, firstViewY, firstViewW, firstViewH);
     [topView addSubview:firstView];
     
     [self addChildControls:firstView imageStr:@"20141118042246536.jpg" numberStr:[NSString stringWithFormat:@"%@",self.averageModel[@"average_score_par_3"]] nameStr:@"3杆洞"];
     
+    //竖条背景色
+    UIView *bjView=[[UIView alloc] initWithFrame:CGRectMake(firstViewW, 25, 0.5, topViewH-50)];
+    bjView.backgroundColor=[UIColor whiteColor];
+    [topView addSubview:bjView];
+    
+    
     
     UIView *secendView=[[UIView alloc] init];
-    CGFloat secendViewX=0;
-    CGFloat secendViewY=firstViewY+firstViewH;
+    CGFloat secendViewX=firstViewX+firstViewW+0.5;
+    CGFloat secendViewY=0;
     CGFloat secendViewW=firstViewW;
     CGFloat secendViewH=firstViewH;
     secendView.frame=CGRectMake(secendViewX, secendViewY, secendViewW, secendViewH);
@@ -57,11 +79,15 @@
     [self addChildControls:secendView imageStr:@"20141118042246536.jpg" numberStr:[NSString stringWithFormat:@"%@",self.averageModel[@"average_score_par_4"]] nameStr:@"4杆洞"];
     
     
-    
+    //竖条背景色
+    UIView *bjView2=[[UIView alloc] initWithFrame:CGRectMake(secendViewX+secendViewW, 25, 0.5, topViewH-50)];
+    bjView2.backgroundColor=[UIColor whiteColor];
+    [topView addSubview:bjView2];
+
     UIView *thirdView=[[UIView alloc] init];
-    thirdView.backgroundColor=[UIColor redColor];
-    CGFloat thirdViewX=0;
-    CGFloat thirdViewY=secendViewY+secendViewH;
+    
+    CGFloat thirdViewX=secendViewX+secendViewW+0.5;
+    CGFloat thirdViewY=0;
     CGFloat thirdViewW=firstViewW;
     CGFloat thirdViewH=firstViewH;
     thirdView.frame=CGRectMake(thirdViewX, thirdViewY, thirdViewW, thirdViewH);
@@ -69,15 +95,15 @@
     [self addChildControls:thirdView imageStr:@"20141118042246536.jpg" numberStr:[NSString stringWithFormat:@"%@",self.averageModel[@"average_score_par_5"]] nameStr:@"5杆洞"];
     
     
-    //右边图片
-    UIImageView *barChartImage=[[UIImageView alloc] init];
-    CGFloat barChartImageX=topViewH+10;
-    CGFloat barChartImageY=20;
-    CGFloat barChartImageW=100;
-    CGFloat barChartImageH=100;
-    barChartImage.frame=CGRectMake(barChartImageX, barChartImageY, barChartImageW, barChartImageH);
-    barChartImage.image=[UIImage imageNamed:@"20141118042246536.jpg"];
-    [self.view addSubview:barChartImage];
+//    //右边图片
+//    UIImageView *barChartImage=[[UIImageView alloc] init];
+//    CGFloat barChartImageX=topViewH+10;
+//    CGFloat barChartImageY=20;
+//    CGFloat barChartImageW=100;
+//    CGFloat barChartImageH=100;
+//    barChartImage.frame=CGRectMake(barChartImageX, barChartImageY, barChartImageW, barChartImageH);
+//    barChartImage.image=[UIImage imageNamed:@"20141118042246536.jpg"];
+//    [self.view addSubview:barChartImage];
     
     
     
@@ -85,37 +111,39 @@
     
     UIView *middleView=[[UIView alloc] init];
     CGFloat middleViewX=0;
-    CGFloat middleViewY=topViewY+topViewH+20;
+    CGFloat middleViewY=topViewY+topViewH+15;
     CGFloat middleViewW=SCREEN_WIDTH;
-    CGFloat middleViewH=200;
+    CGFloat middleViewH=120;
     middleView.frame=CGRectMake(middleViewX, middleViewY, middleViewW, middleViewH);
     [self.view addSubview:middleView];
+    middleView.backgroundColor=[UIColor whiteColor];
     self.middleView=middleView;
     
     
     
     
-    UIImageView *personImage=[[UIImageView alloc] init];
-    CGFloat personImageX=30;
-    CGFloat personImageY=10;
-    CGFloat personImageW=20;
-    CGFloat personImageH=20;
-    personImage.frame=CGRectMake(personImageX, personImageY, personImageW, personImageH);
-    personImage.image=[UIImage imageNamed:@"20141118042246536.jpg"];
-    [middleView addSubview:personImage];
+//    UIImageView *personImage=[[UIImageView alloc] init];
+//    CGFloat personImageX=30;
+//    CGFloat personImageY=10;
+//    CGFloat personImageW=20;
+//    CGFloat personImageH=20;
+//    personImage.frame=CGRectMake(personImageX, personImageY, personImageW, personImageH);
+//    personImage.image=[UIImage imageNamed:@"20141118042246536.jpg"];
+//    [middleView addSubview:personImage];
     
     UILabel *nameLabel=[[UILabel alloc] init];
-    CGFloat nameLabelX=personImageX+personImageW+10;
-    CGFloat nameLabelY=personImageY;
-    CGFloat nameLabelW=200;
+    CGFloat nameLabelX=20;
+    CGFloat nameLabelY=20;
+    CGFloat nameLabelW=190;
     CGFloat nameLabelH=20;
     nameLabel.frame=CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH);
     nameLabel.text=[NSString stringWithFormat:@"救平标准杆率%@/%@ (%@)",self.averageModel[@"scrambles"],self.averageModel[@"non_gir"],self.averageModel[@"scrambles_percentage"]];
+    nameLabel.textColor=ZCColor(255, 150, 29);
     [middleView addSubview:nameLabel];
     //提示按钮
     UIButton *promptBtn=[[UIButton alloc] init];
     CGFloat promptBtnX=nameLabelX+nameLabelW+10;
-    CGFloat promptBtnY=personImageY;
+    CGFloat promptBtnY=nameLabelY;
     CGFloat promptBtnW=20;
     CGFloat promptBtnH=20;
     promptBtn.frame=CGRectMake(promptBtnX, promptBtnY, promptBtnW, promptBtnH);
@@ -127,29 +155,39 @@
     
     UILabel *numberLabel=[[UILabel alloc] init];
     
-    CGFloat numberLabelY=personImageY+20;
+    CGFloat numberLabelY=nameLabelY+nameLabelH+5;
     CGFloat numberLabelW=60;
     CGFloat numberLabelH=40;
     CGFloat numberLabelX=(middleView.frame.size.width-numberLabelW)*0.5;
     numberLabel.frame=CGRectMake(numberLabelX, numberLabelY, numberLabelW, numberLabelH);
     numberLabel.text=[NSString stringWithFormat:@"%@",self.averageModel[@"scrambles"]];
+    numberLabel.textAlignment=NSTextAlignmentCenter;
     [middleView addSubview:numberLabel];
     
     //第二个下面的 百分比
     UILabel *percentLabel=[[UILabel alloc] init];
     
-    CGFloat percentLabelY=numberLabelY+numberLabelH+10;
-    CGFloat percentLabelW=40;
+    CGFloat percentLabelY=numberLabelY+numberLabelH+5;
+    CGFloat percentLabelW=60;
     CGFloat percentLabelH=20;
     CGFloat percentLabelX=(middleView.frame.size.width-percentLabelW)*0.5;
     percentLabel.frame=CGRectMake(percentLabelX, percentLabelY, percentLabelW, percentLabelH);
     percentLabel.text=[NSString stringWithFormat:@"%@",self.averageModel[@"scrambles_percentage"]];
+    percentLabel.textAlignment=NSTextAlignmentCenter;
+    percentLabel.textColor=ZCColor(102, 102, 102);
     [middleView addSubview:percentLabel];
     
     
     
 
 }
+
+
+
+
+
+
+
 
 
 //点击提示
@@ -179,32 +217,36 @@
 //添加子控件
 -(void)addChildControls:(UIView *)childView  imageStr:(NSString *)imageStr  numberStr:(NSString *)numberStr  nameStr:(NSString *)nameStr
 {
-    UIImageView *imageView=[[UIImageView alloc] init];
-    CGFloat imageViewX=5;
-    CGFloat imageViewW=30;
-    CGFloat imageViewH=30;
-    CGFloat imageViewY=(childView.frame.size.height-imageViewH)*0.5;
-    imageView.frame=CGRectMake(imageViewX, imageViewY, imageViewW, imageViewH);
-    imageView.image=[UIImage imageNamed:imageStr];
-    [childView addSubview:imageView];
-    
+//    UIImageView *imageView=[[UIImageView alloc] init];
+//    CGFloat imageViewX=5;
+//    CGFloat imageViewW=30;
+//    CGFloat imageViewH=30;
+//    CGFloat imageViewY=(childView.frame.size.height-imageViewH)*0.5;
+//    imageView.frame=CGRectMake(imageViewX, imageViewY, imageViewW, imageViewH);
+//    imageView.image=[UIImage imageNamed:imageStr];
+//    [childView addSubview:imageView];
+//    
     
     UILabel *numberLabel=[[UILabel alloc ] init];
-    CGFloat numberLabelX=imageViewX+imageViewW+10;
-    CGFloat numberLabelW=60;
+    CGFloat numberLabelX=0;
+    CGFloat numberLabelW=childView.frame.size.width;
     CGFloat numberLabelH=20;
-    CGFloat numberLabelY=5;
+    CGFloat numberLabelY=25;
     numberLabel.frame=CGRectMake(numberLabelX, numberLabelY, numberLabelW, numberLabelH);
     numberLabel.text=numberStr;
+    numberLabel.textAlignment=NSTextAlignmentCenter;
+    numberLabel.textColor=[UIColor whiteColor];
     [childView addSubview:numberLabel];
     
     UILabel *nameLabel=[[UILabel alloc] init];
-    CGFloat nameLabelX=numberLabelX;
-    CGFloat nameLabelW=60;
+    CGFloat nameLabelX=0;
+    CGFloat nameLabelW=numberLabelW;
     CGFloat nameLabelH=20;
-    CGFloat nameLabelY=numberLabelH+numberLabelY;
+    CGFloat nameLabelY=numberLabelH+numberLabelY+5;
     nameLabel.frame=CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH);
     nameLabel.text=nameStr;
+    nameLabel.textColor=[UIColor whiteColor];
+    nameLabel.textAlignment=NSTextAlignmentCenter;
     [childView addSubview:nameLabel];
 
 

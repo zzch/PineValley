@@ -20,31 +20,68 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.tableView.backgroundColor=ZCColor(237, 237, 237);
+    self.navigationItem.title=@"一切一推";
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
     
-    self.tableView.rowHeight=100;
+    //让下面没内容的分割线不显示
+    self.tableView.tableFooterView = [[UIView alloc] init];
+    //返回
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(liftBthClick:) target:self];
+
     
     [self initData];
+}
+
+
+
+//返回
+-(void)liftBthClick:(UIButton *)btn
+{
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
 //添加数据
 -(void)initData
 {
-    NSMutableArray *upAndDownsArray=[NSMutableArray array];
-    self.upAndDownsArray=upAndDownsArray;
-    NSArray *tempArray=self.wedgeModel[@"up_and_downs"];
-    for (NSDictionary *dict in tempArray) {
+    if ([self _valueOrNil:self.wedgeModel[@"up_and_downs"]]==nil) {
         
-        ZCWedgeModel *wedgeModel=[ZCWedgeModel wedgeModelWithDict:dict];
-        [self.upAndDownsArray addObject:wedgeModel];
+    }else{
         
+        NSMutableArray *upAndDownsArray=[NSMutableArray array];
+        self.upAndDownsArray=upAndDownsArray;
+        NSArray *tempArray=self.wedgeModel[@"up_and_downs"];
+        
+        ZCLog(@"%@",self.wedgeModel[@"up_and_downs"]);
+        for (NSDictionary *dict in tempArray) {
+            
+            ZCWedgeModel *wedgeModel=[ZCWedgeModel wedgeModelWithDict:dict];
+            [self.upAndDownsArray addObject:wedgeModel];
+            
+        }
+
+    
     }
+
+    
     
 
 }
 
+
+
+- (id) _valueOrNil:(id)obj {
+    if (!obj) {
+        return nil;
+    }
+    if (obj == [NSNull null]) {
+        return nil;
+    }
+    return obj;
+}
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -95,6 +132,21 @@
     
     }
   }
+
+
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row==0) {
+        return 100;
+    }else if (indexPath.row==self.upAndDownsArray.count+1)
+    {
+        return 150;
+    }else
+    {
+        return 60;
+    }
+}
 
 
 

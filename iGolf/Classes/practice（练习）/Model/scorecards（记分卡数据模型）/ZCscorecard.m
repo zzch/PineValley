@@ -25,7 +25,7 @@
         self.penalties=dict[@"penalties"];
          self.driving_distance=dict[@"driving_distance"];
          self.direction=dict[@"direction"];
-        
+        self.distance_from_hole=dict[@"distance_from_hole"];
         self.tee_boxes=[NSMutableArray array];
         
         NSDictionary *tee_boxes=dict[@"tee_boxes"];

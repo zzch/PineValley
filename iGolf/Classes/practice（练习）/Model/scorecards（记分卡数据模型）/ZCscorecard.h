@@ -44,6 +44,11 @@
 @property (nonatomic, copy) NSString *direction;
 
 /**
+ *  距离球洞距离（跳转修改记分卡简单页面用到）
+ */
+@property (nonatomic, copy) NSString *distance_from_hole;
+
+/**
  *  球洞属性
  */
 @property (nonatomic, strong) NSMutableArray *tee_boxes;

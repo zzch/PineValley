@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ZCProfessionalScorecardModel.h"
+
 @interface ZCProfessionalLandscape : UIView
-@property(nonatomic,strong)ZCProfessionalScorecardModel *professionalScorecardModel;
+//@property(nonatomic,strong)ZCProfessionalScorecardModel *professionalScorecardModel;
 @property(nonatomic,strong)NSDictionary *totalModel;
 @end

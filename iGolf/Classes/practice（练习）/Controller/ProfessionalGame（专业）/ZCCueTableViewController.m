@@ -19,14 +19,26 @@
     [super viewDidLoad];
     
 
+    self.navigationItem.title=@"球杆";
+    //返回
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(liftBthClick:) target:self];
+    
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
     
-    self.tableView.rowHeight=150;
+    self.tableView.rowHeight=120;
     
     [self initData];
     
     
+}
+
+
+//返回
+-(void)liftBthClick:(UIButton *)btn
+{
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void)initData

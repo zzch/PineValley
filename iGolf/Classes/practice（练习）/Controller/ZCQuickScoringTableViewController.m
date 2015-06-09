@@ -697,20 +697,20 @@
 
 
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete)
-    {
-        [self alert];
-        self.indexPath=indexPath;
-        // 从数据源删除数据
-        //      [self.eventArray removeObjectAtIndex:indexPath.row];
-        //
-        //       // 表格删除数据，会重新调用数据源方法，产生越界
-        //       [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }
-}
-
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if (editingStyle == UITableViewCellEditingStyleDelete)
+//    {
+//        [self alert];
+//        self.indexPath=indexPath;
+//        // 从数据源删除数据
+//        //      [self.eventArray removeObjectAtIndex:indexPath.row];
+//        //
+//        //       // 表格删除数据，会重新调用数据源方法，产生越界
+//        //       [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//    }
+//}
+//
 
 -(void)alert
 {
@@ -731,63 +731,63 @@
  *  @param buttonIndex 按钮的索引,从0开始
  */
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 0)
-    {
-        
-        return;
-    }else
-    {
-        ///v1/matches.json
-        [self deleteData];
-        
-        //               // 从数据源删除数据
-        //      [self.eventArray removeObjectAtIndex:self.indexPath.row];
-        //
-        //              // 表格删除数据，会重新调用数据源方法，产生越界
-        //      [self.tableView deleteRowsAtIndexPaths:@[self.indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }
-    
-    
-    
-}
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+//{
+//    if (buttonIndex == 0)
+//    {
+//        
+//        return;
+//    }else
+//    {
+//        ///v1/matches.json
+//        [self deleteData];
+//        
+//        //               // 从数据源删除数据
+//        //      [self.eventArray removeObjectAtIndex:self.indexPath.row];
+//        //
+//        //              // 表格删除数据，会重新调用数据源方法，产生越界
+//        //      [self.tableView deleteRowsAtIndexPaths:@[self.indexPath] withRowAnimation:UITableViewRowAnimationFade];
+//    }
+//    
+//    
+//    
+//}
+//
 
 
-
--(void)deleteData
-{
-    //2.发送网络请求
-    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
-    
-    mgr.responseSerializer.acceptableContentTypes=[NSSet setWithObjects:@"text/html",@"text/plain",@"application/xhtml+xml",@"application/xml",@"application/json", nil];
-    
-    // 2.封装请求参数
-    NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
-    ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
-    //ZCLog(@"%@-------",account.token);
-    // 说明服务器返回的JSON数据
-    // mgr.responseSerializer = [AFJSONResponseSerializer serializer];
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    
-    params[@"uuid"]=[self.eventArray[self.indexPath.row] uuid];
-    params[@"token"]=account.token;
-    
-     NSString *url=[NSString stringWithFormat:@"%@%@",API,@"matches/practice"];
-    [mgr DELETE:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //请求网络重新加载数据
-        [self serverData];
-        
-        ZCLog(@"删除成功");
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        ZCLog(@"%@",error);
-    }];
-    
-}
-
-
+//-(void)deleteData
+//{
+//    //2.发送网络请求
+//    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+//    
+//    mgr.responseSerializer.acceptableContentTypes=[NSSet setWithObjects:@"text/html",@"text/plain",@"application/xhtml+xml",@"application/xml",@"application/json", nil];
+//    
+//    // 2.封装请求参数
+//    NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+//    NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
+//    ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
+//    //ZCLog(@"%@-------",account.token);
+//    // 说明服务器返回的JSON数据
+//    // mgr.responseSerializer = [AFJSONResponseSerializer serializer];
+//    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+//    
+//    params[@"uuid"]=[self.eventArray[self.indexPath.row] uuid];
+//    params[@"token"]=account.token;
+//    
+//     NSString *url=[NSString stringWithFormat:@"%@%@",API,@"matches/practice"];
+//    [mgr DELETE:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        //请求网络重新加载数据
+//        [self serverData];
+//        
+//        ZCLog(@"删除成功");
+//        
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        ZCLog(@"%@",error);
+//    }];
+//    
+//}
+//
+//
 
 
 

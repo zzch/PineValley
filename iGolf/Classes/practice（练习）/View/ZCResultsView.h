@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 #import "ZCStatisticalScorecard.h"
 @interface ZCResultsView : UIView
-+(instancetype)initWithResultsViewWithFrame:(CGRect)frame andModel:(ZCStatisticalScorecard *)scorecard;
++(instancetype)initWithResultsViewWithFrame:(CGRect)frame andModel:(ZCStatisticalScorecard *)scorecard  andTime:(long)time;
 @end

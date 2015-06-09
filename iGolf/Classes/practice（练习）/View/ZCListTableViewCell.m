@@ -160,7 +160,7 @@
     
     CGFloat  userLabelX=userImageViewX+userImageViewW+5;
     CGFloat  userLabelY=0;
-    CGFloat  userLabelW=70;
+    CGFloat  userLabelW=SCREEN_WIDTH-userLabelX-70;
     CGFloat  userLabelH=self.frame.size.height;
     self.userLabel.frame=CGRectMake(userLabelX, userLabelY, userLabelW, userLabelH);
 

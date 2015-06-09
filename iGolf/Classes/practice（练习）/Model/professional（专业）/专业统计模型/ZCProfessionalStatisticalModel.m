@@ -7,7 +7,7 @@
 //
 
 #import "ZCProfessionalStatisticalModel.h"
-#import "ZCProfessionalScorecardModel.h"
+#import "ZCMatch.h"
 @implementation ZCProfessionalStatisticalModel
 
 + (instancetype)professionalStatisticalModelWithDict:(NSDictionary *)dict
@@ -18,7 +18,7 @@
 {
     if (self=[super init]) {
         
-        self.scorecards=[ZCProfessionalScorecardModel ZCProfessionalScorecardModelWithDict:dict[@"scorecards"]];
+        self.scorecards=[ZCStatisticalScorecard statisticalScorecardWithDict:dict[@"scorecards"]];
         self.item_01=dict[@"item_01"];
         self.item_02=dict[@"item_02"];
         self.item_03=dict[@"item_03"];
@@ -29,7 +29,7 @@
         self.item_08=dict[@"item_08"];
         self.item_09=dict[@"item_09"];
         self.item_10=dict[@"item_10"];
-        
+         self.match=[ZCMatch matchWithDict:dict[@"match"]];
         
         
     }

@@ -66,16 +66,27 @@
     //denglu_fgx
     UIImageView *bjImage=[[UIImageView alloc] init];
     
-    bjImage.image=[UIImage imageNamed:@"denglu_fgx"];
+    bjImage.image=[UIImage imageNamed:@"denglu_xian"];
     //登陆landing
-    CGFloat landingButtonY=phoneRegisterY+phoneRegisterH+10;
-    CGFloat landingButtonW=287;
-    CGFloat landingButtonH=15;
-    CGFloat landingButtonX=(SCREEN_WIDTH-landingButtonW)*0.5;
+    CGFloat landingButtonY=phoneRegisterY+phoneRegisterH+15;
+    CGFloat landingButtonW=SCREEN_WIDTH-20;
+    CGFloat landingButtonH=1;
+    CGFloat landingButtonX=10;
     bjImage.frame=CGRectMake(landingButtonX, landingButtonY, landingButtonW,landingButtonH );
     
         [self.view addSubview:bjImage];
     
+    
+    UILabel *denglu=[[UILabel alloc] init];
+    CGFloat dengluY=phoneRegisterY+phoneRegisterH+8;
+    CGFloat dengluW=50;
+    CGFloat dengluH=15;
+    CGFloat dengluX=(SCREEN_WIDTH-dengluW)*0.5;
+    denglu.frame=CGRectMake(dengluX, dengluY, dengluW, dengluH);
+    denglu.text=@"登陆";
+    denglu.textColor=ZCColor(102, 102, 102);
+    denglu.textAlignment=NSTextAlignmentCenter;
+    [self.view addSubview:denglu];
     
     //登陆界面
     ZCPhoneloginView *phoneloginView=[[ZCPhoneloginView alloc] init];

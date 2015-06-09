@@ -269,7 +269,7 @@
     CGFloat distanceLabelNameW=70;
     CGFloat distanceLabelNameH=20;
     distanceLabelName.frame=CGRectMake(distanceLabelNameX, distanceLabelNameY, distanceLabelNameW, distanceLabelNameH);
-    distanceLabelName.text=@"开球距离";
+    distanceLabelName.text=@"距离球洞";
     distanceLabelName.textAlignment=NSTextAlignmentCenter;
     distanceLabelName.textColor=ZCColor(85, 85, 85);
     [self.distanceView addSubview:distanceLabelName];
@@ -744,11 +744,11 @@
         }
         
         // self.hitLabel.text=[NSString stringWithFormat:@"%@",self.scorecard.direction];
-        ZCLog(@"%@",self.scorecard.driving_distance);
+        ZCLog(@"%@",self.scorecard.distance_from_hole);
         
-        int distance=[self.scorecard.driving_distance intValue]/5;
+        int distance=[self.scorecard.distance_from_hole intValue]/5;
         
-        ZCLog(@"%@",self.scorecard.driving_distance);
+        //ZCLog(@"%@",self.scorecard.driving_distance);
         [self pickerView:nil didSelectRow:distance inComponent:0];
         [self.pickView selectRow:distance inComponent:0 animated:YES];
         //        [self pickerView:nil didSelectRow:40 inComponent:0];
@@ -792,7 +792,7 @@
     params[@"score"]=self.totalLabel.text;
     params[@"putts"]=self.punish.text;
     params[@"penalties"]=self.pushLabel.text;
-    params[@"driving_distance"]=self.distanceLabel.text;
+    params[@"distance_from_hole"]=self.distanceLabel.text;
     if ([self.hitLabel.text isEqualToString: @"左侧"]) {
         params[@"direction"]=@"hook";
     }else if ([self.hitLabel.text isEqual:  @"右侧"])

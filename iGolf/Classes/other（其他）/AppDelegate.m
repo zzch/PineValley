@@ -44,6 +44,9 @@
     ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
 
     if (account) {//之前登陆成功
+        
+        //ZCTabbarViewController *tabbar=[[ZCTabbarViewController alloc] init];
+        
          ZCPracticeVController *tabBarVc=[[ZCPracticeVController alloc] init];
         UINavigationController *nav=[[UINavigationController alloc] initWithRootViewController:tabBarVc];
         

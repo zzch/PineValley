@@ -9,7 +9,7 @@
 #import "ZCAKeyToRegisterView.h"
 #import "AFNetworking.h"
 #import "ZCAccount.h"
-#import "ZCTabbarViewController.h"
+#import "ZCPracticeVController.h"
 #import "SVProgressHUD.h"
 @implementation ZCAKeyToRegisterView
 
@@ -74,8 +74,12 @@
         
          ZCLog(@"%@",account.token);
         
+        ZCPracticeVController *tabBarVc=[[ZCPracticeVController alloc] init];
+        UINavigationController *nav=[[UINavigationController alloc] initWithRootViewController:tabBarVc];
+        
+        self.window.rootViewController=nav;
         //去首页
-        self.window.rootViewController = [[ZCTabbarViewController alloc] init];
+       // self.window.rootViewController = [[ZCPracticeVController alloc] init];
         
         [SVProgressHUD dismiss];
         

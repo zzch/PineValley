@@ -8,13 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ZCAccount : NSObject
+@interface ZCAccount : NSObject<NSCopying>
 @property (nonatomic, copy) NSString *token;
 @property (nonatomic, copy) NSString *nickname;
 @property (nonatomic, copy) NSString *uuid;
 @property (nonatomic, copy) NSString *type;
 @property (nonatomic, copy) NSString *phone;
-
+@property (nonatomic, copy)NSString *portrait;
 
 + (instancetype)accountWithDict:(NSDictionary *)dict;
 - (instancetype)initWithDict:(NSDictionary *)dict;

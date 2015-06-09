@@ -11,9 +11,9 @@
 @interface ZCStatisticalScorecard : NSObject
 @property (nonatomic, strong) NSMutableArray *par;
 //分数
-@property (nonatomic, copy) NSMutableArray *score;
+@property (nonatomic, strong) NSMutableArray *score;
 //状态
-@property (nonatomic, copy) NSMutableArray *status;
+@property (nonatomic, strong) NSMutableArray *status;
 + (instancetype)statisticalScorecardWithDict:(NSDictionary *)dict;
 - (instancetype)initWithDict:(NSDictionary *)dict;
 @end

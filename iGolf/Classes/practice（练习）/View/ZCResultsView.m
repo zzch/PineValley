@@ -9,6 +9,7 @@
 #import "ZCResultsView.h"
 @interface ZCResultsView()<UIScrollViewDelegate>
 @property(nonatomic,strong)ZCStatisticalScorecard *scorecard;
+@property(nonatomic,assign)long time;
 @property(nonatomic,weak)UIScrollView *scoringScrollView;
 @property(nonatomic,weak)UIButton *beforeButton;
 @property(nonatomic,weak)UIButton *afterButton;
@@ -17,21 +18,21 @@
 @implementation ZCResultsView
 
 
-+(instancetype)initWithResultsViewWithFrame:(CGRect)frame andModel:(ZCStatisticalScorecard *)scorecard
++(instancetype)initWithResultsViewWithFrame:(CGRect)frame andModel:(ZCStatisticalScorecard *)scorecard andTime:(long)time
 {
     
     
-    return [[self alloc] initWithFrame:frame andModel:scorecard];
+    return [[self alloc] initWithFrame:frame andModel:scorecard andTime:time];
 
 }
--(instancetype)initWithFrame:(CGRect)frame andModel:(ZCStatisticalScorecard *)scorecard
+-(instancetype)initWithFrame:(CGRect)frame andModel:(ZCStatisticalScorecard *)scorecard andTime:(long)time
 {
 
     if (self=[super initWithFrame:frame]) {
         
        
         self.scorecard=scorecard;
-        
+        self.time=time;
         [self addControlsandModel];
         
         
@@ -48,7 +49,32 @@
 -(void)addControlsandModel
 {
     
+    //时间卓转成想要的时间
+    NSDateFormatter *fmt = [[NSDateFormatter alloc] init];
+    [fmt setDateFormat:@"yyyy-MM-dd "];
+    NSDate *confromTimesp=[NSDate dateWithTimeIntervalSince1970:self.time ];
+    NSString *confromTimespStr=[fmt stringFromDate:confromTimesp];
+
     
+        //时间
+        UILabel *timeLabel=[[UILabel alloc] init];
+        CGFloat timeLabelX=10;
+        CGFloat timeLabelY=0;
+        CGFloat timeLabelW=SCREEN_WIDTH*0.4;
+        CGFloat timeLabelH=20;
+    
+        timeLabel.frame=CGRectMake(timeLabelX, timeLabelY, timeLabelW, timeLabelH);
+    
+        timeLabel.textColor=ZCColor(102, 102, 102);
+        timeLabel.font=[UIFont systemFontOfSize:18];
+        [self addSubview:timeLabel];
+    if (self.time==1) {
+        
+    }else
+    {
+        timeLabel.text=confromTimespStr;
+    
+    }
     
     
     UIImageView *imageView=[[UIImageView alloc] init];
@@ -69,7 +95,7 @@
         //后九洞
         UIButton *afterButton=[[UIButton alloc] init];
     
-        afterButton.frame=CGRectMake(47, 0, 48, 25);
+        afterButton.frame=CGRectMake(47, 0, 47, 25);
        // [afterButton setTitle:@"后九洞" forState:UIControlStateNormal];
      [afterButton addTarget:self action:@selector(clickTheAfterButton) forControlEvents:UIControlEventTouchUpInside];
         [self.imageView addSubview:afterButton];
@@ -80,7 +106,7 @@
     //计分页面前的名称
     UIView *nameScoringScrollView=[[UIView alloc] init];
     CGFloat nameScoringScrollViewX=0;
-    CGFloat nameScoringScrollViewY=60;
+    CGFloat nameScoringScrollViewY=35;
     CGFloat nameScoringScrollViewW=SCREEN_WIDTH*0.17;
     CGFloat nameScoringScrollViewH=202.5;
     

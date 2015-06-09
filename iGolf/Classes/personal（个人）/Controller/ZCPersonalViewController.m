@@ -236,12 +236,15 @@
         NSString *str=responseObject[@"user"][@"portrait"][@"url"];
         NSURL *url=[NSURL URLWithString:str];
         //[self.headImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"20141118042246536.jpg"]];
-            [self.headImage sd_setImageWithURL:url placeholderImage:nil];
+//            [self.headImage sd_setImageWithURL:url placeholderImage:nil];
             
             [self.headImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"touxiang"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                 
+                NSString *path=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject] stringByAppendingPathComponent:@"personImage.png"];
+                ZCLog(@"%@",path);
                 
-                
+                NSData *data=UIImagePNGRepresentation(image);
+                [data writeToFile:path atomically:YES];
 //                NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
 //                self.imagePath=[[paths objectAtIndex:0] stringByAppendingPathComponent:@"ImageFile"];
 //                [[NSFileManager defaultManager] createDirectoryAtPath:self.imagePath withIntermediateDirectories:YES attributes:nil error:nil];
@@ -353,8 +356,20 @@ ZCLog(@"网络下的载111122222 ");
     headImage.layer.cornerRadius = 50;
     [headImageView addSubview:headImage];
     self.headImage=headImage;
-    [self personImageData];
     
+    
+    
+    // 获取路劲 取出图片
+    NSString *path=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject] stringByAppendingPathComponent:@"personImage.png"];
+    NSData *imageData=[NSData dataWithContentsOfFile:path];
+    UIImage *image=[[UIImage alloc] initWithData:imageData];
+    
+    if (image) {
+        headImage.image=image;
+        ZCLog(@"沙盒取得");
+    }else{
+    [self personImageData];
+    }
     
     
 //    NSData *data = [NSData dataWithContentsOfFile:self.imagePath];
@@ -529,15 +544,24 @@ ZCLog(@"网络下的载111122222 ");
     //删除文件
     [[NSFileManager defaultManager] removeItemAtPath:file error:nil];
     
+    NSString *path=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject] stringByAppendingPathComponent:@"personImage.png"];
     
+    //删除文件
+    [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
     
-    ZCregisterViewController *registerViewController=[[ZCregisterViewController alloc] init];
+  //  ZCregisterViewController *registerViewController=[[ZCregisterViewController alloc] init];
     
-    
-    UINavigationController *nav=[[UINavigationController alloc] initWithRootViewController:registerViewController];
     UIWindow *wd = [[UIApplication sharedApplication].delegate window];
-    //去首页
-    wd.rootViewController =nav;
+    ZCregisterViewController *registerView=[[ZCregisterViewController alloc] init];
+    UINavigationController *nav=[[UINavigationController alloc] initWithRootViewController:registerView];
+    wd.rootViewController=nav;
+
+    
+    
+//    UINavigationController *nav=[[UINavigationController alloc] initWithRootViewController:registerViewController];
+//    UIWindow *wd = [[UIApplication sharedApplication].delegate window];
+//    //去首页
+//    wd.rootViewController =nav;
     
 }
 

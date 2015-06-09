@@ -50,7 +50,7 @@
     
     
     //返回
-    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(liftBthClick:) target:self];
     
 
     
@@ -141,7 +141,7 @@
     
     
     
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
     
 }
 
@@ -766,6 +766,15 @@
 //    // 'PUT' and 'POST' convenience methods auto-run, but HTTPRequestOperationWithRequest just
 //    // sets up the request. you're responsible for firing it.
     AFHTTPRequestOperation *requestOperation = [mgr HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        
+        
+        
+        //保存照片到沙盒
+        NSString *path=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject] stringByAppendingPathComponent:@"personImage.png"];
+        NSData *data=UIImagePNGRepresentation(self.photoView.image);
+        [data writeToFile:path atomically:YES];
+        
         
         ZCLog(@"%@",responseObject);
         // success

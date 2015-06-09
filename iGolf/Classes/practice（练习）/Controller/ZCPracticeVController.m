@@ -13,6 +13,8 @@
 #import "ZCChooseThePitchVViewController.h"
 #import "ZCStatisticalViewController.h"
 #import "ZCPersonalViewController.h"
+#import "UIImageView+WebCache.h"
+#import "ZCAccount.h"
 @interface ZCPracticeVController ()
 
 @end
@@ -21,6 +23,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    
     
     
     
@@ -63,6 +68,45 @@
     [self.view addSubview:persinImage];
 //    persinImage.layer.cornerRadius=10;//设置圆角的半径为10
 //    persinImage.layer.masksToBounds=YES;
+    
+    
+    
+//    NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+//    NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
+//    ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
+//    ZCLog(@"%@",account.portrait);
+//    
+//    if ([account.portrait isKindOfClass:[NSNull class]]) {
+//        
+//        ZCLog(@"weisha");
+//    }else{
+//        
+//        NSURL *url=[NSURL URLWithString:account.portrait];
+//       // UIImageView *image=[[UIImageView alloc] init];
+//        [persinImage sd_setImageWithURL:url  completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+//            //照片保存到沙盒
+//            NSString *path=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject] stringByAppendingPathComponent:@"personImage.png"];
+//            ZCLog(@"%@",path);
+//            
+//            NSData *data=UIImagePNGRepresentation(image);
+//            [data writeToFile:path atomically:YES];
+//            ZCLog(@"图片已经保存好了 ");
+//            
+//        }];
+//        
+//        //照片保存到沙盒
+//        NSString *path=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject] stringByAppendingPathComponent:@"personImage.png"];
+//        ZCLog(@"%@",path);
+//        
+//        NSData *data=UIImagePNGRepresentation(image.image);
+//        [data writeToFile:path atomically:YES];
+//    }
+    
+
+    
+    
+    
+    
     
     UILabel *nameLabel=[[UILabel alloc] init];
     CGFloat  nameLabelY=persinImageY+persinImageH+20;
@@ -142,6 +186,7 @@ self.navigationController.navigationBarHidden=NO;
 //点击竞技比赛
 -(void)clickThesportsCompetition
 {
+    ZCLog(@"1111111111111111111111111");
 
      ZCQuickScoringTableViewController *quickScoringTableViewController=[[ZCQuickScoringTableViewController alloc] init];
 

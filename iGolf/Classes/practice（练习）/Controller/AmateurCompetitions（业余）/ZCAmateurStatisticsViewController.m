@@ -17,6 +17,7 @@
 #import "UIBarButtonItem+DC.h"
 #import "MBProgressHUD+NJ.h"
 #import "ZCResultsView.h"
+#import "ZCMatch.h"
 //#define UIDeviceOrientationIsPortrait(orientation)  ((orientation) == UIDeviceOrientationPortrait || (orientation) == UIDeviceOrientationPortraitUpsideDown)
 //#define UIDeviceOrientationIsLandscape(orientation) ((orientation) == UIDeviceOrientationLandscapeLeft || (orientation) == UIDeviceOrientationLandscapeRight)
 //
@@ -72,10 +73,10 @@
     
     
     // 修改返回按钮
-    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia-anxia" action:@selector(liftBthClick:) target:self];
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(liftBthClick:) target:self];
     
 
-    ZCLog(@"执行了 一次");
+   
     
     
     [MBProgressHUD showMessage:@"加载中..."];
@@ -247,25 +248,25 @@
     UILabel *nameLabel=[[UILabel alloc] init];
     CGFloat nameLabelX=10;
     CGFloat nameLabelY=10;
-    CGFloat nameLabelW=SCREEN_WIDTH*0.6;
+    CGFloat nameLabelW=SCREEN_WIDTH*0.9;
     CGFloat nameLabelH=20;
     nameLabel.frame=CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH);
-    nameLabel.text=@"球场信息统计";
+    nameLabel.text=self.statistical.match.name;
     nameLabel.textColor=ZCColor(85, 85, 85);
     nameLabel.font=[UIFont systemFontOfSize:22];
     [nameView addSubview:nameLabel];
-    //时间
-    UILabel *timeLabel=[[UILabel alloc] init];
-    CGFloat timeLabelX=10;
-    CGFloat timeLabelY=nameLabelY+nameLabelH+10;
-    CGFloat timeLabelW=SCREEN_WIDTH*0.4;
-    CGFloat timeLabelH=20;
-
-    timeLabel.frame=CGRectMake(timeLabelX, timeLabelY, timeLabelW, timeLabelH);
-    //timeLabel.text=@"2015年2月13号";
-    timeLabel.textColor=ZCColor(208, 210, 212);
-    timeLabel.font=[UIFont systemFontOfSize:18];
-    [nameView addSubview:timeLabel];
+//    //时间
+//    UILabel *timeLabel=[[UILabel alloc] init];
+//    CGFloat timeLabelX=10;
+//    CGFloat timeLabelY=nameLabelY+nameLabelH+10;
+//    CGFloat timeLabelW=SCREEN_WIDTH*0.4;
+//    CGFloat timeLabelH=20;
+//
+//    timeLabel.frame=CGRectMake(timeLabelX, timeLabelY, timeLabelW, timeLabelH);
+//    timeLabel.text=@"2015年2月13号";
+//    timeLabel.textColor=ZCColor(208, 210, 212);
+//    timeLabel.font=[UIFont systemFontOfSize:18];
+//    [nameView addSubview:timeLabel];
 //    //前九洞
 //    UIButton *beforeButton=[[UIButton alloc] init];
 //    beforeButton.backgroundColor=[UIColor redColor];
@@ -284,7 +285,7 @@
     CGFloat nameScoringScrollViewY=nameViewH;
     CGFloat nameScoringScrollViewW=SCREEN_WIDTH;
     CGFloat nameScoringScrollViewH=310;
-    ZCResultsView *ResultsView=[ZCResultsView initWithResultsViewWithFrame:CGRectMake(nameScoringScrollViewX, nameScoringScrollViewY, nameScoringScrollViewW, nameScoringScrollViewH) andModel:self.statistical.scorecards];
+    ZCResultsView *ResultsView=[ZCResultsView initWithResultsViewWithFrame:CGRectMake(nameScoringScrollViewX, nameScoringScrollViewY, nameScoringScrollViewW, nameScoringScrollViewH) andModel:self.statistical.scorecards  andTime:self.statistical.match.played_at];
     
     [self.scrollView addSubview:ResultsView];
     

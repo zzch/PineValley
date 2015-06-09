@@ -22,11 +22,13 @@
 #import "ZCCueTableViewController.h"
 #import "ZCCueMode.h"
 #import "ZCTotalGradeViewController.h"
-#import "UIBarButtonItem+DC.h"
+
 #import "MBProgressHUD+NJ.h"
 @interface ZCProfessionalStatisticalViewController ()
 @property(nonatomic,weak)UIScrollView *scrollView;
 @property(nonatomic,strong)ZCProfessionalStatisticalModel *professionalStatisticalModel;
+
+@property (nonatomic, assign, getter = isClick) BOOL isClick;
 @end
 
 @implementation ZCProfessionalStatisticalViewController
@@ -47,7 +49,7 @@
     
     
     //返回
-    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(liftBthClick:) target:self];
     
     
     
@@ -86,6 +88,9 @@
     ZCLog(@"%@",url);
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
+        ZCLog(@"%@",responseObject);
+        
+        
         ZCProfessionalStatisticalModel *professionalStatisticalModel=[ZCProfessionalStatisticalModel professionalStatisticalModelWithDict:responseObject];
         
         self.professionalStatisticalModel=professionalStatisticalModel;
@@ -120,9 +125,15 @@
     self.scrollView=scrollView;
     [self.view addSubview:scrollView];
     
-    
-
-    
+    NSDictionary *total= self.professionalStatisticalModel.item_01;
+    ZCLog(@"%@",total[@"score"]);
+    if ([self _valueOrNil:total[@"score"]]==nil) {
+        
+        self.isClick=NO;
+    }else
+    {
+    self.isClick=YES;
+    }
     
     //总成绩
     UIButton *totalGradeBtn=[[UIButton alloc] init];
@@ -133,12 +144,15 @@
     CGFloat totalGradeBtnH=140;
     totalGradeBtn.frame=CGRectMake(totalGradeBtnX, totalGradeBtnY, totalGradeBtnW, totalGradeBtnH);
     //监听点击
-   // [totalGradeBtn addTarget:self action:@selector(clicktotalGradeBtn) forControlEvents:UIControlEventTouchUpInside];
+    if (self.isClick==YES) {
+        [totalGradeBtn addTarget:self action:@selector(clicktotalGradeBtn) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
     
     [self.scrollView addSubview:totalGradeBtn];
     //添加背景线
     [self blackgroundLine:totalGradeBtn];
-    NSDictionary *total= self.professionalStatisticalModel.item_01;
+   // NSDictionary *total= self.professionalStatisticalModel.item_01;
     //总成绩里面的内容
     [self addContent:totalGradeBtn imageView:@"zongchengji" nameLabel:@"总成绩" firstLabel:[NSString stringWithFormat:@"%@",total[@"score"]] secondLabel:[NSString stringWithFormat:@"%@",total[@"putts"]] thirdLabel:[NSString stringWithFormat:@"%@",total[@"net"]] firstNameLabel:@"总杆" secondNameLabel:@"净杆" thirdNameLabel:@"推杆"];
     
@@ -156,8 +170,13 @@
     //添加背景线
     [self blackgroundLine:averageBtn];
 
-//    //监听点击
-//  [averageBtn addTarget:self action:@selector(clickaverageBtn) forControlEvents:UIControlEventTouchUpInside];
+    if (self.isClick==YES)
+    {
+        //    //监听点击
+        [averageBtn addTarget:self action:@selector(clickaverageBtn) forControlEvents:UIControlEventTouchUpInside];
+
+    }
+    
     
     NSDictionary *average= self.professionalStatisticalModel.item_02;
     //平均杆里内容
@@ -177,8 +196,12 @@
     //添加背景线
     [self blackgroundLine:pushRodBtn];
 
-    //监听点击
-   // [pushRodBtn addTarget:self action:@selector(clickpushRodBtn) forControlEvents:UIControlEventTouchUpInside];
+    if (self.isClick==YES)
+    {
+        //监听点击
+        [pushRodBtn addTarget:self action:@selector(clickpushRodBtn) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
 
     
     NSDictionary *pushRod= self.professionalStatisticalModel.item_03;
@@ -200,10 +223,13 @@
     //添加背景线
     [self blackgroundLine:bunkersBtn];
 
+    if (self.isClick==YES)
+    {
+        //监听点击
+        [bunkersBtn addTarget:self action:@selector(clickbunkersBtn) forControlEvents:UIControlEventTouchUpInside];
+    }
     
-    
-    //监听点击
-  //  [bunkersBtn addTarget:self action:@selector(clickbunkersBtn) forControlEvents:UIControlEventTouchUpInside];
+  
     
     NSDictionary *bunkers= self.professionalStatisticalModel.item_04;
     
@@ -227,8 +253,12 @@
     //添加背景线
     [self blackgroundLine:wedgeBtn];
 
-    //监听点击
-  //  [wedgeBtn addTarget:self action:@selector(clickwedgeBtn) forControlEvents:UIControlEventTouchUpInside];
+    if (self.isClick==YES)
+    {
+        //监听点击
+        [wedgeBtn addTarget:self action:@selector(clickwedgeBtn) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
     
     //切杆里内容
     NSDictionary *wedge= self.professionalStatisticalModel.item_05;
@@ -250,8 +280,12 @@
     //添加背景线
     [self blackgroundLine:greenBtn];
 
-    //点击监听
-  //  [greenBtn addTarget:self action:@selector(clickBreenBtn) forControlEvents:UIControlEventTouchUpInside];
+    if (self.isClick==YES)
+    {
+        //点击监听
+        [greenBtn addTarget:self action:@selector(clickBreenBtn) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
     
     //攻果岭
     NSDictionary *green= self.professionalStatisticalModel.item_06;
@@ -271,10 +305,14 @@
     //添加背景线
     [self blackgroundLine:fairwayBtn];
 
-    //点击监听
-   // [fairwayBtn addTarget:self action:@selector(clickFairwayBtn) forControlEvents:UIControlEventTouchUpInside];
-    
-    //球道命中
+    if (self.isClick==YES)
+    {
+        //点击监听
+        [fairwayBtn addTarget:self action:@selector(clickFairwayBtn) forControlEvents:UIControlEventTouchUpInside];
+        
+
+    }
+        //球道命中
     NSDictionary *fairway= self.professionalStatisticalModel.item_07;
     ZCLog(@"%@",fairway);
     [self addContent:fairwayBtn imageView:@"（7）qoudaomingzhong" nameLabel:@"球道命中" firstLabel:[NSString stringWithFormat:@"%@",fairway[@"drive_fairways_hit"]] secondLabel:[NSString stringWithFormat:@"%@",fairway[@"drive_left_roughs_hit"]] thirdLabel:[NSString stringWithFormat:@"%@",fairway[@"drive_right_roughs_hit"]] firstNameLabel:@"命中" secondNameLabel:@"左侧" thirdNameLabel:@"右侧"];
@@ -295,12 +333,15 @@
     //添加背景线
     [self blackgroundLine:kickOffBtn];
 
-    
-    //点击监听
-  //  [kickOffBtn addTarget:self action:@selector(clickkickOffBtn) forControlEvents:UIControlEventTouchUpInside];
+    if (self.isClick==YES)
+    {
+        //点击监听
+        [kickOffBtn addTarget:self action:@selector(clickkickOffBtn) forControlEvents:UIControlEventTouchUpInside];
+    }
+   
     //开球
     NSDictionary *kickOff= self.professionalStatisticalModel.item_08;
-    [self addContent:kickOffBtn imageView:@"（8）kaiqiu" nameLabel:@"开球" firstLabel:[NSString stringWithFormat:@"%@",kickOff[@"longest_drive_length"]] secondLabel:[NSString stringWithFormat:@"%@",kickOff[@"average_drive_length"]] thirdLabel:[NSString stringWithFormat:@"%@",kickOff[@"good_drives"]] firstNameLabel:@"最远max" secondNameLabel:@"平均" thirdNameLabel:@"max/2"];
+    [self addContent:kickOffBtn imageView:@"（8）kaiqiu" nameLabel:@"开球" firstLabel:[NSString stringWithFormat:@"%@",kickOff[@"longest_drive_length"]] secondLabel:[NSString stringWithFormat:@"%@",kickOff[@"average_drive_length"]] thirdLabel:[NSString stringWithFormat:@"%@",kickOff[@"longest_2_drive_length"]] firstNameLabel:@"最远max" secondNameLabel:@"平均" thirdNameLabel:@"max/2"];
     
     
     //杆数
@@ -315,8 +356,13 @@
     //添加背景线
     [self blackgroundLine:rodNumberBtn];
 
-    //点击监听
-  //  [rodNumberBtn addTarget:self action:@selector(clickRodNumberBtn) forControlEvents:UIControlEventTouchUpInside];
+     if (self.isClick==YES)
+     {
+         //点击监听
+         [rodNumberBtn addTarget:self action:@selector(clickRodNumberBtn) forControlEvents:UIControlEventTouchUpInside];
+     
+     }
+   
     
     //杆数
     NSDictionary *rodNumber= self.professionalStatisticalModel.item_09;
@@ -335,8 +381,12 @@
     cueButton.frame=CGRectMake(cueButtonX, cueButtonY, cueButtonW, cueButtonH);
     [self.scrollView addSubview:cueButton];
     
-    //点击监听
-  //  [cueButton addTarget:self action:@selector(clickCueButton) forControlEvents:UIControlEventTouchUpInside];
+     if (self.isClick==YES)
+     {
+         //点击监听
+         [cueButton addTarget:self action:@selector(clickCueButton) forControlEvents:UIControlEventTouchUpInside];
+     }
+   
     
     [self addcueButtonContent:cueButton];
     
@@ -369,6 +419,7 @@
     ZCTotalGradeViewController *totalGradeViewController=[[ZCTotalGradeViewController alloc] init];
     totalGradeViewController.professionalScorecardModel=self.professionalStatisticalModel.scorecards;
     totalGradeViewController.totalModel=self.professionalStatisticalModel.item_01;
+    totalGradeViewController.match=self.professionalStatisticalModel.match;
     [self.navigationController pushViewController:totalGradeViewController animated:YES];
 }
 
@@ -794,6 +845,16 @@
 
 }
 
+
+- (id) _valueOrNil:(id)obj {
+    if (!obj) {
+        return nil;
+    }
+    if (obj == [NSNull null]) {
+        return nil;
+    }
+    return obj;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

@@ -9,7 +9,7 @@
 #import "ZCRegisteredViewController.h"
 #import "AFNetworking.h"
 #import "ZCAccount.h"
-#import "ZCTabbarViewController.h"
+#import "ZCPracticeVController.h"
 #import "AppDelegate.h"
 #import "ZCprompt.h"
 #import "UIBarButtonItem+DC.h"
@@ -27,15 +27,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
+    self.view.backgroundColor=ZCColor(237, 237, 237);
     
     
-    //返回
-    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
+ 
+    self.navigationItem.title=@"手机注册";
     
-
-    
-    
+    UIImage *bjimage=[UIImage imageNamed:@"shurukuang" ];
+    // 指定为拉伸模式，伸缩后重新赋值
+    bjimage = [bjimage resizableImageWithCapInsets:UIEdgeInsetsMake(25,25,10,10) resizingMode:UIImageResizingModeStretch];
     
     
     //账号
@@ -49,11 +49,11 @@
     //设置键盘为数字键盘
     phoneAccount.keyboardType=UIKeyboardTypeNumberPad;
     //[phoneAccount setTextColor:[UIColor whiteColor]];
-    [phoneAccount setBackground:[UIImage imageNamed:@"denglu_denglukuang"]];
-    phoneAccount.textColor=ZCColor(240, 208, 122);
+    [phoneAccount setBackground:bjimage];
+    phoneAccount.textColor=ZCColor(85, 85, 85);
     phoneAccount.placeholder=@"请输入您的手机号";
     //修改提示语的字体颜色
-    [phoneAccount setValue:ZCColor(136, 119, 73) forKeyPath:@"_placeholderLabel.textColor"];
+    [phoneAccount setValue:ZCColor(102, 102, 102) forKeyPath:@"_placeholderLabel.textColor"];
     [self.view addSubview:phoneAccount];
     self.phoneAccount=phoneAccount;
     
@@ -67,14 +67,14 @@
     CGFloat  phonePasswordH=phoneAccountH;
     phonePassword.frame=CGRectMake(phonePasswordX, phonePasswordY, phonePasswordW, phonePasswordH);
     
-    [phonePassword setTextColor:ZCColor(240, 208, 122)];
+    [phonePassword setTextColor:ZCColor(85, 85, 85)];
     //实现密文形式
     phonePassword.secureTextEntry=YES;
     phonePassword.placeholder=@"至少输入6位的密码";
     //修改提示语的字体颜色
-    [phonePassword setValue:ZCColor(136, 119, 73) forKeyPath:@"_placeholderLabel.textColor"];
+    [phonePassword setValue:ZCColor(102, 102, 102) forKeyPath:@"_placeholderLabel.textColor"];
     
-    [phonePassword setBackground:[UIImage imageNamed:@"denglu_denglukuang"]];
+    [phonePassword setBackground:bjimage];
     [self.view addSubview:phonePassword];
     self.phonePassword=phonePassword;
     
@@ -89,12 +89,12 @@
     confirmPassword.frame=CGRectMake(confirmPasswordX, confirmPasswordY, confirmPasswordW, confirmPasswordH);
     confirmPassword.placeholder=@"请再一次输入密码";
     //修改提示语的字体颜色
-    [confirmPassword setValue:ZCColor(136, 119, 73) forKeyPath:@"_placeholderLabel.textColor"];
-    [confirmPassword setTextColor:ZCColor(240, 208, 122)];
+    [confirmPassword setValue:ZCColor(102, 102, 102) forKeyPath:@"_placeholderLabel.textColor"];
+    [confirmPassword setTextColor:ZCColor(85, 85, 85)];
     //实现密文形式
     confirmPassword.secureTextEntry=YES;
     
-    [confirmPassword setBackground:[UIImage imageNamed:@"denglu_denglukuang"]];
+    [confirmPassword setBackground:bjimage];
     [self.view addSubview:confirmPassword];
     self.confirmPassword=confirmPassword;
 
@@ -106,30 +106,30 @@
     UITextField *verificationCode=[[UITextField alloc] init];
     //设置键盘为数字键盘
     verificationCode.keyboardType=UIKeyboardTypeNumberPad;
-    [verificationCode setTextColor:ZCColor(240, 208, 122)];
+    [verificationCode setTextColor:ZCColor(85, 85, 85)];
     CGFloat verificationCodeX=confirmPasswordX;
     CGFloat verificationCodeY=confirmPasswordY+confirmPasswordH+20;
     CGFloat verificationCodeW=SCREEN_WIDTH*0.59;
     CGFloat verificationCodeH=phonePasswordH;
     verificationCode.frame=CGRectMake(verificationCodeX, verificationCodeY, verificationCodeW, verificationCodeH);
-    verificationCode.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"denglu_denglukuang"]];
+    verificationCode.background=bjimage;
     verificationCode.placeholder=@"请输入验证码";
     //修改提示语的字体颜色
-    [verificationCode setValue:ZCColor(136, 119, 73) forKeyPath:@"_placeholderLabel.textColor"];
+    [verificationCode setValue:ZCColor(102, 102, 102) forKeyPath:@"_placeholderLabel.textColor"];
     self.verificationCode=verificationCode;
     [self.view addSubview:verificationCode];
     
     
     //获取验证码
     UIButton *getButton=[[UIButton alloc] init];
-    [getButton setBackgroundImage:[UIImage imageNamed:@"zhuce_yanzhengma_anniu"] forState:UIControlStateNormal];
+    [getButton setBackgroundImage:bjimage forState:UIControlStateNormal];
     CGFloat  getButtonX=verificationCodeX+verificationCodeW+10;
     CGFloat  getButtonY=verificationCodeY;
     CGFloat  getButtonW=SCREEN_WIDTH*0.3;
     CGFloat  getButtonH=verificationCodeH;
     getButton.frame=CGRectMake(getButtonX, getButtonY, getButtonW, getButtonH);
     [getButton setTitle:@"获取验证码" forState:UIControlStateNormal];
-    [getButton setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
+    [getButton setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
     [getButton addTarget:self action:@selector(clickgetButton) forControlEvents:UIControlEventTouchUpInside];
     self.getButton=getButton;
     [self.view addSubview:getButton];
@@ -148,11 +148,13 @@
     
     
     [phoneloginBth setTitle:@"提交" forState:UIControlStateNormal];
-    [phoneloginBth setTitleColor:ZCColor(136, 119, 73) forState:UIControlStateNormal];
+    [phoneloginBth setTitleColor:ZCColor(102, 102, 102) forState:UIControlStateNormal];
+    
+    
     
     
     //图片拉伸
-    UIImage *image2=[UIImage imageNamed:@"shoujizhuce_bj" ];
+    UIImage *image2=[UIImage imageNamed:@"anniu_dianji" ];
     // 指定为拉伸模式，伸缩后重新赋值
     image2 = [image2 resizableImageWithCapInsets:UIEdgeInsetsMake(25,25,10,10) resizingMode:UIImageResizingModeStretch];
     [phoneloginBth setBackgroundImage:image2 forState:UIControlStateNormal];
@@ -186,12 +188,12 @@
         self.phoneloginBth.enabled=YES;
          //[self.phoneloginBth setBackgroundImage:[UIImage imageNamed:@"denglu_anniu-1"] forState:UIControlStateNormal];
         //[self.phoneloginBth setBackgroundImage:[UIImage imageNamed:@"denglu_anniu_anxia"] forState:UIControlStateHighlighted];
-        [self.phoneloginBth setTitleColor:ZCColor(240, 208, 122) forState:UIControlStateNormal];
+        [self.phoneloginBth setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
         
     }else
     {
     self.phoneloginBth.enabled=NO;
-      [self.phoneloginBth setTitleColor:ZCColor(136, 119, 73) forState:UIControlStateNormal];
+      [self.phoneloginBth setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
     }
 //   self.phoneloginBth.enabled = (self.phoneAccount.text.length && self.phonePassword.text.length);
 }
@@ -242,11 +244,15 @@
        [NSKeyedArchiver archiveRootObject:account toFile:file];
             
             ZCLog(@"%@",account.token);
-        
+            
+            
+     ZCPracticeVController *tabBarVc=[[ZCPracticeVController alloc] init];
+            UINavigationController *nav=[[UINavigationController alloc] initWithRootViewController:tabBarVc];
+            
             
       UIWindow *wd = [[UIApplication sharedApplication].delegate window];
             //去首页
-       wd.rootViewController = [[ZCTabbarViewController alloc] init];
+       wd.rootViewController =nav;
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -279,7 +285,7 @@
     params[@"type"]=@"sign_up";
     //发送请求
     [mar GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-          NSLog(@"error code %ld",[operation.response statusCode]);
+        
        //开始倒计时
         [self startTheCountdown];
         

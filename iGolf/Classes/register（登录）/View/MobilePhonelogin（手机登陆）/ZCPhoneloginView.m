@@ -9,8 +9,9 @@
 #import "ZCPhoneloginView.h"
 #import "AFNetworking.h"
 #import "ZCAccount.h"
-#import "ZCTabbarViewController.h"
+#import "ZCPracticeVController.h"
 #import "ZCprompt.h"
+#import "UIImageView+WebCache.h"
 @interface ZCPhoneloginView()
 //账号
 @property(nonatomic,weak)UITextField *phoneAccount;
@@ -20,12 +21,25 @@
 @property(nonatomic,weak)UIButton *forgetBth;
 //手机登陆
 @property(nonatomic,weak)UIButton *phoneloginBth;
+@property(nonatomic,weak)UIImageView *image11;
 @end
 @implementation ZCPhoneloginView
 
 -(instancetype)initWithFrame:(CGRect)frame
 {
     if (self=[super initWithFrame:frame]) {
+        
+        
+        
+        
+        
+        UIImageView *image11=[[UIImageView alloc] init];
+        
+        image11.frame=CGRectMake(0, 0, 50, 50);
+        [self addSubview:image11];
+        self.image11=image11;
+        
+        
         
         
         UIImage *image1=[UIImage imageNamed:@"shurukuang" ];
@@ -153,13 +167,44 @@
         NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
         [NSKeyedArchiver archiveRootObject:account toFile:file];
         
-        
-        
-        
-        UIWindow *wd = [[UIApplication sharedApplication].delegate window];
-        //去首页
-        wd.rootViewController = [[ZCTabbarViewController alloc] init];
+            
+            if ([self _valueOrNil:responseObject[@"portrait"]]==nil) {
+                ZCLog(@"不改执行的一步");
+            }else
+            {
+                
+                ZCLog(@"你有没有被执行");
+               
+                
+               dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    NSURL *url=[NSURL URLWithString:responseObject[@"portrait"][@"url"]];
+                   
+                   NSData *data=[[NSData alloc] initWithContentsOfURL:url];
+                   
+                   
+                   NSString *path=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject] stringByAppendingPathComponent:@"personImage.png"];
 
+                   [data writeToFile:path atomically:YES];
+               });
+                
+                
+                
+            }
+            
+   
+            
+            
+            ZCPracticeVController *tabBarVc=[[ZCPracticeVController alloc] init];
+            UINavigationController *nav=[[UINavigationController alloc] initWithRootViewController:tabBarVc];
+            
+            self.window.rootViewController=nav;
+        
+            
+            
+      //  account.
+        //UIWindow *wd = [[UIApplication sharedApplication].delegate window];
+        //去首页
+       
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -170,6 +215,15 @@
 
 }
 
+- (id) _valueOrNil:(id)obj {
+    if (!obj) {
+        return nil;
+    }
+    if (obj == [NSNull null]) {
+        return nil;
+    }
+    return obj;
+}
 
 
 

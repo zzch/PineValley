@@ -19,6 +19,8 @@
 #import "ZCToTheGameModel.h"
 #import "ZCCoursesModel.h"
 #import "ZCScorecardTableViewController.h"
+#import "UIBarButtonItem+DC.h"
+#import "ZCQuickScoringTableViewController.h"
 @interface ZCToJoinTheGameTableViewController ()<UITableViewDataSource,UITableViewDelegate,ZCSettingHeadViewDelegate>
 @property(nonatomic,assign) int count;
 // 标记一下是否展开，YES：展开，NO：收起
@@ -48,12 +50,41 @@
     [super viewDidLoad];
     
 
+    //返回
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(toJoinTheGameliftBthTheClick:) target:self];
+    //让分割线不显示
+    // self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    //分割线颜色
+    [self.tableView   setSeparatorColor:ZCColor(170, 170, 170)];
+    //让下面没内容的分割线不显示
+    self.tableView.tableFooterView = [[UIView alloc] init];
+    
+    
+    self.tableView.backgroundColor=ZCColor(237, 237, 237);
+    
+     self.tableView.rowHeight=45;
+
+     self.tableView.sectionHeaderHeight = 52;
     //加载数据
     [self onlineData];
+    //添加控件
     [self addControls];
 }
 
 
+
+
+-(void)toJoinTheGameliftBthTheClick:(UIButton *)btn
+{
+    for (id viewController in self.navigationController.viewControllers) {
+        
+        if ([viewController isKindOfClass:[ZCQuickScoringTableViewController class]]) {
+            [self.navigationController popToViewController:viewController animated:YES];
+            break;
+        }
+    }
+
+}
 
 //网络加载数据
 -(void)onlineData
@@ -77,6 +108,7 @@
         ZCLog(@"%@",responseObject);
         self.toTheGameModel=[ZCToTheGameModel toTheGameModelWithDict:responseObject];
         
+       
         [self.tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         ZCLog(@"%@",error);
@@ -135,7 +167,7 @@
     params[@"uuid"]=self.uuid;
     //ZCLog(@"%@",self.athleticEventsModel.uuid);
     params[@"token"]=account.token;
-   params[@"scoring_type"]=self.type;
+  
     if (self.lastTeeBox==nil) {
         params[@"tee_boxes"]=self.firstTeeBox;
     }else
@@ -143,7 +175,13 @@
        params[@"tee_boxes"]=[NSString stringWithFormat:@"%@,%@",self.firstTeeBox,self.lastTeeBox];
     }
     
-    
+    if ([self.type isEqual:@"简单"]) {
+        params[@"scoring_type"]=@"simple";
+    }else
+    {
+        params[@"scoring_type"]=@"professional";
+    }
+
     
     //发送请求/v1/matches/tournament/participate.json
     
@@ -296,24 +334,24 @@
         ZCCoursesModel *teeModel=self.toTheGameModel.venue.courses[0];
         NSString *tee=teeModel.tee_boxes[indexPath.row];
         if ([tee isEqual:@"white"]) {
-            cell.textLabel.text=@"白色T台";
+            cell.textLabel.text=@"白色";
             cell.imageView.image=[UIImage imageNamed:@"bai"];
         }else if ([tee isEqual:@"red"])
         {
-            cell.textLabel.text=@"红色T台";
+            cell.textLabel.text=@"红色";
             cell.imageView.image=[UIImage imageNamed:@"hong"];
         }else if ([tee isEqual:@"blue"])
         {
-            cell.textLabel.text=@"蓝色T台";
+            cell.textLabel.text=@"蓝色";
             cell.imageView.image=[UIImage imageNamed:@"lan"];
             
         }else if ([tee isEqual:@"black"])
         {
-            cell.textLabel.text=@"黑色T台";
+            cell.textLabel.text=@"黑色";
             cell.imageView.image=[UIImage imageNamed:@"hei"];
         }else if ([tee isEqual:@"gold"])
         {
-            cell.textLabel.text=@"金色T台";
+            cell.textLabel.text=@"金色";
             cell.imageView.image=[UIImage imageNamed:@"huang"];
             
         }
@@ -323,24 +361,24 @@
         ZCCoursesModel *teeModel=self.toTheGameModel.venue.courses[1];
         NSString *tee=teeModel.tee_boxes[indexPath.row];
         if ([tee isEqual:@"white"]) {
-            cell.textLabel.text=@"白色T台";
+            cell.textLabel.text=@"白色";
             cell.imageView.image=[UIImage imageNamed:@"bai"];
         }else if ([tee isEqual:@"red"])
         {
-            cell.textLabel.text=@"红色T台";
+            cell.textLabel.text=@"红色";
             cell.imageView.image=[UIImage imageNamed:@"hong"];
         }else if ([tee isEqual:@"blue"])
         {
-            cell.textLabel.text=@"蓝色T台";
+            cell.textLabel.text=@"蓝色";
             cell.imageView.image=[UIImage imageNamed:@"lan"];
             
         }else if ([tee isEqual:@"black"])
         {
-            cell.textLabel.text=@"黑色T台";
+            cell.textLabel.text=@"黑色";
             cell.imageView.image=[UIImage imageNamed:@"hei"];
         }else if ([tee isEqual:@"gold"])
         {
-            cell.textLabel.text=@"金色T台";
+            cell.textLabel.text=@"金色";
             cell.imageView.image=[UIImage imageNamed:@"huang"];
             
         }
@@ -422,6 +460,30 @@
 //    }
 }
 
+//分割线显示全
+-(void)viewDidLayoutSubviews {
+    
+    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+        
+    }
+    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)])  {
+        [self.tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    
+}
+
+
+//分割线显示全
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPat{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]){
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
+
 
 
 // 设置每一组的头View
@@ -437,16 +499,16 @@
     if (section==0) {
         headerView.nameButton.tag=3333;
         if (self.opened1) {
-            headerView.imageName=@"shangjiantou";
+            headerView.imageName=@"icon_shang";
         }else
         {
-            headerView.imageName=@"xiajiantou";
+            headerView.imageName=@"icon_xia";
         }
         
         headerView.cleicedName=self.type;
         
         if (self.type==nil) {
-            headerView.liftName=@"请选择计分方式";
+            headerView.liftName=@"选择计分方式";
         }else
         {
             headerView.liftName=@"计分方式";
@@ -465,10 +527,10 @@
         
         
         if (self.opened2) {
-            headerView.imageName=@"icon_arrowxia";
+            headerView.imageName=@"icon_shang";
         }else
         {
-            headerView.imageName=@"icon_arrowshang";
+            headerView.imageName=@"icon_xia";
         }
         
         
@@ -503,10 +565,10 @@
        // headerView.tag=1003;
         
         if (self.opened3) {
-            headerView.imageName=@"icon_arrowxia";
+            headerView.imageName=@"icon_shang";
         }else
         {
-            headerView.imageName=@"icon_arrowshang";
+            headerView.imageName=@"icon_xia";
         }
         
         
@@ -537,10 +599,10 @@
     if (indexPath.section==0) {
         self.opened1=YES;
         if (indexPath.row==0) {
-            self.type=@"simple";
+            self.type=@"简单";
         }else
         {
-            self.type=@"professional";
+            self.type=@"专业";
         }
     }
     if (indexPath.section==2)

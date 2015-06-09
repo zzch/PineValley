@@ -12,6 +12,7 @@
 #import "ZCAccount.h"
 #import "ZCListModel.h"
 #import "ZCViewTheResultsViewController.h"
+#import "ZCInvitationViewController.h"
 @interface ZCListViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property(nonatomic,weak)UITableView *tableView;
 @property(nonatomic,strong)NSMutableArray *listArray;
@@ -57,7 +58,12 @@
     
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-        ZCLog(@"%@",responseObject);
+        ZCLog(@"%@",responseObject );
+        
+       
+            
+            
+        
         self.listArray=[NSMutableArray array];
         for (NSDictionary *dict in responseObject) {
             ZCListModel *listModel=[ZCListModel listModelWithDict:dict ];
@@ -65,16 +71,89 @@
             
         }
         
+        if (self.listArray.count==0) {
+            [self valueIsNil];
+        }else{
+            //创建tableView
+            [self initTableView];
+
+        }
         
+
         
-        
-        //创建tableView
-        [self initTableView];
         
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
+}
+
+
+
+/**
+ *  值为空得情况下
+ */
+-(void)valueIsNil
+{
+
+    UIImageView *trophyImage=[[UIImageView alloc] init];
+   
+    CGFloat trophyImageY=SCREEN_HEIGHT*0.211;
+    CGFloat trophyImageW=81;
+    CGFloat trophyImageH=80;
+    CGFloat trophyImageX=(SCREEN_WIDTH-trophyImageW)/2;
+    trophyImage.frame=CGRectMake(trophyImageX, trophyImageY, trophyImageW, trophyImageH);
+    trophyImage.image=[UIImage imageNamed:@"paihangbang_wu"];
+    [self.view addSubview:trophyImage];
+    
+    
+    UILabel *firstLabel=[[UILabel alloc] init];
+    CGFloat firstLabelY=trophyImageY+trophyImageH+15;
+    CGFloat firstLabelW=SCREEN_WIDTH;
+    CGFloat firstLabelH=20;
+    CGFloat firstLabelX=0;
+    firstLabel.frame=CGRectMake(firstLabelX, firstLabelY, firstLabelW, firstLabelH);
+    firstLabel.textColor=ZCColor(102, 102, 102);
+    firstLabel.textAlignment=NSTextAlignmentCenter;
+    firstLabel.text=@"没有好友加入比赛";
+    [self.view addSubview:firstLabel];
+    
+    
+    UILabel *secondLabel=[[UILabel alloc] init];
+    CGFloat secondLabelY=firstLabelY+firstLabelH+10;
+    CGFloat secondLabelW=SCREEN_WIDTH;
+    CGFloat secondLabelH=20;
+    CGFloat secondLabelX=0;
+    secondLabel.frame=CGRectMake(secondLabelX, secondLabelY, secondLabelW, secondLabelH);
+    secondLabel.textColor=ZCColor(102, 102, 102);
+    secondLabel.textAlignment=NSTextAlignmentCenter;
+    secondLabel.text=@"没有好友加入比赛吧";
+    [self.view addSubview:secondLabel];
+    
+    UIButton *invitationButton=[[UIButton alloc] init];
+    CGFloat invitationButtonW=140;
+    CGFloat invitationButtonH=40;
+    CGFloat invitationButtonX=(SCREEN_WIDTH-invitationButtonW)/2;
+    CGFloat invitationButtonY=secondLabelY+secondLabelH+20;
+    invitationButton.frame=CGRectMake(invitationButtonX, invitationButtonY, invitationButtonW, invitationButtonH);
+    [invitationButton setTitle:@"邀请好友" forState:UIControlStateNormal];
+    invitationButton.backgroundColor=ZCColor(9, 133, 12);
+    invitationButton.layer.cornerRadius=5;
+    invitationButton.layer.masksToBounds=YES;
+    [invitationButton addTarget:self action:@selector(clickTheinvitationButton) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.view addSubview:invitationButton];
+    
+}
+
+//点击邀请好友
+-(void)clickTheinvitationButton
+{
+
+    ZCInvitationViewController *InvitationViewController=[[ZCInvitationViewController alloc] init];
+    InvitationViewController.uuid=self.uuid;
+    [self.navigationController pushViewController:InvitationViewController animated:YES];
+    
 }
 
 
@@ -91,9 +170,10 @@
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
     self.tableView.rowHeight=100;
-    self.tableView.backgroundColor=ZCColor(237, 237, 237);
+    
     //让下面没内容的分割线不显示
     self.tableView.tableFooterView = [[UIView alloc] init];
+    self.tableView.backgroundColor=ZCColor(237, 237, 237);
     //分割线颜色
     [self.tableView   setSeparatorColor:ZCColor(170, 170, 170)];
    

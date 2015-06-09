@@ -140,28 +140,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iGolf/Classes/practice&#xff08;&#x7ec3;&#x4e60;&#xff09;/View/ZCResultsView.m"
-            timestampString = "454220440.662573"
+            timestampString = "454935866.383669"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "410"
-            endingLineNumber = "410"
+            startingLineNumber = "436"
+            endingLineNumber = "436"
             landmarkName = "-addForAfterScoringView:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "iGolf/Classes/personal&#xff08;&#x4e2a;&#x4eba;&#xff09;/Controller/ZCChangethePasswordViewController.m"
-            timestampString = "454410439.810941"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "174"
-            endingLineNumber = "174"
-            landmarkName = "-clickTheSubmitButton"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -8,6 +8,7 @@
 
 #import "ZCStatistical.h"
 #import "ZCStatisticalScorecard.h"
+#import "ZCMatch.h"
 @implementation ZCStatistical
 
 + (instancetype)statisticalWithDict:(NSDictionary *)dict
@@ -44,7 +45,7 @@
          self.score_par_5=dict[@"score_par_5"];
          self.scrambles=dict[@"scrambles"];
         self.bogey=dict[@"bogey"];
-        
+        self.match=[ZCMatch matchWithDict:dict[@"match"]];
         
         
         

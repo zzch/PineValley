@@ -21,12 +21,29 @@
         self.type=dict[@"type"];
         self.uuid=dict[@"uuid"];
         self.phone=dict[@"phone"];
+        
+        if ([self _valueOrNil:dict[@"portrait"]]==nil) {
+            self.portrait=dict[@"portrait"];
+        }else
+        {
+        self.portrait=dict[@"portrait"][@"url"];
+        }
     }
     return self;
 
 
 }
 
+
+- (id) _valueOrNil:(id)obj {
+    if (!obj) {
+        return nil;
+    }
+    if (obj == [NSNull null]) {
+        return nil;
+    }
+    return obj;
+}
 /**
  *  从文件中解析对象的时候调
  */
@@ -38,6 +55,7 @@
         self.uuid = [decoder decodeObjectForKey:@"uuid"];
         self.type = [decoder decodeObjectForKey:@"type"];
         self.phone=[decoder decodeObjectForKey:@"phone"];
+        self.portrait=[decoder decodeObjectForKey:@"portrait"];
         
     }
     return self;
@@ -53,6 +71,7 @@
     [encoder encodeObject:self.uuid forKey:@"uuid"];
     [encoder encodeObject:self.type forKey:@"type"];
     [encoder encodeObject:self.phone forKey:@"phone"];
+    [encoder encodeObject:self.portrait forKey:@"portrait"];
     
 }
 

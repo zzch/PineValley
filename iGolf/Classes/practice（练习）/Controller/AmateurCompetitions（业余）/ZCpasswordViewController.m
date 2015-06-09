@@ -13,6 +13,8 @@
 #import "ZCprompt.h"
 #import "ZCScorecardTableViewController.h"
 #import "ZCToJoinTheGameTableViewController.h"
+#import "ZCPersonalizedSettingsViewController.h"
+#import "ZCEventUuidTool.h"
 @interface ZCpasswordViewController ()
 @property(nonatomic,strong)NSMutableArray *passLabelArray;
 @property(nonatomic,weak)UITextField *hiddenTextField;
@@ -175,12 +177,34 @@
         }else{
             
             
-            ZCToJoinTheGameTableViewController *ToJoinTheGame=[[ZCToJoinTheGameTableViewController alloc] init];
+            // 获取路劲 取出图片
+            NSString *path=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject] stringByAppendingPathComponent:@"personImage.png"];
+            NSData *imageData=[NSData dataWithContentsOfFile:path];
+            UIImage *image=[[UIImage alloc] initWithData:imageData];
             
-            ToJoinTheGame.uuid=responseObject[@"uuid"];
-            
-            [self.navigationController pushViewController:ToJoinTheGame animated:YES];
+            if (image) {
+                
+                ZCToJoinTheGameTableViewController *ToJoinTheGame=[[ZCToJoinTheGameTableViewController alloc] init];
+                
+                ToJoinTheGame.uuid=responseObject[@"uuid"];
+                
+                [self.navigationController pushViewController:ToJoinTheGame animated:YES];
 
+               
+            }else{
+                //单利
+                
+                ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
+                tool.isJoin=YES;
+                
+                ZCPersonalizedSettingsViewController *ZPersonalizedSettingsViewController=[[ZCPersonalizedSettingsViewController alloc] init];
+                ZPersonalizedSettingsViewController.uuid=responseObject[@"uuid"];
+                [self.navigationController pushViewController:ZPersonalizedSettingsViewController animated:YES];
+            }
+
+            
+            
+           
         }
         
         

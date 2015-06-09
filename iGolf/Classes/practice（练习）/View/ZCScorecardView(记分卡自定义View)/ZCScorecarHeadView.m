@@ -31,11 +31,15 @@
         
         self.backgroundColor=ZCColor(60, 57, 78);
         
+        // 获取路劲 取出图片
+        NSString *path=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject] stringByAppendingPathComponent:@"personImage.png"];
+        NSData *imageData=[NSData dataWithContentsOfFile:path];
+        UIImage *image=[[UIImage alloc] initWithData:imageData];
         
         UIImageView *personImageView=[[UIImageView alloc] init];
         personImageView.layer.masksToBounds = YES;
-        personImageView.layer.cornerRadius = 35;
-
+        personImageView.layer.cornerRadius = 38;
+        personImageView.image=image;
         [self addSubview:personImageView];
         self.personImageView=personImageView;
 
@@ -199,9 +203,10 @@
      *  头像位置
      */
     CGFloat  personImageViewX=10;
-    CGFloat  personImageViewY=10;
-    CGFloat  personImageViewW=70;
-    CGFloat  personImageViewH=70;
+       CGFloat  personImageViewW=76;
+    CGFloat  personImageViewH=76;
+    CGFloat  personImageViewY=10;//(self.frame.size.height-40-personImageViewH)/2;
+
     self.personImageView.frame=CGRectMake(personImageViewX, personImageViewY, personImageViewW, personImageViewH);
     
     

@@ -11,6 +11,8 @@
 #import "AFNetworking.h"
 #import "ZCInvitationViewController.h"
 #import "MBProgressHUD+NJ.h"
+#import "ZCToJoinTheGameTableViewController.h"
+#import "ZCEventUuidTool.h"
 @interface ZCPersonalizedSettingsViewController ()<UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 @property(nonatomic,weak)UIButton *imageButton;
 @property(nonatomic,assign,getter=isOpen) BOOL bKeyBoardHide;
@@ -394,13 +396,36 @@
         
         ZCLog(@"%@",responseObject);
         
+        //保存照片到沙盒
+        NSString *path=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject] stringByAppendingPathComponent:@"personImage.png"];
+            NSData *data=UIImagePNGRepresentation(self.chooseImage);
+        [data writeToFile:path atomically:YES];
+        //保存名字到沙盒
+        account.nickname=self.nameTextField.text;
+        [NSKeyedArchiver archiveRootObject:account toFile:file];
         
-        ZCInvitationViewController *InvitationViewController=[[ZCInvitationViewController alloc] init];
         
-        InvitationViewController.isYes=NO;
-        InvitationViewController.uuid=self.uuid;
-        [self.navigationController pushViewController:InvitationViewController animated:YES];
+        ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
         
+        if (tool.isJoin==YES) {
+            ZCToJoinTheGameTableViewController *ToJoinTheGame=[[ZCToJoinTheGameTableViewController alloc] init];
+            
+            ToJoinTheGame.uuid=self.uuid;
+            
+            [self.navigationController pushViewController:ToJoinTheGame animated:YES];
+        }else
+        {
+        
+            
+            ZCInvitationViewController *InvitationViewController=[[ZCInvitationViewController alloc] init];
+            
+            InvitationViewController.isYes=NO;
+            InvitationViewController.uuid=self.uuid;
+            [self.navigationController pushViewController:InvitationViewController animated:YES];
+
+        }
+       
+
         
         //隐藏圈圈
         [MBProgressHUD hideHUD];

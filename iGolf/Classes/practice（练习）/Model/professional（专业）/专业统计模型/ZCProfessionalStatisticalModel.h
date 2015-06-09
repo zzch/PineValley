@@ -7,12 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-@class ZCProfessionalScorecardModel,ZCTotalModel,ZCAverageModel,ZCPushRodModel,ZCBunkersModel;
+#import "ZCStatisticalScorecard.h"
+@class ZCTotalModel,ZCAverageModel,ZCPushRodModel,ZCBunkersModel,ZCMatch;
 @interface ZCProfessionalStatisticalModel : NSObject
 /**
  *  18洞成绩
  */
-@property(nonatomic,strong)ZCProfessionalScorecardModel *scorecards;
+@property(nonatomic,strong)ZCStatisticalScorecard *scorecards;
 /**
  *  总成绩模型
  */
@@ -54,6 +55,7 @@
  */
 @property(nonatomic,strong)NSDictionary *item_10;
 
+@property (nonatomic, strong) ZCMatch *match;
 
 + (instancetype)professionalStatisticalModelWithDict:(NSDictionary *)dict;
 - (instancetype)initWithDict:(NSDictionary *)dict;

@@ -10,8 +10,7 @@
 
 @interface ZCEventUuidTool : NSObject
 + (instancetype)sharedEventUuidTool;
-//创建的是哪种赛事的uuid
-@property (nonatomic, copy) NSString *uuid;
+
 //是专业还是简单
 @property (nonatomic, copy) NSString *scoring;
 
@@ -20,6 +19,12 @@
 //塞事类型practice: 练习赛  tournament: 竞技赛
 
 @property(nonatomic,copy) NSString *eventType;
+
+/**
+ *  是否是加入比赛
+ */
+@property(nonatomic,assign,getter=isJoin) BOOL isJoin;
+
 
 
 @end

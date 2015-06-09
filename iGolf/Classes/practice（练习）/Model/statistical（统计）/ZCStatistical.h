@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class ZCStatisticalScorecard;
+@class ZCStatisticalScorecard,ZCMatch;
 @interface ZCStatistical : NSObject
 /**
  *  净杆数
@@ -97,6 +97,8 @@
 @property (nonatomic, copy) NSString *scrambles;
 
 @property (nonatomic, strong) ZCStatisticalScorecard *scorecards;
+
+@property (nonatomic, strong) ZCMatch *match;
 
 
 + (instancetype)statisticalWithDict:(NSDictionary *)dict;
