@@ -20,7 +20,7 @@
     if (self=[super init]) {
         self.recorded_scorecards_count=dict[@"recorded_scorecards_count"];
         self.scoring_type=dict[@"scoring_type"];
-        self.total=dict[@"total"];
+        self.strokes=dict[@"strokes"];
         
         
         

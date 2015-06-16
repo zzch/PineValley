@@ -15,7 +15,7 @@
 #import "ZCStatistical.h"
 #import "ZCEventUuidTool.h"
 #import "UIBarButtonItem+DC.h"
-#import "MBProgressHUD+NJ.h"
+
 #import "ZCResultsView.h"
 #import "ZCMatch.h"
 //#define UIDeviceOrientationIsPortrait(orientation)  ((orientation) == UIDeviceOrientationPortrait || (orientation) == UIDeviceOrientationPortraitUpsideDown)
@@ -101,6 +101,14 @@
        
         ZCLog(@"%@",responseObject);
         
+        
+        if (responseObject[@"error_code"] ) {
+            
+            [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+            
+        }else
+        {
+        
         ZCStatistical *statistical=[ZCStatistical statisticalWithDict:responseObject];
 //        ZCLog(@"%@",statistical.score);
 //        ZCLog(@"%@",statistical.scorecards.par);
@@ -158,6 +166,7 @@
                     [self.view addSubview:verticalScreenView];
       [self addControls];
 
+        }
         //隐藏
         [MBProgressHUD hideHUD];
         
@@ -169,6 +178,10 @@
         ZCLog(@"%@",error);
         //隐藏
         [MBProgressHUD hideHUD];
+        
+        [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
+        
+
         
     }];
       //    scrollView.backgroundColor=[UIColor redColor];
@@ -247,7 +260,7 @@
     
     UILabel *nameLabel=[[UILabel alloc] init];
     CGFloat nameLabelX=10;
-    CGFloat nameLabelY=10;
+    CGFloat nameLabelY=20;
     CGFloat nameLabelW=SCREEN_WIDTH*0.9;
     CGFloat nameLabelH=20;
     nameLabel.frame=CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH);
@@ -284,7 +297,7 @@
     CGFloat nameScoringScrollViewX=nameViewX;
     CGFloat nameScoringScrollViewY=nameViewH;
     CGFloat nameScoringScrollViewW=SCREEN_WIDTH;
-    CGFloat nameScoringScrollViewH=310;
+    CGFloat nameScoringScrollViewH=250;
     ZCResultsView *ResultsView=[ZCResultsView initWithResultsViewWithFrame:CGRectMake(nameScoringScrollViewX, nameScoringScrollViewY, nameScoringScrollViewW, nameScoringScrollViewH) andModel:self.statistical.scorecards  andTime:self.statistical.match.played_at];
     
     [self.scrollView addSubview:ResultsView];
@@ -417,7 +430,7 @@
     CGFloat resultsViewX=nameScoringScrollViewX;
     CGFloat resultsViewY=nameScoringScrollViewY+nameScoringScrollViewH;
     CGFloat resultsViewW=SCREEN_WIDTH;
-    CGFloat resultsViewH=119;
+    CGFloat resultsViewH=117.5;
 
     resultsView.frame=CGRectMake(resultsViewX, resultsViewY, resultsViewW, resultsViewH);
     self.resultsView=resultsView;
@@ -430,7 +443,7 @@
     
     //success rate 成功率View
     UIView *successRateView=[[UIView alloc] init];
-    successRateView.frame=CGRectMake(0, resultsView.frame.size.height+resultsView.frame.origin.y+15, SCREEN_WIDTH, 393);
+    successRateView.frame=CGRectMake(0, resultsView.frame.size.height+resultsView.frame.origin.y+15, SCREEN_WIDTH, 388.5);
     self.successRateView=successRateView;
     successRateView.backgroundColor=ZCColor(170, 170, 170);
     [self.scrollView addSubview:successRateView];
@@ -441,7 +454,7 @@
     
     // 平均分View
     UIView *averageView=[[UIView alloc] init];
-    averageView.frame=CGRectMake(0, successRateView.frame.origin.y+successRateView.frame.size.height+15, SCREEN_WIDTH, 148);
+    averageView.frame=CGRectMake(0, successRateView.frame.origin.y+successRateView.frame.size.height+15, SCREEN_WIDTH, 146);
     self.averageView=averageView;
     averageView.backgroundColor=ZCColor(170, 170, 170);
     [self.scrollView addSubview:averageView];
@@ -453,7 +466,7 @@
     
     // 球成绩界面的View
     UIView *ballScoresView=[[UIView alloc] init];
-    ballScoresView.frame=CGRectMake(0, averageView.frame.size.height+averageView.frame.origin.y+15, SCREEN_WIDTH, 295);
+    ballScoresView.frame=CGRectMake(0, averageView.frame.size.height+averageView.frame.origin.y+15, SCREEN_WIDTH, 291.5);
     self.ballScoresView=ballScoresView;
     ballScoresView.backgroundColor=ZCColor(170, 170, 170);
     [self.scrollView addSubview:ballScoresView];
@@ -695,12 +708,12 @@
     
     // 1.数字的尺寸
     CGFloat appW = (self.resultsView.frame.size.width-0)/2;
-    CGFloat appH = (self.resultsView.frame.size.height-3)/2;
+    CGFloat appH = (self.resultsView.frame.size.height-1.5)/2;
     
     // 2.间隙 = (控制器view的宽度 - 3 * 应用宽度) / 4
     //CGFloat marginX = (self.view.frame.size.width - totalColumns * appW) / (totalColumns + 1);  jstj_chengji_zjx
     CGFloat marginX = 0;
-    CGFloat marginY = 1;
+    CGFloat marginY = 0.5;
     
     for (int index=0; index<4; index++) {
         
@@ -748,24 +761,34 @@
         //给每个内容赋值
         if (index==0) {
             
-            if (![self.statistical.score isKindOfClass:[NSNull class]]) {
-                resultsLabel1.text=[NSString stringWithFormat:@"%@",self.statistical.score];
+            if ([self  _valueOrNil:self.statistical.score]==nil) {
+                resultsLabel1.text=@"-";
+                
+            }else
+            {
+            resultsLabel1.text=[NSString stringWithFormat:@"%@",self.statistical.score];
             }
             
             
             resultsLabel2.text=@"成绩";
         }else if (index==1)
         {
-            if (![self.statistical.net isKindOfClass:[NSNull class]]) {
-                resultsLabel1.text=[NSString stringWithFormat:@"%@",self.statistical.net];
+            if ([ self _valueOrNil:self.statistical.net]==nil) {
+                resultsLabel1.text=@"-";
+            }else
+            {
+            resultsLabel1.text=[NSString stringWithFormat:@"%@",self.statistical.net];
             }
             
             resultsLabel2.text=@"净杆";
 
         }else if (index==2)
         {
-            if (![self.statistical.putts isKindOfClass:[NSNull class]]) {
-                resultsLabel1.text=[NSString stringWithFormat:@"%@",self.statistical.putts];
+            if ([self _valueOrNil:self.statistical.putts]==nil) {
+                resultsLabel1.text=@"-";
+            }else
+            {
+            resultsLabel1.text=[NSString stringWithFormat:@"%@",self.statistical.putts];
             }
 //            resultsLabel1.text=[NSString stringWithFormat:@"%@",self.statistical.putts];
             resultsLabel2.text=@"推杆";
@@ -773,8 +796,12 @@
         
         }else
         {
-            if (![self.statistical.penalties isKindOfClass:[NSNull class]]) {
-                resultsLabel1.text=[NSString stringWithFormat:@"%@",self.statistical.penalties];
+            if ([self _valueOrNil:self.statistical.penalties ]==nil) {
+                resultsLabel1.text=@"-";
+                
+            }else
+            {
+            resultsLabel1.text=[NSString stringWithFormat:@"%@",self.statistical.penalties];
             }
             //resultsLabel1.text=[NSString stringWithFormat:@"%@",self.statistical.penalties];
             resultsLabel2.text=@"罚杆";
@@ -795,12 +822,12 @@
     
     // 1.数字的尺寸
     CGFloat appW = self.successRateView.frame.size.width;
-    CGFloat appH = (self.successRateView.frame.size.height-9)/8;
+    CGFloat appH = (self.successRateView.frame.size.height-4.5)/8;
     
     // 2.间隙 = (控制器view的宽度 - 3 * 应用宽度) / 4
     //CGFloat marginX = (self.view.frame.size.width - totalColumns * appW) / (totalColumns + 1);
     CGFloat marginX = 0;
-    CGFloat marginY = 1;
+    CGFloat marginY = 0.5;
     
     for (int index=0; index<8; index++) {
         UIView *successView=[[UIView alloc] init];
@@ -825,7 +852,7 @@
         
         //创建下面文字
         UILabel *successLabel2=[[UILabel alloc] init];
-        successLabel2.frame=CGRectMake(successView.frame.size.width-70,0 , 70, successView.frame.size.height);
+        successLabel2.frame=CGRectMake(successView.frame.size.width-80,0 , 70, successView.frame.size.height);
        successLabel2.textAlignment=NSTextAlignmentRight;
         successLabel2.textColor=ZCColor(85, 85, 85);
         [successView addSubview:successLabel2];
@@ -834,16 +861,22 @@
         
         if (index==0) {
             successLabel1.text=@"开球最远距离";
-            if (![[NSString stringWithFormat:@"%@",self.statistical.longest_drive_length] isEqual:@"(null)"]) {
-                successLabel2.text=[NSString stringWithFormat:@"%@码",self.statistical.longest_drive_length];
+            if ([self _valueOrNil:self.statistical.longest_drive_length]==nil) {
+                successLabel2.text=@"-";
+            }else
+            {
+             successLabel2.text=[NSString stringWithFormat:@"%@码",self.statistical.longest_drive_length];
             }
             
         }else if (index==1)
         {
             successLabel1.text=@"开球成功率";
             
-            if (![[NSString stringWithFormat:@"%@",self.statistical.drive_fairways_hit] isEqual:@"(null)"]) {
-                successLabel2.text=[NSString stringWithFormat:@"%@码",self.statistical.drive_fairways_hit];
+            if ([self _valueOrNil:self.statistical.drive_fairways_hit]==nil) {
+                successLabel2.text=@"-";
+            }else
+            {
+            successLabel2.text=[NSString stringWithFormat:@"%@码",self.statistical.drive_fairways_hit];
             }
             //successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.drive_fairways_hit];
         
@@ -851,8 +884,11 @@
         {
             successLabel1.text=@"标准杆上果岭率";
             
-            if (![[NSString stringWithFormat:@"%@",self.statistical.gir] isEqual:@"(null)"]) {
-                successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.gir];
+            if ([self _valueOrNil:self.statistical.gir]==nil) {
+                successLabel2.text=@"-";
+            }else
+            {
+            successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.gir];
             }
 
             
@@ -860,8 +896,11 @@
         {
             successLabel1.text=@"救球成功率";
             
-            if (![[NSString stringWithFormat:@"%@",self.statistical.scrambles] isEqual:@"(null)"]) {
-                successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.scrambles];
+            if ([self _valueOrNil:self.statistical.scrambles]==nil) {
+                successLabel2.text=@"-";
+            }else
+            {
+            successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.scrambles];
             }
 
             
@@ -869,23 +908,32 @@
         {
             successLabel1.text=@"反弹率";
             
-            if (![[NSString stringWithFormat:@"%@",self.statistical.bounce] isEqual:@"(null)"]) {
-                successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.bounce];
+            if ([self _valueOrNil:self.statistical.bounce]==nil) {
+                successLabel2.text=@"-";
+            }else
+            {
+            successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.bounce];
             }
             //successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.bounce];
         }else if (index==5)
         {
             successLabel1.text=@"标准杆上果岭平均推杆数";
             
-            if (![[NSString stringWithFormat:@"%@",self.statistical.putts_per_gir] isEqual:@"(null)"]) {
-                successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.putts_per_gir];
+            if ([self _valueOrNil:self.statistical.putts_per_gir]==nil) {
+                successLabel2.text=@"-";
+            }else
+            {
+            successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.putts_per_gir];
             }
            // successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.putts_per_gir];
         }else if (index==6)
         {
             successLabel1.text=@"优势转化率";
-            if (![[NSString stringWithFormat:@"%@",self.statistical.advantage_transformation] isEqual:@"(null)"]) {
-                successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.advantage_transformation];
+            if ([self _valueOrNil:self.statistical.advantage_transformation]==nil) {
+                successLabel2.text=@"-";
+            }else
+            {
+            successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.advantage_transformation];
             }
             //successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.advantage_transformation];
         }else if (index==7)
@@ -893,8 +941,11 @@
             successLabel1.text=@"平均开球距离";
             
             
-            if (![[NSString stringWithFormat:@"%@",self.statistical.average_drive_length] isEqual:@"(null)"]) {
-                successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.average_drive_length];
+            if ([self _valueOrNil:self.statistical.average_drive_length]==nil) {
+                successLabel2.text=@"-";
+            }else
+            {
+            successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.average_drive_length];
             }
 
             //successLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.average_drive_length];
@@ -915,12 +966,12 @@
     
     // 1.数字的尺寸
     CGFloat appW = self.averageView.frame.size.width;
-    CGFloat appH = (self.averageView.frame.size.height-4)/3;
+    CGFloat appH = (self.averageView.frame.size.height-2)/3;
     
     // 2.间隙 = (控制器view的宽度 - 3 * 应用宽度) / 4
     //CGFloat marginX = (self.view.frame.size.width - totalColumns * appW) / (totalColumns + 1);
     CGFloat marginX = 0;
-    CGFloat marginY = 1;
+    CGFloat marginY = 0.5;
     
     for (int index=0; index<3; index++) {
         UIView *averageView1=[[UIView alloc] init];
@@ -947,7 +998,7 @@
         
         //创建下面文字
         UILabel *averageLabel2=[[UILabel alloc] init];
-        averageLabel2.frame=CGRectMake(averageView1.frame.size.width-70,0 , 70, averageView1.frame.size.height);
+        averageLabel2.frame=CGRectMake(averageView1.frame.size.width-80,0 , 70, averageView1.frame.size.height);
         averageLabel2.textColor=ZCColor(85, 85, 85);
         averageLabel2.textAlignment=NSTextAlignmentRight;
         [averageView1 addSubview:averageLabel2];
@@ -960,8 +1011,11 @@
         if (index==0) {
             averageLabel1.text=@"PAR3平均得分";
             
-           if (![[NSString stringWithFormat:@"%@",self.statistical.score_par_3] isEqual:@"(null)"]) {
-               averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_3];
+           if ([self _valueOrNil:self.statistical.score_par_3]==nil) {
+               averageLabel2.text=@"-";
+            }else
+            {
+             averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_3];
             }
 
             
@@ -969,8 +1023,11 @@
         {
             averageLabel1.text=@"PAR4平均得分";
             
-            if (![[NSString stringWithFormat:@"%@",self.statistical.score_par_4] isEqual:@"(null)"]) {
-                averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_4];
+            if ([self _valueOrNil:self.statistical.score_par_4]==nil) {
+                averageLabel2.text=@"-";
+            }else
+            {
+            averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_4];
             }
 
            // averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_4];
@@ -978,8 +1035,11 @@
         }else if (index==2)
         {
             averageLabel1.text=@"PAR5平均得分";
-            if (![[NSString stringWithFormat:@"%@",self.statistical.score_par_5] isEqual:@"(null)"]) {
-                averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_5];
+            if ([self _valueOrNil:self.statistical.score_par_5]==nil) {
+                averageLabel2.text=@"-";
+            }else
+            {
+            averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_5];
             }
            // averageLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.score_par_5];
         }
@@ -995,12 +1055,12 @@
     
     // 1.数字的尺寸
     CGFloat appW = self.ballScoresView.frame.size.width;
-    CGFloat appH = (self.ballScoresView.frame.size.height-7)/6;
+    CGFloat appH = (self.ballScoresView.frame.size.height-3.5)/6;
     
     // 2.间隙 = (控制器view的宽度 - 3 * 应用宽度) / 4
     //CGFloat marginX = (self.view.frame.size.width - totalColumns * appW) / (totalColumns + 1);
     CGFloat marginX = 0;
-    CGFloat marginY = 1;
+    CGFloat marginY = 0.5;
     
     for (int index=0; index<6; index++) {
         UIView *ballScoresView1=[[UIView alloc] init];
@@ -1027,7 +1087,7 @@
         
         //创建下面文字
         UILabel *ballScoresLabel2=[[UILabel alloc] init];
-        ballScoresLabel2.frame=CGRectMake(ballScoresView1.frame.size.width-70,0 , 70, ballScoresView1.frame.size.height);
+        ballScoresLabel2.frame=CGRectMake(ballScoresView1.frame.size.width-80,0 , 70, ballScoresView1.frame.size.height);
         
         ballScoresLabel2.textColor=ZCColor(85, 85, 85);
         ballScoresLabel2.textAlignment=NSTextAlignmentRight;
@@ -1041,14 +1101,20 @@
         if (index==0) {
             ballScoresLabel1.text=@"信天翁球";
             
-            if (![[NSString stringWithFormat:@"%@",self.statistical.double_eagle] isEqual:@"(null)"]) {
+            if ([self _valueOrNil:self.statistical.double_eagle]==nil) {
+            ballScoresLabel2.text=@"-";
+            }else
+            {
             ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.double_eagle];
             }
         }else if (index==1)
         {
             ballScoresLabel1.text=@"老鹰球";
-            if (![[NSString stringWithFormat:@"%@",self.statistical.eagle] isEqual:@"(null)"]) {
-                ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.eagle];
+            if ([self _valueOrNil:self.statistical.eagle]==nil) {
+                ballScoresLabel2.text=@"-";
+            }else
+            {
+            ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.eagle];
             }
 
             
@@ -1057,16 +1123,23 @@
         {
             ballScoresLabel1.text=@"小鸟球";
             
-            if (![[NSString stringWithFormat:@"%@",self.statistical.birdie] isEqual:@"(null)"]) {
-                 ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.birdie];
+            if ([self _valueOrNil:self.statistical.birdie]==nil) {
+                 ballScoresLabel2.text=@"-";
+            }else
+            {
+            ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.birdie];
             }
            
         }else if (index==3)
         {
             ballScoresLabel1.text=@"标准杆数";
             
-            if (![[NSString stringWithFormat:@"%@",self.statistical.par] isEqual:@"(null)"]) {
+            if ([self _valueOrNil:self.statistical.par]==nil) {
+                ballScoresLabel2.text=@"-";
+            }else
+            {
                 ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.par];
+            
             }
 
             
@@ -1074,8 +1147,11 @@
         {
             ballScoresLabel1.text=@"柏忌数";
             
-            if (![[NSString stringWithFormat:@"%@",self.statistical.bogey] isEqual:@"(null)"]) {
-                ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.bogey];
+            if ([self _valueOrNil:self.statistical.bogey]==nil) {
+                ballScoresLabel2.text=@"-";
+            }else
+            {
+            ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.bogey];
             }
             
         }else if (index==5)
@@ -1084,8 +1160,11 @@
             
             
            // ZCLog(@"%@",self.statistical);
-            if (![[NSString stringWithFormat:@"%@",self.statistical.double_bogey] isEqual:@"(null)"]) {
-                ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.double_bogey];
+            if ([self _valueOrNil:self.statistical.double_bogey]==nil) {
+                ballScoresLabel2.text=@"-";
+            }else
+            {
+            ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.double_bogey];
             }
 
            // ballScoresLabel2.text=[NSString stringWithFormat:@"%@",self.statistical.double_bogey];
@@ -1296,7 +1375,15 @@
 }
 
 
-
+- (id) _valueOrNil:(id)obj {
+    if (!obj) {
+        return nil;
+    }
+    if (obj == [NSNull null]) {
+        return nil;
+    }
+    return obj;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

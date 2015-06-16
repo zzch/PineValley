@@ -13,9 +13,13 @@
 #import "ZCListModel.h"
 #import "ZCViewTheResultsViewController.h"
 #import "ZCInvitationViewController.h"
-@interface ZCListViewController ()<UITableViewDataSource,UITableViewDelegate>
+#import "ZCPersonalizedSettingsViewController.h"
+#import "MJRefresh.h"
+@interface ZCListViewController ()<UITableViewDataSource,UITableViewDelegate,MJRefreshBaseViewDelegate>
 @property(nonatomic,weak)UITableView *tableView;
 @property(nonatomic,strong)NSMutableArray *listArray;
+
+@property (nonatomic, weak) MJRefreshHeaderView *header;
 @end
 
 @implementation ZCListViewController
@@ -27,12 +31,20 @@
     self.navigationItem.title=@"排行榜";
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
     
-   
-    [self onlineData];
+    
+    //返回
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(liftBthClick:) target:self];
+    //创建tableView
+    [self initTableView];
+  // [self onlineData];
     
     
 }
-
+//返回到上个界面
+-(void)liftBthClick:(UIButton *)bth
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 //网络数据加载
 -(void)onlineData
@@ -73,17 +85,17 @@
         
         if (self.listArray.count==0) {
             [self valueIsNil];
-        }else{
-            //创建tableView
-            [self initTableView];
-
         }
         
-
-        
-        
+ 
+        [self.tableView  reloadData];
+         [self.header endRefreshing];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         [self.header endRefreshing];
+        
+        
+        [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
         
     }];
 }
@@ -149,10 +161,24 @@
 //点击邀请好友
 -(void)clickTheinvitationButton
 {
+    // 获取路劲 取出图片
+    NSString *path=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject] stringByAppendingPathComponent:@"personImage.png"];
+    NSData *imageData=[NSData dataWithContentsOfFile:path];
+    UIImage *image=[[UIImage alloc] initWithData:imageData];
+    
 
-    ZCInvitationViewController *InvitationViewController=[[ZCInvitationViewController alloc] init];
-    InvitationViewController.uuid=self.uuid;
-    [self.navigationController pushViewController:InvitationViewController animated:YES];
+    if (image) {
+        ZCInvitationViewController *InvitationViewController=[[ZCInvitationViewController alloc] init];
+        InvitationViewController.uuid=self.uuid;
+        [self.navigationController pushViewController:InvitationViewController animated:YES];
+    }else{
+    
+    ZCPersonalizedSettingsViewController *ZPersonalizedSettingsViewController=[[ZCPersonalizedSettingsViewController alloc] init];
+    ZPersonalizedSettingsViewController.uuid=self.uuid;
+    [self.navigationController pushViewController:ZPersonalizedSettingsViewController animated:YES];
+    
+    }
+   
     
 }
 
@@ -177,8 +203,39 @@
     //分割线颜色
     [self.tableView   setSeparatorColor:ZCColor(170, 170, 170)];
    
+    
+    
+    // 1.下拉刷新
+    MJRefreshHeaderView *header = [MJRefreshHeaderView header];
+    header.scrollView = self.tableView;
+    header.delegate = self;
+    // 自动进入刷新状态
+    [header beginRefreshing];
+    self.header = header;
+
+    
 }
 
+
+- (void)dealloc
+{
+    // 释放内存
+    [self.header free];
+    
+}
+
+
+/**
+ *  框架 刷新控件进入开始刷新状态的时候调用
+ */
+- (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView
+{
+    if ([refreshView isKindOfClass:[MJRefreshFooterView class]]) { // 上拉刷新加载
+        
+    } else { // 下拉刷新
+        [self onlineData];
+    }
+}
 
 
 

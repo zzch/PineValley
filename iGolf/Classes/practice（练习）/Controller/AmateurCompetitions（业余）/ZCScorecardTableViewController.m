@@ -11,7 +11,7 @@
 #import "ZCEventUuidTool.h"
 #import "UIBarButtonItem+DC.h"
 #import "ZCScorecarTableViewCell.h"
-#import "MBProgressHUD+NJ.h"
+
 #import "ZCScorecard.h"
 #import "ZCShowButton.h"
 #import "AFNetworking.h"
@@ -91,10 +91,10 @@
     
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
-    self.tableView.sectionHeaderHeight=145;
+    self.tableView.sectionHeaderHeight=134;
     
     
-    self.tableView.rowHeight=125;
+    self.tableView.rowHeight=80;
     
 
     
@@ -154,7 +154,7 @@
 {
 
     //显示圈圈
-    [MBProgressHUD showMessage:@"加载中..."];
+  [MBProgressHUD showMessage:@"加载中..."];
     
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
@@ -177,6 +177,13 @@
         ZCLog(@"%@",responseObject);
         ZCLog(@"%@",responseObject[@"message"]);
         
+        if (responseObject[@"error_code"] ) {
+            
+            [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+            
+        }else
+        {
+        
         ZCTotalScorecards *totalScorecards= [ZCTotalScorecards totalScorecardsWithDict:responseObject];
         
         self.totalScorecards=totalScorecards;
@@ -188,13 +195,14 @@
         
         
         [self.tableView reloadData ];
-        
+        }
         //隐藏圈圈
         [MBProgressHUD hideHUD];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         //隐藏圈圈
-        [MBProgressHUD hideHUD];
+      [MBProgressHUD hideHUD];
 
+        [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
         ZCLog(@"%@",error);
     }];
     

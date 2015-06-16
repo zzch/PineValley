@@ -10,7 +10,7 @@
 #import "ZCEventUuidTool.h"
 #import "UIBarButtonItem+DC.h"
 #import "ZCScorecarTableViewCell.h"
-#import "MBProgressHUD+NJ.h"
+
 #import "ZCScorecard.h"
 #import "ZCShowButton.h"
 #import "AFNetworking.h"

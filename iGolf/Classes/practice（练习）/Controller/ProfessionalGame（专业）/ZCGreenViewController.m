@@ -7,9 +7,9 @@
 //
 
 #import "ZCGreenViewController.h"
-
+#import "ZCProfessionalStatisticsPromptView.h"
 @interface ZCGreenViewController ()
-
+@property(nonatomic,assign)int index;
 @end
 
 @implementation ZCGreenViewController
@@ -176,8 +176,9 @@
     promptBtn.frame=CGRectMake(promptBtnX, promptBtnY, promptBtnW, promptBtnH);
     [promptBtn setImage:[UIImage imageNamed:@"chengsewenhao"]
                forState:UIControlStateNormal];
-    //promptBtn.tag=1006;
-   // [promptBtn addTarget:self action:@selector(clickpromptishi:) forControlEvents:UIControlEventTouchUpInside];
+    self.index++;
+    promptBtn.tag=18000+self.index;
+    [promptBtn addTarget:self action:@selector(clickpromTheptishi:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:promptBtn];
     
     
@@ -357,6 +358,31 @@
 //    [childView addSubview:promptBtn];
     
     
+}
+
+
+-(void)clickpromTheptishi:(UIButton *)btn
+{
+    ZCProfessionalStatisticsPromptView *PromptView=[[ZCProfessionalStatisticsPromptView alloc] init];
+    
+    PromptView.frame= [[UIScreen mainScreen] bounds];
+    
+
+    
+    if (btn.tag==18001) {
+        PromptView.nameStr=@"标准杆上果岭";
+        PromptView.instructionsStr=@"3杆洞1杆上果岭，4杆洞2杆上果岭，5杆洞3杆上果岭。";
+    }else if (btn.tag==18002)
+    {
+        PromptView.nameStr=@"标准杆上果岭距离球洞小于5码";
+        PromptView.instructionsStr=@"3/4/5杆洞的标准杆上果岭后第一次推杆前距离果岭小于等于5码";
+    }
+    
+    
+    
+    UIWindow *wd = [[UIApplication sharedApplication].delegate window];
+    [wd addSubview:PromptView];
+
 }
 
 

@@ -10,6 +10,7 @@
 #import "ZCAccount.h"
 #import "AFNetworking.h"
 #import "ZCAccountSettingsViewController.h"
+#import "ZCAccountSettingsViewController.h"
 @interface ZCValidationViewController ()
 @property(nonatomic,weak)UITextField *validationText;
 @property(nonatomic,weak)UITextField *passwordTextField;
@@ -24,6 +25,10 @@
     
     
     self.view.backgroundColor=ZCColor(237, 237, 237);
+    self.navigationItem.title=@"验证手机号";
+    //返回
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(liftBthClick:) target:self];
+
     
     UILabel *firstLabel=[[UILabel alloc] init];
     CGFloat firstLabelX=0;
@@ -133,7 +138,11 @@
     
 }
 
-
+//返回到上个界面
+-(void)liftBthClick:(UIButton *)bth
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 - (void)dealloc
 {
     //移除通知
@@ -164,6 +173,8 @@
 //点击提交按钮
 -(void)clickThesubmitButton
 {
+    
+    [MBProgressHUD showMessage:@"请稍后..."];
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     mgr.responseSerializer.acceptableContentTypes=[NSSet setWithObjects:@"text/html",@"text/plain",@"application/xhtml+xml",@"application/xml",@"application/json", nil];
     
@@ -186,23 +197,39 @@
         
         ZCLog(@"%@",responseObject);
         
-        for (id  Controller in self.navigationController.viewControllers) {
+        
+        if (responseObject[@"error_code"] ) {
             
-            if ([Controller isKindOfClass:[ZCAccountSettingsViewController class]]) {
-                ZCAccountSettingsViewController *controller=Controller;
-                controller.phoneNumber=self.phoneNumber;
-                [self.navigationController popToViewController:Controller animated:YES];
-                break;
-            }
+            [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+            
+        }else
+        {
+
+            ZCAccountSettingsViewController *AccountSettingsViewController=[[ZCAccountSettingsViewController alloc] init];
+            AccountSettingsViewController.phoneNumber=self.phoneNumber;
+            [self.navigationController pushViewController:AccountSettingsViewController animated:YES];
+        
+//        for (id  Controller in self.navigationController.viewControllers) {
+//            
+//            if ([Controller isKindOfClass:[ZCAccountSettingsViewController class]]) {
+//                ZCAccountSettingsViewController *controller=Controller;
+//                controller.phoneNumber=self.phoneNumber;
+//                [self.navigationController popToViewController:Controller animated:YES];
+//                break;
+//            }
            
+  //      }
+        
+        
         }
         
-        
-        
-        
-        
+        [MBProgressHUD hideHUD];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         ZCLog(@"%@",error);
+        [MBProgressHUD hideHUD];
+        [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
+        
+
     }];
     
     

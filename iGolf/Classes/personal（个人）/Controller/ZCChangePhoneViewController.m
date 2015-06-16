@@ -21,6 +21,10 @@
     self.view.backgroundColor=ZCColor(237, 237, 237);
     
     
+    //返回
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(liftBthClick:) target:self];
+
+    
     UILabel *firstLabel=[[UILabel alloc] init];
     CGFloat  firstLabelX=0;
     CGFloat  firstLabelY=20;
@@ -138,6 +142,12 @@
 }
 
 
+
+//返回到上个界面
+-(void)liftBthClick:(UIButton *)bth
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 //点击下一步
 -(void)clickTheChangeNextButton

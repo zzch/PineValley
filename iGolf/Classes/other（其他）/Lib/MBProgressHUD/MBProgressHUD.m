@@ -593,6 +593,7 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 
 	if (self.dimBackground) {
 		//Gradient colours
+        
 		size_t gradLocationsNum = 2;
 		CGFloat gradLocations[2] = {0.0f, 1.0f};
 		CGFloat gradColors[8] = {0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.75f}; 

@@ -33,10 +33,10 @@
 {
     if (self=[super initWithReuseIdentifier:reuseIdentifier]) {
         
-       self.backgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"yihang_bj232"]];
+      self.backgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bjbaise"]];
         
          // self.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
-        self.backgroundColor=[UIColor whiteColor];
+       // self.backgroundColor=[UIColor whiteColor];
         //添加子控件
         //1.添加按钮
         UIButton *nameButton=[UIButton buttonWithType:UIButtonTypeCustom];
@@ -107,11 +107,11 @@
         [self addSubview:TTaiImage];
         self.TTaiImage=TTaiImage;
         
-//        
-//        UIView *bjview=[[UIView alloc] init];
-//        bjview.backgroundColor=ZCColor(170, 170, 170);
-//        [self addSubview:bjview];
-//        self.bjview=bjview;
+        
+        UIView *bjview=[[UIView alloc] init];
+        bjview.backgroundColor=ZCColor(170, 170, 170);
+        [self addSubview:bjview];
+        self.bjview=bjview;
         
     }
     return self;
@@ -167,7 +167,7 @@
         self.TTaiName.text=@"黑色";
     }else if ([cleicedName isEqual:@"gold"])
     {
-      [self.TTaiImage setImage:[UIImage imageNamed:@"huang"]];
+      [self.TTaiImage setImage:[UIImage imageNamed:@"jin"]];
         self.TTaiName.text=@"金色";
     }else
     {
@@ -243,7 +243,7 @@
     self.imageView.frame=CGRectMake(imageViewX, imageViewY, imageViewW, imageViewH);
     
     
-    self.bjview.frame=CGRectMake(0, self.frame.size.height-1, self.frame.size.width, 1);
+    self.bjview.frame=CGRectMake(0, self.frame.size.height-0.5, self.frame.size.width, 0.5);
 }
 
 

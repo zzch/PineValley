@@ -20,7 +20,7 @@
 /**
  *  总成绩
  */
-@property (nonatomic, copy) NSString *total;
+@property (nonatomic, copy) NSString *strokes;
 
 + (instancetype)playerModelWithDict:(NSDictionary *)dict;
 - (instancetype)initWithDict:(NSDictionary *)dict;

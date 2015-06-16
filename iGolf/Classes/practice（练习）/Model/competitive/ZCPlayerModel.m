@@ -23,7 +23,7 @@
         self.scoring_type=dict[@"scoring_type"];
         self.strokes=dict[@"strokes"];
         self.total=dict[@"total"];
-        
+        self.owned=dict[@"owned"];
         
         self.user=[ZCUserModel userModelWithDict:dict[@"user"]];
         

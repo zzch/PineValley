@@ -7,7 +7,7 @@
 //
 
 #import "ZCKickOffViewController.h"
-
+#import "ZCProfessionalStatisticsPromptView.h"
 @interface ZCKickOffViewController ()
 
 @end
@@ -162,8 +162,8 @@
     promptBtn.frame=CGRectMake(promptBtnX, promptBtnY, promptBtnW, promptBtnH);
     [promptBtn setImage:[UIImage imageNamed:@"chengsewenhao"]
                forState:UIControlStateNormal];
-    //promptBtn.tag=1006;
-    // [promptBtn addTarget:self action:@selector(clickpromptishi:) forControlEvents:UIControlEventTouchUpInside];
+    promptBtn.tag=19000;
+     [promptBtn addTarget:self action:@selector(clickpromptishi:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:promptBtn];
     
     
@@ -319,6 +319,19 @@
     return rect;
 }
 
+
+
+-(void)clickpromptishi:(UIButton *)btn
+{
+    ZCProfessionalStatisticsPromptView *PromptView=[[ZCProfessionalStatisticsPromptView alloc] init];
+    PromptView.frame= [[UIScreen mainScreen] bounds];
+    
+    PromptView.nameStr=@"最佳球位";
+    PromptView.instructionsStr=@"4/5杆洞开球后未上球道，但是该球洞标准杆上果岭。";
+    UIWindow *wd = [[UIApplication sharedApplication].delegate window];
+    [wd addSubview:PromptView];
+
+}
 
 
 - (void)didReceiveMemoryWarning {

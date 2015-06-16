@@ -53,6 +53,26 @@
 
 @property (strong,nonatomic) NSArray *pickerArray;
 
+/**
+ *  默认距离选择第几个
+ */
+@property(nonatomic,assign)int index1;
+
+/**
+ *  默认球的状态选择第几个
+ */
+@property(nonatomic,assign)int index2;
+/**
+ *  默认罚杆选择第几个
+ */
+@property(nonatomic,assign)int index3;
+/**
+ *  默认球杆选择第几个
+ */
+@property(nonatomic,assign)int index4;
+
+
+
 
 
 /**
@@ -94,9 +114,9 @@
         
         
         
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(chooseViewClick)];
-        [self addGestureRecognizer:tap];
-        
+//        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(chooseViewClick)];
+//        [self addGestureRecognizer:tap];
+//        
         
         
         UIView *coverView=[[UIView alloc] init];
@@ -119,8 +139,7 @@
         
         //创建pickerview
         [self initPickerView];
-       //默认选中
-        [self pickerViewDefaultData];
+      
         
     }
     return self;
@@ -129,12 +148,12 @@
 
 
 
-//点击透明图存
--(void)chooseViewClick
-{
-    [self removeFromSuperview];
-
-}
+////点击透明图存
+//-(void)chooseViewClick
+//{
+//    [self removeFromSuperview];
+//
+//}
 
 
 -(NSArray *)pickerArray
@@ -143,9 +162,19 @@
         
         _pickerArray=[NSArray array];
         NSMutableArray *pickArray1=[NSMutableArray array];
-        for (int i = 1; i < 81; i ++) {
-            [pickArray1 addObject:[NSString stringWithFormat:@"%d",i*5]];
+      //  NSMutableArray *Array1=[NSMutableArray array];
+
+        
+        
+        for (int j=0; j<50; j++) {
+            [pickArray1 addObject:[NSString stringWithFormat:@"%d",j]];
         }
+        
+        
+        for (int i = 0; i <= 110; i++) {
+            [pickArray1 addObject:[NSString stringWithFormat:@"%d",i*5+50]];
+        }
+        
         
         [pickArray1  replaceObjectAtIndex:0 withObject:@"进洞"];
         
@@ -298,11 +327,28 @@
     
     //数据模型
     ZCSelectTheDisplay *selectTheDisplay=[[ZCSelectTheDisplay alloc] init];
-    selectTheDisplay.distance_from_hole=self.distance_from_hole;
-    selectTheDisplay.point_of_fall=self.point_of_fall;
-    selectTheDisplay.penalties=self.penalties;
-    selectTheDisplay.club=self.club;
     
+    if ([self.distance_from_hole isEqual:@"进洞"]) {
+        selectTheDisplay.point_of_fall=@"";
+        self.penalties=@"0";
+    }else
+    {
+    selectTheDisplay.point_of_fall=self.point_of_fall;
+    }
+    
+    if ([self.point_of_fall isEqual:@"不可打"]) {
+        selectTheDisplay.penalties=self.penalties;
+    }else
+    {
+    selectTheDisplay.penalties=@"0";
+    }
+    
+    
+    selectTheDisplay.distance_from_hole=self.distance_from_hole;
+    
+    
+    selectTheDisplay.club=self.club;
+    ZCLog(@"%@",self.club);
     
 //    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
 //    NSMutableDictionary *params = [NSMutableDictionary dictionary];
@@ -397,20 +443,206 @@
 }
     
     
+
+
+
+
+//-(void)setIsYes:(NSString *)isYes
+//{
+// if ([self.isYes isEqual:@"no"])
+// {
+//     
+//             [self pickerViewDefaultData];
+//         
+//         
+//     }
+// 
+// }
+//
+//}
+
+
+-(void)setSelectTheDisplay:(ZCSelectTheDisplay *)selectTheDisplay
+{
+
     
+    _selectTheDisplay=selectTheDisplay;
     
+    if (self.selectTheDisplay.distance_from_hole) {
+        
+        
+       int  distance=[self.selectTheDisplay.distance_from_hole intValue];
+       
+        
+        if (distance==0) {
+            self.index1=0;
+        }else if (distance <=50 && distance>0) {
+            self.index1=distance;
+            
+        }else
+        {
+            self.index1=(distance-50)/5+49;
+        }
+        
+        
+       if ([selectTheDisplay.point_of_fall isEqual:@"球道"]) {
+           self.index2=2;
+           
+            }else if ([selectTheDisplay.point_of_fall isEqual:@"果岭"])
+            {
+                 self.index2=0;
+            }else if ([selectTheDisplay.point_of_fall isEqual:@"球道外左侧"])
+            {
+                self.index2=1;
+            }else if ([selectTheDisplay.point_of_fall isEqual:@"球道外右侧"])
+            {
+                 self.index2=3;
+            }else if ([selectTheDisplay.point_of_fall isEqual:@"沙坑"])
+            {
+                 self.index2=4;
+            }else if ([selectTheDisplay.point_of_fall isEqual:@"不可打"])
+            {
+                self.index2=5;
+            }
+        
+        
+         int penalties=[self.selectTheDisplay.penalties intValue];
+        if (penalties==1) {
+            self.index3=0;
+        }else if (penalties==2)
+        {
+        self.index3=1;
+        }else if (penalties==3)
+        {
+            self.index3=2;
+        }
+        
+        
+        
+        
+        
+        
+        
+        if ([selectTheDisplay.club isEqual:@"Driver"]) {
+            self.index4=0;
+        }else if ([selectTheDisplay.club isEqual:@"Putter"])
+        {
+           self.index4=1;
+        }else if ([selectTheDisplay.club isEqual:@"3 Wood"])
+        {
+            self.index4=2;
+        }else if ([selectTheDisplay.club isEqual:@"5 Wood"])
+        {
+            self.index4=3;
+        }else if ([selectTheDisplay.club isEqual:@"7 Wood"])
+        {
+            self.index4=4;
+        }else if ([selectTheDisplay.club isEqual:@"2 Hybrid"])
+        {
+            self.index4=5;
+        }else if ([selectTheDisplay.club isEqual:@"3 Hybrid"])
+        {
+            self.index4=6;
+        }else if ([selectTheDisplay.club isEqual:@"4 Hybrid"])
+        {
+            self.index4=7;
+        }else if ([selectTheDisplay.club isEqual:@"5 Hybrid"])
+        {
+            self.index4=8;
+        }else if ([selectTheDisplay.club isEqual:@"1 Iron"])
+        {
+            self.index4=9;
+        }else if ([selectTheDisplay.club isEqual:@"2 Iron"])
+        {
+            self.index4=10;
+        }else if ([selectTheDisplay.club isEqual:@"3 Iron"])
+        {
+            self.index4=11;
+        }else if ([selectTheDisplay.club isEqual:@"4 Iron"])
+        {
+            self.index4=12;
+        }else if ([selectTheDisplay.club isEqual:@"5 Iron"])
+        {
+            self.index4=13;
+        }else if ([selectTheDisplay.club isEqual:@"6 Iron"])
+        {
+            self.index4=14;
+        }else if ([selectTheDisplay.club isEqual:@"3 Iron"])
+        {
+            self.index4=15;
+        }else if ([selectTheDisplay.club isEqual:@"7 Iron"])
+        {
+            self.index4=16;
+        }else if ([selectTheDisplay.club isEqual:@"8 Iron"])
+        {
+            self.index4=17;
+        }else if ([selectTheDisplay.club isEqual:@"9 Iron"])
+        {
+            self.index4=18;
+        }else if ([selectTheDisplay.club isEqual:@"PW"])
+        {
+            self.index4=19;
+        }else if ([selectTheDisplay.club isEqual:@"GW"])
+        {
+            self.index4=20;
+        }else if ([selectTheDisplay.club isEqual:@"LW"])
+        {
+            self.index4=21;
+        }else if ([selectTheDisplay.club isEqual:@"SW"])
+        {
+            self.index4=22;
+        }
+
+        
+        
+        
+        
+        
+        
+        //默认选中
+        [self pickerViewDefaultData];
+        
+        
+        
+    }else
+    {
+        self.index1=90;
+        self.index2=2;
+        self.index3=0;
+        self.index4=0;
+        //默认选中
+        [self pickerViewDefaultData];
+
+        
+    }
+    
+
+    
+}
+
+
+
+
     
 //pickView到这个界面的默认值
 -(void)pickerViewDefaultData
 {
-    [self pickerView:nil didSelectRow:40 inComponent:0];
-    [self.pickerView selectRow:40 inComponent:0 animated:YES];
     
-    [self pickerView:nil didSelectRow:1 inComponent:1];
-    [self.pickerView selectRow:3 inComponent:1 animated:YES];
     
-    //[self pickerView:nil didSelectRow:1 inComponent:2];
-    [self pickerView:nil didSelectRow:1 inComponent:3];
+    
+    
+    
+    [self pickerView:self.pickerView didSelectRow:self.index1 inComponent:0];
+    [self.pickerView selectRow:self.index1 inComponent:0 animated:YES];
+    
+    [self pickerView:self.pickerView didSelectRow:self.index2 inComponent:1];
+    [self.pickerView selectRow:self.index2 inComponent:1 animated:YES];
+    
+    [self.pickerView selectRow:0 inComponent:2 animated:YES];
+    [self pickerView:self.pickerView didSelectRow:0 inComponent:2];
+    
+    [self.pickerView selectRow:self.index4 inComponent:3 animated:YES];
+    [self pickerView:self.pickerView didSelectRow:self.index4 inComponent:3];
     
 }
 
@@ -428,7 +660,8 @@
  *  一共有多少列
  */
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{//ZCLog(@"%lu",self.pickerArray.count);
+{
+   // ZCLog(@"%d",self.pickerArray.count);
     return self.pickerArray.count;
     
     
@@ -439,8 +672,23 @@
  */
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    if (component==2) {
-        // 获取第0列选中的行
+    
+    // 获取第0列选中的行
+    NSInteger selectIndex = [self.pickerView selectedRowInComponent:0];
+  //  ZCLog(@"c: %d",component);
+    if (component==1) {
+       
+        if (selectIndex==0) {
+            
+            return 0;
+        }else
+        {
+            NSArray *subfoods = self.pickerArray[component];
+            return subfoods.count;
+        }
+    }else if (component==2) {
+       
+        // 获取第1列选中的行
         NSInteger selectIndex = [self.pickerView selectedRowInComponent:1];
         if (selectIndex==5) {
             NSArray *subfoods = self.pickerArray[component];
@@ -466,16 +714,42 @@
  */
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    // 获取第2列选中的行
-    NSInteger selectIndex = [self.pickerView selectedRowInComponent:2];
-    if (component==1) {
-        if (selectIndex==5) {
-            return self.pickerArray[component][row];
-        }else{return nil;}
-    }else{
+    if (component==0) {
+        return self.pickerArray[component][row];
+    }else if (component==1)
+   
     
+     {
+         
+         
+         // 获取第1列选中的行
+         NSInteger selectIndex = [self.pickerView selectedRowInComponent:0];
+         if (selectIndex==0) {
+             return nil;
+         }else
+         {
+             return self.pickerArray[component][row];
+             //重新设置右边的数据显示第一行
+             
+             
+         }
+
+         
+         
+         
+           }else  if(component==2){
+               // 获取第2列选中的行
+               NSInteger selectIndex = [self.pickerView selectedRowInComponent:1];
+               if (selectIndex==5) {
+                   return self.pickerArray[component][row];
+               }else{return nil;}
+
     
-        return self.pickerArray[component][row];}
+        
+           }else{
+           return self.pickerArray[component][row];
+           
+           }
 }
 
 
@@ -484,13 +758,20 @@
  */
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
+    ZCLog(@"%ld",(long)row);
+    
     if (component == 0) { //
         self.distance_from_hole = self.pickerArray[component][row];
+       // [pickerView reloadComponent:1];
+        
     } else if (component == 1) { //
         
             self.point_of_fall = self.pickerArray[component][row];
 
-            [pickerView reloadComponent:2];
+        
+//        [self.pickerView selectRow:2 inComponent:2 animated:YES];
+//        [self pickerView:self.pickerView didSelectRow:self.index3 inComponent:2];
+//             [pickerView reloadComponent:2];
         
         
         
@@ -498,13 +779,14 @@
             }else if (component==2)
     {
         self.penalties=self.pickerArray[component][row];
+        
     }else if (component==3)
     {
         self.club=self.pickerArray[component][row];
-    }
+            }
     
     
-    
+    [pickerView reloadAllComponents];
     
     UILabel *label = (UILabel *)[self.pickerView viewForRow:row forComponent:component];
     
@@ -542,23 +824,27 @@
 //
 //改变pickview的字体颜色
 
-- (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    NSString *title;
-    if (component==0) {
-        title = [NSString stringWithFormat:@"%@码",self.pickerArray[component][row]];
-    }else {
-        title = [NSString stringWithFormat:@"%@",self.pickerArray[component][row]];
-    }
-    
-    
-    
-    NSAttributedString *attString = [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName:ZCColor(85, 85, 85)}];
-    
-    return attString;
-    
-}
-
+//- (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
+//{
+//    NSString *title;
+//    if (component==0) {
+//        if (row==0) {
+//            title = [NSString stringWithFormat:@"%@",self.pickerArray[component][row]];
+//        }else{
+//        title = [NSString stringWithFormat:@"%@码",self.pickerArray[component][row]];
+//        }
+//    }else {
+//        title = [NSString stringWithFormat:@"%@",self.pickerArray[component][row]];
+//    }
+//    
+//    
+//    
+//    NSAttributedString *attString = [[NSAttributedString alloc] initWithString:title attributes:@{NSForegroundColorAttributeName:ZCColor(85, 85, 85)}];
+//    
+//    return attString;
+//    
+//}
+//
 
 
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row
@@ -572,7 +858,12 @@
     label.textAlignment=NSTextAlignmentCenter;
     label.font=[UIFont systemFontOfSize:15];
     if (component==0) {
+        if (row==0) {
+             label.text = [NSString stringWithFormat:@"%@",self.pickerArray[component][row]];
+        }else
+        {
         label.text = [NSString stringWithFormat:@"%@码",self.pickerArray[component][row]];
+        }
     }else {
         label.text = [NSString stringWithFormat:@"%@",self.pickerArray[component][row]];
     }

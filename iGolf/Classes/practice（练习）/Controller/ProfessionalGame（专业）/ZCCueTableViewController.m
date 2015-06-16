@@ -24,6 +24,7 @@
     self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(liftBthClick:) target:self];
     
     self.tableView.delegate=self;
+    self.tableView.bounces=NO;
     self.tableView.dataSource=self;
     
     self.tableView.rowHeight=120;

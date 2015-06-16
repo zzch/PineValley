@@ -79,7 +79,7 @@
     
     UIImageView *imageView=[[UIImageView alloc] init];
     imageView.image=[UIImage imageNamed:@"jstj_qianjiu"];
-    imageView.frame=CGRectMake(SCREEN_WIDTH-(SCREEN_WIDTH-200), 0, 95, 25);
+    imageView.frame=CGRectMake((SCREEN_WIDTH-115), 0, 95, 25);
     imageView.userInteractionEnabled=YES;
     [self addSubview:imageView];
     self.imageView=imageView;
@@ -108,7 +108,7 @@
     CGFloat nameScoringScrollViewX=0;
     CGFloat nameScoringScrollViewY=35;
     CGFloat nameScoringScrollViewW=SCREEN_WIDTH*0.17;
-    CGFloat nameScoringScrollViewH=202.5;
+    CGFloat nameScoringScrollViewH=146.5;
     
     nameScoringScrollView.frame=CGRectMake(nameScoringScrollViewX, nameScoringScrollViewY, nameScoringScrollViewW, nameScoringScrollViewH);
     nameScoringScrollView.backgroundColor=ZCColor(170, 170, 170);
@@ -186,6 +186,8 @@
     
     scoringScrollView.frame=CGRectMake(scoringScrollViewX, scoringScrollViewY, scoringScrollViewW, scoringScrollViewH);
     scoringScrollView.delegate=self;
+    //让tableView没有弹簧效果
+    scoringScrollView.bounces=NO;
     [self addSubview:scoringScrollView];
     self.scoringScrollView=scoringScrollView;
     //滚动的区域
@@ -479,7 +481,7 @@
         UILabel *label=[[UILabel alloc] init];
         
         
-        label.frame=CGRectMake(20, 15, 40, 20);
+        label.frame=CGRectMake(17, 15, 40, 20);
         label.textColor=ZCColor(85, 85, 85);
         [tempview addSubview:label];
         

@@ -15,7 +15,7 @@
 #import "ZCProfessionalStatisticalViewController.h"
 #import "ZCprompt.h"
 #import "UIBarButtonItem+DC.h"
-#import "MBProgressHUD+NJ.h"
+
 @interface ZCModifyTheProfessionalScorecardController ()<UITableViewDataSource,UITableViewDelegate,ZCChooseViewDelegate>
 
 //表示行数
@@ -158,7 +158,7 @@
         point_of_fall=@"unplayable";
         }else
         {
-            point_of_fall=[NSString stringWithFormat:@"%@",selectTheDisplay.distance_from_hole];
+            point_of_fall=[NSString stringWithFormat:@"%@",selectTheDisplay.point_of_fall];
         }
         
         }
@@ -216,9 +216,6 @@
         }else if ([selectTheDisplay.club isEqual:@"6 Iron"])
         {
             club=@"6i";
-        }else if ([selectTheDisplay.club isEqual:@"3 Iron"])
-        {
-            club=@"7i";
         }else if ([selectTheDisplay.club isEqual:@"7 Iron"])
         {
             club=@"7i";
@@ -237,6 +234,9 @@
         }else if ([selectTheDisplay.club isEqual:@"LW"])
         {
             club=@"lw";
+        }else if ([selectTheDisplay.club isEqual:@"SW"])
+        {
+            club=@"sw";
         }else{
         
             club=[NSString stringWithFormat:@"%@",selectTheDisplay.club];
@@ -271,7 +271,7 @@
         ZCLog(@"%@",str);
     }
     
-    [parameterArray removeLastObject];
+//    [parameterArray removeLastObject];
     
     
    // ZCLog(@"%lu",parameterArray.count);
@@ -280,6 +280,9 @@
     
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    
+     mgr.responseSerializer.acceptableContentTypes=[NSSet setWithObjects:@"text/html",@"text/plain",@"application/xhtml+xml",@"application/xml",@"application/json", nil];
+    
     NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
     ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
@@ -294,19 +297,25 @@
         
         if (responseObject[@"error_code"] )
         {
-            [ZCprompt prompt:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+               [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+             [MBProgressHUD hideHUD];
         }else{
+            [MBProgressHUD hideHUD];
         //调用数据传递方法
             [self theDataTransfer:responseObject];
         }
         
-        [MBProgressHUD hideHUD];
+        
         
         ZCLog(@"%@",responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         ZCLog(@"%@",error);
         
         [MBProgressHUD hideHUD];
+        
+        [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
+        
+
 
     }];
 
@@ -343,16 +352,14 @@
 
 
 
-
-
 -(NSMutableArray *)selectTheDisplayArray
 {
     if (_selectTheDisplayArray==nil) {
         _selectTheDisplayArray=[NSMutableArray array];
         
-        ZCSelectTheDisplay *selectTheDisplay=[[ZCSelectTheDisplay alloc] init];
-        
-        [_selectTheDisplayArray addObject:selectTheDisplay];
+//        ZCSelectTheDisplay *selectTheDisplay=[[ZCSelectTheDisplay alloc] init];
+//        
+//        [_selectTheDisplayArray addObject:selectTheDisplay];
         
     }
     return _selectTheDisplayArray;
@@ -382,6 +389,7 @@
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         ZCLog(@"%@",responseObject);
         
+        
         NSMutableArray *tempArray=[NSMutableArray array];
         for (NSDictionary *dict in responseObject) {
             
@@ -397,11 +405,14 @@
        // ZCLog(@"%lu",self.selectTheDisplayArray.count);
         self.index=self.selectTheDisplayArray.count;
         [self.tableView reloadData];
-        
+       
         [MBProgressHUD hideHUD];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         ZCLog(@"%@",error);
         [MBProgressHUD hideHUD];
+        [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
+        
+
     }];
     
 
@@ -417,37 +428,57 @@
     resultsView.frame=CGRectMake(0, 0, SCREEN_WIDTH, 50);
     [self.view addSubview:resultsView];
     //标准杆
-    UILabel *parLabel=[[UILabel alloc] initWithFrame:CGRectMake(20, 0, SCREEN_WIDTH*0.197, resultsView.frame.size.height)];
+    UILabel *parLabel=[[UILabel alloc] initWithFrame:CGRectMake(20, 0, SCREEN_WIDTH*0.190, resultsView.frame.size.height)];
     parLabel.text=[NSString stringWithFormat:@"%@标准杆",self.scorecard.par];
     parLabel.textColor=[UIColor whiteColor];
     [resultsView addSubview:parLabel];
     self.parLabel=parLabel;
     
     
+    
+    ZCTee_boxes *teeBox;
+    NSString *teeColer;
+    for (ZCTee_boxes *tee in self.scorecard.tee_boxes) {
+        if ([[NSString stringWithFormat:@"%@",tee.used]  isEqual:@"1"]) {
+            teeBox=tee;
+            teeColer=tee.color;
+            break;
+        }
+    }
+
+    
     //码数
-    UILabel *distanceLabel=[[UILabel alloc] initWithFrame:CGRectMake(parLabel.frame.size.width+parLabel.frame.origin.x+SCREEN_WIDTH*0.04, 0, SCREEN_WIDTH*0.156, resultsView.frame.size.height)];
-   // distanceLabel.text=[NSString stringWithFormat:@"%@码",self.scorecard.distance_from_hole_to_tee_box];
+    UILabel *distanceLabel=[[UILabel alloc] initWithFrame:CGRectMake(parLabel.frame.size.width+parLabel.frame.origin.x+SCREEN_WIDTH*0.02, 0, SCREEN_WIDTH*0.156, resultsView.frame.size.height)];
+    distanceLabel.text=[NSString stringWithFormat:@"%@码",teeBox.distance_from_hole];
     distanceLabel.textColor=[UIColor whiteColor];
     [resultsView addSubview:distanceLabel];
     self.distanceLabel=distanceLabel;
     
+    
+    
+    
    //T台颜色
-    UILabel *tee_box_colorLabel=[[UILabel alloc] initWithFrame:CGRectMake(distanceLabel.frame.size.width+distanceLabel.frame.origin.x+SCREEN_WIDTH*0.02, 0, SCREEN_WIDTH*0.198, resultsView.frame.size.height)];
-//    if ([self.scorecard.tee_box_color isEqual:@"white"]) {
-//        tee_box_colorLabel.text=@"白T";
-//    }else if ([self.scorecard.tee_box_color isEqual:@"red"])
-//    {
-//    tee_box_colorLabel.text=@"红T";
-//    }else if ([self.scorecard.tee_box_color isEqual:@"blue"])
-//    {
-//     tee_box_colorLabel.text=@"蓝T";
-//    }else if ([self.scorecard.tee_box_color isEqual:@"black"])
-//    {
-//    tee_box_colorLabel.text=@"黑T";
-//    }else if ([self.scorecard.tee_box_color isEqual:@"gold"])
-//    {
-//    tee_box_colorLabel.text=@"金T";
-//    }
+    UILabel *tee_box_colorLabel=[[UILabel alloc] initWithFrame:CGRectMake(distanceLabel.frame.size.width+distanceLabel.frame.origin.x+SCREEN_WIDTH*0.01, 0, SCREEN_WIDTH*0.190, resultsView.frame.size.height)];
+    
+    ZCLog(@"%@",self.scorecard.tee_boxes);
+    
+    
+    
+    if ([teeColer isEqual:@"white"]) {
+        tee_box_colorLabel.text=@"白T";
+    }else if ([teeColer isEqual:@"red"])
+    {
+    tee_box_colorLabel.text=@"红T";
+    }else if ([teeColer isEqual:@"blue"])
+    {
+     tee_box_colorLabel.text=@"蓝T";
+    }else if ([teeColer isEqual:@"black"])
+    {
+    tee_box_colorLabel.text=@"黑T";
+    }else if ([teeColer isEqual:@"gold"])
+    {
+    tee_box_colorLabel.text=@"金T";
+    }
     
     tee_box_colorLabel.textColor=[UIColor whiteColor];
     [resultsView addSubview:tee_box_colorLabel];
@@ -499,7 +530,7 @@
     tableview.delegate=self;
     tableview.dataSource=self;
     tableview.rowHeight=50;
-    
+    tableview.sectionHeaderHeight=35;
     tableview.backgroundColor=ZCColor(237, 237, 237);
     
     [tableview   setSeparatorColor:ZCColor(170, 170, 170)];
@@ -549,6 +580,7 @@
 {
  
     UIView *view=[[UIView alloc] init];
+    view.backgroundColor=ZCColor(237, 237, 237);
     view.frame=CGRectMake(0, 0, SCREEN_WIDTH, 35);
     //view.backgroundColor=[UIColor blackColor];
 
@@ -609,6 +641,35 @@
 
 
 
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 50;
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    UIButton *footerView=[[UIButton alloc] init];
+    footerView.frame=CGRectMake(0, 0, SCREEN_WIDTH, 50);
+    footerView.backgroundColor=[UIColor whiteColor];
+    
+    UIView *bjView=[[UIView alloc] init];
+    bjView.frame=CGRectMake(0, 0, SCREEN_WIDTH, 0.5);
+    bjView.backgroundColor=ZCColor(170, 170, 170);
+    [footerView addSubview:bjView];
+    
+    
+    [footerView addTarget:self action:@selector(clickTheFooterView) forControlEvents:UIControlEventTouchUpInside];
+    UIImageView *addImage=[[UIImageView alloc] init];
+    addImage.frame=CGRectMake((SCREEN_WIDTH-25)/2, (footerView.frame.size.height-25)/2, 25, 25);
+    addImage.image=[UIImage imageNamed:@"zyjf_tiejia"];
+    [footerView addSubview:addImage];
+    return footerView;
+}
+
+
+
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NSString *distanceCell = @"distanceCellID";
@@ -624,6 +685,54 @@
     
     return cell;
 }
+
+
+
+
+//点击尾部加号
+-(void)clickTheFooterView
+{
+
+    UIWindow *wd = [[UIApplication sharedApplication].delegate window];
+    
+    
+    ZCChooseView *chooseView=[[ZCChooseView alloc] init];
+    chooseView.frame=[UIScreen mainScreen].bounds;
+     chooseView.delegate=self;
+    
+    
+    chooseView.isYes=@"no";
+    
+    if (self.selectTheDisplayArray.count) {
+        ZCSelectTheDisplay *selectTheDisplay=self.selectTheDisplayArray[self.selectTheDisplayArray.count-1];
+        chooseView.selectTheDisplay=selectTheDisplay;
+    }else
+    {
+    
+    
+   ZCSelectTheDisplay *selectTheDisplay=[[ZCSelectTheDisplay alloc] init];
+  chooseView.selectTheDisplay=selectTheDisplay;
+
+    }
+    
+    
+//    if (self.selectTheDisplayArray.count==1) {
+//        ZCSelectTheDisplay *selectTheDisplay=self.selectTheDisplayArray[self.selectTheDisplayArray.count-1];
+//        chooseView.selectTheDisplay=selectTheDisplay;
+//        
+//    }else
+//    {
+//        
+//        ZCSelectTheDisplay *selectTheDisplay=self.selectTheDisplayArray[self.selectTheDisplayArray.count-2];
+//        chooseView.selectTheDisplay=selectTheDisplay;
+//    }
+    
+
+    [wd addSubview:chooseView];
+    self.chooseView=chooseView;
+    
+}
+
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -652,13 +761,25 @@
     if (selectTheDisplay.point_of_fall) {
         chooseView.isYes=@"yes";
         chooseView.uuid=selectTheDisplay.uuid;
+        chooseView.selectTheDisplay=selectTheDisplay;
         self.indexPath=indexPath;
   
-    }else
-    {
-        chooseView.isYes=@"no";
-
-    }
+   }
+    //else
+//    {
+//        chooseView.isYes=@"no";
+//        if (self.selectTheDisplayArray.count==1) {
+//            ZCSelectTheDisplay *selectTheDisplay=self.selectTheDisplayArray[self.selectTheDisplayArray.count-1];
+//            chooseView.selectTheDisplay=selectTheDisplay;
+//            
+//        }else
+//        {
+//        
+//        ZCSelectTheDisplay *selectTheDisplay=self.selectTheDisplayArray[self.selectTheDisplayArray.count-2];
+//        chooseView.selectTheDisplay=selectTheDisplay;
+//        }
+//
+//    }
 
     [wd addSubview:chooseView];
     self.chooseView=chooseView;
@@ -797,7 +918,7 @@
       
        
     }
-        [self.selectTheDisplayArray insertObject:selectTheDisplay atIndex:self.selectTheDisplayArray.count-1];
+        [self.selectTheDisplayArray insertObject:selectTheDisplay atIndex:self.selectTheDisplayArray.count];
     
     
     

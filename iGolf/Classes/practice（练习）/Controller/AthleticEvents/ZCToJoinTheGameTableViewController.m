@@ -50,6 +50,8 @@
     [super viewDidLoad];
     
 
+    
+    self.navigationItem.title=@"加入比赛";
     //返回
     self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(toJoinTheGameliftBthTheClick:) target:self];
     //让分割线不显示
@@ -138,7 +140,7 @@
     
     // startButton.frame=CGRectMake(0, 300, 317, 40);
     [startButton setTitle:@"加入比赛" forState:UIControlStateNormal];
-    startButton.backgroundColor=ZCColor(105, 178, 138);
+    startButton.backgroundColor=ZCColor(100, 175, 102);
     [startButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [startButton addTarget:self action:@selector(clickDidStartButton) forControlEvents:UIControlEventTouchUpInside];
     UIWindow *wd = [[UIApplication sharedApplication].delegate window];
@@ -154,6 +156,8 @@
 //点击加入比赛
 -(void)clickDidStartButton
 {
+    
+    [MBProgressHUD showMessage:@"请稍后..."];
     ZCScorecardTableViewController *ScorecardTableViewController=[[ZCScorecardTableViewController alloc] init];
    
     
@@ -191,13 +195,28 @@
         
         ZCLog(@"%@",responseObject);
         
+        if (responseObject[@"error_code"] ) {
+            
+            [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+            [MBProgressHUD hideHUD];
+        }else
+        {
+        
+        
         //传值
         ScorecardTableViewController.uuid=self.uuid;
         
         [self.navigationController pushViewController:ScorecardTableViewController animated:YES];
         
+            [MBProgressHUD hideHUD];
+            [MBProgressHUD showSuccess:@"加入比赛成功"];
+        }
+       
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+         [MBProgressHUD hideHUD];
+         [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
         
     }];
     
@@ -230,7 +249,7 @@
     
     
     self.startButton.enabled=NO;
-    self.startButton.backgroundColor=ZCColor(105, 178, 138);
+    self.startButton.backgroundColor=ZCColor(100, 175, 102);
     //ZCLog(@"进入该方法了");
     
     ZCCoursesModel *CoursesModel=self.toTheGameModel.venue.courses[0];
@@ -239,7 +258,7 @@
         if (self.firstTeeBox) {
             
             self.startButton.enabled=YES;
-            self.startButton.backgroundColor=ZCColor(37, 176, 101);
+            self.startButton.backgroundColor=ZCColor(9, 133, 12);
             
         }
         
@@ -249,7 +268,7 @@
         if (self.firstTeeBox &&self.lastTeeBox) {
             
             self.startButton.enabled=YES;
-            self.startButton.backgroundColor=ZCColor(37, 176, 101);
+            self.startButton.backgroundColor=ZCColor(9, 133, 12);
             
         }
 
@@ -508,10 +527,10 @@
         headerView.cleicedName=self.type;
         
         if (self.type==nil) {
-            headerView.liftName=@"选择计分方式";
+            headerView.liftName=@"选择记分方式";
         }else
         {
-            headerView.liftName=@"计分方式";
+            headerView.liftName=@"记分方式";
         }
 
     }else if (section==1)
@@ -538,10 +557,10 @@
        // headerView.tag=1004;
         headerView.cleicedName=self.firstTeeBox;
         if (self.firstTeeBox==nil) {
-            headerView.liftName=@"请选择T台";
+            headerView.liftName=@"请选择发球台";
         }else
         {
-            headerView.liftName=@"开球T台";
+            headerView.liftName=@"发球台";
         }
         
         
@@ -574,10 +593,10 @@
         
         
         if (self.lastTeeBox==nil) {
-            headerView.liftName=@"请选择T台";
+            headerView.liftName=@"请选择发球台";
         }else
         {
-            headerView.liftName=@"开球T台";
+            headerView.liftName=@"发球台";
         }
         
         

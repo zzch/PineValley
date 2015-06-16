@@ -167,22 +167,22 @@
         ZCLog(@"%@",responseObject[@"message"]);
         if (responseObject[@"error_code"] ) {
             
-            [ZCprompt prompt:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+          //  [ZCprompt prompt:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+            
+           // ZCprompt *p=[[ZCprompt alloc] initWithErrorCode:@"sdada"];
+            
             self.hiddenTextField.text=nil;
             [self hiddenTextFieldDidChange:nil];
             //设置为第一响应者
             [_hiddenTextField becomeFirstResponder];
 
+            [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
             
         }else{
             
             
-            // 获取路劲 取出图片
-            NSString *path=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject] stringByAppendingPathComponent:@"personImage.png"];
-            NSData *imageData=[NSData dataWithContentsOfFile:path];
-            UIImage *image=[[UIImage alloc] initWithData:imageData];
-            
-            if (image) {
+                      
+           
                 
                 ZCToJoinTheGameTableViewController *ToJoinTheGame=[[ZCToJoinTheGameTableViewController alloc] init];
                 
@@ -191,17 +191,7 @@
                 [self.navigationController pushViewController:ToJoinTheGame animated:YES];
 
                
-            }else{
-                //单利
-                
-                ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
-                tool.isJoin=YES;
-                
-                ZCPersonalizedSettingsViewController *ZPersonalizedSettingsViewController=[[ZCPersonalizedSettingsViewController alloc] init];
-                ZPersonalizedSettingsViewController.uuid=responseObject[@"uuid"];
-                [self.navigationController pushViewController:ZPersonalizedSettingsViewController animated:YES];
-            }
-
+           
             
             
            
@@ -209,7 +199,7 @@
         
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
+        [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
     }];
 
 

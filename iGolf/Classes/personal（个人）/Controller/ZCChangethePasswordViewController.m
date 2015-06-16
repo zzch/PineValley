@@ -27,6 +27,8 @@
     self.navigationItem.title=@"账号密码";
     self.view.backgroundColor=ZCColor(237, 237, 237);
     
+    //返回
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(liftBthClick:) target:self];
     
     UIImage *image=[UIImage imageNamed:@"shurukuang" ];
     // 指定为拉伸模式，伸缩后重新赋值
@@ -109,6 +111,13 @@
     
 }
 
+
+//返回到上个界面
+-(void)liftBthClick:(UIButton *)bth
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 //监听内容改变
 -(void)TextFieldTextChange
 {
@@ -138,6 +147,8 @@
 //点击提交
 -(void)clickTheSubmitButton
 {
+    
+    [MBProgressHUD showMessage:@"请稍后..."];
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     mgr.responseSerializer.acceptableContentTypes=[NSSet setWithObjects:@"text/html",@"text/plain",@"application/xhtml+xml",@"application/xml",@"application/json", nil];
     
@@ -161,9 +172,14 @@
         
         ZCLog(@"%@",responseObject);
         if (responseObject[@"error_code"]) {
-            [ZCprompt prompt:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+          [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+            
+             [MBProgressHUD hideHUD];
         }else
         {
+            [MBProgressHUD hideHUD];
+            
+            [MBProgressHUD showSuccess:@"密码修改成功"];
             [self.navigationController popViewControllerAnimated:YES];
         
         }
@@ -172,6 +188,12 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         ZCLog(@"%@",error);
+        [MBProgressHUD hideHUD];
+        
+        [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
+        
+
+        
         
     }];
     

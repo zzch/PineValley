@@ -11,7 +11,7 @@
 #import "ZCAccount.h"
 #import "AFNetworking.h"
 #import "UIBarButtonItem+DC.h"
-#import "MBProgressHUD+NJ.h"
+
 @interface ZCModifyTheScorecardViewController ()<UIPickerViewDataSource,UIPickerViewDelegate,UIAlertViewDelegate>
 //总杆数 加号
 @property(weak,nonatomic) UIButton *totalLabelAddButton;
@@ -142,7 +142,7 @@
     self.totalView=totalView;
     
     UIView *bjView1=[[UIView alloc] init];
-    bjView1.frame=CGRectMake(0, totalViewY+totalViewH, SCREEN_WIDTH, 1);
+    bjView1.frame=CGRectMake(0, totalViewY+totalViewH, SCREEN_WIDTH, 0.5);
     bjView1.backgroundColor=ZCColor(170, 170, 170);
     [self.view addSubview:bjView1];
     [self totalViewContent];
@@ -161,7 +161,7 @@
     [self.view addSubview:pushLabelView];
     
     UIView *bjView2=[[UIView alloc] init];
-    bjView2.frame=CGRectMake(0, pushLabelViewY+pushLabelViewH, SCREEN_WIDTH, 1);
+    bjView2.frame=CGRectMake(0, pushLabelViewY+pushLabelViewH, SCREEN_WIDTH, 0.5);
     bjView2.backgroundColor=ZCColor(170, 170, 170);
     [self.view addSubview:bjView2];
 
@@ -185,7 +185,7 @@
     
     
     UIView *bjView3=[[UIView alloc] init];
-    bjView3.frame=CGRectMake(0, punishLabelViewY+punishLabelViewH, SCREEN_WIDTH, 1);
+    bjView3.frame=CGRectMake(0, punishLabelViewY+punishLabelViewH, SCREEN_WIDTH, 0.5);
     bjView3.backgroundColor=ZCColor(170, 170, 170);
     [self.view addSubview:bjView3];
 
@@ -211,7 +211,7 @@
      [self distanceViewContent];
     
     UIView *bjView4=[[UIView alloc] init];
-    bjView4.frame=CGRectMake(0, distanceViewY+distanceViewH, SCREEN_WIDTH, 1);
+    bjView4.frame=CGRectMake(0, distanceViewY+distanceViewH, SCREEN_WIDTH, 0.5);
     bjView4.backgroundColor=ZCColor(170, 170, 170);
     [self.view addSubview:bjView4];
 
@@ -264,19 +264,19 @@
 -(void)distanceViewContent
 {
     UILabel *distanceLabelName=[[UILabel alloc] init];
-    CGFloat distanceLabelNameX=self.distanceView.frame.size.width*0.152;
+    CGFloat distanceLabelNameX=self.distanceView.frame.size.width*0.112;
     CGFloat distanceLabelNameY=self.distanceView.frame.size.height*0.22;
-    CGFloat distanceLabelNameW=70;
+    CGFloat distanceLabelNameW=130;
     CGFloat distanceLabelNameH=20;
     distanceLabelName.frame=CGRectMake(distanceLabelNameX, distanceLabelNameY, distanceLabelNameW, distanceLabelNameH);
-    distanceLabelName.text=@"距离球洞";
+    distanceLabelName.text=@"第一杆距离球洞";
     distanceLabelName.textAlignment=NSTextAlignmentCenter;
     distanceLabelName.textColor=ZCColor(85, 85, 85);
     [self.distanceView addSubview:distanceLabelName];
     
     //显示值
     UILabel *distanceLabel=[[UILabel alloc] init];
-    CGFloat distanceLabelX=distanceLabelNameX;
+    CGFloat distanceLabelX=distanceLabelNameX+30;
     CGFloat distanceLabelY=distanceLabelNameY+distanceLabelNameH+self.distanceView.frame.size.height*0.1;
     
     CGFloat distanceLabelW=70;
@@ -332,12 +332,12 @@
     totalLabelName.frame=CGRectMake(totalLabelNameX, totalLabelNameY, totalLabelNameW, totalLabelNameH);
     totalLabelName.text=@"罚杆数";
     totalLabelName.textAlignment=NSTextAlignmentCenter;
-    totalLabelName.font=[UIFont systemFontOfSize:22];
+    totalLabelName.font=[UIFont systemFontOfSize:16];
     totalLabelName.textColor=ZCColor(85, 85, 85);
     [self.punishLabelView addSubview:totalLabelName ];
     
     UIView *bjView=[[UIView alloc] init];
-    bjView.frame=CGRectMake(totalLabelNameW, 0, 1, totalLabelNameH);
+    bjView.frame=CGRectMake(totalLabelNameW, 0, 0.5, totalLabelNameH);
     //UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"A5dong_shuxian"]];
     bjView.backgroundColor=ZCColor(170, 170, 170);
     [self.punishLabelView addSubview:bjView];
@@ -398,12 +398,12 @@
     totalLabelName.frame=CGRectMake(totalLabelNameX, totalLabelNameY, totalLabelNameW, totalLabelNameH);
     totalLabelName.text=@"推杆数";
     totalLabelName.textAlignment=NSTextAlignmentCenter;
-    totalLabelName.font=[UIFont systemFontOfSize:22];
+    totalLabelName.font=[UIFont systemFontOfSize:16];
     totalLabelName.textColor=ZCColor(85, 85, 85);
     [self.pushLabelView addSubview:totalLabelName ];
     
     UIView *bjView=[[UIView alloc] init];
-    bjView.frame=CGRectMake(totalLabelNameW, 0, 1, totalLabelNameH);
+    bjView.frame=CGRectMake(totalLabelNameW, 0, 0.5, totalLabelNameH);
     //UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"A5dong_shuxian"]];
     bjView.backgroundColor=ZCColor(170, 170, 170);
     [self.pushLabelView addSubview:bjView];
@@ -478,12 +478,13 @@
     totalLabelName.frame=CGRectMake(totalLabelNameX, totalLabelNameY, totalLabelNameW, totalLabelNameH);
     totalLabelName.text=@"总杆数";
     totalLabelName.textAlignment=NSTextAlignmentCenter;
-    totalLabelName.font=[UIFont systemFontOfSize:22];
+    totalLabelName.font=[UIFont systemFontOfSize:16];
     totalLabelName.textColor=ZCColor(85, 85, 85);
+    
     [self.totalView addSubview:totalLabelName ];
     
     UIView *bjView=[[UIView alloc] init];
-    bjView.frame=CGRectMake(totalLabelNameW, 0, 1, totalLabelNameH);
+    bjView.frame=CGRectMake(totalLabelNameW, 0, 0.5, totalLabelNameH);
    // UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"A5dong_shuxian"]];
     bjView.backgroundColor=ZCColor(170, 170, 170);
     [self.totalView addSubview:bjView];

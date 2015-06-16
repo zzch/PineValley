@@ -19,7 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.tableView.bounces=NO;
     self.tableView.backgroundColor=ZCColor(237, 237, 237);
     self.navigationItem.title=@"一切一推";
     self.tableView.delegate=self;

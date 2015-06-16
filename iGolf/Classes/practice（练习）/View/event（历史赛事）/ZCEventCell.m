@@ -76,20 +76,21 @@
         [scoreImageView addSubview:scoreLabel];
         self.scoreLabel=scoreLabel;
         scoreLabel.textAlignment=NSTextAlignmentCenter;
-        scoreLabel.font=[UIFont systemFontOfSize:34 ];
+        scoreLabel.font=[UIFont systemFontOfSize:36 ];
         scoreLabel.textColor=ZCColor(255, 150, 29);
         
         //球场名称
         UILabel *nameLabel=[[UILabel alloc] init];
         [self.contentView addSubview:nameLabel];
         self.nameLabel=nameLabel;
-        nameLabel.textColor=ZCColor(85, 85, 85);
+        nameLabel.textColor=ZCColor(34, 34, 34);
        // scoreLabel.textAlignment=NSTextAlignmentCenter;
 
         //创建时间
         UILabel *startedAtLabel=[[UILabel alloc] init];
         [self.contentView addSubview:startedAtLabel];
         self.startedAtLabel=startedAtLabel;
+        startedAtLabel.font=[UIFont systemFontOfSize:13 ];
          startedAtLabel.textColor=ZCColor(85, 85, 85);
         //赛事类型
         
@@ -106,9 +107,9 @@
 //        typeLabel.backgroundColor=col1;
         //typeLabel.backgroundColor=col;
         typeLabel.textAlignment=NSTextAlignmentCenter;
-        typeLabel.font=[UIFont fontWithName:@"AppleGothic" size:11];
+        typeLabel.font=[UIFont fontWithName:@"AppleGothic" size:12];
        // typeLabel.font=[UIFont systemFontOfSize:11 ];
-         typeLabel.textColor=ZCColor(85, 85, 85);
+         typeLabel.textColor=ZCColor(102, 102, 102);
 
         //
         UIImageView *recorded_scorecards_count_label_View=[[UIImageView alloc] init];
@@ -123,7 +124,7 @@
 //        UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"lianxisai"]];
 //        recorded_scorecards_count_label.backgroundColor=col;
         recorded_scorecards_count_label.textAlignment=NSTextAlignmentCenter;
-        recorded_scorecards_count_label.font=[UIFont systemFontOfSize:14 ];
+        recorded_scorecards_count_label.font=[UIFont systemFontOfSize:12 ];
          recorded_scorecards_count_label.textColor=ZCColor(85, 85, 85);
         [recorded_scorecards_count_label_View addSubview:recorded_scorecards_count_label];
         
@@ -170,12 +171,14 @@
 {
     _event=event;
     
-    if ([self _valueOrNil:self.event.player.total]==nil) {
-        self.scoreLabel.text=@"未记录";
-        self.scoreLabel.font=[UIFont systemFontOfSize:25];
+    ZCLog(@"%@",self.event.player.strokes);
+    
+    if ([self _valueOrNil:self.event.player.strokes]==nil) {
+        self.scoreLabel.text=@"未完成";
+        self.scoreLabel.font=[UIFont systemFontOfSize:18];
     }else
     {
-    self.scoreLabel.text=[NSString stringWithFormat:@"%@",self.event.player.total ];
+    self.scoreLabel.text=[NSString stringWithFormat:@"%@",self.event.player.strokes ];
     }
   
     self.nameLabel.text=self.event.venue.name;
@@ -214,7 +217,7 @@
     [super layoutSubviews];
     
     //成绩frame
-    CGFloat scoreLabelX=10;
+    CGFloat scoreLabelX=17;
     
     CGFloat scoreLabelW=75;
     CGFloat scoreLabelH=75;
@@ -245,7 +248,7 @@
     //timeImage frame
     
     CGFloat timeImageX=nameLabelX;
-    CGFloat timeImageY=nameLabelY+nameLabelH+5;
+    CGFloat timeImageY=nameLabelY+nameLabelH+6;
     CGFloat timeImageW=17;
     CGFloat timeImageH=15;
     
@@ -255,7 +258,7 @@
     
     //startedAtLabel frame
     
-    CGFloat startedAtLabelX=timeImageX+timeImageW+5;
+    CGFloat startedAtLabelX=timeImageX+timeImageW+6;
     CGFloat startedAtLabelY=timeImageY;
     CGFloat startedAtLabelW=170;
     CGFloat startedAtLabelH=15;
@@ -267,17 +270,17 @@
     //typeLabel frame
     
     CGFloat typeLabelX=timeImageX;
-    CGFloat typeLabelY=timeImageY+timeImageH+10;
+    CGFloat typeLabelY=timeImageY+timeImageH+12;
     CGFloat typeLabelW=75;
     CGFloat typeLabelH=20;
     
     self.typeLabelView.frame=CGRectMake(typeLabelX, typeLabelY, typeLabelW, typeLabelH);
     
-    self.typeLabel.frame=self.typeLabelView.bounds;
+    self.typeLabel.frame=CGRectMake(0, 2, self.typeLabelView.frame.size.width, self.typeLabelView.frame.size.height);
     //recorded_scorecards_count_label frame
     
     CGFloat countLabelX=typeLabelX+typeLabelW+10;
-    CGFloat countLabelY=timeImageY+timeImageH+10;
+    CGFloat countLabelY=timeImageY+timeImageH+12;
     CGFloat countLabelW=75;
     CGFloat countLabelH=20;
     

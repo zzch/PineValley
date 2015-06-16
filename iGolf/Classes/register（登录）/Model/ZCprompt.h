@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ZCprompt : NSObject
-+ (void)prompt:(id )viewController andErrorCode:(NSString * )errorCode;
+@interface ZCprompt : UIView
+//+ ( void)prompt:(id )viewController andErrorCode:(NSString * )errorCode;
+
+//-(void)showAlertView:(id *)viewController andErrorCode:(NSString *)errorCode;
+
++(void)initWithController:(id)viewController  andErrorCode:(NSString *)errorCode;
+-(instancetype)initWithFrame:(CGRect)frame andErrorCode:(NSString *)errorCode;
 @end

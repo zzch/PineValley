@@ -7,7 +7,7 @@
 //
 
 #import "ZCAverageViewController.h"
-
+#import "ZCProfessionalStatisticsPromptView.h"
 @interface ZCAverageViewController ()
 @property(nonatomic,weak)UIView *middleView;
 @property (nonatomic, assign, getter = isOpened) BOOL opened;
@@ -147,7 +147,7 @@
     CGFloat promptBtnW=20;
     CGFloat promptBtnH=20;
     promptBtn.frame=CGRectMake(promptBtnX, promptBtnY, promptBtnW, promptBtnH);
-    [promptBtn setImage:[UIImage imageNamed:@"20141118042246536.jpg"]
+    [promptBtn setImage:[UIImage imageNamed:@"chengsewenhao"]
                forState:UIControlStateNormal];
     [promptBtn addTarget:self action:@selector(clickprompBtn:) forControlEvents:UIControlEventTouchUpInside];
     [middleView addSubview:promptBtn];
@@ -193,24 +193,33 @@
 //点击提示
 -(void)clickprompBtn:(UIButton *)prompBtn
 {
- 
-    if (self.opened==NO) {
-        self.opened=YES;
-        UILabel *prompLabel=[[UILabel alloc] init];
-        CGFloat prompLabelX=prompBtn.frame.origin.x-60;
-        CGFloat prompLabelY=prompBtn.frame.origin.y+30;
-        CGFloat prompLabelW=200;
-        CGFloat prompLabelH=20;
-        prompLabel.frame=CGRectMake(prompLabelX, prompLabelY, prompLabelW, prompLabelH);
-        prompLabel.text=@"提示语提示语提示语提示语提示语提示语提示语";
-        [self.middleView addSubview:prompLabel];
-        self.prompLabel=prompLabel;
-
-    }else
-    {
-        [self.prompLabel removeFromSuperview];
-        self.opened=NO;
-    }
+    
+    ZCProfessionalStatisticsPromptView *PromptView=[[ZCProfessionalStatisticsPromptView alloc] init];
+    PromptView.frame= [[UIScreen mainScreen] bounds];
+    
+    PromptView.nameStr=@"救球平均杆率";
+    PromptView.instructionsStr=@"在(3/4/5)杆洞大于标准杆上果岭并且打出等于标准杆的成绩";
+    UIWindow *wd = [[UIApplication sharedApplication].delegate window];
+    [wd addSubview:PromptView];
+    
+// 
+//    if (self.opened==NO) {
+//        self.opened=YES;
+//        UILabel *prompLabel=[[UILabel alloc] init];
+//        CGFloat prompLabelX=prompBtn.frame.origin.x-60;
+//        CGFloat prompLabelY=prompBtn.frame.origin.y+30;
+//        CGFloat prompLabelW=200;
+//        CGFloat prompLabelH=20;
+//        prompLabel.frame=CGRectMake(prompLabelX, prompLabelY, prompLabelW, prompLabelH);
+//        prompLabel.text=@"提示语提示语提示语提示语提示语提示语提示语";
+//        [self.middleView addSubview:prompLabel];
+//        self.prompLabel=prompLabel;
+//
+//    }else
+//    {
+//        [self.prompLabel removeFromSuperview];
+//        self.opened=NO;
+//    }
    
 }
 

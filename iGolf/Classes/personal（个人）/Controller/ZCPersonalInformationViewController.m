@@ -32,6 +32,8 @@
 @property (nonatomic, assign, getter = isOpened1) BOOL opened1;
 @property (nonatomic, assign, getter = isOpened2) BOOL opened2;
 
+@property(nonatomic,weak)UIButton *ageNumLabel;
+
 @end
 
 @implementation ZCPersonalInformationViewController
@@ -39,7 +41,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title=@"修改个人资料";
+    self.navigationItem.title=@"修改个人信息";
 //    
 //    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
 //    customLab.textAlignment=NSTextAlignmentCenter;
@@ -75,10 +77,8 @@
    
     self.view.backgroundColor=ZCColor(237, 237, 237);
     
-    //跟换头像View
-    [self changePhotoView];
-    //名字
-    [self personalName];
+    [self onlineData];
+    
     
 //    //性别
 //    [self chooseGender];
@@ -100,80 +100,195 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+
+
+
+
+//网络请求
+-(void)onlineData
+{
+    //加载圈圈
+    [MBProgressHUD showMessage:@"加载中..."];
+    NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
+    ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
+    self.name=account.nickname;
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    
+    NSString *URL=[NSString stringWithFormat:@"%@%@",API,@"users/details.json"];
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"token"]=account.token;
+    
+    // params[parameter]=[NSString stringWithFormat:@"%@",value];
+    // /v1/users/details.json
+    [mgr GET:URL parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        
+        ZCLog(@"%@",responseObject);
+        if (responseObject[@"error_code"] ) {
+            
+            [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+            
+        }else
+        {
+            
+            ZCLog(@"%@",responseObject);
+            ZCPersonalData *personalData=[ZCPersonalData personalDataWithDict:responseObject];
+            self.personalData=personalData;
+            
+            
+            
+            
+            //跟换头像View
+            [self changePhotoView];
+            //名字
+            [self personalName];
+
+        }
+        //移除圈圈
+        [MBProgressHUD hideHUD];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        ZCLog(@"%@",error);
+        [MBProgressHUD hideHUD];
+        [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
+    }];
+    
+    
+}
+
+
+
+
+
+
 //点击确定按钮
 -(void)chooseTheDetermine
 {
 /////v1/users/update_nickname.json
     
     
-    
-    //生日的URL
-    NSString *birthdayURL=[NSString stringWithFormat:@"%@%@",API,@"users/update_birthday.json"];
-    //签名的URL
-    NSString *descriptionURL=[NSString stringWithFormat:@"%@%@",API,@"users/update_description.json"];
-    
-    //性别的URL
-    NSString *genderURL=[NSString stringWithFormat:@"%@%@",API,@"users/update_gender.json"];
-    //昵称的URL
-    NSString *nicknameURL=[NSString stringWithFormat:@"%@%@",API,@"users/update_nickname.json"];
-
-    
-    //跟新签名
-    [self withTheNewDataWithURL:descriptionURL parameter:@"description" value:self.signatureTextView.text];
-    //跟新昵称
-    [self withTheNewDataWithURL:nicknameURL parameter:@"nickname" value:self.nameTextField.text];
-    
-    //跟新生日
-    [self withTheNewDataWithURL:birthdayURL parameter:@"birthday" value:[NSString stringWithFormat:@"%ld", self.time]];
-    //跟新性别
-   [self withTheNewDataWithURL:genderURL parameter:@"gender" value:[NSString stringWithFormat:@"%@", self.gender]];
-    
-
-    
-    
-    
-    
-    if ([self.delegate respondsToSelector:@selector(ZCPersonalInformationViewController:andPersonImage:andSignatureTextView:andPersonName:)]) {
-        
-        [self.delegate ZCPersonalInformationViewController:self andPersonImage:self.photoView.image andSignatureTextView:self.signatureTextView.text andPersonName:self.nameTextField.text];
-    }
-    
-    
-    
-    
-    [self.navigationController popViewControllerAnimated:YES];
-    
-}
-
--(void)withTheNewDataWithURL:(NSString *)url parameter:(NSString *)parameter value:(NSString *)value
-{
-    
+    //加载圈圈
+    [MBProgressHUD showMessage:@"上传中..."];
     NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
     ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
-    
+    self.name=account.nickname;
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
-   
-    ZCLog(@"%@",account.token);
-    ZCLog(@"%@",value);
     
+    NSString *URL=[NSString stringWithFormat:@"%@%@",API,@"users/update_profile.json"];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    params[@"token"]=account.token;
+     params[@"token"]=account.token;
+     params[@"nickname"]=self.nameTextField.text;
+     params[@"gender"]=[NSString stringWithFormat:@"%@", self.gender];
+     params[@"birthday"]=@(self.time);
+     params[@"description"]=self.signatureTextView.text;
     
-    params[parameter]=[NSString stringWithFormat:@"%@",value];
-    
-    [mgr PUT:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
+    [mgr PUT:URL parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         ZCLog(@"%@",responseObject);
         
+        
+        if (responseObject[@"error_code"] ) {
+            
+            [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+            
+            [MBProgressHUD hideHUD];
+            
+        }else
+        {
+
+        
+        if ([self.delegate respondsToSelector:@selector(ZCPersonalInformationViewController:andPersonImage:andSignatureTextView:andPersonName:)]) {
+            
+            [self.delegate ZCPersonalInformationViewController:self andPersonImage:self.photoView.image andSignatureTextView:self.signatureTextView.text andPersonName:self.nameTextField.text];
+        }
+        
+        
+        
+        
+        [self.navigationController popViewControllerAnimated:YES];
+
+        [MBProgressHUD hideHUD];
+        }
+        
+        [MBProgressHUD showSuccess:@"上传成功"];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         ZCLog(@"%@",error);
+        [MBProgressHUD hideHUD];
         
+        
+         [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
     }];
-
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+//    //生日的URL
+//    NSString *birthdayURL=[NSString stringWithFormat:@"%@%@",API,@"users/update_profile.json"];
+//    
+//    
+//    //签名的URL
+//    NSString *descriptionURL=[NSString stringWithFormat:@"%@%@",API,@"users/update_description.json"];
+//    
+//    //性别的URL
+//    NSString *genderURL=[NSString stringWithFormat:@"%@%@",API,@"users/update_gender.json"];
+//    //昵称的URL
+//    NSString *nicknameURL=[NSString stringWithFormat:@"%@%@",API,@"users/update_nickname.json"];
+//
+//    
+//    //跟新签名
+//    [self withTheNewDataWithURL:descriptionURL parameter:@"description" value:self.signatureTextView.text];
+//    //跟新昵称
+//    [self withTheNewDataWithURL:nicknameURL parameter:@"nickname" value:self.nameTextField.text];
+//    
+//    //跟新生日
+//    [self withTheNewDataWithURL:birthdayURL parameter:@"birthday" value:[NSString stringWithFormat:@"%ld", self.time]];
+//    //跟新性别
+//   [self withTheNewDataWithURL:genderURL parameter:@"gender" value:[NSString stringWithFormat:@"%@", self.gender]];
+//    
+//
+//    
+//    
+    
+    
 }
+
+//-(void)withTheNewDataWithURL:(NSString *)url parameter:(NSString *)parameter value:(NSString *)value
+//{
+//    
+//    NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+//    NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
+//    ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
+//    
+//    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+//   
+//    ZCLog(@"%@",account.token);
+//    ZCLog(@"%@",value);
+//    
+//    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+//    params[@"token"]=account.token;
+//    
+//    params[parameter]=[NSString stringWithFormat:@"%@",value];
+//    
+//    [mgr PUT:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        
+//        ZCLog(@"%@",responseObject);
+//        
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        
+//        ZCLog(@"%@",error);
+//        
+//    }];
+//
+//
+//}
 
 
 //名字
@@ -193,11 +308,11 @@
     CGFloat nameTextFieldX=0;
     CGFloat nameTextFieldY=nameLabelY+nameLabelH;
     CGFloat nameTextFieldW=SCREEN_WIDTH-(2*nameTextFieldX);
-    CGFloat nameTextFieldH=40;
+    CGFloat nameTextFieldH=51;
     
     nameTextField.frame=CGRectMake(nameTextFieldX, nameTextFieldY, nameTextFieldW, nameTextFieldH);
     
-    
+    [nameTextField addTarget:self action:@selector(nameTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
 //    CGFloat top = 25; // 顶端盖高度
 //    CGFloat bottom = 25 ; // 底端盖高度
@@ -208,8 +323,8 @@
 //    // 指定为拉伸模式，伸缩后重新赋值
 //    image1 = [image1 resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
 //    [nameTextField setBackground:image1];
-    
-    nameTextField.backgroundColor=[UIColor whiteColor];
+    nameTextField.background=[UIImage imageNamed:@"hang_bj_03"];
+    //nameTextField.backgroundColor=[UIColor whiteColor];
     nameTextField.textColor=ZCColor(85, 85, 85);
     nameTextField.text=self.name;
     [self.scrollView addSubview:nameTextField];
@@ -231,9 +346,11 @@
     CGFloat genderButtonX=0;
     CGFloat genderButtonY=genderLabelY+genderLabelH;
     CGFloat genderButtonW=SCREEN_WIDTH-(2*genderButtonX);
-    CGFloat genderButtonH=49;
-    genderButton.backgroundColor=[UIColor whiteColor];
+    CGFloat genderButtonH=51;
+    [genderButton setBackgroundImage:[UIImage imageNamed:@"hang_bj_03"] forState:UIControlStateNormal];
+   
     genderButton.frame=CGRectMake(genderButtonX, genderButtonY, genderButtonW, genderButtonH);
+    self.gender=@"1";
     [genderButton addTarget:self action:@selector(chickGenderButton) forControlEvents:UIControlEventTouchUpInside];
     
     
@@ -300,15 +417,15 @@
     CGFloat birthdayButtonX=0;
     CGFloat birthdayButtonY=birthdayLabelY+birthdayLabelH;
     CGFloat birthdayButtonW=SCREEN_WIDTH-(2*birthdayButtonX);
-    CGFloat birthdayButtonH=49;
+    CGFloat birthdayButtonH=51;
     birthdayButton.frame=CGRectMake(birthdayButtonX, birthdayButtonY, birthdayButtonW, birthdayButtonH);
-    
+    [birthdayButton setBackgroundImage:[UIImage imageNamed:@"hang_bj_03"] forState:UIControlStateNormal];
     
 //    UIImage *image3=[UIImage imageNamed:@"grxx_anniu_bj" ];
 //    // 指定为拉伸模式，伸缩后重新赋值
 //    image3 = [image3 resizableImageWithCapInsets:UIEdgeInsetsMake(25,25,10,10) resizingMode:UIImageResizingModeStretch];
    // [birthdayButton setBackgroundImage:image2 forState:UIControlStateNormal];
-    birthdayButton.backgroundColor=[UIColor whiteColor];
+    
     
     [birthdayButton addTarget:self action:@selector(chickBirthdayButton) forControlEvents:UIControlEventTouchUpInside];
    // birthdayButton.backgroundColor=[UIColor blueColor];
@@ -317,6 +434,8 @@
     [fmt setDateFormat:@"yyyy-MM-dd "];
     NSDate *confromTimesp=[NSDate dateWithTimeIntervalSince1970:self.personalData.birthday];
     NSString *confromTimespStr=[fmt stringFromDate:confromTimesp];
+    
+    
     [birthdayButton setTitle:confromTimespStr forState:UIControlStateNormal];
     [birthdayButton setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
         //居左
@@ -327,7 +446,17 @@
     self.birthdayButton=birthdayButton;
     
     
-    
+//    // 获取用户通过UIDatePicker设置的日期和时间
+//    NSDate *selected = [datePicker date];
+//    // 创建一个日期格式器
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    // 为日期格式器设置格式字符串
+//    [dateFormatter setDateFormat:@"yyyy年MM月dd日"];
+//    // 使用日期格式器格式化日期、时间
+//    NSString *destDateString = [dateFormatter stringFromDate:selected];
+//    
+//    [self.birthdayButton setTitle:destDateString forState:UIControlStateNormal];
+//
     
     
   
@@ -336,7 +465,6 @@
     UILabel *ageLabel=[[UILabel alloc] init];
     CGFloat ageLabelY=birthdayButtonY+birthdayButtonH;
     CGFloat ageLabelX=10;
-    
     CGFloat ageLabelW=60;
     CGFloat ageLabelH=40;
     ageLabel.frame=CGRectMake(ageLabelX, ageLabelY, ageLabelW, ageLabelH);
@@ -344,13 +472,20 @@
     ageLabel.textColor=ZCColor(85, 85, 85);
     [self.scrollView addSubview:ageLabel];
     
+    
+   
+    
+    
+    
+    
     UIButton *ageNumLabel=[[UIButton alloc] init];
     CGFloat ageNumLabelY=ageLabelY+ageLabelH;
     CGFloat ageNumLabelX=0;
     
     CGFloat ageNumLabelW=SCREEN_WIDTH-(2*ageNumLabelX);
-    CGFloat ageNumLabelH=49;
+    CGFloat ageNumLabelH=51;
     ageNumLabel.frame=CGRectMake(ageNumLabelX, ageNumLabelY, ageNumLabelW, ageNumLabelH);
+    [ageNumLabel setBackgroundImage:[UIImage imageNamed:@"hang_bj_03"] forState:UIControlStateNormal];
    // ageNumLabel.text=@"24";
     
 //    UIImage *image4=[UIImage imageNamed:@"grxx_anniu_bj" ];
@@ -358,11 +493,53 @@
 //    image4 = [image4 resizableImageWithCapInsets:UIEdgeInsetsMake(25,25,10,10) resizingMode:UIImageResizingModeStretch];
     //[ageNumLabel setBackgroundImage:image2 forState:UIControlStateNormal];
     //[ageNumLabel setBackgroundImage:image4 forState:UIControlStateNormal];
-    [ageNumLabel setBackgroundColor:[UIColor whiteColor]];
+    ageNumLabel.contentHorizontalAlignment=UIControlContentHorizontalAlignmentLeft;
+    //让button的里的内容从左往右移动10像素
+   
     ageNumLabel.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
     [ageNumLabel setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
     
     [self.scrollView addSubview:ageNumLabel];
+    self.ageNumLabel=ageNumLabel;
+    
+   
+    
+    
+    // 为日期格式器设置格式字符串
+    [fmt setDateFormat:@"yyyy"];
+    // 使用日期格式器格式化日期、时间
+    NSString *person = [fmt stringFromDate:confromTimesp];
+    
+    int age=[person intValue];
+    
+    
+    // 获取用户通过UIDatePicker设置的日期和时间
+    NSDate *nowDate = [NSDate date];
+    // 创建一个日期格式器
+    NSDateFormatter *nowDateFormatter = [[NSDateFormatter alloc] init];
+    // 为日期格式器设置格式字符串
+    [nowDateFormatter setDateFormat:@"yyyy"];
+    // 使用日期格式器格式化日期、时间
+    NSString *nowDateString = [nowDateFormatter stringFromDate:nowDate];
+    
+    int now=[nowDateString intValue];
+    
+    
+    if (now-age>0) {
+        [self.ageNumLabel setTitle:[NSString stringWithFormat:@"%d",now-age] forState:UIControlStateNormal];
+    }else if (now-age>85)
+    {
+    [self.ageNumLabel setTitle:@"85" forState:UIControlStateNormal];
+    }
+    
+    else
+    {
+    [self.ageNumLabel setTitle:@"0" forState:UIControlStateNormal];
+    }
+    
+    
+    
+
     
     
     
@@ -424,7 +601,7 @@
 
     //signatureTextView.
     signatureTextView.backgroundColor=[UIColor whiteColor];
-    //signatureTextView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"grxx_qianming_bj"]];
+   // signatureTextView.backgroundColor=[UIColor colorWithPatternImage:image4];
     
     if (![self.personalData.desc isKindOfClass:[NSNull class]]) {
         signatureTextView.text=[NSString stringWithFormat:@"%@",self.personalData.desc];
@@ -436,6 +613,21 @@
     
     self.scrollView.contentSize = CGSizeMake(0,signatureTextFieldY+signatureTextFieldH+70 );
 }
+
+
+
+
+
+//监听  限制文字
+-(void)nameTextFieldDidChange:(UITextField *)TextField
+{
+    if (TextField.text.length > 14 && TextField.text.length!=1){
+        self.nameTextField.text = [TextField.text substringToIndex:14];
+        
+    }
+    
+}
+
 
 ////chickAddressButton
 //-(void)chickAddressButton
@@ -502,22 +694,22 @@
         UIButton *manBtn=[[UIButton alloc] init];
         CGFloat  manBtnW=30;
         CGFloat  manBtnH=30;
-        CGFloat  manBtnX=50;
+        CGFloat  manBtnX=(SCREEN_WIDTH-60)/3;
         CGFloat  manBtnY=(genderViewH-manBtnH)*0.5;
         manBtn.frame=CGRectMake(manBtnX, manBtnY, manBtnW, manBtnH);
         [manBtn setTitle:@"男" forState:UIControlStateNormal];
-        [manBtn setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
+        [manBtn setTitleColor:ZCColor(255, 150, 29) forState:UIControlStateNormal];
         [manBtn addTarget:self action:@selector(chooseTheMan) forControlEvents:UIControlEventTouchUpInside];
         [genderView addSubview:manBtn];
         
         UIButton *womanBtn=[[UIButton alloc] init];
         CGFloat  womanBtnW=30;
         CGFloat  womanBtnH=30;
-        CGFloat  womanBtnX=manBtnX+manBtnW+ 100;
+        CGFloat  womanBtnX=manBtnX+manBtnW+ manBtnX;
         CGFloat  womanBtnY=(genderViewH-manBtnH)*0.5;
         womanBtn.frame=CGRectMake(womanBtnX, womanBtnY, womanBtnW, womanBtnH);
         [womanBtn setTitle:@"女" forState:UIControlStateNormal];
-        [womanBtn setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
+        [womanBtn setTitleColor:ZCColor(255, 150, 29) forState:UIControlStateNormal];
         [womanBtn addTarget:self action:@selector(chooseTheWoman) forControlEvents:UIControlEventTouchUpInside];
         [genderView addSubview:womanBtn];
 
@@ -567,9 +759,14 @@
 //    // 指定为拉伸模式，伸缩后重新赋值
 //    image = [image resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
 //    [photoViewBtn setBackgroundImage:image forState:UIControlStateNormal];
-//    
-    [photoViewBtn setBackgroundColor:[UIColor whiteColor]];
+//
     
+    UIImage *image=[UIImage imageNamed:@"hang_bj_03" ];
+    // 指定为拉伸模式，伸缩后重新赋值
+    image = [image resizableImageWithCapInsets:UIEdgeInsetsMake(25,25,10,10) resizingMode:UIImageResizingModeStretch];
+
+    //[photoViewBtn setBackgroundColor:[UIColor whiteColor]];
+    [photoViewBtn setBackgroundImage:image forState:UIControlStateNormal];
     [photoViewBtn addTarget:self action:@selector(clickphotoViewBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.scrollView addSubview:photoViewBtn];
     self.photoViewBtn=photoViewBtn;
@@ -687,6 +884,45 @@
     //吧时间变成时间濯
      long time=(long)[selected timeIntervalSince1970];
      self.time=time;
+    
+    
+    
+    
+    // 为日期格式器设置格式字符串
+    [dateFormatter setDateFormat:@"yyyy"];
+    // 使用日期格式器格式化日期、时间
+    NSString *person = [dateFormatter stringFromDate:selected];
+    
+    int age=[person intValue];
+    
+    
+    // 获取用户通过UIDatePicker设置的日期和时间
+    NSDate *nowDate = [NSDate date];
+    // 创建一个日期格式器
+    NSDateFormatter *nowDateFormatter = [[NSDateFormatter alloc] init];
+    // 为日期格式器设置格式字符串
+    [nowDateFormatter setDateFormat:@"yyyy"];
+    // 使用日期格式器格式化日期、时间
+    NSString *nowDateString = [dateFormatter stringFromDate:nowDate];
+    
+    int now=[nowDateString intValue];
+    
+    
+    if (now-age>0 &&now-age<85) {
+        [self.ageNumLabel setTitle:[NSString stringWithFormat:@"%d",now-age] forState:UIControlStateNormal];
+    }else if (now-age>85)
+    {
+        [self.ageNumLabel setTitle:@"85" forState:UIControlStateNormal];
+    }
+    
+    else
+    {
+        [self.ageNumLabel setTitle:@"0" forState:UIControlStateNormal];
+    }
+    
+
+    
+//    [self.ageNumLabel setTitle:[NSString stringWithFormat:@"%d",now-age] forState:UIControlStateNormal];
 }
 
 

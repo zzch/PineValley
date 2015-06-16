@@ -10,10 +10,10 @@
 #import "ZCAccount.h"
 #import "AFNetworking.h"
 #import "ZCInvitationViewController.h"
-#import "MBProgressHUD+NJ.h"
+#import "ZCpasswordViewController.h"
 #import "ZCToJoinTheGameTableViewController.h"
 #import "ZCEventUuidTool.h"
-@interface ZCPersonalizedSettingsViewController ()<UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface ZCPersonalizedSettingsViewController ()<UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextFieldDelegate>
 @property(nonatomic,weak)UIButton *imageButton;
 @property(nonatomic,assign,getter=isOpen) BOOL bKeyBoardHide;
 @property(nonatomic,weak)UITextField *nameTextField;
@@ -29,7 +29,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor=[UIColor whiteColor];
+    self.view.backgroundColor=ZCColor(237, 237, 237);
     self.navigationItem.title=@"个性化设置";
     
     //监听通知中心
@@ -67,7 +67,7 @@
     
     
     UIView *xian1=[[UIView alloc] init];
-    xian1.frame=CGRectMake(10, imageButtonY+imageButtonH+(SCREEN_HEIGHT*0.0271), SCREEN_WIDTH-20, 1);
+    xian1.frame=CGRectMake(10, imageButtonY+imageButtonH+(SCREEN_HEIGHT*0.0271), SCREEN_WIDTH-20, 0.5);
     xian1.backgroundColor=ZCColor(170, 170, 170);
     [self.view addSubview:xian1];
     
@@ -126,11 +126,14 @@
      nameTextField.frame=CGRectMake(nameTextFieldX, nameTextFieldY, nameTextFieldW, nameTextFieldH);
     [self.view addSubview:nameTextField];
     self.nameTextField=nameTextField;
+    //nameTextField.keyboardType=
+    [nameTextField addTarget:self action:@selector(nameTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    nameTextField.delegate=self;
     [self.nameTextField addTarget:self action:@selector(whetherCanSaveClicks) forControlEvents:UIControlEventEditingChanged];
 
     
     UIView *xian2=[[UIView alloc] init];
-    xian2.frame=CGRectMake(10, nameTextFieldY+nameTextFieldH+(SCREEN_HEIGHT*0.04), SCREEN_WIDTH-20, 1);
+    xian2.frame=CGRectMake(10, nameTextFieldY+nameTextFieldH+(SCREEN_HEIGHT*0.04), SCREEN_WIDTH-20, 0.5);
     xian2.backgroundColor=ZCColor(170, 170, 170);
     [self.view addSubview:xian2];
     
@@ -156,8 +159,10 @@
     CGFloat manBtnX=(SCREEN_WIDTH-(2*manBtnW))/3;
     CGFloat manBtnY=thirdLabelY+thirdLabelH+SCREEN_HEIGHT*0.03;
     manBtn.frame=CGRectMake(manBtnX, manBtnY, manBtnW, manBtnH);
-    [manBtn setImage:[UIImage imageNamed:@"gxhsz_nan"] forState:UIControlStateNormal];
-    //[manBtn setTitle:@"男" forState:UIControlStateNormal];
+    [manBtn setBackgroundImage:[UIImage imageNamed:@"nan_mr"] forState:UIControlStateNormal];
+    
+    [manBtn setTitle:@"男" forState:UIControlStateNormal];
+    [manBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [manBtn addTarget:self action:@selector(clickTheManBtn:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:manBtn];
     self.manBtn=manBtn;
@@ -170,7 +175,9 @@
     CGFloat wonamBtnX=(2*manBtnX)+manBtnW;
     CGFloat wonamBtnY=manBtnY;
     wonamBtn.frame=CGRectMake(wonamBtnX, wonamBtnY, wonamBtnW, wonamBtnH);
-    [wonamBtn setImage:[UIImage imageNamed:@"gxhsz_nv"] forState:UIControlStateNormal];
+    [wonamBtn setTitle:@"女" forState:UIControlStateNormal];
+    [wonamBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [wonamBtn setBackgroundImage:[UIImage imageNamed:@"nv_mr"] forState:UIControlStateNormal];
     self.wonamBtn=wonamBtn;
    
     [wonamBtn addTarget:self action:@selector(clickTheWonamBtn:) forControlEvents:UIControlEventTouchUpInside];
@@ -195,12 +202,42 @@
     
 }
 
+
+
+//监听  限制文字
+-(void)nameTextFieldDidChange:(UITextField *)TextField
+{
+    if (TextField.text.length > 14 && TextField.text.length!=1){
+        self.nameTextField.text = [TextField.text substringToIndex:14];
+        
+    }
+    }
+
+
+
+
+
+////代理  限制文字长度
+//- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+//    
+//    NSString * toBeString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+//    
+//    if (toBeString.length > 14 && range.length!=1){
+//        textField.text = [toBeString substringToIndex:14];
+//        return NO;
+//        
+//    }
+//    return YES;
+//}
+//
+
+
 //选择男
 -(void)clickTheManBtn:(UIButton *)button
 {
+    [self.manBtn setBackgroundImage:[UIImage imageNamed:@"nan_xz"] forState:UIControlStateNormal];
+    [self.wonamBtn setBackgroundImage:[UIImage imageNamed:@"nv_mr"] forState:UIControlStateNormal];
     
-    [self.manBtn setImage:[UIImage imageNamed:@"nan_xuanzhong"] forState:UIControlStateNormal];
-    [self.wonamBtn setImage:[UIImage imageNamed:@"gxhsz_nv"] forState:UIControlStateNormal];
     self.index=1;
     
     
@@ -213,9 +250,11 @@
 -(void)clickTheWonamBtn:(UIButton *)button
 {
     
+    [self.manBtn setBackgroundImage:[UIImage imageNamed:@"nan_mr"] forState:UIControlStateNormal];
+    [self.wonamBtn setBackgroundImage:[UIImage imageNamed:@"nv_xz"] forState:UIControlStateNormal];
     
-    [self.manBtn setImage:[UIImage imageNamed:@"gxhsz_nan"] forState:UIControlStateNormal];
-    [self.wonamBtn setImage:[UIImage imageNamed:@"nv_xuanzhong"] forState:UIControlStateNormal];
+    
+   
     self.index=2;
     
     
@@ -328,22 +367,7 @@
 
 - (void)keyboardDidChangeFrame:(NSNotification *)noti
 {
-    //改变window的背景颜色
-    //    self.view.window.backgroundColor = self.tableView.backgroundColor;
-//    
-//    CGRect frame = [noti.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-//    
-//    //键盘实时y
-//    CGFloat keyY = frame.origin.y;
-//  CGFloat keyDuration = [noti.userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue];
-//    
-//    CGFloat screenH = [[UIScreen mainScreen] bounds].size.height;
-//    [UIView animateWithDuration:keyDuration animations:^{
-//        self.view.transform = CGAffineTransformMakeTranslation(0, keyY - screenH );
-//    }];
-
-    
-    
+        
     if (self.bKeyBoardHide==NO) {
         self.view.transform = CGAffineTransformMakeTranslation(0,-40 );
 //        [UIView animateWithDuration:keyDuration animations:^{
@@ -396,6 +420,16 @@
         
         ZCLog(@"%@",responseObject);
         
+        if (responseObject[@"error_code"] ) {
+            
+            [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+            
+            //隐藏圈圈
+            [MBProgressHUD hideHUD];
+            
+        }else
+        {
+        
         //保存照片到沙盒
         NSString *path=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject] stringByAppendingPathComponent:@"personImage.png"];
             NSData *data=UIImagePNGRepresentation(self.chooseImage);
@@ -408,11 +442,14 @@
         ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
         
         if (tool.isJoin==YES) {
-            ZCToJoinTheGameTableViewController *ToJoinTheGame=[[ZCToJoinTheGameTableViewController alloc] init];
             
-            ToJoinTheGame.uuid=self.uuid;
+            ZCpasswordViewController *passwordViewController=[[ZCpasswordViewController alloc] init];
             
-            [self.navigationController pushViewController:ToJoinTheGame animated:YES];
+//            ZCToJoinTheGameTableViewController *ToJoinTheGame=[[ZCToJoinTheGameTableViewController alloc] init];
+            
+           // ToJoinTheGame.uuid=self.uuid;
+            
+            [self.navigationController pushViewController:passwordViewController animated:YES];
         }else
         {
         
@@ -424,17 +461,24 @@
             [self.navigationController pushViewController:InvitationViewController animated:YES];
 
         }
+            //隐藏圈圈
+            [MBProgressHUD hideHUD];
+            
+            [MBProgressHUD showSuccess:@"保存成功"];
        
-
+        }
         
-        //隐藏圈圈
-        [MBProgressHUD hideHUD];
+       
 
         
         // success
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         //隐藏圈圈
         [MBProgressHUD hideHUD];
+        
+        [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
+        
+
 
     }];
     

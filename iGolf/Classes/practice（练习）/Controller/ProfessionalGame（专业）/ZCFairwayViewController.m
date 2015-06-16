@@ -43,6 +43,7 @@
 {
     UIScrollView *scrollView=[[UIScrollView alloc] init];
     scrollView.frame=[UIScreen mainScreen].bounds;
+    scrollView.bounces=NO;
     self.scrollView=scrollView;
     [self.view addSubview:scrollView];
     
@@ -238,18 +239,18 @@
     nameLabel.font=[UIFont systemFontOfSize:18];
     nameLabel.textColor=ZCColor(225, 150, 29);
     [view addSubview:nameLabel];
-    //提示按钮
-    UIButton *promptBtn=[[UIButton alloc] init];
-    CGFloat promptBtnX=nameLabelX+nameLabelW+10;
-    CGFloat promptBtnY=nameLabelY;
-    CGFloat promptBtnW=20;
-    CGFloat promptBtnH=20;
-    promptBtn.frame=CGRectMake(promptBtnX, promptBtnY, promptBtnW, promptBtnH);
-    [promptBtn setImage:[UIImage imageNamed:@"chengsewenhao"]
-               forState:UIControlStateNormal];
+//    //提示按钮
+//    UIButton *promptBtn=[[UIButton alloc] init];
+//    CGFloat promptBtnX=nameLabelX+nameLabelW+10;
+//    CGFloat promptBtnY=nameLabelY;
+//    CGFloat promptBtnW=20;
+//    CGFloat promptBtnH=20;
+//    promptBtn.frame=CGRectMake(promptBtnX, promptBtnY, promptBtnW, promptBtnH);
+//    [promptBtn setImage:[UIImage imageNamed:@"chengsewenhao"]
+//               forState:UIControlStateNormal];
     //promptBtn.tag=1006;
     // [promptBtn addTarget:self action:@selector(clickpromptishi:) forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:promptBtn];
+   // [view addSubview:promptBtn];
     
     
     UILabel *firstNumberLaber=[[UILabel alloc] init];

@@ -32,7 +32,7 @@
     
     self.view.backgroundColor=ZCColor(237, 237, 237);
     
-    self.navigationItem.title=@"技术分析";
+    self.navigationItem.title=@"统计分析";
 //    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
 //    customLab.textAlignment=NSTextAlignmentCenter;
 //    [customLab setTextColor:ZCColor(240, 208, 122)];
@@ -42,7 +42,7 @@
 
     
     //返回
-    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(liftBthClick:) target:self];
     
     
     
@@ -123,7 +123,7 @@
     titleLabel.text=@"所有统计数据将基于您有完整记分场次计算";
     titleLabel.textColor=ZCColor(60, 57, 78);
     titleLabel.textAlignment=NSTextAlignmentCenter;
-    titleLabel.font=[UIFont systemFontOfSize:16 ];
+    titleLabel.font=[UIFont systemFontOfSize:12 ];
     [self.view addSubview:titleLabel];
     self.titleLabel=titleLabel;
     

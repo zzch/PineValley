@@ -7,7 +7,7 @@
 //
 
 #import "ZCPushRodViewController.h"
-
+#import "ZCProfessionalStatisticsPromptView.h"
 @interface ZCPushRodViewController ()
 @property(nonatomic,assign)int index;
 @property(nonatomic,assign)int index2;
@@ -43,6 +43,7 @@
 {
     UIScrollView *scrollView=[[UIScrollView alloc] init];
     scrollView.frame=[UIScreen mainScreen].bounds;
+    scrollView.bounces=NO;
     self.scrollView=scrollView;
     [self.view addSubview:scrollView];
     
@@ -155,8 +156,11 @@
     middleFourthView.frame=CGRectMake(middleFourthViewX, middleFourthViewY, middleFourthViewW, middleFourthViewH);
     middleFourthView.backgroundColor=[UIColor whiteColor];
     [self.scrollView addSubview:middleFourthView];
+    
+    //ZCLog(@"%@",self.pushRodModel);
+    
     NSDictionary *distance_0_1=self.pushRodModel[@"distance_0_1_from_hole_in_green"];
-    [self addMiddleViewControls:middleFourthView codeStr:@"10-20码" tryStr:[NSString stringWithFormat:@"%@",distance_0_1[@"per_round"]] averageStr:[NSString stringWithFormat:@"%@",distance_0_1[@"shots_to_hole"]] ALeverToPromote:[NSString stringWithFormat:@"%@",distance_0_1[@"holed_percentage"]] averageRemainingYards:[NSString stringWithFormat:@"%@",distance_0_1[@"dispersion"]]];
+    [self addMiddleViewControls:middleFourthView codeStr:@"0-1码" tryStr:[NSString stringWithFormat:@"%@",distance_0_1[@"per_round"]] averageStr:[NSString stringWithFormat:@"%@",distance_0_1[@"shots_to_hole"]] ALeverToPromote:[NSString stringWithFormat:@"%@",distance_0_1[@"holed_percentage"]] averageRemainingYards:[NSString stringWithFormat:@"%@",distance_0_1[@"dispersion"]]];
 
     //中间第五个View
     UIView *middleFifthView=[[UIView alloc] init];
@@ -169,7 +173,7 @@
     [self.scrollView addSubview:middleFifthView];
     //添加里面内容
     NSDictionary *distance_0_2=self.pushRodModel[@"distance_1_2_from_hole_in_green"];
-   [self addMiddleViewControls:middleFifthView codeStr:@"20-30码" tryStr:[NSString stringWithFormat:@"%@",distance_0_2[@"per_round"]] averageStr:[NSString stringWithFormat:@"%@",distance_0_2[@"shots_to_hole"]] ALeverToPromote:[NSString stringWithFormat:@"%@",distance_0_2[@"holed_percentage"]] averageRemainingYards:[NSString stringWithFormat:@"%@",distance_0_2[@"dispersion"]]];
+   [self addMiddleViewControls:middleFifthView codeStr:@"1-2码" tryStr:[NSString stringWithFormat:@"%@",distance_0_2[@"per_round"]] averageStr:[NSString stringWithFormat:@"%@",distance_0_2[@"shots_to_hole"]] ALeverToPromote:[NSString stringWithFormat:@"%@",distance_0_2[@"holed_percentage"]] averageRemainingYards:[NSString stringWithFormat:@"%@",distance_0_2[@"dispersion"]]];
 
     
     //中间第六个View
@@ -184,7 +188,7 @@
     
     //添加里面内容
     NSDictionary *distance_0_3=self.pushRodModel[@"distance_2_3_from_hole_in_green"];
-    [self addMiddleViewControls:middleSixthView codeStr:@"30-40码" tryStr:[NSString stringWithFormat:@"%@",distance_0_3[@"per_round"]] averageStr:[NSString stringWithFormat:@"%@",distance_0_3[@"shots_to_hole"]] ALeverToPromote:[NSString stringWithFormat:@"%@",distance_0_3[@"holed_percentage"]] averageRemainingYards:[NSString stringWithFormat:@"%@",distance_0_3[@"dispersion"]]];
+    [self addMiddleViewControls:middleSixthView codeStr:@"2-3码" tryStr:[NSString stringWithFormat:@"%@",distance_0_3[@"per_round"]] averageStr:[NSString stringWithFormat:@"%@",distance_0_3[@"shots_to_hole"]] ALeverToPromote:[NSString stringWithFormat:@"%@",distance_0_3[@"holed_percentage"]] averageRemainingYards:[NSString stringWithFormat:@"%@",distance_0_3[@"dispersion"]]];
     
     
 
@@ -200,10 +204,57 @@
     
     //添加里面内容
     NSDictionary *distance_0_4=self.pushRodModel[@"distance_3_5_from_hole_in_green"];
-    [self addMiddleViewControls:middleSeventhView codeStr:@"40-50码" tryStr:[NSString stringWithFormat:@"%@",distance_0_4[@"per_round"]] averageStr:[NSString stringWithFormat:@"%@",distance_0_4[@"shots_to_hole"]] ALeverToPromote:[NSString stringWithFormat:@"%@",distance_0_4[@"holed_percentage"]] averageRemainingYards:[NSString stringWithFormat:@"%@",distance_0_4[@"dispersion"]]];
+    [self addMiddleViewControls:middleSeventhView codeStr:@"3-5码" tryStr:[NSString stringWithFormat:@"%@",distance_0_4[@"per_round"]] averageStr:[NSString stringWithFormat:@"%@",distance_0_4[@"shots_to_hole"]] ALeverToPromote:[NSString stringWithFormat:@"%@",distance_0_4[@"holed_percentage"]] averageRemainingYards:[NSString stringWithFormat:@"%@",distance_0_4[@"dispersion"]]];
 
     
-     scrollView.contentSize = CGSizeMake(0,middleSeventhViewY+middleSeventhViewH+70 );
+    
+    
+    UIView *middleEighthView=[[UIView alloc] init];
+    CGFloat middleEighthViewX=0;
+    CGFloat middleEighthViewY=middleSeventhViewY+middleSeventhViewH+1;
+    CGFloat middleEighthViewW=SCREEN_WIDTH;
+    CGFloat middleEighthViewH=150;
+    middleEighthView.frame=CGRectMake(middleEighthViewX, middleEighthViewY, middleEighthViewW, middleEighthViewH);
+    middleEighthView.backgroundColor=[UIColor whiteColor];
+    [self.scrollView addSubview:middleEighthView];
+    
+    //添加里面内容
+    NSDictionary *distance_0_5=self.pushRodModel[@"distance_5_8_from_hole_in_green"];
+    [self addMiddleViewControls:middleEighthView codeStr:@"5-8码" tryStr:[NSString stringWithFormat:@"%@",distance_0_5[@"per_round"]] averageStr:[NSString stringWithFormat:@"%@",distance_0_5[@"shots_to_hole"]] ALeverToPromote:[NSString stringWithFormat:@"%@",distance_0_5[@"holed_percentage"]] averageRemainingYards:[NSString stringWithFormat:@"%@",distance_0_5[@"dispersion"]]];
+    
+
+    UIView *middleNinthView=[[UIView alloc] init];
+    CGFloat middleNinthViewX=0;
+    CGFloat middleNinthViewY=middleEighthViewY+middleEighthViewH+1;
+    CGFloat middleNinthViewW=SCREEN_WIDTH;
+    CGFloat middleNinthViewH=150;
+    middleNinthView.frame=CGRectMake(middleNinthViewX, middleNinthViewY, middleNinthViewW, middleNinthViewH);
+    middleNinthView.backgroundColor=[UIColor whiteColor];
+    [self.scrollView addSubview:middleNinthView];
+    
+    //添加里面内容
+    NSDictionary *distance_0_6=self.pushRodModel[@"distance_8_13_from_hole_in_green"];
+    [self addMiddleViewControls:middleNinthView codeStr:@"8-13码" tryStr:[NSString stringWithFormat:@"%@",distance_0_6[@"per_round"]] averageStr:[NSString stringWithFormat:@"%@",distance_0_6[@"shots_to_hole"]] ALeverToPromote:[NSString stringWithFormat:@"%@",distance_0_6[@"holed_percentage"]] averageRemainingYards:[NSString stringWithFormat:@"%@",distance_0_6[@"dispersion"]]];
+
+    
+    
+    UIView *middleTenView=[[UIView alloc] init];
+    CGFloat middleTenViewX=0;
+    CGFloat middleTenViewY=middleNinthViewY+middleNinthViewH+1;
+    CGFloat middleTenViewW=SCREEN_WIDTH;
+    CGFloat middleTenViewH=150;
+    middleTenView.frame=CGRectMake(middleTenViewX, middleTenViewY, middleTenViewW, middleTenViewH);
+    middleTenView.backgroundColor=[UIColor whiteColor];
+    [self.scrollView addSubview:middleTenView];
+    
+    //添加里面内容
+    NSDictionary *distance_0_7=self.pushRodModel[@"distance_13_33_from_hole_in_green"];
+    [self addMiddleViewControls:middleTenView codeStr:@"13-33码" tryStr:[NSString stringWithFormat:@"%@",distance_0_7[@"per_round"]] averageStr:[NSString stringWithFormat:@"%@",distance_0_7[@"shots_to_hole"]] ALeverToPromote:[NSString stringWithFormat:@"%@",distance_0_7[@"holed_percentage"]] averageRemainingYards:[NSString stringWithFormat:@"%@",distance_0_7[@"dispersion"]]];
+    
+
+    
+    
+     scrollView.contentSize = CGSizeMake(0,middleTenViewY+middleTenViewH+70 );
     
 
 }
@@ -254,7 +305,7 @@
     [promptBtn setImage:[UIImage imageNamed:@"chengsewenhao"]
                forState:UIControlStateNormal];
     self.index++;
-    promptBtn.tag=self.index+1000;
+    promptBtn.tag=self.index+15100;
     [promptBtn addTarget:self action:@selector(clickpromptishi:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:promptBtn];
     
@@ -423,7 +474,7 @@
     promptBtn.frame=CGRectMake(promptBtnX, promptBtnY, promptBtnW, promptBtnH);
     [promptBtn setImage:[UIImage imageNamed:@"chengsewenhao"]
                forState:UIControlStateNormal];
-    promptBtn.tag=1007;
+    promptBtn.tag=15005;
     [promptBtn addTarget:self action:@selector(clickpromptishi:) forControlEvents:UIControlEventTouchUpInside];
     [middlethirdView addSubview:promptBtn];
     
@@ -475,7 +526,7 @@
     promptBtn.frame=CGRectMake(promptBtnX, promptBtnY, promptBtnW, promptBtnH);
     [promptBtn setImage:[UIImage imageNamed:@"chengsewenhao"]
                forState:UIControlStateNormal];
-    promptBtn.tag=1006;
+    promptBtn.tag=15004;
     [promptBtn addTarget:self action:@selector(clickpromptishi:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:promptBtn];
 
@@ -617,8 +668,8 @@
     promptBtn.frame=CGRectMake(promptBtnX, promptBtnY, promptBtnW, promptBtnH);
     [promptBtn setImage:[UIImage imageNamed:@"baisewenhao"] forState:UIControlStateNormal];
     
-    self.index2++;
-    promptBtn.tag=self.index2+1100;
+     self.index2++;
+    promptBtn.tag=self.index2+15000;
     [promptBtn addTarget:self action:@selector(clickpromptishi:) forControlEvents:UIControlEventTouchUpInside];
     
     [childView addSubview:promptBtn];
@@ -639,7 +690,76 @@
 //提示按钮点击
 -(void)clickpromptishi:(UIButton *)btn
 {
-    [self.navigationController popViewControllerAnimated:YES];
+   
+    ZCLog(@"%ld",(long)btn.tag);
+    ZCProfessionalStatisticsPromptView *PromptView=[[ZCProfessionalStatisticsPromptView alloc] init];
+     PromptView.frame= [[UIScreen mainScreen] bounds];
+    
+    
+    
+    if (btn.tag==15001) {
+        PromptView.nameStr=@"平均/洞";
+        PromptView.instructionsStr=@"当前推杆数总和和与当前完成球洞的平均数。";
+    }else if (btn.tag==15002)
+    {
+        PromptView.nameStr=@"标准杆";
+        PromptView.instructionsStr=@"当前标准杆上果岭后推杆数的总和与当前完成标准杆上果岭球洞的平均数。";
+    }else if (btn.tag==15003)
+    {
+        PromptView.nameStr=@"大于标准杆";
+        PromptView.instructionsStr=@"当前大于标准杆上果岭后推杆数的总和与当前完成大于标准杆上果岭球洞的平均数。";
+    }else if (btn.tag==15004)
+    {
+        PromptView.nameStr=@"第一次推杆后距离球洞码数的平均数";
+        PromptView.instructionsStr=@"当前完成球洞的第一次推杆后剩余距离的平均数。";
+    
+    }else if (btn.tag==15005)
+    {
+        PromptView.nameStr=@"最后一推码数的平均数";
+        PromptView.instructionsStr=@"当前完成所有球洞的最后一次推杆距离的平均数。";
+        
+    }else if (btn.tag==15101)
+    {
+        PromptView.nameStr=@"距离球洞 0 - 1 码";
+        PromptView.instructionsStr=@"该项目计算在球洞0-1码时尝试推杆的次数，该距离推进洞的平均杆数，该距离一杆进洞的几率，以及该距离第一推后平均剩余码数。";
+        
+    }else if (btn.tag==15102)
+    {
+        PromptView.nameStr=@"距离球洞 1- 2 码";
+        PromptView.instructionsStr=@"该项目计算在球位于球洞大于1码小于2码时尝试推杆的次数，该距离推进洞的平均杆数，该距离一杆进洞的几率，以及该距离第一推后平均剩余码数。";
+        
+    }else if (btn.tag==15103)
+    {
+        PromptView.nameStr=@"距离球洞 2- 3 码";
+        PromptView.instructionsStr=@"该项目计算在球位于球洞大于2码小于3码时尝试推杆的次数，该距离推进洞的平均杆数，该距离一杆进洞的几率，以及该距离第一推后平均剩余码数。";
+        
+    }else if (btn.tag==15104)
+    {
+        PromptView.nameStr=@"距离球洞 3- 5 码";
+        PromptView.instructionsStr=@"该项目计算在球位于球洞大于3码小于5码时尝试推杆的次数，该距离推进洞的平均杆数，该距离一杆进洞的几率，以及该距离第一推后平均剩余码数。";
+        
+    }else if (btn.tag==15105)
+    {
+        PromptView.nameStr=@"距离球洞 5- 8 码";
+        PromptView.instructionsStr=@"该项目计算在球位于球洞大于5码小于8码时尝试推杆的次数，该距离推进洞的平均杆数，该距离一杆进洞的几率，以及该距离第一推后平均剩余码数。";
+        
+    }else if (btn.tag==15106)
+    {
+        PromptView.nameStr=@"距离球洞 8- 13 码";
+        PromptView.instructionsStr=@"该项目计算在球位于球洞大于8码小于13码时尝试推杆的次数，该距离推进洞的平均杆数，该距离一杆进洞的几率，以及该距离第一推后平均剩余码数。";
+        
+    }else if (btn.tag==15107)
+    {
+        PromptView.nameStr=@"距离球洞 13- 33 码";
+        PromptView.instructionsStr=@"该项目计算在球位于球洞大于13码小于33码时尝试推杆的次数，该距离推进洞的平均杆数，该距离一杆进洞的几率，以及该距离第一推后平均剩余码数。";
+        
+    }
+    
+    
+    
+    
+    UIWindow *wd = [[UIApplication sharedApplication].delegate window];
+    [wd addSubview:PromptView];
 
 }
 

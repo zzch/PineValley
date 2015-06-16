@@ -44,16 +44,17 @@
     CGFloat  phoneAccountX=SCREEN_WIDTH*0.031;
     CGFloat  phoneAccountY=20;
     CGFloat  phoneAccountW=SCREEN_WIDTH-(phoneAccountX*2);
-    CGFloat  phoneAccountH=40.5;
+    CGFloat  phoneAccountH=40;
     phoneAccount.frame=CGRectMake(phoneAccountX, phoneAccountY, phoneAccountW, phoneAccountH);
     //设置键盘为数字键盘
     phoneAccount.keyboardType=UIKeyboardTypeNumberPad;
     //[phoneAccount setTextColor:[UIColor whiteColor]];
     [phoneAccount setBackground:bjimage];
     phoneAccount.textColor=ZCColor(85, 85, 85);
-    phoneAccount.placeholder=@"请输入您的手机号";
+    phoneAccount.placeholder=@"  请输入您的手机号";
     //修改提示语的字体颜色
     [phoneAccount setValue:ZCColor(102, 102, 102) forKeyPath:@"_placeholderLabel.textColor"];
+    phoneAccount.font=[UIFont systemFontOfSize:14];
     [self.view addSubview:phoneAccount];
     self.phoneAccount=phoneAccount;
     
@@ -70,11 +71,12 @@
     [phonePassword setTextColor:ZCColor(85, 85, 85)];
     //实现密文形式
     phonePassword.secureTextEntry=YES;
-    phonePassword.placeholder=@"至少输入6位的密码";
+    phonePassword.placeholder=@"  至少输入6位的密码";
     //修改提示语的字体颜色
     [phonePassword setValue:ZCColor(102, 102, 102) forKeyPath:@"_placeholderLabel.textColor"];
     
     [phonePassword setBackground:bjimage];
+    phonePassword.font=[UIFont systemFontOfSize:14];
     [self.view addSubview:phonePassword];
     self.phonePassword=phonePassword;
     
@@ -87,13 +89,13 @@
     CGFloat  confirmPasswordW=phoneAccountW;
     CGFloat  confirmPasswordH=phoneAccountH;
     confirmPassword.frame=CGRectMake(confirmPasswordX, confirmPasswordY, confirmPasswordW, confirmPasswordH);
-    confirmPassword.placeholder=@"请再一次输入密码";
+    confirmPassword.placeholder=@"  请再一次输入密码";
     //修改提示语的字体颜色
     [confirmPassword setValue:ZCColor(102, 102, 102) forKeyPath:@"_placeholderLabel.textColor"];
     [confirmPassword setTextColor:ZCColor(85, 85, 85)];
     //实现密文形式
     confirmPassword.secureTextEntry=YES;
-    
+    confirmPassword.font=[UIFont systemFontOfSize:14];
     [confirmPassword setBackground:bjimage];
     [self.view addSubview:confirmPassword];
     self.confirmPassword=confirmPassword;
@@ -113,10 +115,11 @@
     CGFloat verificationCodeH=phonePasswordH;
     verificationCode.frame=CGRectMake(verificationCodeX, verificationCodeY, verificationCodeW, verificationCodeH);
     verificationCode.background=bjimage;
-    verificationCode.placeholder=@"请输入验证码";
+    verificationCode.placeholder=@"  请输入验证码";
     //修改提示语的字体颜色
     [verificationCode setValue:ZCColor(102, 102, 102) forKeyPath:@"_placeholderLabel.textColor"];
     self.verificationCode=verificationCode;
+    verificationCode.font=[UIFont systemFontOfSize:14];
     [self.view addSubview:verificationCode];
     
     
@@ -131,6 +134,8 @@
     [getButton setTitle:@"获取验证码" forState:UIControlStateNormal];
     [getButton setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
     [getButton addTarget:self action:@selector(clickgetButton) forControlEvents:UIControlEventTouchUpInside];
+    getButton.font=[UIFont systemFontOfSize:14];
+
     self.getButton=getButton;
     [self.view addSubview:getButton];
     
@@ -142,13 +147,14 @@
     phoneloginBth.enabled=NO;
     CGFloat  phoneloginBthY=verificationCodeY+verificationCodeH+25;
     CGFloat  phoneloginBthW=phonePasswordW;
-    CGFloat  phoneloginBthH=49;
+    CGFloat  phoneloginBthH=40;
     CGFloat  phoneloginBthX=verificationCodeX;
     phoneloginBth.frame=CGRectMake(phoneloginBthX, phoneloginBthY, phoneloginBthW, phoneloginBthH);
     
     
     [phoneloginBth setTitle:@"提交" forState:UIControlStateNormal];
-    [phoneloginBth setTitleColor:ZCColor(102, 102, 102) forState:UIControlStateNormal];
+    [phoneloginBth setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
     
     
     
@@ -181,9 +187,20 @@
 }
 
 
+
+
+
 //监听文本框改变时调用
 -(void)textChange
 {
+    
+    if (self.phoneAccount.text.length > 11 ){
+        self.phoneAccount.text = [self.phoneAccount.text substringToIndex:11];
+        
+    }
+
+    
+    
     if (self.phoneAccount.text.length==11&&self.phonePassword.text.length>=6&&self.confirmPassword.text.length==self.phonePassword.text.length&&self.verificationCode.text.length==4) {
         self.phoneloginBth.enabled=YES;
          //[self.phoneloginBth setBackgroundImage:[UIImage imageNamed:@"denglu_anniu-1"] forState:UIControlStateNormal];
@@ -216,6 +233,7 @@
 -(void)clickphoneloginBth
 {
     
+    [MBProgressHUD showMessage:@"注册中..."];
     // 1.创建请求管理对象
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     NSString *url=[NSString stringWithFormat:@"%@%@",API,@"users/sign_up.json"];
@@ -232,7 +250,9 @@
        // NSString * responseObject[@"error_code"]
         if (responseObject[@"error_code"] ) {
             
-            [ZCprompt prompt:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+            [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+            
+             [MBProgressHUD hideHUD];
         }else{
             
             
@@ -250,6 +270,10 @@
             UINavigationController *nav=[[UINavigationController alloc] initWithRootViewController:tabBarVc];
             
             
+            [MBProgressHUD hideHUD];
+            
+            [MBProgressHUD showSuccess:@"注册成功"];
+            
       UIWindow *wd = [[UIApplication sharedApplication].delegate window];
             //去首页
        wd.rootViewController =nav;
@@ -257,22 +281,84 @@
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
+        [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
+        
+
+        
+       //  NSLog(@"error code %d",[operation.response statusCode]);
+        
+//        if (operation ) {
+//            
+//           // [ZCprompt prompt:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+//        }
+        
     }];
    
 }
 
-
-
+//手机号验证
+- (BOOL)validateMobile:(NSString *)mobileNum
+{
+    /**
+     * 手机号码
+     * 移动：134[0-8],135,136,137,138,139,150,151,157,158,159,182,187,188
+     * 联通：130,131,132,152,155,156,185,186
+     * 电信：133,1349,153,180,189
+     */
+    NSString * MOBILE = @"^1(3[0-9]|5[0-35-9]|8[025-9])\\d{8}$";
+    /**
+     10         * 中国移动：China Mobile
+     11         * 134[0-8],135,136,137,138,139,150,151,157,158,159,182,187,188
+     12         */
+    NSString * CM = @"^1(34[0-8]|(3[5-9]|5[017-9]|8[278])\\d)\\d{7}$";
+    /**
+     15         * 中国联通：China Unicom
+     16         * 130,131,132,152,155,156,185,186
+     17         */
+    NSString * CU = @"^1(3[0-2]|5[256]|8[56])\\d{8}$";
+    /**
+     20         * 中国电信：China Telecom
+     21         * 133,1349,153,180,189
+     22         */
+    NSString * CT = @"^1((33|53|8[09])[0-9]|349)\\d{7}$";
+    /**
+     25         * 大陆地区固话及小灵通
+     26         * 区号：010,020,021,022,023,024,025,027,028,029
+     27         * 号码：七位或八位
+     28         */
+    // NSString * PHS = @"^0(10|2[0-5789]|\\d{3})\\d{7,8}$";
+    
+    NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];
+    NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];
+    NSPredicate *regextestcu = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CU];
+    NSPredicate *regextestct = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CT];
+    
+    if (([regextestmobile evaluateWithObject:mobileNum] == YES)
+        || ([regextestcm evaluateWithObject:mobileNum] == YES)
+        || ([regextestct evaluateWithObject:mobileNum] == YES)
+        || ([regextestcu evaluateWithObject:mobileNum] == YES))
+    {
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
+}
 //发送验证码
 -(void)clickgetButton
 {
 
-    ZCLog(@"%@",self.phonePassword.text);
+    ZCLog(@"%@",self.phonePassword.text );
     
     
+    BOOL isPhone=[self validateMobile:self.phoneAccount.text];
     
-    
-    
+    if (isPhone==NO) {
+        ZCLog(@"手机号错误");
+        [ZCprompt initWithController:self andErrorCode:@"手机号输入错误"];
+    }else
+    {
     ///v1/verification_code/send.json
     
     // AFNetworking\AFN
@@ -286,19 +372,31 @@
     //发送请求
     [mar GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
+        if (responseObject[@"error_code"] ) {
+            
+            [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+            
+        }else
+        {
+        
        //开始倒计时
         [self startTheCountdown];
         
-        
+        [MBProgressHUD showSuccess:@"验证码已发送"];
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         NSLog(@"请求失败%@",error);
         //[SVProgressHUD dismiss];
+        
+        [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
+        
+
     }];
     
 
     
-    
+    }
 
 }
 

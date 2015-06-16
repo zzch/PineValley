@@ -7,9 +7,9 @@
 //
 
 #import "ZCRodNumberViewController.h"
-
+#import "ZCProfessionalStatisticsPromptView.h"
 @interface ZCRodNumberViewController ()
-
+@property(nonatomic,assign)int index;
 @end
 
 @implementation ZCRodNumberViewController
@@ -39,13 +39,13 @@
 //添加控件
 -(void)addControls
 {
-//    UIScrollView *scrollView=[[UIScrollView alloc] init];
-//    scrollView.frame=[UIScreen mainScreen].bounds;
-//    self.scrollView=scrollView;
-//    [self.view addSubview:scrollView];
-//    
-//    scrollView.contentSize = CGSizeMake(0,SCREEN_HEIGHT+2200 );
-//    
+    UIScrollView *scrollView=[[UIScrollView alloc] init];
+    scrollView.frame=[UIScreen mainScreen].bounds;
+    
+    [self.view addSubview:scrollView];
+    
+    
+    
     
     
     
@@ -56,7 +56,7 @@
     CGFloat topViewH=305;
     topView.frame=CGRectMake(topViewX, topViewY, topViewW, topViewH);
     topView.backgroundColor=ZCColor(237, 237, 237);
-    [self.view addSubview:topView];
+    [scrollView addSubview:topView];
     
     
     UIView *firstView=[[UIView alloc] init];
@@ -153,9 +153,9 @@
     CGFloat middleFourthViewH=120;
     middleFourthView.frame=CGRectMake(middleFourthViewX, middleFourthViewY, middleFourthViewW, middleFourthViewH);
     middleFourthView.backgroundColor=[UIColor whiteColor];
-    [self.view addSubview:middleFourthView];
+    [scrollView addSubview:middleFourthView];
    // [self addMiddleView:middleFourthView nameLabelStr:@"命中" girStr:[NSString stringWithFormat:@"%@",self.fairwayModel[@"drive_fairways_count"]] percentage:[NSString stringWithFormat:@"%@",self.fairwayModel[@"drive_fairways_hit"]] holesNSArray:self.fairwayModel[@"holes_of_drive_fairways"]];
-    [self addMiddlethirdViewControls:middleFourthView nameLabelStr:@"小鸟球转化率" numberLabelStr:[NSString stringWithFormat:@"%@",self.rodNumberModel[@"advantage_transformation"]]];
+    [self addMiddlethirdViewControls:middleFourthView nameLabelStr:@"优势转化率" numberLabelStr:[NSString stringWithFormat:@"%@",self.rodNumberModel[@"advantage_transformation"]]];
     
     //中间第五个View[]
     UIView *middleFifthView=[[UIView alloc] init];
@@ -165,9 +165,12 @@
     CGFloat middleFifthViewH=120;
     middleFifthView.frame=CGRectMake(middleFifthViewX, middleFifthViewY, middleFifthViewW, middleFifthViewH);
     middleFifthView.backgroundColor=[UIColor whiteColor];
-    [self.view addSubview:middleFifthView];
+    [scrollView addSubview:middleFifthView];
     //[self addMiddleView:middleFifthView nameLabelStr:@"左侧" girStr:[NSString stringWithFormat:@"%@",self.fairwayModel[@"drive_left_roughs_count"]] percentage:[NSString stringWithFormat:@"%@",self.fairwayModel[@"drive_left_roughs_hit"]] holesNSArray:self.fairwayModel[@"holes_of_drive_left_roughs"]];
     [self addMiddlethirdViewControls:middleFifthView nameLabelStr:@"反弹率" numberLabelStr:[NSString stringWithFormat:@"%@",self.rodNumberModel[@"bounce"]]];
+    
+    
+    scrollView.contentSize = CGSizeMake(0,middleFifthViewY+middleFifthViewH+66 );
 }
 
 
@@ -202,7 +205,8 @@
     promptBtn.frame=CGRectMake(promptBtnX, promptBtnY, promptBtnW, promptBtnH);
     [promptBtn setImage:[UIImage imageNamed:@"chengsewenhao"]
                forState:UIControlStateNormal];
-    promptBtn.tag=1007;
+    self.index++;
+    promptBtn.tag=20000+self.index;
     [promptBtn addTarget:self action:@selector(clickpromptishi:) forControlEvents:UIControlEventTouchUpInside];
     [middlethirdView addSubview:promptBtn];
     
@@ -286,6 +290,33 @@
 {
     CGRect rect = [content boundingRectWithSize:frame options:NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObjectsAndKeys:fontSize,NSFontAttributeName, nil] context:nil];
     return rect;
+}
+
+
+-(void)clickpromptishi:(UIButton *)btn
+{
+    ZCProfessionalStatisticsPromptView *PromptView=[[ZCProfessionalStatisticsPromptView alloc] init];
+    PromptView.frame= [[UIScreen mainScreen] bounds];
+
+    
+    
+    
+    
+    if (btn.tag==20001) {
+        
+        PromptView.nameStr=@"优势转化率";
+        PromptView.instructionsStr=@"3/4/5杆洞小于等于标准杆上果岭后并且该洞成绩小于标准杆与当前所完成洞的比例";
+    }else if (btn.tag==20002)
+    {
+        PromptView.nameStr=@"反弹率";
+        PromptView.instructionsStr=@"相邻的2个球洞之间成绩的反弹，上一个球洞大于标准杆，下一个球洞小于标准杆为反弹";
+    }
+    
+
+    
+    UIWindow *wd = [[UIApplication sharedApplication].delegate window];
+    [wd addSubview:PromptView];
+
 }
 
 

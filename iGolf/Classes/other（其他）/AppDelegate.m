@@ -2,7 +2,7 @@
 //  AppDelegate.m
 //  我爱高尔夫
 //
-//  Created by hh on 15/1/29.
+//  Created by   on 15/1/29.
 //  Copyright (c) 2015年 zhongchuang. All rights reserved.
 //
 
@@ -11,6 +11,7 @@
 #import "ZCregisterViewController.h"
 #import "ZCAccount.h"
 #import "ZCPracticeVController.h"
+#import "ZCGuideViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -30,6 +31,12 @@
     //创建Window
     self.window=[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor=[UIColor whiteColor];
+    
+    
+    
+    
+    
+    
     if (is_IOS_7) { // 判断是否是IOS7
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     }
@@ -38,29 +45,58 @@
    
     
     
-    //先判断有无存储账号信息
-    NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
-    ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
-
-    if (account) {//之前登陆成功
-        
-        //ZCTabbarViewController *tabbar=[[ZCTabbarViewController alloc] init];
-        
-         ZCPracticeVController *tabBarVc=[[ZCPracticeVController alloc] init];
-        UINavigationController *nav=[[UINavigationController alloc] initWithRootViewController:tabBarVc];
-        
-         self.window.rootViewController=nav;
-    }else
-    {// 之前没有登录成功
-        //设置跟控制器
-        
-        ZCregisterViewController *registerView=[[ZCregisterViewController alloc] init];
-        UINavigationController *nav=[[UINavigationController alloc] initWithRootViewController:registerView];
-        self.window.rootViewController=nav;
-       
+    NSString *key = @"CFBundleVersion";
     
+    // 取出沙盒中存储的上次使用软件的版本号
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *lastVersion = [defaults stringForKey:key];
+
+    // 获得当前软件的版本号
+    NSString *currentVersion = [NSBundle mainBundle].infoDictionary[key];
+    
+    
+    
+    if ([currentVersion isEqualToString:lastVersion]) {
+        // 显示状态栏
+       // application.statusBarHidden = NO;
+        
+        //先判断有无存储账号信息
+        NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+        NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
+        ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
+        
+        if (account) {//之前登陆成功
+            
+            //ZCTabbarViewController *tabbar=[[ZCTabbarViewController alloc] init];
+            
+            ZCPracticeVController *tabBarVc=[[ZCPracticeVController alloc] init];
+            UINavigationController *nav=[[UINavigationController alloc] initWithRootViewController:tabBarVc];
+            
+            self.window.rootViewController=nav;
+        }else
+        {// 之前没有登录成功
+            //设置跟控制器
+            
+            ZCregisterViewController *registerView=[[ZCregisterViewController alloc] init];
+            UINavigationController *nav=[[UINavigationController alloc] initWithRootViewController:registerView];
+            self.window.rootViewController=nav;
+            
+            
+        }
+
+        
+        
+        
+    } else { // 新版本
+        self.window.rootViewController = [[ZCGuideViewController alloc] init];
+        // 存储新版本
+        [defaults setObject:currentVersion forKey:key];
+        [defaults synchronize];
     }
+
+    
+    
+    
     
     
     //导航栏的背景颜色和字体

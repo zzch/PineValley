@@ -33,7 +33,7 @@
 
     
     //返回
-    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(liftBthClick:) target:self];
     //背景颜色suoyou_bj
     self.view.backgroundColor=ZCColor(237, 237, 237);
     
@@ -55,6 +55,9 @@
 //网络加载
 -(void)onlineData
 {
+    
+    [MBProgressHUD showMessage:@"请稍后..."];
+    
     //2.发送网络请求
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     
@@ -90,6 +93,13 @@
         
         ZCLog(@"%@",[responseObject[@"finished_count"] class]);
         
+        
+        if (responseObject[@"error_code"] ) {
+            
+            [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+            
+        }else{
+        
         if ([responseObject[@"finished_count"] intValue] ==0) {
             //ZCLog(@"11111");
             UILabel *label1=[[UILabel alloc] init];
@@ -110,8 +120,17 @@
             [self addControls];
 
         }
+            
+        }
+        [MBProgressHUD hideHUD];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+       
+        [MBProgressHUD hideHUD];
+        
+        [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
+        
+
         
     }];
 

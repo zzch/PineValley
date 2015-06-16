@@ -36,6 +36,9 @@
 //网络加载
 -(void)initonlineData
 {
+    
+    [MBProgressHUD showMessage:@"请稍后"];
+    
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     
     
@@ -57,13 +60,31 @@
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         ZCLog(@"%@",responseObject);
         
+        if (responseObject[@"error_code"] ) {
+            
+            [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+            
+        }else
+        {
+        
+        
         ZCViewTheResultsModel *viewTheResultsModel=[ZCViewTheResultsModel viewTheResultsModelWithDict:responseObject];
         self.viewTheResultsModel=viewTheResultsModel;
         
         
         
         [self  addControls];
+            
+        }
+        
+        [MBProgressHUD hideHUD];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+       
+        [MBProgressHUD hideHUD];
+        
+        [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
+        
+
         
     }];
 
@@ -77,7 +98,7 @@
 
     
     UIView *topView=[[UIView alloc] init];
-    topView.frame=CGRectMake(0, 0, SCREEN_WIDTH, 105);
+    topView.frame=CGRectMake(0, 0, SCREEN_WIDTH, 94);
     topView.backgroundColor=ZCColor(60, 57, 78);
     [self.view addSubview:topView];
     [self addTopViewControls:topView];
@@ -86,7 +107,7 @@
     
    // ZCResultsView *resultsView=[[ZCResultsView alloc] initWithFrame:CGRectMake(0, 80, SCREEN_WIDTH, 80)];
     
-    ZCResultsView *resultsView=[ZCResultsView initWithResultsViewWithFrame:CGRectMake(0, 110, SCREEN_WIDTH, 400) andModel:self.viewTheResultsModel.scorecards andTime:1];
+    ZCResultsView *resultsView=[ZCResultsView initWithResultsViewWithFrame:CGRectMake(0, 105, SCREEN_WIDTH, 400) andModel:self.viewTheResultsModel.scorecards andTime:1];
     
     [self.view addSubview:resultsView];
     
@@ -126,7 +147,7 @@
    
     CGFloat  personImageViewW=70;
     CGFloat  personImageViewH=70;
-     CGFloat  personImageViewY=(view.frame.size.height-personImageViewH)/2;
+     CGFloat  personImageViewY=10;
     personImageView.frame=CGRectMake(personImageViewX, personImageViewY, personImageViewW, personImageViewH);
     //personImageView.backgroundColor=[UIColor redColor];
      [personImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",self.viewTheResultsModel.user.portrait]] placeholderImage:[UIImage imageNamed:@"touxiang"]];
@@ -136,14 +157,17 @@
     //名字
     UILabel *nameLabel=[[UILabel alloc] init];
     nameLabel.textColor=[UIColor whiteColor];
+    nameLabel.font=[UIFont systemFontOfSize:15];
     /**
      *  名字位置
      */
-    CGFloat  nameLabelX=personImageViewX+personImageViewW+10;
+    CGFloat  nameLabelX=personImageViewX+personImageViewW+7;
     CGFloat  nameLabelY=personImageViewY;
     CGFloat  nameLabelW=SCREEN_WIDTH-nameLabelX;
-    CGFloat  nameLabelH=25;
+    CGFloat  nameLabelH=20;
     nameLabel.frame=CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH);
+    nameLabel.font=[UIFont systemFontOfSize:13];
+
     nameLabel.text=[NSString stringWithFormat:@"%@",self.viewTheResultsModel.user.nickname];
     [view addSubview:nameLabel];
     
@@ -152,9 +176,10 @@
     UILabel *rankingLabel=[[UILabel alloc] init];
     rankingLabel.textColor=[UIColor whiteColor];
     CGFloat  rankingLabelX=nameLabelX;
-    CGFloat  rankingLabelY=nameLabelY+nameLabelH+10;
+    CGFloat  rankingLabelY=nameLabelY+nameLabelH+7;
     CGFloat  rankingLabelW=(SCREEN_WIDTH-nameLabelX)/2;
     CGFloat  rankingLabelH=20;
+     rankingLabel.font=[UIFont systemFontOfSize:13];
     rankingLabel.frame=CGRectMake(rankingLabelX, rankingLabelY, rankingLabelW, rankingLabelH);
     
     if ([self _valueOrNil:self.viewTheResultsModel.position]==nil) {
@@ -172,11 +197,12 @@
     UILabel *resultsLabel=[[UILabel alloc] init];
     resultsLabel.textColor=[UIColor whiteColor];
     CGFloat  resultsLabelX=nameLabelX;
-    CGFloat  resultsLabelY=rankingLabelY+rankingLabelH+10;
+    CGFloat  resultsLabelY=rankingLabelY+rankingLabelH+7;
     CGFloat  resultsLabelW=(SCREEN_WIDTH-nameLabelX)/2;
     CGFloat  resultsLabelH=20;
-    resultsLabel.frame=CGRectMake(resultsLabelX, resultsLabelY, resultsLabelW, resultsLabelH);
     
+    resultsLabel.frame=CGRectMake(resultsLabelX, resultsLabelY, resultsLabelW, resultsLabelH);
+     resultsLabel.font=[UIFont systemFontOfSize:13];
     
     if ([self _valueOrNil:self.viewTheResultsModel.strokes]==nil) {
         resultsLabel.text=[NSString stringWithFormat:@"成绩: -"];
@@ -202,7 +228,7 @@
         progressLabel.text=[NSString stringWithFormat:@"进度: %@/18",self.viewTheResultsModel.recorded_scorecards_count];
     }
 
-    
+    progressLabel.font=[UIFont systemFontOfSize:13];
     [view addSubview:progressLabel];
    
     
@@ -220,7 +246,7 @@
     }else{
         parLabel.text=[NSString stringWithFormat:@"距标准杆: %@",self.viewTheResultsModel.total];
     }
-
+ parLabel.font=[UIFont systemFontOfSize:13];
     [view addSubview:parLabel];
     
     

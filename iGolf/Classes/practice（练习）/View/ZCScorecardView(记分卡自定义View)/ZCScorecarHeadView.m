@@ -7,6 +7,7 @@
 //
 
 #import "ZCScorecarHeadView.h"
+#import "ZCEventUuidTool.h"
 @interface ZCScorecarHeadView()
 @property(nonatomic,weak)UIImageView *personImageView;
 @property(nonatomic,weak)UILabel *nameLabel;
@@ -38,14 +39,21 @@
         
         UIImageView *personImageView=[[UIImageView alloc] init];
         personImageView.layer.masksToBounds = YES;
-        personImageView.layer.cornerRadius = 38;
-        personImageView.image=image;
+        personImageView.layer.cornerRadius = 35;
+        if (image) {
+            personImageView.image=image;
+        }else
+        {
+            personImageView.image=[UIImage imageNamed:@"touxiang"];
+        }
+        
         [self addSubview:personImageView];
         self.personImageView=personImageView;
 
         
         UILabel *nameLabel=[[UILabel alloc] init];
         nameLabel.textColor=[UIColor whiteColor];
+        nameLabel.font=[UIFont systemFontOfSize:15];
         [self addSubview:nameLabel];
         self.nameLabel=nameLabel;
 
@@ -53,6 +61,7 @@
         //排名
         UILabel *rankingLabel=[[UILabel alloc] init];
         rankingLabel.textColor=[UIColor whiteColor];
+        rankingLabel.font=[UIFont systemFontOfSize:13];
         [self addSubview:rankingLabel];
         self.rankingLabel=rankingLabel;
         
@@ -60,18 +69,22 @@
         //成绩
         UILabel *resultsLabel=[[UILabel alloc] init];
         resultsLabel.textColor=[UIColor whiteColor];
+        resultsLabel.font=[UIFont systemFontOfSize:13];
         [self addSubview:resultsLabel];
         self.resultsLabel=resultsLabel;
         
         //进度
         UILabel *progressLabel=[[UILabel alloc] init];
-        progressLabel.textColor=[UIColor whiteColor];        [self addSubview:progressLabel];
+        progressLabel.textColor=[UIColor whiteColor];
+        progressLabel.font=[UIFont systemFontOfSize:13];
+        [self addSubview:progressLabel];
         self.progressLabel=progressLabel;
         
         
         //距标准杆
         UILabel *parLabel=[[UILabel alloc] init];
         parLabel.textColor=[UIColor whiteColor];
+        parLabel.font=[UIFont systemFontOfSize:13];
         [self addSubview:parLabel];
         self.parLabel=parLabel;
         
@@ -101,23 +114,29 @@
         self.shuBjView1=shuBjView1;
 
         
-         /**
-         *  邀请好友  shuBjView1
-         */
-        UIButton *InviteFriendsBtn=[[UIButton alloc] init];
-        [InviteFriendsBtn setTitle:@"邀请好友" forState:UIControlStateNormal];
-        InviteFriendsBtn.tag=2790;
-        [InviteFriendsBtn addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
-        InviteFriendsBtn.backgroundColor=ZCColor(234, 173, 67);
-        [self addSubview:InviteFriendsBtn];
-        self.InviteFriendsBtn=InviteFriendsBtn;
+       
         
         
-        UIView *shuBjView2=[[UIView alloc] init];
-        shuBjView2.backgroundColor=RGBACOLOR(170, 170, 170, 1);
-        [self addSubview:shuBjView2];
-        self.shuBjView2=shuBjView2;
+                    /**
+             *  邀请好友  shuBjView1
+             */
+            UIButton *InviteFriendsBtn=[[UIButton alloc] init];
+            [InviteFriendsBtn setTitle:@"邀请好友" forState:UIControlStateNormal];
+            InviteFriendsBtn.tag=2790;
+            [InviteFriendsBtn addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
+            InviteFriendsBtn.backgroundColor=ZCColor(234, 173, 67);
+            [self addSubview:InviteFriendsBtn];
+            self.InviteFriendsBtn=InviteFriendsBtn;
+            
+            
+            UIView *shuBjView2=[[UIView alloc] init];
+            shuBjView2.backgroundColor=RGBACOLOR(170, 170, 170, 1);
+            [self addSubview:shuBjView2];
+            self.shuBjView2=shuBjView2;
 
+       
+        
+        
         /**
          * 技术分析
          */
@@ -203,8 +222,8 @@
      *  头像位置
      */
     CGFloat  personImageViewX=10;
-       CGFloat  personImageViewW=76;
-    CGFloat  personImageViewH=76;
+       CGFloat  personImageViewW=70;
+    CGFloat  personImageViewH=70;
     CGFloat  personImageViewY=10;//(self.frame.size.height-40-personImageViewH)/2;
 
     self.personImageView.frame=CGRectMake(personImageViewX, personImageViewY, personImageViewW, personImageViewH);
@@ -213,10 +232,10 @@
     /**
      *  名字位置
      */
-    CGFloat  nameLabelX=personImageViewX+personImageViewW+10;
-    CGFloat  nameLabelY=personImageViewY;
+    CGFloat  nameLabelX=personImageViewX+personImageViewW+7;
+    CGFloat  nameLabelY=10;
     CGFloat  nameLabelW=SCREEN_WIDTH-nameLabelX;
-    CGFloat  nameLabelH=25;
+    CGFloat  nameLabelH=20;
     self.nameLabel.frame=CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH);
     
     
@@ -225,7 +244,7 @@
      */
     
     CGFloat  rankingLabelX=nameLabelX;
-    CGFloat  rankingLabelY=nameLabelY+nameLabelH+10;
+    CGFloat  rankingLabelY=nameLabelY+nameLabelH+7;
     CGFloat  rankingLabelW=(SCREEN_WIDTH-nameLabelX)/2;
     CGFloat  rankingLabelH=20;
     self.rankingLabel.frame=CGRectMake(rankingLabelX, rankingLabelY, rankingLabelW, rankingLabelH);
@@ -235,7 +254,7 @@
      */
     
     CGFloat  resultsLabelX=nameLabelX;
-    CGFloat  resultsLabelY=rankingLabelY+rankingLabelH+10;
+    CGFloat  resultsLabelY=rankingLabelY+rankingLabelH+7;
     CGFloat  resultsLabelW=(SCREEN_WIDTH-nameLabelX)/2;
     CGFloat  resultsLabelH=20;
     self.resultsLabel.frame=CGRectMake(resultsLabelX, resultsLabelY, resultsLabelW, resultsLabelH);
@@ -267,12 +286,45 @@
     
     self.bjView.frame=CGRectMake(0, parLabelY+parLabelH+9, SCREEN_WIDTH, 1);
     
+   // ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
+    
+    
+    if ([[NSString stringWithFormat:@"%@",self.playerModel.owned] isEqual:@"0"] )
+    {
+        
+        /**
+         *  排行榜
+         */
+        CGFloat  listBtnX=0;
+        CGFloat  listBtnY=parLabelY+parLabelH+10;
+        CGFloat  listBtnW=SCREEN_WIDTH/2;
+        CGFloat  listBtnH=40;
+        self.listBtn.frame=CGRectMake(listBtnX, listBtnY, listBtnW, listBtnH);
+        
+        
+        self.shuBjView1.frame=CGRectMake(listBtnW, listBtnY+5, 1, 30);
+        
+
+    
+        /**
+         *  技术分析
+         */
+        CGFloat  analysisBtnX=listBtnW+listBtnX;
+        CGFloat  analysisBtnY=listBtnY;
+        CGFloat  analysisBtnW=SCREEN_WIDTH/2;
+        CGFloat  analysisBtnH=40;
+        self.analysisBtn.frame=CGRectMake(analysisBtnX, analysisBtnY, analysisBtnW, analysisBtnH);
+        
+    }else
+    {
+    
+       
     /**
      *  排行榜
      */
     CGFloat  listBtnX=0;
     CGFloat  listBtnY=parLabelY+parLabelH+10;
-    CGFloat  listBtnW=SCREEN_WIDTH/3-1;
+    CGFloat  listBtnW=SCREEN_WIDTH/3;
     CGFloat  listBtnH=40;
     self.listBtn.frame=CGRectMake(listBtnX, listBtnY, listBtnW, listBtnH);
     
@@ -284,7 +336,7 @@
      */
     CGFloat  InviteFriendsBtnX=listBtnW;
     CGFloat  InviteFriendsBtnY=listBtnY;
-    CGFloat  InviteFriendsBtnW=SCREEN_WIDTH/3-1;
+    CGFloat  InviteFriendsBtnW=SCREEN_WIDTH/3;
     CGFloat  InviteFriendsBtnH=40;
     self.InviteFriendsBtn.frame=CGRectMake(InviteFriendsBtnX, InviteFriendsBtnY, InviteFriendsBtnW, InviteFriendsBtnH);
     
@@ -298,6 +350,9 @@
     CGFloat  analysisBtnW=SCREEN_WIDTH/3;
     CGFloat  analysisBtnH=40;
     self.analysisBtn.frame=CGRectMake(analysisBtnX, analysisBtnY, analysisBtnW, analysisBtnH);
+        
+        
+    }
 }
 
 

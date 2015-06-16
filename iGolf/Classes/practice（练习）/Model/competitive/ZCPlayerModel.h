@@ -32,9 +32,15 @@
  */
 @property (nonatomic, copy) NSString *strokes;
 /**
- *  分数+1-1
+ *  分数+1-1  owned
  */
 @property (nonatomic, copy) NSString *total;
+
+/**
+ * 杆数
+ */
+@property (nonatomic, copy) NSString *owned;
+
 
 + (instancetype)playerModelWithDict:(NSDictionary *)dict;
 - (instancetype)initWithDict:(NSDictionary *)dict;

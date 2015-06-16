@@ -14,6 +14,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "UIBarButtonItem+DC.h"
+#import "MBProgressHUD+NJ.h"
+#import "ZCprompt.h"
 #endif
 
 
@@ -22,7 +24,7 @@
 #pragma mark - 设备型号识别
 #define is_IOS_7 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
 
-#define API @"http://123.57.210.52/api/v1/"
+#define API @"http://ilovegolfclub.com/api/v1/"
 //#define API @"http://192.168.0.124:3001/api/v1/"
 
 // 2.获得RGB颜色

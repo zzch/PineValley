@@ -107,7 +107,7 @@
     
     UIButton *seeButton=[[UIButton alloc] init];
     seeButton.backgroundColor=ZCColor(9, 133, 12);
-    [seeButton setTitle:@"搜索" forState:UIControlStateNormal];
+    [seeButton setTitle:@"确定" forState:UIControlStateNormal];
     [seeButton addTarget:self action:@selector(clickseeButton) forControlEvents:UIControlEventTouchUpInside];
     self.seeButton=seeButton;
     [self addSubview:seeButton];

@@ -20,6 +20,7 @@
 #import "UIBarButtonItem+DC.h"
 #import "ZCSettingTVController.h"
 #import "ZCpasswordViewController.h"
+#import "ZCPersonalizedSettingsViewController.h"
 @interface ZCQuickScoringTableViewController ()<MJRefreshBaseViewDelegate,UITableViewDataSource,UITableViewDelegate>
 //模型数组
 @property(nonatomic,strong)NSMutableArray *eventArray;
@@ -86,8 +87,13 @@
     [super viewDidLoad];
 
     
-    self.navigationItem.title=@"历史赛事";
-     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
+    
+    
+    self.navigationItem.title=@"竞技比赛";
+    
+    
+    //返回
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(liftBthClick:) target:self];
     
 //    
    // UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"新建" style:UIBarButtonItemStyleDone target:self action:@selector(chooseThePitch)];
@@ -196,7 +202,7 @@
     //self.tableView.sectionHeaderHeight=225;
      self.page=1;
     
-    
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 70, 0);
     
     
     [self.tableView   setSeparatorColor:ZCColor(170, 170, 170)];
@@ -310,6 +316,12 @@
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         ZCLog(@"----%@",responseObject);
         
+//        if (responseObject[@"error_code"] ) {
+//            
+//            [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+//            
+//        }else{
+        
         NSMutableArray *eventMutableArray=[NSMutableArray array];
         for (NSDictionary *dict in responseObject) {
             ZCHistoricalEventsModel *event=[ZCHistoricalEventsModel historicalEventsModelWithDict:dict];
@@ -358,15 +370,23 @@
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         ZCLog(@"获取数据失败%@",error);
-        
+        ZCLog(@"---%ld",(long)[operation.response statusCode]);
         // 让刷新控件停止显示刷新状态
         [self.header endRefreshing];
         
+        
+        
+        [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
         // 让刷新控件停止显示刷新状态
         //[refreshControl endRefreshing];
     }];
 
 }
+
+
+
+
+
 
 
 //下拉加载的网络请求
@@ -391,7 +411,15 @@
     params[@"token"]=account.token;
     NSString *url=[NSString stringWithFormat:@"%@%@",API,@"matches/practice"];
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        // ZCLog(@"----%@",responseObject);
+         ZCLog(@"----%@",responseObject);
+        
+        
+        if (responseObject[@"error_code"] ) {
+            
+            [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+            
+        }else{
+        
         
         NSMutableArray *eventMutableArray=[NSMutableArray array];
         for (NSDictionary *dict in responseObject) {
@@ -406,7 +434,7 @@
         
 
         
-        
+        }
         
        // [self.tableView reloadData];
         
@@ -415,12 +443,16 @@
         
         // 让刷新控件停止显示刷新状态
         [self.footer endRefreshing];
+            
+            
        // [self showNewStatusCount];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         ZCLog(@"获取数据失败");
         
         // 让刷新控件停止显示刷新状态
         [self.footer endRefreshing];
+        
+        [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
         
         // 让刷新控件停止显示刷新状态
         //[refreshControl endRefreshing];
@@ -656,7 +688,7 @@
     CGFloat historyLabelH=40;
     
     UILabel *historyLabel=[[UILabel alloc] initWithFrame:CGRectMake(historyLabelX, historyLabelY, historyLabelW, historyLabelH)];
-    historyLabel.text=@"历史赛事";
+    historyLabel.text=@"  历史比赛";
     historyLabel.backgroundColor=ZCColor(204, 204, 204);
     historyLabel.textColor=ZCColor(85, 85, 85);
     [headerView addSubview:historyLabel];
@@ -677,9 +709,28 @@
 
 -(void)clickThejoinGameBth
 {
-    ZCpasswordViewController *passwordViewController=[[ZCpasswordViewController alloc] init];
-    [self.navigationController pushViewController:passwordViewController animated:YES];
-
+    // 获取路劲 取出图片
+    NSString *path=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject] stringByAppendingPathComponent:@"personImage.png"];
+    NSData *imageData=[NSData dataWithContentsOfFile:path];
+    UIImage *image=[[UIImage alloc] initWithData:imageData];
+    
+    
+    if (image) {
+        
+        ZCpasswordViewController *passwordViewController=[[ZCpasswordViewController alloc] init];
+        [self.navigationController pushViewController:passwordViewController animated:YES];
+        
+    }else{
+    
+        //单利
+        
+        ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
+        tool.isJoin=YES;
+        
+        ZCPersonalizedSettingsViewController *ZPersonalizedSettingsViewController=[[ZCPersonalizedSettingsViewController alloc] init];
+       // ZPersonalizedSettingsViewController.uuid=responseObject[@"uuid"];
+        [self.navigationController pushViewController:ZPersonalizedSettingsViewController animated:YES];
+    }
 }
 
 //点击创建比赛

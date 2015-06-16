@@ -16,6 +16,6 @@
 @interface ZCPersonalInformationViewController : UIViewController
 @property(nonatomic,strong)ZCPersonalData *personalData;
 @property(nonatomic,strong)UIImage *personalImage;
-@property(nonatomic,weak)NSString *name;
+@property(nonatomic,copy)NSString *name;
 @property(nonatomic,weak) id<ZCPersonalInformationViewControllerDelegate>delegate;
 @end

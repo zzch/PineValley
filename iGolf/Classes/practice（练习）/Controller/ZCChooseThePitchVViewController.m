@@ -17,10 +17,10 @@
 #import "ZCSettingTVController.h"
 #import "ZCStadiumInformation.h"
 #import "SVProgressHUD.h"
-#import "MBProgressHUD+NJ.h"
+#import "MJRefresh.h"
 #import "ZCEventUuidTool.h"
-#import "ZCCompetitiveSetTableViewController.h"
-@interface ZCChooseThePitchVViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate,CLLocationManagerDelegate>
+
+@interface ZCChooseThePitchVViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate,CLLocationManagerDelegate,MJRefreshBaseViewDelegate>
 
 //搜索栏
 @property (nonatomic , strong)UISearchDisplayController *mySearchDisplayController;
@@ -36,6 +36,10 @@
 @property(nonatomic,assign) double latitude;
 
 @property(nonatomic,assign) double longitude;
+//加载的页数
+@property(nonatomic,assign)int page;
+@property (nonatomic, weak) MJRefreshFooterView *footer;
+@property (nonatomic, weak) MJRefreshHeaderView *header;
 @end
 
 
@@ -85,7 +89,7 @@
     self.locationMgr=[[CLLocationManager alloc] init];
     self.locationMgr.delegate=self;
     self.locationMgr.desiredAccuracy=kCLLocationAccuracyBest;
-    self.locationMgr.distanceFilter=5.0;
+    self.locationMgr.distanceFilter=225.0;
     if([[UIDevice currentDevice].systemVersion doubleValue] >= 8.0)
     {
         NSLog(@"是iOS8");
@@ -110,12 +114,19 @@
     //[self initMysearchBarAndMysearchDisPlay];
    // [SVProgressHUD show];
     
-    [MBProgressHUD showMessage:@"加载中..."];
 }
 //返回到上个界面
 -(void)liftBthClick:(UIButton *)bth
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+- (void)dealloc
+{
+    // 释放内存
+    [self.header free];
+    [self.footer free];
 }
 
 
@@ -129,6 +140,23 @@
     
     
 }
+
+
+
+/**
+ *  框架 刷新控件进入开始刷新状态的时候调用
+ */
+- (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView
+{
+    if ([refreshView isKindOfClass:[MJRefreshFooterView class]]) { // 上拉刷新加载
+        [self loadMoreData1];
+    } else { // 下拉刷新
+        [self initDataSource1];
+    }
+}
+
+
+
 
 
 //网络请求数据
@@ -161,11 +189,13 @@
     
     params[@"longitude"] = @(self.longitude);
     params[@"latitude"]=@(self.latitude) ;
-
+    params[@"page"]=@"1";
     params[@"token"]=account.token;
      NSString *url=[NSString stringWithFormat:@"%@%@",API,@"venues/nearby"];
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         ZCLog(@"%@------",responseObject);
+        
+        
         //将字典转换成模型数据
         NSMutableArray *stadiunArray=[NSMutableArray array];
         for (NSDictionary *dict in responseObject) {
@@ -177,22 +207,100 @@
         }
         self.dataArray=stadiunArray;
         
-        //刷新表格
-        [self.tableView reloadData];
+//        //刷新表格
+      [self.tableView reloadData];
         
         //移除
        // [SVProgressHUD dismiss];
-        [MBProgressHUD hideHUD];
+       // [MBProgressHUD hideHUD];
+        [self.header endRefreshing];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         ZCLog(@"%@",error);
-        //移除
-        //[SVProgressHUD dismiss];
-        [MBProgressHUD hideHUD];
-        [MBProgressHUD showError:@"cuowu"];
+         [self.header endRefreshing];
+        
+        [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
 
     }];
     
 }
+
+
+
+#pragma mark 上拉加载更多
+
+-(void)loadMoreData1
+{
+
+    //2.发送网络请求
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+    
+    mgr.responseSerializer.acceptableContentTypes=[NSSet setWithObjects:@"text/html",@"text/plain",@"application/xhtml+xml",@"application/xml",@"application/json", nil];
+    // mgr.responseSerializer.acceptableContentTypes = [mgr.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    
+    //    double  latitude=39.975368;
+    //    double  longitude =116.300841;
+    // 2.封装请求参数
+    NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
+    ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
+    
+    // 说明服务器返回的JSON数据
+    // mgr.responseSerializer = [AFJSONResponseSerializer serializer];
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    //    params[@"longitude"] = @(116.300841);
+    //    params[@"latitude"]=@(39.975368);
+    self.page++;
+    
+    params[@"longitude"] = @(self.longitude);
+    params[@"latitude"]=@(self.latitude) ;
+    params[@"page"]=[NSString stringWithFormat:@"%d",self.page];
+    params[@"token"]=account.token;
+    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"venues/nearby"];
+    [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        ZCLog(@"%@------",responseObject);
+        
+       // NSMutableArray *eventMutableArray=[NSMutableArray array];
+        //将字典转换成模型数据
+        NSMutableArray *stadiunArray=[NSMutableArray array];
+        for (NSDictionary *dict in responseObject) {
+            //创建模型
+            ZCstadium *stadium=[ZCstadium stadiumWithDict:dict];
+            //添加模型
+            [stadiunArray addObject:stadium];
+            
+        }
+        [self.dataArray addObjectsFromArray:stadiunArray];
+        
+        //刷新表格
+        [self.tableView reloadData];
+        
+        //移除
+        // [SVProgressHUD dismiss];
+        // [MBProgressHUD hideHUD];
+        // 让刷新控件停止显示刷新状态
+        [self.footer endRefreshing];
+
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        ZCLog(@"%@",error);
+        //移除
+        //[SVProgressHUD dismiss];
+        //        [MBProgressHUD hideHUD];
+        //        [MBProgressHUD showError:@"cuowu"];
+        // 让刷新控件停止显示刷新状态
+        [self.footer endRefreshing];
+
+        
+    }];
+    
+
+    
+    
+    
+    
+}
+
+
+
 
 //代理方法实现
 
@@ -226,9 +334,9 @@
     
     
     
-    
-    [self initDataSource1];
     [self initTableView];
+    [self initDataSource1];
+    
     
 }
 
@@ -269,6 +377,26 @@
     
     
     [self.view addSubview:_tableView];
+    self.page=1;
+    
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 70, 0);
+    
+    
+    // 1.下拉刷新
+    MJRefreshHeaderView *header = [MJRefreshHeaderView header];
+    header.scrollView = self.tableView;
+    header.delegate = self;
+    // 自动进入刷新状态
+  //  [header beginRefreshing];
+    self.header = header;
+    
+    // 2.上拉刷新(上拉加载更多数据)
+    MJRefreshFooterView *footer = [MJRefreshFooterView footer];
+    footer.scrollView = self.tableView;
+    footer.delegate = self;
+    self.footer = footer;
+
+    
     
 //    if (is_IOS_7)
 //        //分割线的位置不带偏移

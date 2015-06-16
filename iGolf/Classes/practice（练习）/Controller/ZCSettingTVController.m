@@ -19,7 +19,7 @@
 #import "ZCEventUuidTool.h"
 #import "ZCEventUuidTool.h"
 #import "UIBarButtonItem+DC.h"
-#import "MBProgressHUD+NJ.h"
+
 #import "ZCChooseThePitchVViewController.h"
 #import "ZCSwitchTableViewController.h"
 
@@ -79,17 +79,10 @@
     
     [super viewDidLoad];
     //返回
-//    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(liftBthClick:) target:self];
     
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
-    self.navigationItem.title=@"球场设置";
-//    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
-//    customLab.textAlignment=NSTextAlignmentCenter;
-//    [customLab setTextColor:ZCColor(240, 208, 122)];
-//    [customLab setText:@"球场设置"];
-//    customLab.font = [UIFont boldSystemFontOfSize:20];
-//    self.navigationItem.titleView = customLab;
-    
+    self.navigationItem.title=@"创建比赛";
     
     self.view.backgroundColor=ZCColor(237, 237, 237);
     
@@ -106,16 +99,22 @@
     ZCLog(@"#3333333333333333333");
 }
 
-
+//返回按钮
+-(void)liftBthClick:(UIButton *)bth
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 //创建tableView
 -(void)initTableView
 {
 
+    ZCLog(@"11111111111111111");
+    
     
     //创建tabelView
     UITableView *tableView=[[UITableView alloc] init];
-    tableView.frame=CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
+    tableView.frame=CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-45)
     ;
     [self.view addSubview:tableView];
     self.tableView=tableView;
@@ -154,21 +153,22 @@
     CGFloat startButtonX=0;
     
     CGFloat startButtonW=SCREEN_WIDTH;
-    CGFloat startButtonH=65;
-    CGFloat startButtonY=SCREEN_HEIGHT-startButtonH;
+    CGFloat startButtonH=45;
+    CGFloat startButtonY=self.view.frame.size.height-startButtonH;
     
     startButton.frame=CGRectMake(startButtonX, startButtonY, startButtonW, startButtonH);
     
     // startButton.frame=CGRectMake(0, 300, 317, 40);
-    [startButton setTitle:@"开始回合" forState:UIControlStateNormal];
+    [startButton setTitle:@"创建比赛" forState:UIControlStateNormal];
     startButton.backgroundColor=ZCColor(100, 175, 102);
     //[startButton setBackgroundImage:[UIImage imageNamed:@"kedianji_zhuangtai"] forState:UIControlStateNormal];
+     startButton.enabled=NO;
     [startButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [startButton addTarget:self action:@selector(clickTheDidStartButton) forControlEvents:UIControlEventTouchUpInside];
-    UIWindow *wd = [[UIApplication sharedApplication].delegate window];
-    [wd addSubview:startButton];
+   // UIWindow *wd = [[UIApplication sharedApplication].delegate window];
+    [self.view addSubview:startButton];
     // startButton.userInteractionEnabled=NO;
-    startButton.enabled=NO;
+   
     self.startButton=startButton;
     
 
@@ -206,7 +206,7 @@
     
     UIImageView *rightImageView=[[UIImageView alloc] init];
     
-    rightImageView.frame=CGRectMake(SCREEN_WIDTH-25, (chooseBtn.frame.size.height-15)*0.5, 10, 15);
+    rightImageView.frame=CGRectMake(SCREEN_WIDTH-25, (chooseBtn.frame.size.height-15)*0.5, 18.5, 18.5);
     rightImageView.image=[UIImage imageNamed:@"cjbs_shuru"];
     [chooseBtn addSubview:rightImageView];
     
@@ -254,7 +254,37 @@
 //ZCSwitchTableView控制器传值过来时候的set方法
 -(void)setUuidStr:(NSString *)uuidStr
 {
+    
+    
+    
+    
     _uuidStr=uuidStr;
+    
+    self.opened1=NO;
+    self.opened2=NO;
+    self.opened3=NO;
+    self.opened4=NO;
+    self.opened5=NO;
+    self.firstChildName=nil;
+    self.tee_boxe=nil;
+    self.lastChildName=nil;
+    self.lastTee_boxe=nil;
+    
+    self.childStadium=nil;
+    self.childStadiumMutableArray=nil;
+    
+    self.lastChildStadium=nil;
+    self.index=0;
+    self.type=nil;
+    self.nameLabel.text=nil;
+    self.count=0;
+    self.stadiumInformation=nil;
+    
+    
+    [self.startButton removeFromSuperview];
+    [self.tableView removeFromSuperview];
+    
+
     
     [self selectCourseLoadData:uuidStr];
     
@@ -279,7 +309,7 @@
 
     }else
     {
-        NSLog(@"是iOS7");
+        ZCLog(@"是iOS7");
         // 3.开始监听(开始获取位置)
         [self.locationMgr startUpdatingLocation];
     }
@@ -294,8 +324,8 @@
 -(void)initDataLoading
 {
 
-    //加载圈圈
-    [MBProgressHUD showMessage:@"加载中..."];
+    //显示圈圈
+    MBProgressHUD *ProgressHUD= [MBProgressHUD showMessage:@"加载中..."];
     //2.发送网络请求
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     
@@ -337,14 +367,14 @@
         //刷新表格
         [self.tableView reloadData];
         
-        [MBProgressHUD hideHUD];
+        [ProgressHUD removeFromSuperview];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         ZCLog(@"%@",error);
         //移除
         //[SVProgressHUD dismiss];
-        [MBProgressHUD hideHUD];
-        [MBProgressHUD showError:@"cuowu"];
+       [ProgressHUD removeFromSuperview];
+        
         
     }];
     
@@ -355,8 +385,9 @@
 //选择球场后加载数据
 -(void)selectCourseLoadData:(NSString *)uuid
 {
-   // 加载圈圈
+    //显示圈圈
     [MBProgressHUD showMessage:@"加载中..."];
+
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
@@ -371,27 +402,35 @@
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         ZCLog(@"%@",responseObject);
         
+        if (responseObject[@"error_code"] ) {
+            
+            [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+            
+        }else
+        {
         
         ZCStadiumInformation  *stadiumInformation=[ZCStadiumInformation stadiumInformationWithDict:responseObject];
         
         self.stadiumInformation=stadiumInformation;
         
         
+        }
+        //隐藏圈圈
+       [MBProgressHUD hideHUD];
+        // 刷新表格
+        [self initTableView];
+        
         
         //给表头里的label的名字赋值
         self.nameLabel.text=self.stadiumInformation.name;
-        //隐藏圈圈
-        [MBProgressHUD hideHUD];
-        // 刷新表格
-        [self.tableView reloadData];
-        
-        
-        
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         ZCLog(@"请求失败%@",error);
         //隐藏圈圈
+        //[ProgressHUD2 removeFromSuperview];
         [MBProgressHUD hideHUD];
+        
+         [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
     }];
     
 
@@ -402,6 +441,37 @@
 //ZCChooseThePitchVViewController代理方法
 -(void)ZCChooseThePitchVViewController:(ZCChooseThePitchVViewController *)ChooseThePitchVViewController andUuid:(NSString *)uuid
 {
+    
+    
+        self.opened1=NO;
+        self.opened2=NO;
+        self.opened3=NO;
+        self.opened4=NO;
+        self.opened5=NO;
+        self.firstChildName=nil;
+        self.tee_boxe=nil;
+        self.lastChildName=nil;
+        self.lastTee_boxe=nil;
+    
+        self.childStadium=nil;
+        self.childStadiumMutableArray=nil;
+    
+        self.lastChildStadium=nil;
+        self.index=0;
+        self.type=nil;
+        self.nameLabel.text=nil;
+        self.count=0;
+        self.stadiumInformation=nil;
+    
+
+    [self.startButton removeFromSuperview];
+    [self.tableView removeFromSuperview];
+
+    
+    
+    
+    
+    
     [self selectCourseLoadData:uuid];
 }
 
@@ -479,14 +549,14 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
-  self.startButton.hidden=YES;
+ // [self.startButton removeFromSuperview];
     
        //[self.startButton removeFromSuperview];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    [self.tableView reloadData];
-    self.startButton.hidden=NO;
+//    [self.tableView reloadData];
+//    self.startButton.hidden=NO;
 }
 
 
@@ -496,6 +566,8 @@
     
     ZCScorecardTableViewController *scorecardTableView=[[ZCScorecardTableViewController alloc] init];
     
+    
+    [MBProgressHUD showMessage:@"创建中..."];
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
@@ -524,7 +596,12 @@
     NSString *url=[NSString stringWithFormat:@"%@%@",API,@"matches.json"];
     [mgr POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-      
+        if (responseObject[@"error_code"] ) {
+            
+            [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+            
+        }else
+        {
         
        // ZCTotalScorecards *totalScorecards= [ZCTotalScorecards totalScorecardsWithDict:responseObject];
        // ZCLog(@"-------%@",totalScorecards.type);
@@ -537,9 +614,17 @@
         
         [self.navigationController pushViewController:scorecardTableView animated:YES];
         
+        }
         
+        [MBProgressHUD hideHUD];
+        
+        [MBProgressHUD showSuccess:@"创建成功"];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         ZCLog(@"%@",error);
+        
+        [MBProgressHUD hideHUD];
+         [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
+        
     }];
     
     
@@ -618,7 +703,7 @@
         return (self.opened1? 0:self.stadiumInformation.courses.count) ;
     }else if(section==2){
         
-        NSLog(@"%zd",self.childStadium.tee_boxes.count);
+      // ZCLog(@"%zd",self.childStadium.tee_boxes.count);
         return (self.opened2? 0: self.childStadium.tee_boxes.count );
     }else if (section==3)
     {
@@ -685,7 +770,7 @@
         }else if ([tee isEqual:@"gold"])
         {
             cell.textLabel.text=@"金色";
-            cell.imageView.image=[UIImage imageNamed:@"huang"];
+            cell.imageView.image=[UIImage imageNamed:@"jin"];
 
         }
         
@@ -721,7 +806,7 @@
         }else if ([tee isEqual:@"gold"])
         {
             cell.textLabel.text=@"金色";
-            cell.imageView.image=[UIImage imageNamed:@"huang"];
+            cell.imageView.image=[UIImage imageNamed:@"jin"];
             
         }
         
@@ -787,10 +872,10 @@
         headerView.cleicedName=self.type;
         
         if (self.type==nil) {
-            headerView.liftName=@"选择计分方式";
+            headerView.liftName=@"选择记分方式";
         }else
         {
-        headerView.liftName=@"计分方式";
+        headerView.liftName=@"记分方式";
         }
         
         
@@ -839,10 +924,10 @@
         
         
         if (self.tee_boxe==nil) {
-            headerView.liftName=@"请选择T台";
+            headerView.liftName=@"请选发球台";
         }else
         {
-            headerView.liftName=@"开球T台";
+            headerView.liftName=@"发球台";
         }
 
         
@@ -865,7 +950,7 @@
         
         
         if (self.lastChildName==nil) {
-            headerView.liftName=@"请选择球场";
+            headerView.liftName=@"请选择发球台";
         }else
         {
             headerView.liftName=@"后九洞";
@@ -888,10 +973,10 @@
         headerView.tag=1004;
         headerView.cleicedName=self.lastTee_boxe;
         if (self.lastTee_boxe==nil) {
-            headerView.liftName=@"请选择T台";
+            headerView.liftName=@"请选择发球台";
         }else
         {
-            headerView.liftName=@"开球T台";
+            headerView.liftName=@"发球台";
         }
 
     }

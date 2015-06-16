@@ -16,8 +16,11 @@
 #import "ZCExitTableViewController.h"
 #import "UIImage+MJ.h"
 #import "ZCregisterViewController.h"
-#import "MBProgressHUD+NJ.h"
+#import "ZCFeedbackViewController.h"
 #import "ZCAccountSettingsViewController.h"
+#import "ZCAboutMeViewController.h"
+#import "ZCMobilePhoneViewController.h"
+#import "ZCMobilePhoneViewController.h"
 @interface ZCPersonalViewController ()<UIActionSheetDelegate,UIAlertViewDelegate,ZCPersonalInformationViewControllerDelegate>
 //头像View
 @property(nonatomic,weak)UIButton *headImageView;
@@ -37,7 +40,7 @@
     [super viewDidLoad];
     
     self.view.backgroundColor=ZCColor(237, 237, 237);
-    self.navigationItem.title=@"我爱高尔夫";
+    self.navigationItem.title=@"个人信息";
 //    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
 //    customLab.textAlignment=NSTextAlignmentCenter;
 //    [customLab setTextColor:ZCColor(240, 208, 122)];
@@ -45,7 +48,8 @@
 //    customLab.font = [UIFont boldSystemFontOfSize:20];
 //    self.navigationItem.titleView = customLab;
 
-    
+    //返回
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(liftBthClick:) target:self];
     
     [self onlineData];
     
@@ -55,6 +59,14 @@
 
 }
 
+
+
+
+//返回到上个界面
+-(void)liftBthClick:(UIButton *)bth
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 //网络请求
 -(void)onlineData
@@ -75,6 +87,15 @@
    // /v1/users/details.json
     [mgr GET:URL parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
+        
+        ZCLog(@"%@",responseObject);
+        if (responseObject[@"error_code"] ) {
+            
+            [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+            
+        }else
+        {
+        
         ZCLog(@"%@",responseObject);
         ZCPersonalData *personalData=[ZCPersonalData personalDataWithDict:responseObject];
         self.personalData=personalData;
@@ -87,13 +108,14 @@
         
         //设置
         [self initSettingsButton];
-
+        }
         //移除圈圈
         [MBProgressHUD hideHUD];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         ZCLog(@"%@",error);
         [MBProgressHUD hideHUD];
+        [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
     }];
   
  
@@ -122,9 +144,10 @@
     settingsButton.frame=CGRectMake(settingsButtonX, settingsButtonY, settingsButtonW, settingsButtonH);
     settingsButton.backgroundColor=[UIColor whiteColor];
     [settingsButton addTarget:self action:@selector(clicksettingsButton) forControlEvents:UIControlEventTouchUpInside];
+    [settingsButton setBackgroundImage:[UIImage imageNamed:@"hang_bj_03"] forState:UIControlStateNormal];
     [self.view addSubview:settingsButton];
     self.settingsButton=settingsButton;
-    [self addChildControls:settingsButton andText:@"账号设置"];
+    [self addChildControls:settingsButton andText:@"账号与安全"];
     
     UIButton *abountUsBtn=[[UIButton alloc] init];
     CGFloat abountUsBtnX=0;
@@ -132,7 +155,9 @@
     CGFloat abountUsBtnW=SCREEN_WIDTH;
     CGFloat abountUsBtnH=50;
     abountUsBtn.frame=CGRectMake(abountUsBtnX, abountUsBtnY, abountUsBtnW, abountUsBtnH);
-    abountUsBtn.backgroundColor=[UIColor whiteColor];
+    [abountUsBtn setBackgroundImage:[UIImage imageNamed:@"hang_bj_03"] forState:UIControlStateNormal];
+
+    [abountUsBtn addTarget:self action:@selector(clicktheAbountUsBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:abountUsBtn];
     [self addChildControls:abountUsBtn andText:@"关于我们"];
     
@@ -140,11 +165,13 @@
     
     UIButton *feedbackBtn=[[UIButton alloc] init];
     CGFloat feedbackBtnX=0;
-    CGFloat feedbackBtnY=abountUsBtnY+abountUsBtnH+1;
+    CGFloat feedbackBtnY=abountUsBtnY+abountUsBtnH-1;
     CGFloat feedbackBtnW=SCREEN_WIDTH;
     CGFloat feedbackBtnH=50;
     feedbackBtn.frame=CGRectMake(feedbackBtnX, feedbackBtnY, feedbackBtnW, feedbackBtnH);
-    feedbackBtn.backgroundColor=[UIColor whiteColor];
+    [feedbackBtn setBackgroundImage:[UIImage imageNamed:@"hang_bj_03"] forState:UIControlStateNormal];
+   
+    [feedbackBtn addTarget:self action:@selector(clickThefeedbackBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:feedbackBtn];
     [self addChildControls:feedbackBtn andText:@"意见反馈"];
 
@@ -159,9 +186,9 @@
     CGFloat LoggedOutBtnW=SCREEN_WIDTH;
     CGFloat LoggedOutBtnH=50;
     LoggedOutBtn.frame=CGRectMake(LoggedOutBtnX, LoggedOutBtnY, LoggedOutBtnW, LoggedOutBtnH);
-    LoggedOutBtn.backgroundColor=[UIColor whiteColor];
-    [LoggedOutBtn setTitle:@"退出登陆" forState:UIControlStateNormal];
-    [LoggedOutBtn setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
+    [LoggedOutBtn setBackgroundImage:[UIImage imageNamed:@"hang_bj_03"] forState:UIControlStateNormal];
+    [LoggedOutBtn setTitle:@"退出登录" forState:UIControlStateNormal];
+    [LoggedOutBtn setTitleColor:ZCColor(255, 0, 0) forState:UIControlStateNormal];
     [LoggedOutBtn addTarget:self action:@selector(clickLoggedOutBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:LoggedOutBtn];
 
@@ -409,7 +436,7 @@ ZCLog(@"网络下的载111122222 ");
     
     //名字
     UILabel *nameLabel=[[UILabel alloc] init];
-    nameLabel.font=[UIFont systemFontOfSize:27];
+    nameLabel.font=[UIFont systemFontOfSize:20];
     nameLabel.text=self.name;
    // nameLabel.textColor=[UIColor whiteColor];
     CGFloat nameLabelW=150;
@@ -418,7 +445,7 @@ ZCLog(@"网络下的载111122222 ");
     CGFloat nameLabelY=headImageY+headImageH+17;
     nameLabel.frame=CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH);
     nameLabel.textAlignment=NSTextAlignmentCenter;
-    nameLabel.textColor=ZCColor(240, 208, 122);
+    nameLabel.textColor=[UIColor whiteColor];
     [headImageView addSubview:nameLabel];
     self.nameLabel=nameLabel;
     
@@ -457,12 +484,33 @@ ZCLog(@"网络下的载111122222 ");
 
 }
 
-
+- (id) _valueOrNil:(id)obj {
+    if (!obj) {
+        return nil;
+    }
+    if (obj == [NSNull null]) {
+        return nil;
+    }
+    return obj;
+}
 //点击设置
 -(void)clicksettingsButton
 {
+    
+    NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
+    ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
+
+    if ([self _valueOrNil:account.phone ]==nil) {
+        ZCMobilePhoneViewController *MobilePhoneViewController=[[ZCMobilePhoneViewController alloc] init];
+        [self.navigationController pushViewController:MobilePhoneViewController animated:YES];
+    }else{
+    
+    
     ZCAccountSettingsViewController *AccountSettings=[[ZCAccountSettingsViewController alloc] init];
     [self.navigationController  pushViewController:AccountSettings animated:YES];
+        
+    }
 }
 
 //点击设置按钮clickLoggedOutBtn
@@ -473,7 +521,7 @@ ZCLog(@"网络下的载111122222 ");
 //    [self.navigationController pushViewController:exitTableViewController animated:YES];
     
     
-    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"退出登录",nil];
+    UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"设置账号和密码",@"退出登录",nil];
     [sheet showInView:self.view];
 
 }
@@ -487,7 +535,7 @@ ZCLog(@"网络下的载111122222 ");
     
     ZCPersonalInformationViewController *PersonalInformation=[[ZCPersonalInformationViewController alloc] init];
     PersonalInformation.delegate=self;
-    PersonalInformation.personalData=self.personalData;
+   // PersonalInformation.personalData=self.personalData;
     PersonalInformation.personalImage=self.headImage.image;
     PersonalInformation.name=self.nameLabel.text;
     PersonalInformation.hidesBottomBarWhenPushed=YES;
@@ -506,13 +554,33 @@ ZCLog(@"网络下的载111122222 ");
     self.headImage.image=personImage;
     self.moodLabel.text=SignatureStr;
     self.nameLabel.text=name;
+    
+    
+    
+    NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
+    ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
+    account.nickname=name;
+    //删除文件
+    [[NSFileManager defaultManager] removeItemAtPath:file error:nil];
+    
+   //添加
+    [NSKeyedArchiver archiveRootObject:account toFile:file];
+    
+    
 }
 
 
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 0)
+    if (buttonIndex == 0) {
+        
+        ZCMobilePhoneViewController *MobilePhoneViewController=[[ZCMobilePhoneViewController alloc] init];
+        [self.navigationController pushViewController:MobilePhoneViewController animated:YES];
+        
+        
+    }else  if (buttonIndex == 1)
     {
         NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
         NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
@@ -598,6 +666,25 @@ ZCLog(@"网络下的载111122222 ");
     
     // 按钮的索引肯定不是0
     
+}
+
+
+
+//意见反馈
+
+-(void)clickThefeedbackBtn
+{
+    ZCFeedbackViewController *feedbackViewController=[[ZCFeedbackViewController alloc] init];
+    [self.navigationController pushViewController:feedbackViewController animated:YES];
+
+}
+
+//关于我们
+-(void)clicktheAbountUsBtn
+{
+    ZCAboutMeViewController *AboutMeViewController=[[ZCAboutMeViewController alloc] init];
+    [self.navigationController pushViewController:AboutMeViewController animated:YES];
+
 }
 
 

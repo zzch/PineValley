@@ -23,7 +23,7 @@
 #import "ZCCueMode.h"
 #import "ZCTotalGradeViewController.h"
 
-#import "MBProgressHUD+NJ.h"
+
 @interface ZCProfessionalStatisticalViewController ()
 @property(nonatomic,weak)UIScrollView *scrollView;
 @property(nonatomic,strong)ZCProfessionalStatisticalModel *professionalStatisticalModel;
@@ -123,6 +123,7 @@
     UIScrollView *scrollView=[[UIScrollView alloc] init];
     scrollView.frame=[UIScreen mainScreen].bounds;
     self.scrollView=scrollView;
+    scrollView.bounces=NO;
     [self.view addSubview:scrollView];
     
     NSDictionary *total= self.professionalStatisticalModel.item_01;
@@ -346,7 +347,7 @@
     
     //杆数
     UIButton *rodNumberBtn=[[UIButton alloc] init];
-    
+    rodNumberBtn.tag=51234;
     CGFloat rodNumberBtnX=totalGradeBtnX;
     CGFloat rodNumberBtnY=kickOffBtnY+kickOffBtnH+10;
     CGFloat rodNumberBtnW=totalGradeBtnW;
@@ -366,7 +367,7 @@
     
     //杆数
     NSDictionary *rodNumber= self.professionalStatisticalModel.item_09;
-    [self addContent:rodNumberBtn imageView:@"jstj_bingtu" nameLabel:@"杆数" firstLabel:[NSString stringWithFormat:@"%@",rodNumber[@"birdie"]] secondLabel:[NSString stringWithFormat:@"%@",rodNumber[@"par"]] thirdLabel:[NSString stringWithFormat:@"%@",rodNumber[@"bogey"]] firstNameLabel:@"小鸟" secondNameLabel:@"标准杆" thirdNameLabel:@"柏忌"];
+    [self addContent:rodNumberBtn imageView:@"80tu" nameLabel:@"杆数" firstLabel:[NSString stringWithFormat:@"%@",rodNumber[@"birdie"]] secondLabel:[NSString stringWithFormat:@"%@",rodNumber[@"par"]] thirdLabel:[NSString stringWithFormat:@"%@",rodNumber[@"bogey"]] firstNameLabel:@"小鸟" secondNameLabel:@"标准杆" thirdNameLabel:@"柏忌"];
 
 
     
@@ -518,14 +519,31 @@
     //UIImage *im=[UIImage imageNamed:imageStr];
     //ZCLog(@"%@",im)
     
+    
+    
+    
     UIImageView *imageView=[[UIImageView alloc] init];
     CGFloat imageViewW=188;
     CGFloat imageViewH=140;
+//    
+//    if (button.tag==51234) {
+//        imageViewW=114.5;
+//        imageViewH=113;
+//    }
+    
     CGFloat imageViewX=0;
+    
     CGFloat imageViewY=(button.frame.size.height-imageViewH)*0.5;
+    
+    
+    
     imageView.frame=CGRectMake(imageViewX, imageViewY, imageViewW, imageViewH);
     imageView.image=[UIImage imageNamed:imageStr];//@"20141118042246536"
     [button addSubview:imageView];
+    
+    
+    
+
     
     
     UILabel *nameLabel=[[UILabel alloc] init];

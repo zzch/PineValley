@@ -98,6 +98,8 @@
     NSString *url=[NSString stringWithFormat:@"%@%@",API,@"venues/visited.json"];
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
+        ZCLog(@"%@",responseObject);
+        
         for (NSDictionary *dict in responseObject) {
             ZCHistoryCoursesModel *historyCoursesModel=[ZCHistoryCoursesModel historyCoursesWithDict:dict];
             [self.stadiumArray addObject:historyCoursesModel];

@@ -49,8 +49,8 @@
     //排名的图片
     UILabel *rankingLabel=[[UILabel alloc ] init];
     [self.contentView addSubview:rankingLabel];
-    rankingLabel.backgroundColor=ZCColor(55, 57, 59);
-    rankingLabel.textColor=[UIColor whiteColor];
+    
+    
     rankingLabel.font=[UIFont systemFontOfSize:30];
     rankingLabel.textAlignment=NSTextAlignmentCenter;
     self.rankingLabel=rankingLabel;
@@ -71,7 +71,7 @@
     UILabel *resultsLabel=[[UILabel alloc] init];
     [self.contentView addSubview:resultsLabel];
     resultsLabel.textAlignment=NSTextAlignmentCenter;
-    resultsLabel.textColor=ZCColor(225, 150, 29);
+    
     resultsLabel.font=[UIFont systemFontOfSize:28];
     self.resultsLabel=resultsLabel;
     
@@ -128,9 +128,12 @@
     
     if ([[NSString stringWithFormat:@"%@",listModel.isself] isEqual:@"1"]) {
         
-        self.backgroundColor=ZCColor(55, 57, 59);
-        self.userLabel.textColor=[UIColor whiteColor];
-        self.progressLabel.textColor=[UIColor whiteColor];
+        
+        self.userLabel.textColor=ZCColor(255, 150, 29);
+        self.progressLabel.textColor=ZCColor(255, 150, 29);
+        self.rankingLabel.textColor=ZCColor(255, 150, 29);
+        self.resultsLabel.textColor=ZCColor(255, 150, 29);
+        
     }
 
 }

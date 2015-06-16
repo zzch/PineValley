@@ -14,7 +14,7 @@
 //球场的uuid
 @property(nonatomic,copy)NSString *uuid;
 //历史次数
-@property(nonatomic,copy)NSString *visited_count;
+@property(nonatomic,copy)NSString *played_count;
 
 + (instancetype)historyCoursesWithDict:(NSDictionary *)dict;
 - (instancetype)initWithDict:(NSDictionary *)dict;

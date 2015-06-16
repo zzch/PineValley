@@ -21,7 +21,7 @@
         self.name=dict[@"name"];
         self.address=dict[@"address"];
         self.uuid=dict[@"uuid"];
-        self.visited_count=dict[@"visited_count"];
+        self.played_count=dict[@"played_count"];
     }
     return self;
 

@@ -26,6 +26,6 @@
 //修改一条的UUID
 @property(nonatomic,copy) NSString *uuid;
 @property(nonatomic,copy) NSString *isYes;
-
+@property(nonatomic,strong)ZCSelectTheDisplay *selectTheDisplay;
 @property(nonatomic,weak) id<ZCChooseViewDelegate >delegate;
 @end

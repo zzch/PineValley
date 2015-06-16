@@ -74,6 +74,7 @@
 
     if (self=[super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         //背景
+        self.backgroundColor=ZCColor(237, 237, 237);
         // self.backgroundView=[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"jifenka_yihangbeijing"]];
         //self.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"suoyou_bj_02"]];
         self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -109,7 +110,7 @@
         
         UILabel *numberparLabel=[[UILabel alloc] init];
         numberparLabel.textAlignment=NSTextAlignmentCenter;
-        numberparLabel.textColor=ZCColor(102, 102, 102);
+        numberparLabel.textColor=ZCColor(85, 85, 85);
         numberparLabel.font=[UIFont systemFontOfSize:20];
         [self.liftView addSubview:numberparLabel];
         self.numberparLabel=numberparLabel;
@@ -326,7 +327,7 @@
     //创建左边View的frame
     CGFloat liftViewX=0;
     CGFloat liftViewY=0;
-    CGFloat liftViewW=self.frame.size.width*0.21;
+    CGFloat liftViewW=self.frame.size.width*0.2;
     CGFloat liftViewH=self.frame.size.height;
     
     self.liftView.frame=CGRectMake(liftViewX, liftViewY, liftViewW, liftViewH);
@@ -342,19 +343,19 @@
     
     //创建球洞ballLabel的frame
     
-    CGFloat ballLabelW=62;
-    CGFloat ballLabelH=32;
+    CGFloat ballLabelW=60;
+    CGFloat ballLabelH=30;
     CGFloat ballLabelX=(self.liftView.frame.size.width-ballLabelW)*0.5;
-    CGFloat ballLabelY=self.liftView.frame.size.height*0.252;
+    CGFloat ballLabelY=17;
 
     self.numberLabel.frame=CGRectMake(ballLabelX, ballLabelY, ballLabelW, ballLabelH);
     
     
     
-    CGFloat numberparLabelW=62;
-    CGFloat numberparLabelH=62;
+    CGFloat numberparLabelW=60;
+    CGFloat numberparLabelH=20;
     CGFloat numberparLabelX=(self.liftView.frame.size.width-numberparLabelW)*0.5;
-    CGFloat numberparLabelY=ballLabelY+ballLabelH;
+    CGFloat numberparLabelY=ballLabelY+ballLabelH+7;
     
     self.numberparLabel.frame=CGRectMake(numberparLabelX, numberparLabelY, numberparLabelW, numberparLabelH);
 

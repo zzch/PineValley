@@ -21,11 +21,24 @@
 
 @implementation ZCPracticeVController
 
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     
     
+//    if( ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0)) {
+//        
+//        
+//        UINavigationBar *bar = [UINavigationBar appearance];
+//
+//        [bar setBarTintColor:[UIColor redColor]];
+//        
+//        [bar setTranslucent:NO];
+//        
+//    }
     
     
     
@@ -39,10 +52,10 @@
     }
     
    
-    
+     //[self setNeedsStatusBarAppearanceUpdate];
     
     //背景颜色suoyou_bj
-    self.view.backgroundColor=ZCColor(237, 237, 237);
+    self.view.backgroundColor=[UIColor whiteColor];
     
     
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone target:nil action:nil];
@@ -56,15 +69,27 @@
 //    self.navigationItem.titleView = customLab;
     
 
+    UIImage *topimage;
+    if (SCREEN_HEIGHT==480) {
+        topimage=[UIImage imageNamed:@"shouye_4s"];
+    }else if (SCREEN_HEIGHT==568)
+    {
+    topimage=[UIImage imageNamed:@"bn_01"];
+    }else
+    {
+    topimage=[UIImage imageNamed:@"shouye_6"];
+    }
+    
+    
     
     UIImageView *persinImage=[[UIImageView alloc] init];
     
-    CGFloat  persinImageY=60;
-    CGFloat  persinImageW=70;
-    CGFloat  persinImageH=70;
-    CGFloat  persinImageX=(SCREEN_WIDTH-persinImageW)/2;
+    CGFloat  persinImageY=0;
+    CGFloat  persinImageW=SCREEN_WIDTH;
+    CGFloat  persinImageH=topimage.size.height;
+    CGFloat  persinImageX=0;
     persinImage.frame=CGRectMake(persinImageX, persinImageY, persinImageW, persinImageH);
-    persinImage.image=[UIImage imageNamed:@"tubiao"];
+    persinImage.image=topimage;
     [self.view addSubview:persinImage];
 //    persinImage.layer.cornerRadius=10;//设置圆角的半径为10
 //    persinImage.layer.masksToBounds=YES;
@@ -108,25 +133,25 @@
     
     
     
-    UILabel *nameLabel=[[UILabel alloc] init];
-    CGFloat  nameLabelY=persinImageY+persinImageH+20;
-    CGFloat  nameLabelW=150;
-    CGFloat  nameLabelH=25;
-    CGFloat  nameLabelX=(SCREEN_WIDTH-nameLabelW)/2;
-    nameLabel.frame=CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH);
-    nameLabel.text=@"我 爱 高 尔 夫";
-    nameLabel.textColor=ZCColor(85, 85, 85);
-    nameLabel.textAlignment=NSTextAlignmentCenter;
-    [self.view addSubview:nameLabel];
-    
+//    UILabel *nameLabel=[[UILabel alloc] init];
+//    CGFloat  nameLabelY=persinImageY+persinImageH+20;
+//    CGFloat  nameLabelW=150;
+//    CGFloat  nameLabelH=25;
+//    CGFloat  nameLabelX=(SCREEN_WIDTH-nameLabelW)/2;
+//    nameLabel.frame=CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH);
+//    nameLabel.text=@"我 爱 高 尔 夫";
+//    nameLabel.textColor=ZCColor(85, 85, 85);
+//    nameLabel.textAlignment=NSTextAlignmentCenter;
+//    [self.view addSubview:nameLabel];
+//    
     //竞技比赛
     UIButton *sportsCompetition=[[UIButton alloc] init];
     CGFloat sportsCompetitionX=0;
-    CGFloat sportsCompetitionY=SCREEN_HEIGHT*0.4;
+    CGFloat sportsCompetitionY=persinImageH+0.5;
     CGFloat sportsCompetitionW=SCREEN_WIDTH;
-    CGFloat sportsCompetitionH=SCREEN_HEIGHT*0.2;
+    CGFloat sportsCompetitionH=(SCREEN_HEIGHT-persinImageH-3)/3;
     sportsCompetition.frame=CGRectMake(sportsCompetitionX, sportsCompetitionY, sportsCompetitionW, sportsCompetitionH);
-    sportsCompetition.backgroundColor=ZCColor(0, 194, 123);
+    sportsCompetition.backgroundColor=ZCColor(248, 67, 67);
     [sportsCompetition setTitle:@"竞技比赛" forState:UIControlStateNormal];
     [sportsCompetition addTarget:self action:@selector(clickThesportsCompetition) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:sportsCompetition];
@@ -139,11 +164,11 @@
     //技术统计
     UIButton *technicalStatistics=[[UIButton alloc] init];
     CGFloat technicalStatisticsX=0;
-    CGFloat technicalStatisticsY=SCREEN_HEIGHT*0.6;
+    CGFloat technicalStatisticsY=sportsCompetitionY+sportsCompetitionH+0.5;
     CGFloat technicalStatisticsW=SCREEN_WIDTH;
-    CGFloat technicalStatisticsH=SCREEN_HEIGHT*0.2;
+    CGFloat technicalStatisticsH=sportsCompetitionH;
     technicalStatistics.frame=CGRectMake(technicalStatisticsX, technicalStatisticsY, technicalStatisticsW, technicalStatisticsH);
-    technicalStatistics.backgroundColor=ZCColor(72, 172, 204);
+    technicalStatistics.backgroundColor=ZCColor(76, 160, 255);
     [technicalStatistics setTitle:@"技术统计" forState:UIControlStateNormal];
     [technicalStatistics addTarget:self action:@selector(clickTheTechnicalStatistics) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:technicalStatistics];
@@ -152,11 +177,11 @@
     //个人中心
     UIButton *personalCenter=[[UIButton alloc] init];
     CGFloat personalCenterX=0;
-    CGFloat personalCenterY=SCREEN_HEIGHT*0.8;
+    CGFloat personalCenterY=technicalStatisticsY+technicalStatisticsH+1;
     CGFloat personalCenterW=SCREEN_WIDTH;
-    CGFloat personalCenterH=SCREEN_HEIGHT*0.2;
+    CGFloat personalCenterH=SCREEN_HEIGHT-personalCenterY;
     personalCenter.frame=CGRectMake(personalCenterX, personalCenterY, personalCenterW, personalCenterH);
-    personalCenter.backgroundColor=ZCColor(226, 159, 64);
+    personalCenter.backgroundColor=ZCColor(248, 129, 57);
     [personalCenter setTitle:@"个人中心" forState:UIControlStateNormal];
     [personalCenter addTarget:self action:@selector(clickThePersonalCenter) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:personalCenter];
@@ -168,18 +193,21 @@
 }
 
 
-
+//- (UIStatusBarStyle)preferredStatusBarStyle
+//{
+//    return UIStatusBarStyleDefault;
+//}
 
 -(void)viewWillAppear:(BOOL)animated
 {
     //影藏状态栏
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+  //  [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
  self.navigationController.navigationBarHidden=YES;
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
     //影藏状态栏
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+   // [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
 self.navigationController.navigationBarHidden=NO;
 }
 

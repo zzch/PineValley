@@ -113,6 +113,7 @@
     
     UIScrollView *scrollView=[[UIScrollView alloc] init];
     scrollView.frame=CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    scrollView.bounces=NO;
     //scrollView.frame=  [ UIScreen mainScreen ].bounds ;
     self.scrollView=scrollView;
     [self.verticalScreenView addSubview:scrollView];
@@ -149,7 +150,7 @@
     CGFloat ResultsViewX=nameViewX;
     CGFloat ResultsViewY=nameViewH;
     CGFloat ResultsViewW=SCREEN_WIDTH;
-    CGFloat ResultsViewH=310;
+    CGFloat ResultsViewH=250;
     ZCResultsView *ResultsView=[ZCResultsView initWithResultsViewWithFrame:CGRectMake(ResultsViewX, ResultsViewY, ResultsViewW, ResultsViewH) andModel:self.professionalScorecardModel  andTime:self.match.played_at];
     
     [self.scrollView addSubview:ResultsView];

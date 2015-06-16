@@ -11,6 +11,7 @@
 #import "ZCAccount.h"
 #import "ZCChangePhoneViewController.h"
 #import "ZCChangethePasswordViewController.h"
+#import "ZCPersonalViewController.h"
 @interface ZCAccountSettingsViewController ()
 
 @end
@@ -22,6 +23,10 @@
     
     self.view.backgroundColor=ZCColor(237, 237, 237);
     self.navigationItem.title=@"设置";
+    
+    //返回
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(liftBthClick:) target:self];
+    
     
     NSString *doc=[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory , NSUserDomainMask, YES) lastObject];
     NSString *file=[doc stringByAppendingPathComponent:@"account.data"];
@@ -39,9 +44,12 @@
     CGFloat  photoNumberBtnY=25;
     CGFloat  photoNumberBtnW=SCREEN_WIDTH;
     CGFloat  photoNumberBtnH=50;
+    
     photoNumberBtn.frame=CGRectMake(photoNumberBtnX, photoNumberBtnY, photoNumberBtnW, photoNumberBtnH);
     photoNumberBtn.backgroundColor=[UIColor whiteColor];
     [photoNumberBtn addTarget:self action:@selector(clickThephotoNumberBtn) forControlEvents:UIControlEventTouchUpInside];
+    photoNumberBtn.enabled=NO;
+    photoNumberBtn.tag=79999;
     [self.view addSubview:photoNumberBtn];
     [self addChildControls:photoNumberBtn andText:@"手机号" andOther:[NSString stringWithFormat:@"%@",photo]];
     
@@ -59,6 +67,23 @@
     [self.view addSubview:accountPassword];
     [self addChildControls:accountPassword andText:@"账号密码" andOther:nil];
     
+}
+
+
+//返回到上个界面
+-(void)liftBthClick:(UIButton *)bth
+{
+    
+    for (id  Controller in self.navigationController.viewControllers) {
+        
+                    if ([Controller isKindOfClass:[ZCPersonalViewController class]]) {
+                       // ZCPersonalViewController *controller=Controller;
+                        
+                        [self.navigationController popToViewController:Controller animated:YES];
+                        break;
+                    }
+
+    }
 }
 
 - (id) _valueOrNil:(id)obj {
@@ -97,6 +122,12 @@
     nuberLabel.textAlignment=NSTextAlignmentRight;
     [Button addSubview:nuberLabel];
     
+    
+    
+    if (Button.tag==79999) {
+        
+    }else
+    {
     //向右箭头
     UIImageView *rightImageView=[[UIImageView alloc] init];
     
@@ -109,7 +140,7 @@
     
     [Button addSubview:rightImageView];
     
-    
+    }
     
 }
 

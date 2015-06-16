@@ -64,7 +64,7 @@
     _historyCoursesModel=historyCoursesModel;
     
     self.nameLabel.text=[NSString stringWithFormat:@"%@",historyCoursesModel.name];
-    self.typeLabel.text=[NSString stringWithFormat:@"%@次",historyCoursesModel.visited_count];
+    self.typeLabel.text=[NSString stringWithFormat:@"%@次",historyCoursesModel.played_count];
     
     
     

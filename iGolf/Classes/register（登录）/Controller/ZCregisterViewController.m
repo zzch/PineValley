@@ -15,13 +15,19 @@
 #import "ZCPhoneloginView.h"
 #import "ZCRegisteredViewController.h"
 @interface ZCregisterViewController ()
-
+@property(nonatomic,assign,getter=isOpen) BOOL bKeyBoardHide;
 @end
 
 @implementation ZCregisterViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    
+    
+    
+    
     
     self.view.backgroundColor=ZCColor(237, 237, 237);
    // self.navigationController.title=@"我爱高尔夫";
@@ -36,7 +42,7 @@
     CGFloat registerX=SCREEN_WIDTH*0.031;
     CGFloat registerY=SCREEN_HEIGHT*0.0484;
     CGFloat registerW=SCREEN_WIDTH-2*registerX;
-    CGFloat registerH=49;
+    CGFloat registerH=40;
     ZCAKeyToRegisterView *Register=[[ZCAKeyToRegisterView alloc] initWithFrame:CGRectMake(registerX, registerY, registerW, registerH)];
     [self.view addSubview:Register];
     
@@ -68,9 +74,9 @@
     
     bjImage.image=[UIImage imageNamed:@"denglu_xian"];
     //登陆landing
-    CGFloat landingButtonY=phoneRegisterY+phoneRegisterH+15;
+    CGFloat landingButtonY=phoneRegisterY+phoneRegisterH+45;
     CGFloat landingButtonW=SCREEN_WIDTH-20;
-    CGFloat landingButtonH=1;
+    CGFloat landingButtonH=0.5;
     CGFloat landingButtonX=10;
     bjImage.frame=CGRectMake(landingButtonX, landingButtonY, landingButtonW,landingButtonH );
     
@@ -78,12 +84,12 @@
     
     
     UILabel *denglu=[[UILabel alloc] init];
-    CGFloat dengluY=phoneRegisterY+phoneRegisterH+8;
+    CGFloat dengluY=phoneRegisterY+phoneRegisterH+38;
     CGFloat dengluW=50;
     CGFloat dengluH=15;
     CGFloat dengluX=(SCREEN_WIDTH-dengluW)*0.5;
     denglu.frame=CGRectMake(dengluX, dengluY, dengluW, dengluH);
-    denglu.text=@"登陆";
+    denglu.text=@"登录";
     denglu.textColor=ZCColor(102, 102, 102);
     denglu.textAlignment=NSTextAlignmentCenter;
     [self.view addSubview:denglu];
@@ -126,20 +132,48 @@
     //改变window的背景颜色
     //    self.view.window.backgroundColor = self.tableView.backgroundColor;
     
-    CGRect frame = [noti.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    if (SCREEN_HEIGHT==480) {
+        CGRect frame = [noti.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+        
+        //键盘实时y
+        CGFloat keyY = frame.origin.y;
+        
+        CGFloat screenH = [[UIScreen mainScreen] bounds].size.height;
+        
+        CGFloat keyDuration = [noti.userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue];
+        
+        [UIView animateWithDuration:keyDuration animations:^{
+            self.view.transform = CGAffineTransformMakeTranslation(0, keyY - screenH );
+        }];
+        
+
+    }else
+    {
+        
+        
+        if (self.bKeyBoardHide==NO) {
+            self.view.transform = CGAffineTransformMakeTranslation(0,-100 );
+            //        [UIView animateWithDuration:keyDuration animations:^{
+            //            self.view.transform = CGAffineTransformMakeTranslation(0, -40 );
+            //        }];
+            self.bKeyBoardHide = YES;
+            
+        }else
+        {
+            self.bKeyBoardHide = NO;
+            self.view.transform = CGAffineTransformMakeTranslation(0,0 );
+            
+        }
+
+        
+        
+    }
     
-    //键盘实时y
-    CGFloat keyY = frame.origin.y;
     
-    CGFloat screenH = [[UIScreen mainScreen] bounds].size.height;
     
-    CGFloat keyDuration = [noti.userInfo[UIKeyboardAnimationDurationUserInfoKey] floatValue];
     
-    [UIView animateWithDuration:keyDuration animations:^{
-        self.view.transform = CGAffineTransformMakeTranslation(0, keyY - screenH );
-    }];
     
-}
+   }
 
 
 

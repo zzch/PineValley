@@ -26,8 +26,6 @@
 	<string>使用GPS获取您的位置</string>
 	<key>NSLocationWhenInUseDescription</key>
 	<string>使用GPS获取您的位置</string>
-	<key>UILaunchStoryboardName</key>
-	<string>Default-568h@2x</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

@@ -76,7 +76,7 @@
 {
 
     
-    
+    [MBProgressHUD showMessage:@"请稍后..."];
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
@@ -94,15 +94,31 @@
     [mgr GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         
+        if (responseObject[@"error_code"] ) {
+            
+            [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+           
+        }else
+        {
+        
         
         self.password=responseObject[@"password"];
         self.expired_at=[responseObject[@"expired_at"] longValue];
         
         
         [self addControls];
+          
+            
+        }
+        
+        
+        [MBProgressHUD hideHUD];
+        
         ZCLog(@"%@",responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [MBProgressHUD hideHUD];
         
+         [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
     }];
 
 }

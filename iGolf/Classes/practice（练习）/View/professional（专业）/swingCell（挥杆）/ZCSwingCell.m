@@ -108,14 +108,14 @@
       //  }else{
 
         //如果没值显示加号jfk_tianjia
-        
-        UIImageView *addImage=[[UIImageView alloc] init];
-            addImage.frame=CGRectMake((self.frame.size.width-30)/2, (self.frame.size.height-30)/2, 30, 30);
-        addImage.image=[UIImage imageNamed:@"zyjf_tiejia"];
-        //addLabel.text=@"+++++++++++++";
-            
-        [self addSubview:addImage];
-        self.addImage=addImage;
+//        
+//        UIImageView *addImage=[[UIImageView alloc] init];
+//            addImage.frame=CGRectMake((SCREEN_WIDTH-25)/2, (self.frame.size.height-25)/2, 25, 25);
+//        addImage.image=[UIImage imageNamed:@"zyjf_tiejia"];
+//        //addLabel.text=@"+++++++++++++";
+//            
+//        [self addSubview:addImage];
+//        self.addImage=addImage;
     //    }
         
     }
@@ -131,14 +131,14 @@
 {
     _selectTheDisplay=selectTheDisplay;
     
-    if (self.selectTheDisplay.distance_from_hole) {
-        self.addImage.hidden=YES;
-        self.valueView.hidden=NO;
-    }else
-    {
-        self.valueView.hidden=YES;
-    self.addImage.hidden=NO;
-    }
+//    if (self.selectTheDisplay.distance_from_hole) {
+//        self.addImage.hidden=YES;
+//        self.valueView.hidden=NO;
+//    }else
+//    {
+//        self.valueView.hidden=YES;
+//    self.addImage.hidden=NO;
+//    }
     
     if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.distance_from_hole] isEqual:@"0"]) {
         self.codeLable.text=@"进洞";
@@ -192,8 +192,76 @@
     }
     
     
+    
+    //球杆转换
+    
+    if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.club]  isEqual:@"1w"]) {
+        self.cueLable.text=@"Driver";
+        
+    } else if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.club] isEqual:@"pt"]) {
+        self.cueLable.text=@"Putter";
+    } else if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.club] isEqual:@"3w"]) {
+        self.cueLable.text=@"3 Wood";
+    } else if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.club] isEqual:@"5w"]) {
+        self.cueLable.text=@"5 Wood";
+    } else if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.club] isEqual:@"7w"]) {
+        self.cueLable.text=@"7 Wood";
+    } else if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.club] isEqual:@"2h"]) {
+        self.cueLable.text=@"2 Hybrid";
+    } else if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.club] isEqual:@"3h"]) {
+        self.cueLable.text=@"3 Hybrid";
+    } else if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.club] isEqual:@"4h"]) {
+        self.cueLable.text=@"4 Hybrid";
+    } else if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.club] isEqual:@"5h"]) {
+        self.cueLable.text=@"5 Hybrid";
+    } else if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.club] isEqual:@"1i"]) {
+        self.cueLable.text=@"1 Iron";
+    } else if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.club] isEqual:@"2i"]) {
+        self.cueLable.text=@"2 Iron";
+    } else if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.club] isEqual:@"3i"]) {
+        self.cueLable.text=@"3 Iron";
+    } else if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.club] isEqual:@"4i"]) {
+        self.cueLable.text=@"4 Iron";
+    } else if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.club] isEqual:@"5i"]) {
+        self.cueLable.text=@"5 Iron";
+    } else if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.club] isEqual:@"6i"]) {
+        self.cueLable.text=@"6 Iron";
+    } else if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.club] isEqual:@"7i"]) {
+        self.cueLable.text=@"7 Iron";
+    } else if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.club] isEqual:@"8i"]) {
+        self.cueLable.text=@"8 Iron";
+    } else if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.club] isEqual:@"9i"]) {
+        self.cueLable.text=@"9 Iron";
+    } else if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.club] isEqual:@"pw"]) {
+        self.cueLable.text=@"PW";
+    } else if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.club] isEqual:@"gw"]) {
+        self.cueLable.text=@"GW";
+    } else if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.club] isEqual:@"lw"]) {
+        self.cueLable.text=@"LW";
+    } else if ([[NSString stringWithFormat:@"%@",self.selectTheDisplay.club] isEqual:@"sw"]) {
+        self.cueLable.text=@"SW";
+    }else
+    {
     self.cueLable.text=[NSString stringWithFormat:@"%@",self.selectTheDisplay.club];
-   // self.sequenceLabel.text=[NSString stringWithFormat:@"%@",self.selectTheDisplay.sequence];
+    }
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+  
 
 }
 

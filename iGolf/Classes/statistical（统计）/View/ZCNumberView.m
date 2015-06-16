@@ -50,17 +50,19 @@
     [button1 addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
      self.button1=button1;
     //[button1 setBackgroundImage:image forState:UIControlStateNormal];
-    [button1 setBackgroundColor:[UIColor whiteColor]];
+    [button1 setBackgroundImage:[UIImage imageNamed:@"hang_bj_03"] forState:UIControlStateNormal];
     [button1 setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
+    
     [self.scrollView addSubview:button1];
     
     UIButton *button2=[[UIButton alloc] init];
     [button2 setTitle:@"最近10场" forState:UIControlStateNormal];
     button2.tag=4010;
+    [button2 setBackgroundImage:[UIImage imageNamed:@"hang_bj_03"] forState:UIControlStateNormal];
     [button2 addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     self.button2=button2;
     //[button2 setBackgroundImage:image forState:UIControlStateNormal];
-    [button2 setBackgroundColor:[UIColor whiteColor]];
+    
     [button2 setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
     [self.scrollView addSubview:button2];
 
@@ -68,8 +70,9 @@
     UIButton *button3=[[UIButton alloc] init];
     [button3 setTitle:@"最近30场" forState:UIControlStateNormal];
     button3.tag=4030;
+    [button3 setBackgroundImage:[UIImage imageNamed:@"hang_bj_03"] forState:UIControlStateNormal];
     // [button3 setBackgroundImage:image
-    [button3 setBackgroundColor:[UIColor whiteColor]];
+    
     [button3 setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
 
     [button3 addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -80,8 +83,9 @@
     UIButton *button4=[[UIButton alloc] init];
     [button4 setTitle:@"最近50场" forState:UIControlStateNormal];
     button4.tag=4050;
+    [button4 setBackgroundImage:[UIImage imageNamed:@"hang_bj_03"] forState:UIControlStateNormal];
    // [button4 setBackgroundImage:image forState:UIControlStateNormal];
-    [button4 setBackgroundColor:[UIColor whiteColor]];
+    
     [button4 setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
     [button4 addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -92,7 +96,7 @@
     UIButton *button5=[[UIButton alloc] init];
     [button5 setTitle:@"最近100场" forState:UIControlStateNormal];
     button5.tag=4100;
-    [button5 setBackgroundColor:[UIColor whiteColor]];
+    [button5 setBackgroundImage:[UIImage imageNamed:@"hang_bj_03"] forState:UIControlStateNormal];
     [button5 setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
     [button5 addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     self.button5=button5;
@@ -103,7 +107,7 @@
     [button6 setTitle:@"全部场次" forState:UIControlStateNormal];
     
     button6.tag=4101;
-    [button6 setBackgroundColor:[UIColor whiteColor]];
+    [button6 setBackgroundImage:[UIImage imageNamed:@"hang_bj_03"] forState:UIControlStateNormal];
     [button6 setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
     [button6 addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     self.button6=button6;
@@ -126,7 +130,7 @@
 -(void)layoutSubviews
 {
     [super layoutSubviews];
-    CGFloat button1W=SCREEN_WIDTH-20;
+    CGFloat button1W=SCREEN_WIDTH;
     CGFloat button1H=50;
     CGFloat button1X=(SCREEN_WIDTH-button1W)*0.5;
     CGFloat button1Y=0;

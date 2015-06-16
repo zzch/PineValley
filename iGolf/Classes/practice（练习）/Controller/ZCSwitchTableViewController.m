@@ -16,7 +16,7 @@
 #import "ZCSettingTVController.h"
 #import "ZCEventUuidTool.h"
 
-#import "MBProgressHUD+NJ.h"
+
 @interface ZCSwitchTableViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate>
 
 //@property (nonatomic, strong) NSArray *citys;
@@ -46,7 +46,7 @@
 //    self.navigationItem.titleView = customLab;
     
     //返回
-   // self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"suoyou_fanhui" hightImageName:@"ffanhui_anxia" action:@selector(liftBthClick:) target:self];
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(liftBthClick:) target:self];
     
     self.navigationItem.title=@"搜索球场";
     
@@ -128,6 +128,13 @@
         
         ZCLog(@"%@",responseObject);
         
+//        if (responseObject[@"error_code"] ) {
+//            
+//            [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+//            
+//        }else{
+        
+        
         // 将字典数组转为模型数组(
         //self.citys = [ZCCity objectArrayWithKeyValuesArray:responseObject];
         // 将字典数据转为模型数据
@@ -143,12 +150,18 @@
         // ZCLog(@"---self.dataArray---%zd",self.dataArray.count);
         // 刷新表格
         [self.tableView reloadData];
+            
+        
         //移除
         [MBProgressHUD hideHUD];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         ZCLog(@"数据请求失败%@",error);
         //移除
         [MBProgressHUD hideHUD];
+        
+        [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
+        
+
     }];
 }
 

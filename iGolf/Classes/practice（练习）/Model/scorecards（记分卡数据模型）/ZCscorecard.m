@@ -17,6 +17,8 @@
 {
     if (self = [super init]) {
         
+        
+        
         self.uuid=dict[@"uuid"];
         self.number=dict[@"number"];
         self.par=dict[@"par"];

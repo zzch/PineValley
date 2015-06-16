@@ -71,7 +71,7 @@
         penaltiesLabel.text=@"成绩";
         [self addSubview:penaltiesLabel];
         penaltiesLabel.textColor=ZCColor(85, 85, 85);
-        penaltiesLabel.font=[UIFont systemFontOfSize:19];
+        penaltiesLabel.font=[UIFont systemFontOfSize:15];
         penaltiesLabel.textAlignment=NSTextAlignmentCenter;
         self.penaltiesLabel=penaltiesLabel;
         
@@ -90,7 +90,7 @@
         drivingNameLabel.textColor=ZCColor(85, 85, 85);
         [self addSubview:drivingNameLabel];
         drivingNameLabel.text=@"开球";
-        drivingNameLabel.font=[UIFont systemFontOfSize:19];
+        drivingNameLabel.font=[UIFont systemFontOfSize:15];
         drivingNameLabel.textAlignment=NSTextAlignmentCenter;
         self.drivingNameLabel=drivingNameLabel;
         
@@ -99,6 +99,7 @@
         [self addSubview:driving_distance_label];
     
         driving_distance_label.textColor=ZCColor(255, 150, 29);
+        driving_distance_label.font=[UIFont systemFontOfSize:15];
         //driving_distance_label.text=@"dasdsad";
         self.driving_distance_label=driving_distance_label;
 //        //求道
@@ -156,10 +157,14 @@
     }else if ([scorecard.score intValue]-[scorecard.par intValue]>=2)
     {
     self.scoreLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_dayu2"]];
-    }else if ([scorecard.score intValue]-[scorecard.par intValue]<0)
+    }else if ([scorecard.score intValue]-[scorecard.par intValue]==-1)
     {
     self.scoreLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_xiaoyu"]];
+    }else if ([scorecard.score intValue]-[scorecard.par intValue]<=2)
+    {
+        self.scoreLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"xiaoyu2ge"]];
     }
+
     
     self.scoreLabel.text=[NSString stringWithFormat:@"%@",scorecard.score];
     
@@ -238,9 +243,9 @@
     
     //求道方向前图片
     CGFloat directionImageX=drivingNameLabelX+drivingNameLabelW+25;
-    CGFloat directionImageY=(self.frame.size.height-60)/2;
-    CGFloat directionImageW=25;
-    CGFloat directionImageH=25;
+    CGFloat directionImageY=22;
+    CGFloat directionImageW=21;
+    CGFloat directionImageH=20;
     
     
     self.directionImage.frame=CGRectMake(directionImageX, directionImageY, directionImageW, directionImageH);
@@ -249,7 +254,7 @@
     
     //求道frame
     CGFloat driving_distance_labelX=directionImageX-10;
-    CGFloat driving_distance_labelY=directionImageY+directionImageH+10;
+    CGFloat driving_distance_labelY=directionImageY+directionImageH+4;
     CGFloat driving_distance_labelW=50;
     CGFloat driving_distance_labelH=25;
     

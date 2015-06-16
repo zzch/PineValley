@@ -54,7 +54,7 @@
 //点击一键注册，注册账号
 -(void)clickKeyButton
 {
-    [SVProgressHUD show];
+    [MBProgressHUD showMessage:@"请稍后"];
     
     // AFNetworking\AFN
     // 1.创建请求管理对象
@@ -81,12 +81,14 @@
         //去首页
        // self.window.rootViewController = [[ZCPracticeVController alloc] init];
         
-        [SVProgressHUD dismiss];
         
+        [MBProgressHUD hideHUD];
+        
+         [MBProgressHUD showSuccess:@"注册成功"];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         NSLog(@"请求失败%@",error);
-        [SVProgressHUD dismiss];
+        [MBProgressHUD hideHUD];
     }];
     
 }

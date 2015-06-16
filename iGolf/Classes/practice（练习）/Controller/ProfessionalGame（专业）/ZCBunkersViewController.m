@@ -7,7 +7,7 @@
 //
 
 #import "ZCBunkersViewController.h"
-
+#import "ZCProfessionalStatisticsPromptView.h"
 @interface ZCBunkersViewController ()
 @property(nonatomic,weak)UIScrollView *scrollView;
 @property(nonatomic,assign)int index;
@@ -24,7 +24,7 @@
     
     
     //返回
-    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(liftBthClick:) target:self];
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(liftBthIsClick) target:self];
     
     [self addControls];
 }
@@ -32,7 +32,7 @@
 
 
 //返回
--(void)liftBthClick:(UIButton *)btn
+-(void)liftBthIsClick
 {
     
     [self.navigationController popViewControllerAnimated:YES];
@@ -46,6 +46,7 @@
 {
     UIScrollView *scrollView=[[UIScrollView alloc] init];
     scrollView.frame=[UIScreen mainScreen].bounds;
+    scrollView.bounces=NO;
     self.scrollView=scrollView;
     [self.view addSubview:scrollView];
     
@@ -231,8 +232,8 @@
     [promptBtn setImage:[UIImage imageNamed:@"chengsewenhao"]
                forState:UIControlStateNormal];
     self.index++;
-    promptBtn.tag=self.index+1000;
-    [promptBtn addTarget:self action:@selector(clickpromptishi:) forControlEvents:UIControlEventTouchUpInside];
+    promptBtn.tag=self.index+16000;
+    [promptBtn addTarget:self action:@selector(clickThepromptishi:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:promptBtn];
     
     //第一行
@@ -447,9 +448,9 @@
         promptBtn.frame=CGRectMake(promptBtnX, promptBtnY, promptBtnW, promptBtnH);
         [promptBtn setImage:[UIImage imageNamed:@"baisewenhao"] forState:UIControlStateNormal];
 
-        self.index2++;
-        promptBtn.tag=self.index2+1100;
-        [promptBtn addTarget:self action:@selector(clickpromptishi:) forControlEvents:UIControlEventTouchUpInside];
+       
+        promptBtn.tag=16000;
+        [promptBtn addTarget:self action:@selector(clickThepromptishi:) forControlEvents:UIControlEventTouchUpInside];
         
         [childView addSubview:promptBtn];
         
@@ -470,12 +471,41 @@
 }
 
 
-
--(void)clickpromptishi:(UIButton *)btn
+-(void)clickThepromptishi:(UIButton *)btn
 {
+    
+     ZCProfessionalStatisticsPromptView *PromptView=[[ZCProfessionalStatisticsPromptView alloc] init];
+    
+    PromptView.frame= [[UIScreen mainScreen] bounds];
+    
+    
+    if (btn.tag==16000) {
+        PromptView.nameStr=@"沙坑救球";
+        PromptView.instructionsStr=@"球进入距离果岭40码的沙坑后一切一推进洞。";
+    }else if (btn.tag==16001)
+    {
+        PromptView.nameStr=@"距离球洞 0-10码";
+        PromptView.instructionsStr=@"该项目计算球进入距果岭0-10码的沙坑后一切一推进洞。";
+    }else if (btn.tag==16002)
+    {
+        PromptView.nameStr=@"距离球洞 10-20码";
+        PromptView.instructionsStr=@"该项目计算球进入距果岭大于10小于20码的沙坑后一切一推进洞。";
+    }else if (btn.tag==16003)
+    {
+        PromptView.nameStr=@"距离球洞 20-50码";
+        PromptView.instructionsStr=@"该项目计算球进入距果岭大于20小于50码的沙坑后一切一推进洞。";
+    }else if (btn.tag==16004)
+    {
+        PromptView.nameStr=@"距离球洞 50-100码";
+        PromptView.instructionsStr=@"该项目计算球进入距果岭大于50小于100码的沙坑后一切一推进洞。";
+    }
+    
+    
+    
+    UIWindow *wd = [[UIApplication sharedApplication].delegate window];
+    [wd addSubview:PromptView];
 
     
-    ZCLog(@"%ld",btn.tag);
 }
 
 

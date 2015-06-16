@@ -31,22 +31,24 @@
         
         [self addSubview:fristLabel];
         fristLabel.textColor=[UIColor whiteColor];
-        fristLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_hong"]];
+        fristLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"hong_mr"]];
          fristLabel.textAlignment=NSTextAlignmentCenter;
         self.fristLabel=fristLabel;
         
         
         UILabel *secondLabel=[[UILabel alloc] init];
         //secondLabel.textColor=ZCColor(240, 208, 122);
-        secondLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_bai_zhihui"]];
+        secondLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bai_mr"]];
          secondLabel.textAlignment=NSTextAlignmentCenter;
+        secondLabel.hidden=YES;
         [self addSubview:secondLabel];
         self.secondLabel=secondLabel;
         
         
         UILabel *thirdLabel=[[UILabel alloc] init];
+        thirdLabel.hidden=YES;
         thirdLabel.textColor=[UIColor whiteColor];
-         thirdLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_lan"]];
+         thirdLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"lan_mr"]];
          thirdLabel.textAlignment=NSTextAlignmentCenter;
         [self addSubview:thirdLabel];
         self.thirdLabel=thirdLabel;
@@ -54,8 +56,8 @@
         
         UILabel *fourthLabel=[[UILabel alloc] init];
         fourthLabel.textColor=[UIColor whiteColor];
-       
-        fourthLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_hei_zhihui"]];
+       fourthLabel.hidden=YES;
+        fourthLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"hei_mr"]];
          fourthLabel.textAlignment=NSTextAlignmentCenter;
         [self addSubview:fourthLabel];
         self.fourthLabel=fourthLabel;
@@ -63,7 +65,8 @@
         
         
         UILabel *fifthLabel=[[UILabel alloc] init];
-        fifthLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_jin_zhihui"]];
+         fifthLabel.hidden=YES;
+        fifthLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jin_mr"]];
         fifthLabel.textAlignment=NSTextAlignmentCenter;
         [self addSubview:fifthLabel];
         self.fifthLabel=fifthLabel;
@@ -90,12 +93,39 @@
 
 -(void)setTee_boxes:(NSMutableArray *)tee_boxes
 {
+    
+    ZCLog(@"%@",tee_boxes);
     _tee_boxes=tee_boxes;
    
     self.fristLabel.text=[NSString stringWithFormat:@"%@",[tee_boxes[0] distance_from_hole]];
-    self.secondLabel.text=[NSString stringWithFormat:@"%@",[tee_boxes[1] distance_from_hole]];
-    self.thirdLabel.text=[NSString stringWithFormat:@"%@",[tee_boxes[2] distance_from_hole]];    self.fourthLabel.text=[NSString stringWithFormat:@"%@",[tee_boxes[3] distance_from_hole]];
-    self.fifthLabel.text=[NSString stringWithFormat:@"%@",[tee_boxes[4] distance_from_hole]];
+    
+    if (tee_boxes.count>=2) {
+        self.secondLabel.hidden=NO;
+        self.secondLabel.text=[NSString stringWithFormat:@"%@",[tee_boxes[1] distance_from_hole]];
+    }
+
+    
+    
+    if (tee_boxes.count>=3) {
+        self.thirdLabel.hidden=NO;
+       self.thirdLabel.text=[NSString stringWithFormat:@"%@",[tee_boxes[2] distance_from_hole]];
+    }
+   
+    
+    
+    if (tee_boxes.count>=4) {
+        self.fourthLabel.hidden=NO;
+      self.fourthLabel.text=[NSString stringWithFormat:@"%@",[tee_boxes[3] distance_from_hole]];
+    }
+    
+    
+    
+    if (tee_boxes.count>=5) {
+        self.fifthLabel.hidden=NO;
+        self.fifthLabel.text=[NSString stringWithFormat:@"%@",[tee_boxes[4] distance_from_hole]];
+    }
+    
+    
 }
 
 
@@ -105,10 +135,10 @@
 {
     [super layoutSubviews];
     
-    CGFloat mager=(self.frame.size.width-20-5*36)/5;
-    CGFloat fristLabelX=8;
-    CGFloat fristLabelW=36;
-    CGFloat fristLabelH=35;
+    CGFloat mager=(self.frame.size.width-20-5*37.5)/5;
+    CGFloat fristLabelX=0;
+    CGFloat fristLabelW=37.5;
+    CGFloat fristLabelH=37;
     CGFloat fristLabelY=(self.frame.size.height-fristLabelH)/2;
     self.fristLabel.frame=CGRectMake(fristLabelX, fristLabelY, fristLabelW, fristLabelH);
 
