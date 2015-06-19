@@ -12,6 +12,7 @@
 #import "ZCPracticeVController.h"
 #import "ZCprompt.h"
 #import "UIImageView+WebCache.h"
+
 @interface ZCPhoneloginView()
 //账号
 @property(nonatomic,weak)UITextField *phoneAccount;
@@ -79,13 +80,16 @@
        
         self.phonePassword=phonePassword;
         
-////        //忘记密码
-////        UIButton *forgetBth=[[UIButton alloc] init];
-////        [forgetBth setTitle:@"忘记密码" forState:UIControlStateNormal];
-//        [forgetBth setTitleColor:ZCColor(102, 102, 102) forState:UIControlStateNormal];
-//        [self addSubview:forgetBth];
-//        self.forgetBth=forgetBth;
-//        
+        //忘记密码
+        UIButton *forgetBth=[[UIButton alloc] init];
+        [forgetBth setTitle:@"忘记密码?" forState:UIControlStateNormal];
+        [forgetBth setTitleColor:ZCColor(102, 102, 102) forState:UIControlStateNormal];
+        forgetBth.titleLabel.font=[UIFont systemFontOfSize:15];
+        
+        [forgetBth addTarget:self action:@selector(clickTheforgetBth) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:forgetBth];
+        self.forgetBth=forgetBth;
+        
         
         //登陆
         UIButton *phoneloginBth=[[UIButton alloc] init];
@@ -168,6 +172,19 @@
         return NO;
     }
 }
+
+
+//点击忘记密码
+-(void)clickTheforgetBth
+{
+
+    if ([self.delegate respondsToSelector:@selector(ZCPhoneloginViewIsClick:)]) {
+        [self .delegate ZCPhoneloginViewIsClick:nil];
+    }
+    
+}
+
+
 
 
 //监听文本框里的值  改变就调用

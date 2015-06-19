@@ -91,7 +91,7 @@
         
         //背景色横线
         UIView *bjView=[[UIView alloc] init];
-        //bjView.backgroundColor=RGBACOLOR(170, 170, 170, 1);
+        bjView.backgroundColor=RGBACOLOR(170, 170, 170, 1);
         [self addSubview:bjView];
         self.bjView=bjView;
 
@@ -100,11 +100,16 @@
         /**
          排行榜
          */
-        UIButton *listBtn=[[UIButton alloc] init];
+        UIButton *listBtn= [UIButton buttonWithType:UIButtonTypeCustom];;
         listBtn.tag=2789;
         [listBtn addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
         [listBtn setTitle:@"排行榜" forState:UIControlStateNormal];
-        listBtn.backgroundColor=ZCColor(90, 190, 99);
+       // listBtn.backgroundColor=ZCColor(90, 190, 99);
+        
+        
+        [listBtn setImage:[UIImage imageNamed:@"phb_icon"] forState:UIControlStateNormal];//给button添加image
+        listBtn.imageEdgeInsets = UIEdgeInsetsMake(0,0,0,listBtn.titleLabel.bounds.size.width+13);//设置image在button上的位
+        listBtn.titleLabel.font = [UIFont systemFontOfSize:14];//title字体大小
         [self addSubview:listBtn];
         self.listBtn=listBtn;
         
@@ -124,7 +129,11 @@
             [InviteFriendsBtn setTitle:@"邀请好友" forState:UIControlStateNormal];
             InviteFriendsBtn.tag=2790;
             [InviteFriendsBtn addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
-            InviteFriendsBtn.backgroundColor=ZCColor(234, 173, 67);
+           // InviteFriendsBtn.backgroundColor=ZCColor(234, 173, 67);
+        [InviteFriendsBtn setImage:[UIImage imageNamed:@"jsfx_icon"] forState:UIControlStateNormal];
+        
+        InviteFriendsBtn.imageEdgeInsets = UIEdgeInsetsMake(0,0,0,listBtn.titleLabel.bounds.size.width+13);//设置image在button上的位
+        InviteFriendsBtn.titleLabel.font = [UIFont systemFontOfSize:14];//title字体大小
             [self addSubview:InviteFriendsBtn];
             self.InviteFriendsBtn=InviteFriendsBtn;
             
@@ -144,7 +153,9 @@
         [analysisBtn setTitle:@"技术分析" forState:UIControlStateNormal];
         analysisBtn.tag=2791;
         [analysisBtn addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
-        analysisBtn.backgroundColor=ZCColor(73, 172, 214);
+         [analysisBtn setImage:[UIImage imageNamed:@"yqhy_icon"] forState:UIControlStateNormal];
+        analysisBtn.imageEdgeInsets = UIEdgeInsetsMake(0,0,0,listBtn.titleLabel.bounds.size.width+13);//设置image在button上的位
+        analysisBtn.titleLabel.font = [UIFont systemFontOfSize:14];//title字体大小
         [self addSubview:analysisBtn];
         self.analysisBtn=analysisBtn;
     }
@@ -284,7 +295,7 @@
     self.parLabel.frame=CGRectMake(parLabelX, parLabelY, parLabelW, parLabelH);
     
     
-    self.bjView.frame=CGRectMake(0, parLabelY+parLabelH+9, SCREEN_WIDTH, 1);
+    self.bjView.frame=CGRectMake(0, parLabelY+parLabelH+8, SCREEN_WIDTH, 0.5);
     
    // ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
     
@@ -297,21 +308,21 @@
          */
         CGFloat  listBtnX=0;
         CGFloat  listBtnY=parLabelY+parLabelH+10;
-        CGFloat  listBtnW=SCREEN_WIDTH/2;
+        CGFloat  listBtnW=SCREEN_WIDTH/2-0.5;
         CGFloat  listBtnH=40;
         self.listBtn.frame=CGRectMake(listBtnX, listBtnY, listBtnW, listBtnH);
         
         
-        self.shuBjView1.frame=CGRectMake(listBtnW, listBtnY+5, 1, 30);
+        self.shuBjView1.frame=CGRectMake(listBtnW, listBtnY+5, 0.5, 30);
         
 
     
         /**
          *  技术分析
          */
-        CGFloat  analysisBtnX=listBtnW+listBtnX;
+        CGFloat  analysisBtnX=listBtnW+listBtnX+0.5;
         CGFloat  analysisBtnY=listBtnY;
-        CGFloat  analysisBtnW=SCREEN_WIDTH/2;
+        CGFloat  analysisBtnW=SCREEN_WIDTH/2-0.5;
         CGFloat  analysisBtnH=40;
         self.analysisBtn.frame=CGRectMake(analysisBtnX, analysisBtnY, analysisBtnW, analysisBtnH);
         
@@ -324,30 +335,30 @@
      */
     CGFloat  listBtnX=0;
     CGFloat  listBtnY=parLabelY+parLabelH+10;
-    CGFloat  listBtnW=SCREEN_WIDTH/3;
+    CGFloat  listBtnW=SCREEN_WIDTH/3-1;
     CGFloat  listBtnH=40;
     self.listBtn.frame=CGRectMake(listBtnX, listBtnY, listBtnW, listBtnH);
     
     
-     self.shuBjView1.frame=CGRectMake(listBtnW, listBtnY+5, 1, 30);
+     self.shuBjView1.frame=CGRectMake(listBtnW, listBtnY+5, 0.5, 30);
     
     /**
      *  邀请好友
      */
-    CGFloat  InviteFriendsBtnX=listBtnW;
+    CGFloat  InviteFriendsBtnX=listBtnW+0.5;
     CGFloat  InviteFriendsBtnY=listBtnY;
-    CGFloat  InviteFriendsBtnW=SCREEN_WIDTH/3;
+    CGFloat  InviteFriendsBtnW=SCREEN_WIDTH/3-1;
     CGFloat  InviteFriendsBtnH=40;
     self.InviteFriendsBtn.frame=CGRectMake(InviteFriendsBtnX, InviteFriendsBtnY, InviteFriendsBtnW, InviteFriendsBtnH);
     
-    self.shuBjView2.frame=CGRectMake(InviteFriendsBtnX+InviteFriendsBtnW, listBtnY+5, 1, 30);
+    self.shuBjView2.frame=CGRectMake(InviteFriendsBtnX+InviteFriendsBtnW, listBtnY+5, 0.5, 30);
     
     /**
      *  技术分析
      */
-    CGFloat  analysisBtnX=listBtnW+InviteFriendsBtnW;
+    CGFloat  analysisBtnX=listBtnW+InviteFriendsBtnW+0.5;
     CGFloat  analysisBtnY=listBtnY;
-    CGFloat  analysisBtnW=SCREEN_WIDTH/3;
+    CGFloat  analysisBtnW=SCREEN_WIDTH/3-1;
     CGFloat  analysisBtnH=40;
     self.analysisBtn.frame=CGRectMake(analysisBtnX, analysisBtnY, analysisBtnW, analysisBtnH);
         

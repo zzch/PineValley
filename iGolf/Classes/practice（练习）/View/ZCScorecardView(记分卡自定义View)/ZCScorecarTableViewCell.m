@@ -22,14 +22,14 @@
 距离球洞位置
  */
 @property(nonatomic,weak) UILabel *distanceLabel;
-///*
-// 小P的Label
-// */
-//@property(nonatomic,weak) UILabel *PLabel;
-///*
-// 小Y的Label
-// */
-//@property(nonatomic,weak) UILabel *YLabel;
+/*
+ 小P的Label
+ */
+@property(nonatomic,weak) UILabel *PLabel;
+/*
+ 小Y的Label
+ */
+@property(nonatomic,weak) UILabel *YLabel;
 /*
   parLabel
  */
@@ -62,6 +62,10 @@
 @property(nonatomic,weak) UIView *middleView;
 
 @property(nonatomic,weak) UIImageView *image1;
+/**
+ *  小圆点
+ */
+@property(nonatomic,weak) UIImageView *dotImage;
 
 
 
@@ -111,7 +115,7 @@
         UILabel *numberparLabel=[[UILabel alloc] init];
         numberparLabel.textAlignment=NSTextAlignmentCenter;
         numberparLabel.textColor=ZCColor(85, 85, 85);
-        numberparLabel.font=[UIFont systemFontOfSize:20];
+        numberparLabel.font=[UIFont systemFontOfSize:16];
         [self.liftView addSubview:numberparLabel];
         self.numberparLabel=numberparLabel;
         
@@ -124,29 +128,41 @@
 //       // parLabel.font=[UIFont systemFontOfSize:26];
 //        parLabel.font=[UIFont fontWithName:@"Arial" size:26];
 //        self.parLabel=parLabel;
-//        //创建离球洞距离的Label
-//        UILabel *distanceLabel=[[UILabel alloc] init];
-//        [self.liftView addSubview:distanceLabel];
-//        distanceLabel.font=[UIFont systemFontOfSize:21];
-//        self.distanceLabel=distanceLabel;
-//        self.distanceLabel.font=[UIFont fontWithName:@"Arial" size:26];
-//        distanceLabel.textColor=ZCColor(240, 208, 122);
-//        //创建小P label
-//        UILabel *PLabel=[[UILabel alloc] init];
-//        [self.liftView addSubview:PLabel];
-//        PLabel.text=@"P";
-//        PLabel.textColor=ZCColor(240, 208, 122);
-//       // PLabel.backgroundColor=[UIColor blueColor];
-//        self.PLabel=PLabel;
-//        
-//        //创建小Y label
-//        UILabel *YLabel=[[UILabel alloc] init];
-//        [self.liftView addSubview:YLabel];
-//        YLabel.text=@"Y";
-//        YLabel.textColor=ZCColor(240, 208, 122);
-//       // YLabel.backgroundColor=[UIColor blueColor];
-//        self.YLabel=YLabel;
-//        
+        
+        
+        //创建离球洞距离的Label
+        UILabel *distanceLabel=[[UILabel alloc] init];
+        [self.liftView addSubview:distanceLabel];
+        distanceLabel.font=[UIFont systemFontOfSize:16];
+        self.distanceLabel=distanceLabel;
+       // self.distanceLabel.font=[UIFont fontWithName:@"Arial" size:20];
+        distanceLabel.textColor=ZCColor(85, 85, 85);
+        distanceLabel.textAlignment=NSTextAlignmentCenter;
+        self.distanceLabel=distanceLabel;
+        
+        //创建小P label
+        UILabel *PLabel=[[UILabel alloc] init];
+        [self.liftView addSubview:PLabel];
+        PLabel.text=@"P";
+        PLabel.textColor= ZCColor(85, 85, 85);
+        PLabel.font=[UIFont systemFontOfSize:10];
+        self.PLabel=PLabel;
+
+        //创建小Y label
+        UILabel *YLabel=[[UILabel alloc] init];
+        [self.liftView addSubview:YLabel];
+        YLabel.text=@"Y";
+        YLabel.font=[UIFont systemFontOfSize:10];
+        YLabel.textColor=ZCColor(85, 85, 85);
+        self.YLabel=YLabel;
+        
+        
+        
+        //创建小圆点
+        UIImageView *dotImage=[[UIImageView alloc] init];
+        [self addSubview:dotImage];
+        self.dotImage=dotImage;
+//
         //创建可显示信息值的showLabel
         if (self.scorecard.score==nil) {
             
@@ -225,8 +241,7 @@
         if (self.nilButtom) {
           [self.nilButtom removeFromSuperview];
             
-            ZCLog(@"妈的为啥执行上面那行%@",self.scorecard.score);
-            ZCLog(@"妈的为啥执行上面那行%@",self.scorecard.number);
+          
         }
         if (self.showButton) {
             [self.showButton removeFromSuperview];
@@ -246,8 +261,42 @@
     
     self.nilButtom.tee_boxes=scorecard.tee_boxes;
     self.numberLabel.text=[NSString stringWithFormat:@"%@",scorecard.number];
-    self.numberparLabel.text=[NSString stringWithFormat:@"Par %@",scorecard.par];
-    //self.distanceLabel.text=[NSString stringWithFormat:@"%@",scorecard.distance_from_hole_to_tee_box];
+    self.numberparLabel.text=[NSString stringWithFormat:@"%@",scorecard.par];
+    
+    
+    ZCTee_boxes *teeBox;
+    NSString *teeColer;
+    for (ZCTee_boxes *tee in self.scorecard.tee_boxes) {
+        if ([[NSString stringWithFormat:@"%@",tee.used]  isEqual:@"1"]) {
+            teeBox=tee;
+            teeColer=tee.color;
+            break;
+        }
+    }
+
+    
+    
+    self.distanceLabel.text=[NSString stringWithFormat:@"%@",teeBox.distance_from_hole];
+    
+    
+    if ([teeColer isEqual:@"white"]) {
+        self.dotImage.image=[UIImage imageNamed:@"bai_t"];
+    }else if ([teeColer isEqual:@"red"])
+    {
+        self.dotImage.image=[UIImage imageNamed:@"hong_t"];
+    }else if ([teeColer isEqual:@"blue"])
+    {
+        self.dotImage.image=[UIImage imageNamed:@"lan_t"];
+    }else if ([teeColer isEqual:@"black"])
+    {
+       self.dotImage.image=[UIImage imageNamed:@"hei_t"];
+    }else if ([teeColer isEqual:@"gold"])
+    {
+       self.dotImage.image=[UIImage imageNamed:@"huang_t"];
+    }
+
+    
+    
     
 //    if ([scorecard.tee_box_color isEqual:@"red"]) {
 //        UIColor *col=[UIColor colorWithPatternImage:[UIImage imageNamed:@"hongdong"]];
@@ -320,6 +369,18 @@
 //}
 
 
+//根据字符串计算出宽高
+-(CGRect)getFrame:(CGSize)frame content:(NSString *)content fontSize:(UIFont *)fontSize
+{
+    CGRect rect = [content boundingRectWithSize:frame options:NSStringDrawingUsesLineFragmentOrigin attributes:[NSDictionary dictionaryWithObjectsAndKeys:fontSize,NSFontAttributeName, nil] context:nil];
+    return rect;
+}
+
+
+
+
+
+
 -(void)layoutSubviews
 {
     [super layoutSubviews];
@@ -327,7 +388,7 @@
     //创建左边View的frame
     CGFloat liftViewX=0;
     CGFloat liftViewY=0;
-    CGFloat liftViewW=self.frame.size.width*0.2;
+    CGFloat liftViewW=self.frame.size.width*0.236;
     CGFloat liftViewH=self.frame.size.height;
     
     self.liftView.frame=CGRectMake(liftViewX, liftViewY, liftViewW, liftViewH);
@@ -352,9 +413,9 @@
     
     
     
-    CGFloat numberparLabelW=60;
+    CGFloat numberparLabelW=20;
     CGFloat numberparLabelH=20;
-    CGFloat numberparLabelX=(self.liftView.frame.size.width-numberparLabelW)*0.5;
+    CGFloat numberparLabelX=(self.liftView.frame.size.width-70)*0.5;
     CGFloat numberparLabelY=ballLabelY+ballLabelH+7;
     
     self.numberparLabel.frame=CGRectMake(numberparLabelX, numberparLabelY, numberparLabelW, numberparLabelH);
@@ -372,26 +433,36 @@
 //    self.parLabel.frame=CGRectMake(parLabelX, parLabelY, parLabelW, parLabelH);
 //
 //    
-//    //小P得PLabel的frame
-//    CGFloat PLabelX=parLabelX+parLabelW-3;
-//    CGFloat PLabelY=parLabelY+(parLabelH*0.5);
-//    CGFloat PLabelW=15;
-//    CGFloat PLabelH=15;
-//    self.PLabel.frame=CGRectMake(PLabelX, PLabelY, PLabelW, PLabelH);
-//    //距离球洞的距离distanceLabel的frame
-//    
-//    CGFloat distanceLabelX=PLabelX+PLabelW+5;
-//    CGFloat distanceLabelY=parLabelY;
-//    CGFloat distanceLabelW=45;
-//    CGFloat distanceLabelH=22;
-//    self.distanceLabel.frame=CGRectMake(distanceLabelX, distanceLabelY, distanceLabelW, distanceLabelH);
-//    //小Y得YLabel的frame
-//    CGFloat YLabelX=distanceLabelX+distanceLabelW;
-//    CGFloat YLabelY=distanceLabelY+(distanceLabelH*0.5);
-//    CGFloat YLabelW=15;
-//    CGFloat YLabelH=15;
-//    self.YLabel.frame=CGRectMake(YLabelX, YLabelY, YLabelW, YLabelH);
-//    
+    //小P得PLabel的frame
+    CGFloat PLabelW=10;
+    CGFloat PLabelH=15;
+    CGFloat PLabelX=numberparLabelX+numberparLabelW-3;
+    CGFloat PLabelY=numberparLabelY+numberparLabelH-PLabelH;
+    
+    self.PLabel.frame=CGRectMake(PLabelX, PLabelY, PLabelW, PLabelH);
+    //距离球洞的距离distanceLabel的frame
+    
+    CGFloat distanceLabelX=PLabelX+PLabelW+1;
+    CGFloat distanceLabelY=numberparLabelY;
+    CGFloat distanceLabelW=[self getFrame:CGSizeMake(1000, 20) content:self.distanceLabel.text fontSize:[UIFont systemFontOfSize:16]].size.width;
+    CGFloat distanceLabelH=20;
+    self.distanceLabel.frame=CGRectMake(distanceLabelX, distanceLabelY, distanceLabelW, distanceLabelH);
+    //小Y得YLabel的frame
+    CGFloat YLabelX=distanceLabelX+distanceLabelW;
+    CGFloat YLabelY=PLabelY;
+    CGFloat YLabelW=[self getFrame:CGSizeMake(1000, 15) content:@"Y" fontSize:[UIFont systemFontOfSize:10]].size.width;
+    CGFloat YLabelH=15;
+    self.YLabel.frame=CGRectMake(YLabelX, YLabelY, YLabelW, YLabelH);
+    
+    
+    
+    CGFloat dotImageX=YLabelX+YLabelW+2;
+    CGFloat dotImageY=PLabelY+YLabelH-9;
+    CGFloat dotImageW=7;
+    CGFloat dotImageH=7;
+    self.dotImage.frame=CGRectMake(dotImageX, dotImageY, dotImageW, dotImageH);
+    
+    
     //showButton的frame
     CGFloat showLabelX=middleViewX+middleViewW;
     CGFloat showLabelY=0;

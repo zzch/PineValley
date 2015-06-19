@@ -20,6 +20,16 @@
         
         
         
+        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDate *currentDate = [NSDate date];
+        NSDateComponents *comps = [[NSDateComponents alloc] init];
+        [comps setYear:0];
+        NSDate *maxDate = [calendar dateByAddingComponents:comps toDate:currentDate options:0];
+        [comps setYear:-100];
+        NSDate *minDate = [calendar dateByAddingComponents:comps toDate:currentDate options:0];
+
+        
+        
         UIDatePicker *datePicker=[[UIDatePicker alloc] initWithFrame:CGRectZero];
         //模式
         datePicker.datePickerMode=UIDatePickerModeDate;
@@ -28,7 +38,16 @@
         [datePicker addTarget:self action:@selector(dateChange:) forControlEvents:UIControlEventValueChanged];
        //[datePicker setValue:ZCColor(85, 85, 85) forKeyPath:@"textColor"];
         // [ datePicker setDate:[datePicker date] animated:YES];
+        
+        [datePicker setMaximumDate:maxDate];
+        [datePicker setMinimumDate:minDate];
+        
         [self addSubview:datePicker];
+        
+        
+        
+        
+        
        
 //        NSDate* minDate = [[NSDate alloc]initWithString:@"1900-01-01 00:00:00 -0500"];
 //        NSDate* maxDate = [[NSDate alloc]initWithString:@"2099-01-01 00:00:00 -0500"];

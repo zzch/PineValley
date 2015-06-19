@@ -76,11 +76,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iGolf/Classes/practice&#xff08;&#x7ec3;&#x4e60;&#xff09;/View/ZCScorecardView(&#x8bb0;&#x5206;&#x5361;&#x81ea;&#x5b9a;&#x4e49;View)/ZCScorecarTableViewCell.m"
-            timestampString = "456060442.398531"
+            timestampString = "456389288.405674"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "176"
-            endingLineNumber = "176"
+            startingLineNumber = "192"
+            endingLineNumber = "192"
             landmarkName = "-initWithStyle:reuseIdentifier:"
             landmarkType = "5">
          </BreakpointContent>
