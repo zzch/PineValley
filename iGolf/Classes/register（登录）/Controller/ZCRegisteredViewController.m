@@ -126,9 +126,10 @@
     //获取验证码
     UIButton *getButton=[[UIButton alloc] init];
     [getButton setBackgroundImage:bjimage forState:UIControlStateNormal];
-    CGFloat  getButtonX=verificationCodeX+verificationCodeW+10;
-    CGFloat  getButtonY=verificationCodeY;
     CGFloat  getButtonW=SCREEN_WIDTH*0.3;
+    CGFloat  getButtonX=confirmPasswordX+confirmPasswordW-getButtonW;
+    CGFloat  getButtonY=verificationCodeY;
+    
     CGFloat  getButtonH=verificationCodeH;
     getButton.frame=CGRectMake(getButtonX, getButtonY, getButtonW, getButtonH);
     [getButton setTitle:@"获取验证码" forState:UIControlStateNormal];

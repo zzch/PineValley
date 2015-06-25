@@ -33,7 +33,7 @@
 @property(nonatomic,weak) UIView *vc;
 @property (nonatomic, weak) MJRefreshFooterView *footer;
 @property (nonatomic, weak) MJRefreshHeaderView *header;
-
+@property (nonatomic, weak) MJRefreshHeaderView *header2;
 //加载的页数
 @property(nonatomic,assign)int page;
 
@@ -55,8 +55,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
    
-  
-    
+       
     
 //    //如果没有数据执行此方法
 //    if (self.eventArray.count==0) {
@@ -79,6 +78,26 @@
 //        
 //    }
 
+    
+}
+
+
+-(void)setBlack:(NSString *)black
+{
+    _black=black;
+    
+    [self.header removeFromSuperview];
+    // 1.下拉刷新
+    MJRefreshHeaderView *header = [MJRefreshHeaderView header];
+    header.scrollView = self.tableView;
+    header.delegate = self;
+   //  自动进入刷新状态
+    [header beginRefreshing];
+    self.header = header;
+    // [self serverData];
+    
+    // 自动进入刷新状态
+  //  [self.header beginRefreshing];
     
 }
 
@@ -265,6 +284,7 @@
 {
     // 释放内存
     [self.header free];
+    
     [self.footer free];
 }
 
@@ -365,6 +385,7 @@
         
         [self.tableView reloadData];
         [self.header endRefreshing];
+        
         //弹出数据刷新显示
        // [self showNewStatusCount];
 
@@ -414,11 +435,7 @@
          ZCLog(@"----%@",responseObject);
         
         
-        if (responseObject[@"error_code"] ) {
-            
-            [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
-            
-        }else{
+       
         
         
         NSMutableArray *eventMutableArray=[NSMutableArray array];
@@ -434,7 +451,7 @@
         
 
         
-        }
+        
         
        // [self.tableView reloadData];
         

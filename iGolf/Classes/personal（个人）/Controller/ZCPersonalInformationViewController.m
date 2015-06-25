@@ -832,6 +832,7 @@
              UIImagePickerController *pick = [[UIImagePickerController alloc] init];
              //类型
              pick.sourceType=UIImagePickerControllerSourceTypeCamera;
+             [pick setAllowsEditing:YES];
              pick.delegate=self;
              // 3. 展现
              [self presentViewController:pick animated:YES completion:nil];
@@ -851,12 +852,9 @@
                   pick.sourceType=UIImagePickerControllerSourceTypePhotoLibrary;
                   // 2. 设置代理
                   pick.delegate = self;
-                  
+                   [pick setAllowsEditing:YES];
                   // 3. 展现
                   [self presentViewController:pick animated:YES completion:nil];
-
-       
-        
                }else{
                    ZCLog(@"相ce不可用");
         
@@ -931,7 +929,10 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     //[self.photoView.image setImage:info[UIImagePickerControllerOriginalImage] forState:UIControlStateNormal];
-    self.photoView.image=info[UIImagePickerControllerOriginalImage];
+    //整个图片
+  //  self.photoView.image=info[UIImagePickerControllerOriginalImage];
+    //裁剪后的图片
+     self.photoView.image=info[UIImagePickerControllerEditedImage];
     
     //ZCLog(@"%@",[self.photoView.image class]);
     // 关闭视图控制器

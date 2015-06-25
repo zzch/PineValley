@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ZCQuickScoringTableViewController : UIViewController
-
+//记分卡界面返回这个界面重新加载网络
+@property(nonatomic,copy)NSString *black;
 @end

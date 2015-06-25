@@ -21,6 +21,7 @@
 @property(nonatomic,weak)UIView *bjView;
 @property(nonatomic,weak)UIView *shuBjView1;
 @property(nonatomic,weak)UIView *shuBjView2;
+@property(nonatomic,weak)UIButton *QrCode;
 @end
 @implementation ZCScorecarHeadView
 
@@ -87,6 +88,15 @@
         parLabel.font=[UIFont systemFontOfSize:13];
         [self addSubview:parLabel];
         self.parLabel=parLabel;
+        
+        
+        UIButton *QrCode=[[UIButton alloc] init];
+        QrCode.backgroundColor=[UIColor redColor];
+        QrCode.tag=2777;
+        [QrCode addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:QrCode];
+        self.QrCode=QrCode;
+        
         
         
         //背景色横线
@@ -245,10 +255,20 @@
      */
     CGFloat  nameLabelX=personImageViewX+personImageViewW+7;
     CGFloat  nameLabelY=10;
-    CGFloat  nameLabelW=SCREEN_WIDTH-nameLabelX;
+    CGFloat  nameLabelW=SCREEN_WIDTH-nameLabelX-70;
     CGFloat  nameLabelH=20;
     self.nameLabel.frame=CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH);
     
+    
+    /**
+     *  二维码的位置
+     */
+    CGFloat QrCodeX=SCREEN_WIDTH-70;
+    CGFloat QrCodeY=nameLabelY;
+    CGFloat QrCodeW=50;
+    CGFloat QrCodeH=50;
+    
+    self.QrCode.frame=CGRectMake(QrCodeX, QrCodeY, QrCodeW, QrCodeH);
     
     /**
      *  rankingLabel
@@ -293,6 +313,8 @@
     CGFloat  parLabelW=(SCREEN_WIDTH-nameLabelX)/2;
     CGFloat  parLabelH=20;
     self.parLabel.frame=CGRectMake(parLabelX, parLabelY, parLabelW, parLabelH);
+    
+    
     
     
     self.bjView.frame=CGRectMake(0, parLabelY+parLabelH+8, SCREEN_WIDTH, 0.5);

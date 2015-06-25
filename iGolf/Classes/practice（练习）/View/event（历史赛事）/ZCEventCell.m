@@ -46,7 +46,14 @@
  向右图片
  */
 @property(weak,nonatomic) UIImageView *rightImage;
-
+/**
+ 创建者的图片
+ */
+@property(nonatomic,weak)UIImageView *createImage;
+/**
+ 比赛类型的图片
+ */
+@property(nonatomic,weak)UIImageView *scoringImage;
 @end
 
 @implementation ZCEventCell
@@ -66,6 +73,12 @@
         
         //self.selectedBackgroundView
         
+        
+        UIImageView *createImage=[[UIImageView alloc] init];
+        [self.contentView addSubview:createImage];
+        self.createImage=createImage;
+        
+        
         UIImageView *scoreImageView=[[UIImageView alloc] init];
         scoreImageView.image=[UIImage imageNamed:@"jjbs_lsbs"];
         [self.contentView addSubview:scoreImageView];
@@ -78,6 +91,12 @@
         scoreLabel.textAlignment=NSTextAlignmentCenter;
         scoreLabel.font=[UIFont systemFontOfSize:36 ];
         scoreLabel.textColor=ZCColor(255, 150, 29);
+        
+        //计分类型
+        UIImageView *scoringImage=[[UIImageView alloc] init];
+        [self.contentView addSubview:scoringImage];
+        self.scoringImage=scoringImage;
+        
         
         //球场名称
         UILabel *nameLabel=[[UILabel alloc] init];
@@ -173,12 +192,30 @@
     
     ZCLog(@"%@",self.event.player.strokes);
     
+    
+    if ([[NSString stringWithFormat:@"%@",event.player.owned] isEqual:@"0"]) {
+       
+      self.createImage.image=[UIImage imageNamed:@""];
+    }else
+    {
+         self.createImage.image=[UIImage imageNamed:@"zhu_icon"];
+    }
+    
+    
+    
     if ([self _valueOrNil:self.event.player.strokes]==nil) {
         self.scoreLabel.text=@"未完成";
         self.scoreLabel.font=[UIFont systemFontOfSize:18];
     }else
     {
     self.scoreLabel.text=[NSString stringWithFormat:@"%@",self.event.player.strokes ];
+    }
+    
+    
+    if ([event.player.scoring_type isEqual:@"simple"]) {
+        self.scoringImage.image=[UIImage imageNamed:@"jian_icon"];
+    }else{
+    self.scoringImage.image=[UIImage imageNamed:@"zhuan_icon"];
     }
   
     self.nameLabel.text=self.event.venue.name;
@@ -216,6 +253,14 @@
 {
     [super layoutSubviews];
     
+    CGFloat createImageX=0;
+    
+    CGFloat createImageY=0;
+    CGFloat createImageW=27;
+    CGFloat createImageH=27;
+    
+    self.createImage.frame=CGRectMake(createImageX, createImageY, createImageW, createImageH);
+    
     //成绩frame
     CGFloat scoreLabelX=17;
     
@@ -235,9 +280,16 @@
     
     
     
+    
+    CGFloat scoringImageX=self.frame.size.width*0.34;
+    CGFloat scoringImageY=13;
+    CGFloat scoringImageW=16;
+    CGFloat scoringImageH=16;
+    self.scoringImage.frame=CGRectMake(scoringImageX, scoringImageY, scoringImageW, scoringImageH);
+    
     //nameLabel frame
     
-    CGFloat nameLabelX=self.frame.size.width*0.34;
+    CGFloat nameLabelX=scoringImageX+scoringImageW+10;
     CGFloat nameLabelY=10;
     CGFloat nameLabelW=self.frame.size.width*0.6;
     CGFloat nameLabelH=23;
@@ -247,7 +299,7 @@
 
     //timeImage frame
     
-    CGFloat timeImageX=nameLabelX;
+    CGFloat timeImageX=scoringImageX;
     CGFloat timeImageY=nameLabelY+nameLabelH+6;
     CGFloat timeImageW=17;
     CGFloat timeImageH=15;

@@ -16,7 +16,7 @@
 #import "ZCSwitchTableViewController.h"
 #import "ZCSettingTVController.h"
 #import "ZCStadiumInformation.h"
-#import "SVProgressHUD.h"
+
 #import "MJRefresh.h"
 #import "ZCEventUuidTool.h"
 

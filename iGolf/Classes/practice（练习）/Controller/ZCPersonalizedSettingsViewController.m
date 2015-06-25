@@ -310,6 +310,7 @@
             //类型
             pick.sourceType=UIImagePickerControllerSourceTypeCamera;
             pick.delegate=self;
+            [pick setAllowsEditing:YES];
             // 3. 展现
             [self presentViewController:pick animated:YES completion:nil];
             
@@ -328,6 +329,7 @@
             pick.sourceType=UIImagePickerControllerSourceTypePhotoLibrary;
             // 2. 设置代理
             pick.delegate = self;
+            [pick setAllowsEditing:YES];
             
             // 3. 展现
             [self presentViewController:pick animated:YES completion:nil];
@@ -353,7 +355,7 @@
     //[self.photoView.image setImage:info[UIImagePickerControllerOriginalImage] forState:UIControlStateNormal];
     //self.photoView.image=info[UIImagePickerControllerOriginalImage];
     [self.imageButton setImage:info[UIImagePickerControllerOriginalImage] forState:UIControlStateNormal];
-    self.chooseImage=info[UIImagePickerControllerOriginalImage];
+    self.chooseImage=info[UIImagePickerControllerEditedImage];
     //ZCLog(@"%@",[self.photoView.image class]);
     // 关闭视图控制器
     [self dismissViewControllerAnimated:YES completion:nil];

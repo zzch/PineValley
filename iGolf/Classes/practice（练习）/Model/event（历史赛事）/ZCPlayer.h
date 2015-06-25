@@ -10,6 +10,11 @@
 
 @interface ZCPlayer : NSObject
 /**
+ *  记录是否是房主 1是房主 0 不是房主
+ */
+@property (nonatomic, copy) NSString *owned;
+
+/**
  *  记分卡记录数
  */
 @property (nonatomic, copy) NSString *recorded_scorecards_count;

@@ -11,7 +11,7 @@
 #import "ZCEventUuidTool.h"
 #import "UIBarButtonItem+DC.h"
 #import "ZCScorecarTableViewCell.h"
-
+#import "ZCQrCodeViewController.h"
 #import "ZCScorecard.h"
 #import "ZCShowButton.h"
 #import "AFNetworking.h"
@@ -141,6 +141,8 @@
     for (id viewController in self.navigationController.viewControllers) {
      
         if ([viewController isKindOfClass:[ZCQuickScoringTableViewController class]]) {
+            ZCQuickScoringTableViewController *Quick=viewController;
+            Quick.black=@"black";
             [self.navigationController popToViewController:viewController animated:YES];
             break;
         }
@@ -348,6 +350,11 @@
         
         
     
+    }else if (button.tag==2777)
+    {
+        ZCQrCodeViewController *QrCode=[[ZCQrCodeViewController alloc] init];
+        [self.navigationController pushViewController:QrCode animated:YES];
+        
     }
 }
 
