@@ -1,41 +1,42 @@
 //
-//  ZCRegisteredViewController.m
-//  我爱高尔夫
+//  ZCForgetViewController.m
+//  iGolf
 //
-//  Created by hh on 15/4/7.
-//  Copyright (c) 2015年 zhongchuang. All rights reserved.
+//  Created by hh on 15/6/19.
+//  Copyright (c) 2015年 Beijing iSports Co., Ltd. All rights reserved.
 //
 
-#import "ZCRegisteredViewController.h"
+#import "ZCForgetViewController.h"
 #import "AFNetworking.h"
 #import "ZCAccount.h"
 #import "ZCPracticeVController.h"
-#import "AppDelegate.h"
-#import "ZCprompt.h"
-#import "UIBarButtonItem+DC.h"
-@interface ZCRegisteredViewController ()
-@property(nonatomic,weak)UIButton *getButton;
+@interface ZCForgetViewController ()
 @property(nonatomic,weak)UITextField *phoneAccount;
-@property(nonatomic,weak)UITextField *phonePassword;
-@property(nonatomic,weak)UIButton *phoneloginBth;
-@property(nonatomic,weak)UITextField *confirmPassword;
 @property(nonatomic,weak)UITextField *verificationCode;
+
+@property(nonatomic,weak)UITextField *confirmPassword;
+@property(nonatomic,weak)UITextField *phonePassword;
+@property(nonatomic,weak)UIButton *getButton;
+
+@property(nonatomic,weak)UIButton *phoneloginBth;
 @end
 
-@implementation ZCRegisteredViewController
+@implementation ZCForgetViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     self.view.backgroundColor=ZCColor(237, 237, 237);
+    self.navigationItem.title=@"忘记密码";
     
     
- 
-    self.navigationItem.title=@"手机注册";
+    
     
     UIImage *bjimage=[UIImage imageNamed:@"shurukuang" ];
     // 指定为拉伸模式，伸缩后重新赋值
     bjimage = [bjimage resizableImageWithCapInsets:UIEdgeInsetsMake(25,25,10,10) resizingMode:UIImageResizingModeStretch];
+    
+    
     
     
     //账号
@@ -58,61 +59,18 @@
     [self.view addSubview:phoneAccount];
     self.phoneAccount=phoneAccount;
     
-    
-    
-    //密码
-    UITextField *phonePassword=[[UITextField alloc] init];
-    CGFloat  phonePasswordX=phoneAccountX;
-    CGFloat  phonePasswordY=phoneAccountY+phoneAccountH+20;
-    CGFloat  phonePasswordW=phoneAccountW;
-    CGFloat  phonePasswordH=phoneAccountH;
-    phonePassword.frame=CGRectMake(phonePasswordX, phonePasswordY, phonePasswordW, phonePasswordH);
-    
-    [phonePassword setTextColor:ZCColor(85, 85, 85)];
-    //实现密文形式
-    phonePassword.secureTextEntry=YES;
-    phonePassword.placeholder=@"  至少输入6位的密码";
-    //修改提示语的字体颜色
-    [phonePassword setValue:ZCColor(102, 102, 102) forKeyPath:@"_placeholderLabel.textColor"];
-    
-    [phonePassword setBackground:bjimage];
-    phonePassword.font=[UIFont systemFontOfSize:14];
-    [self.view addSubview:phonePassword];
-    self.phonePassword=phonePassword;
-    
-    
-    //确认密码
-    //密码
-    UITextField *confirmPassword=[[UITextField alloc] init];
-    CGFloat  confirmPasswordX=phonePasswordX;
-    CGFloat  confirmPasswordY=phonePasswordY+phonePasswordH+20;
-    CGFloat  confirmPasswordW=phoneAccountW;
-    CGFloat  confirmPasswordH=phoneAccountH;
-    confirmPassword.frame=CGRectMake(confirmPasswordX, confirmPasswordY, confirmPasswordW, confirmPasswordH);
-    confirmPassword.placeholder=@"  请再一次输入密码";
-    //修改提示语的字体颜色
-    [confirmPassword setValue:ZCColor(102, 102, 102) forKeyPath:@"_placeholderLabel.textColor"];
-    [confirmPassword setTextColor:ZCColor(85, 85, 85)];
-    //实现密文形式
-    confirmPassword.secureTextEntry=YES;
-    confirmPassword.font=[UIFont systemFontOfSize:14];
-    [confirmPassword setBackground:bjimage];
-    [self.view addSubview:confirmPassword];
-    self.confirmPassword=confirmPassword;
 
     
     
-    
-
     //验证码
     UITextField *verificationCode=[[UITextField alloc] init];
     //设置键盘为数字键盘
     verificationCode.keyboardType=UIKeyboardTypeNumberPad;
     [verificationCode setTextColor:ZCColor(85, 85, 85)];
-    CGFloat verificationCodeX=confirmPasswordX;
-    CGFloat verificationCodeY=confirmPasswordY+confirmPasswordH+20;
+    CGFloat verificationCodeX=phoneAccountX;
+    CGFloat verificationCodeY=phoneAccountY+phoneAccountH+20;
     CGFloat verificationCodeW=SCREEN_WIDTH*0.59;
-    CGFloat verificationCodeH=phonePasswordH;
+    CGFloat verificationCodeH=phoneAccountH;
     verificationCode.frame=CGRectMake(verificationCodeX, verificationCodeY, verificationCodeW, verificationCodeH);
     verificationCode.background=bjimage;
     verificationCode.placeholder=@"  请输入验证码";
@@ -135,17 +93,61 @@
     [getButton setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
     [getButton addTarget:self action:@selector(clickgetButton) forControlEvents:UIControlEventTouchUpInside];
     getButton.titleLabel.font=[UIFont systemFontOfSize:14];
-
+    
     self.getButton=getButton;
     [self.view addSubview:getButton];
     
     
+
     
+    
+    //密码
+    UITextField *phonePassword=[[UITextField alloc] init];
+    CGFloat  phonePasswordX=phoneAccountX;
+    CGFloat  phonePasswordY=verificationCodeY+verificationCodeH+20;
+    CGFloat  phonePasswordW=phoneAccountW;
+    CGFloat  phonePasswordH=phoneAccountH;
+    phonePassword.frame=CGRectMake(phonePasswordX, phonePasswordY, phonePasswordW, phonePasswordH);
+    
+    [phonePassword setTextColor:ZCColor(85, 85, 85)];
+    //实现密文形式
+    phonePassword.secureTextEntry=YES;
+    phonePassword.placeholder=@"  请重设密码(至少6位密码)";
+    //修改提示语的字体颜色
+    [phonePassword setValue:ZCColor(102, 102, 102) forKeyPath:@"_placeholderLabel.textColor"];
+    
+    [phonePassword setBackground:bjimage];
+    phonePassword.font=[UIFont systemFontOfSize:14];
+    [self.view addSubview:phonePassword];
+    self.phonePassword=phonePassword;
+    
+    
+    //确认密码
+    //密码
+    UITextField *confirmPassword=[[UITextField alloc] init];
+    CGFloat  confirmPasswordX=phonePasswordX;
+    CGFloat  confirmPasswordY=phonePasswordY+phonePasswordH+20;
+    CGFloat  confirmPasswordW=phoneAccountW;
+    CGFloat  confirmPasswordH=phoneAccountH;
+    confirmPassword.frame=CGRectMake(confirmPasswordX, confirmPasswordY, confirmPasswordW, confirmPasswordH);
+    confirmPassword.placeholder=@"  请确认重设密码(至少6位密码)";
+    //修改提示语的字体颜色
+    [confirmPassword setValue:ZCColor(102, 102, 102) forKeyPath:@"_placeholderLabel.textColor"];
+    [confirmPassword setTextColor:ZCColor(85, 85, 85)];
+    //实现密文形式
+    confirmPassword.secureTextEntry=YES;
+    confirmPassword.font=[UIFont systemFontOfSize:14];
+    [confirmPassword setBackground:bjimage];
+    [self.view addSubview:confirmPassword];
+    self.confirmPassword=confirmPassword;
+    
+    
+
     
     //提交
     UIButton *phoneloginBth=[[UIButton alloc] init];
     phoneloginBth.enabled=NO;
-    CGFloat  phoneloginBthY=verificationCodeY+verificationCodeH+25;
+    CGFloat  phoneloginBthY=confirmPasswordY+confirmPasswordH+25;
     CGFloat  phoneloginBthW=phonePasswordW;
     CGFloat  phoneloginBthH=40;
     CGFloat  phoneloginBthX=verificationCodeX;
@@ -154,11 +156,7 @@
     
     [phoneloginBth setTitle:@"提交" forState:UIControlStateNormal];
     [phoneloginBth setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    
-    
-    
-    
-    
+
     //图片拉伸
     UIImage *image2=[UIImage imageNamed:@"anniu_dianji" ];
     // 指定为拉伸模式，伸缩后重新赋值
@@ -169,24 +167,24 @@
     [self.view addSubview:phoneloginBth];
     self.phoneloginBth=phoneloginBth;
     
-    
-    
+
     
     // 监听通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChange) name:UITextFieldTextDidChangeNotification object:self.phoneAccount];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChange) name:UITextFieldTextDidChangeNotification object:self.phonePassword];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChange) name:UITextFieldTextDidChangeNotification object:self.confirmPassword];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChange) name:UITextFieldTextDidChangeNotification object:self.verificationCode];
+
+    
     
 }
+
 
 - (void)dealloc
 {
     //移除通知
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
-
 
 
 
@@ -198,21 +196,21 @@
         self.phoneAccount.text = [self.phoneAccount.text substringToIndex:11];
         
     }
-
+    
     
     
     if (self.phoneAccount.text.length==11&&self.phonePassword.text.length>=6&&self.confirmPassword.text.length==self.phonePassword.text.length&&self.verificationCode.text.length==4) {
         self.phoneloginBth.enabled=YES;
-         //[self.phoneloginBth setBackgroundImage:[UIImage imageNamed:@"denglu_anniu-1"] forState:UIControlStateNormal];
+        //[self.phoneloginBth setBackgroundImage:[UIImage imageNamed:@"denglu_anniu-1"] forState:UIControlStateNormal];
         //[self.phoneloginBth setBackgroundImage:[UIImage imageNamed:@"denglu_anniu_anxia"] forState:UIControlStateHighlighted];
-        [self.phoneloginBth setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
+        //[self.phoneloginBth setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
         
     }else
     {
-    self.phoneloginBth.enabled=NO;
-      [self.phoneloginBth setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
+        self.phoneloginBth.enabled=NO;
+      //  [self.phoneloginBth setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
     }
-//   self.phoneloginBth.enabled = (self.phoneAccount.text.length && self.phonePassword.text.length);
+    //   self.phoneloginBth.enabled = (self.phoneAccount.text.length && self.phonePassword.text.length);
 }
 
 
@@ -228,15 +226,14 @@
 
 
 
-
 //点击提交按钮
 -(void)clickphoneloginBth
 {
     
-    [MBProgressHUD showMessage:@"注册中..."];
+    [MBProgressHUD showMessage:@"修改中..."];
     // 1.创建请求管理对象
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
-    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"users/sign_up.json"];
+    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"users/reset_password.json"];
     //封装请求参数
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     params[@"phone"] = self.phoneAccount.text;
@@ -244,57 +241,47 @@
     params[@"password_confirmation"]=self.confirmPassword.text;
     params[@"verification_code"]=self.verificationCode.text;
     //发送请求/v1/users/sign_up.json
-
-    [mgr POST:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+    [mgr PUT:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
         ZCLog(@"%@",responseObject);
-       // NSString * responseObject[@"error_code"]
+        // NSString * responseObject[@"error_code"]
         if (responseObject[@"error_code"] ) {
             
             [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
             
-             [MBProgressHUD hideHUD];
+            [MBProgressHUD hideHUD];
         }else{
             
             
-            // 先将字典转为模型
-      ZCAccount *account=[ZCAccount accountWithDict:responseObject];
-            // 存储模型数据
-       NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-            NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
-       [NSKeyedArchiver archiveRootObject:account toFile:file];
+          
             
-            ZCLog(@"%@",account.token);
+            [self.navigationController popViewControllerAnimated:YES];
             
             
-     ZCPracticeVController *tabBarVc=[[ZCPracticeVController alloc] init];
-            UINavigationController *nav=[[UINavigationController alloc] initWithRootViewController:tabBarVc];
             
             
             [MBProgressHUD hideHUD];
             
-            [MBProgressHUD showSuccess:@"注册成功"];
+            [MBProgressHUD showSuccess:@"密码修改成功"];
             
-      UIWindow *wd = [[UIApplication sharedApplication].delegate window];
-            //去首页
-       wd.rootViewController =nav;
+          
         }
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         [MBProgressHUD hideHUD];
-        
         [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
         
-
         
-       //  NSLog(@"error code %d",[operation.response statusCode]);
         
-//        if (operation ) {
-//            
-//           // [ZCprompt prompt:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
-//        }
+        //  NSLog(@"error code %d",[operation.response statusCode]);
+        
+        //        if (operation ) {
+        //
+        //           // [ZCprompt prompt:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+        //        }
         
     }];
-   
+    
 }
 
 //手机号验证
@@ -346,10 +333,12 @@
         return NO;
     }
 }
+
+
 //发送验证码
 -(void)clickgetButton
 {
-
+    
     ZCLog(@"%@",self.phonePassword.text );
     
     
@@ -360,46 +349,45 @@
         [ZCprompt initWithController:self andErrorCode:@"手机号输入错误"];
     }else
     {
-    ///v1/verification_code/send.json
-    
-    // AFNetworking\AFN
-    // 1.创建请求管理对象
-    AFHTTPRequestOperationManager *mar=[AFHTTPRequestOperationManager manager];
-    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"verification_code/send.json"];
-    //封装请求参数
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    params[@"phone"] = self.phoneAccount.text;
-    params[@"type"]=@"sign_up";
-    //发送请求
-    [mar GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        ///v1/verification_code/send.json
         
-        if (responseObject[@"error_code"] ) {
+        // AFNetworking\AFN
+        // 1.创建请求管理对象
+        AFHTTPRequestOperationManager *mar=[AFHTTPRequestOperationManager manager];
+        NSString *url=[NSString stringWithFormat:@"%@%@",API,@"verification_code/reset_password.json"];
+        //封装请求参数
+        NSMutableDictionary *params = [NSMutableDictionary dictionary];
+        params[@"phone"] = self.phoneAccount.text;
+       // params[@"type"]=@"sign_up";
+        //发送请求
+        [mar GET:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
             
-            [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+            if (responseObject[@"error_code"] ) {
+                
+                [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%@",responseObject[@"error_code"]]];
+                
+            }else
+            {
+                
+                //开始倒计时
+                [self startTheCountdown];
+                
+                [MBProgressHUD showSuccess:@"验证码已发送"];
+            }
+        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             
-        }else
-        {
+            NSLog(@"请求失败%@",error);
+            //[SVProgressHUD dismiss];
+            [MBProgressHUD hideHUD];
+            [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
+            
+            
+        }];
         
-       //开始倒计时
-        [self startTheCountdown];
         
-        [MBProgressHUD showSuccess:@"验证码已发送"];
-        }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [MBProgressHUD hideHUD];
         
-        NSLog(@"请求失败%@",error);
-        //[SVProgressHUD dismiss];
-        
-        [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
-        
-
-    }];
-    
-
-    
     }
-
+    
 }
 
 
@@ -441,15 +429,16 @@
     dispatch_resume(_timer);
     
     
-
-
+    
+    
 }
+
 
 
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    
+    // Dispose of any resources that can be recreated.
 }
 
 /*

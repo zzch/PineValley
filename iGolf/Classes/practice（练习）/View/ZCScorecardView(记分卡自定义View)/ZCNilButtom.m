@@ -93,9 +93,38 @@
 
 -(void)setTee_boxes:(NSMutableArray *)tee_boxes
 {
+     _tee_boxes=tee_boxes;
+    
+    
+    ZCTee_boxes *teeBox;
+    NSString *teeColer;
+    for (ZCTee_boxes *tee in tee_boxes) {
+        if ([[NSString stringWithFormat:@"%@",tee.used]  isEqual:@"1"]) {
+            teeBox=tee;
+            teeColer=tee.color;
+            break;
+        }
+    }
+    
     
     ZCLog(@"%@",tee_boxes);
-    _tee_boxes=tee_boxes;
+    
+    if ([teeColer isEqual:@"white"]) {
+        self.secondLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bai_xz"]];
+    }else if ([teeColer isEqual:@"red"])
+    {
+       self.fristLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"hong_xz"]];
+    }else if ([teeColer isEqual:@"blue"])
+    {
+       self.thirdLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"lan_xz"]];
+    }else if ([teeColer isEqual:@"black"])
+    {
+      self.fourthLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"hei_xz"]];
+    }else if ([teeColer isEqual:@"gold"])
+    {
+        self.fifthLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jin_xz"]];
+    }
+    
    
     self.fristLabel.text=[NSString stringWithFormat:@"%@",[tee_boxes[0] distance_from_hole]];
     

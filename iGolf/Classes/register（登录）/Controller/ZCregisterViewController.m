@@ -14,7 +14,8 @@
 #import "ZCAKeyToRegisterView.h"
 #import "ZCPhoneloginView.h"
 #import "ZCRegisteredViewController.h"
-@interface ZCregisterViewController ()
+#import "ZCForgetViewController.h"
+@interface ZCregisterViewController ()<ZCPhoneloginViewDelegate>
 @property(nonatomic,assign,getter=isOpen) BOOL bKeyBoardHide;
 @end
 
@@ -26,7 +27,7 @@
     
     
     
-    
+   
     
     
     self.view.backgroundColor=ZCColor(237, 237, 237);
@@ -103,6 +104,8 @@
     CGFloat phoneloginViewX=0;
 
     phoneloginView.frame=CGRectMake(phoneloginViewX, phoneloginViewY, phoneloginViewW, phoneloginViewH);
+    
+    phoneloginView.delegate=self;
     [self.view addSubview:phoneloginView];
     
     
@@ -112,6 +115,19 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
     
 }
+
+
+
+//代理方法
+-(void)ZCPhoneloginViewIsClick:(UIButton *)sender
+{
+
+    ZCForgetViewController  *ForgetViewControlle=[[ZCForgetViewController alloc] init];
+    [self.navigationController pushViewController:ForgetViewControlle animated:YES];
+    
+}
+
+
 
 
 -(void)keyboardWillHide:(NSNotification *)notification

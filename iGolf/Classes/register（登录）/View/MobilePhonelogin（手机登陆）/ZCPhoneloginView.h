@@ -8,6 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+
+@protocol ZCPhoneloginViewDelegate <NSObject>
+
+@optional
+-(void)ZCPhoneloginViewIsClick:(UIButton *)sender;
+
+@end
+
+
 @interface ZCPhoneloginView : UIView
+
+@property(nonatomic,strong) id<ZCPhoneloginViewDelegate>delegate;
+
 
 @end

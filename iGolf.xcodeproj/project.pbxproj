@@ -137,6 +137,7 @@
 		A976B0D01AE4BB6700D8EA92 /* ZCStadiumView.m in Sources */ = {isa = PBXBuildFile; fileRef = A976B0CF1AE4BB6700D8EA92 /* ZCStadiumView.m */; };
 		A976B0D61AE506D500D8EA92 /* ZCStadiumTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A976B0D51AE506D500D8EA92 /* ZCStadiumTableViewCell.m */; };
 		A976B0D91AE5129E00D8EA92 /* ZCHistoryCoursesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A976B0D81AE5129E00D8EA92 /* ZCHistoryCoursesModel.m */; };
+		A97BD3B81B340AC4004958C8 /* ZCForgetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A97BD3B71B340AC4004958C8 /* ZCForgetViewController.m */; };
 		A97F29581AF08E230077A79A /* ZCHistoryOfCompetitiveTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A97F29571AF08E230077A79A /* ZCHistoryOfCompetitiveTableViewCell.m */; };
 		A97F295E1AF0BA010077A79A /* ZCCheckTheScorecardTTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A97F295D1AF0BA010077A79A /* ZCCheckTheScorecardTTableViewCell.m */; };
 		A98256FE1ADE165D00DC4B52 /* ZCBunkersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A98256FD1ADE165D00DC4B52 /* ZCBunkersViewController.m */; };
@@ -455,6 +456,8 @@
 		A976B0D51AE506D500D8EA92 /* ZCStadiumTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCStadiumTableViewCell.m; sourceTree = "<group>"; };
 		A976B0D71AE5129E00D8EA92 /* ZCHistoryCoursesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCHistoryCoursesModel.h; sourceTree = "<group>"; };
 		A976B0D81AE5129E00D8EA92 /* ZCHistoryCoursesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCHistoryCoursesModel.m; sourceTree = "<group>"; };
+		A97BD3B61B340AC4004958C8 /* ZCForgetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCForgetViewController.h; sourceTree = "<group>"; };
+		A97BD3B71B340AC4004958C8 /* ZCForgetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCForgetViewController.m; sourceTree = "<group>"; };
 		A97F29561AF08E230077A79A /* ZCHistoryOfCompetitiveTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCHistoryOfCompetitiveTableViewCell.h; sourceTree = "<group>"; };
 		A97F29571AF08E230077A79A /* ZCHistoryOfCompetitiveTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCHistoryOfCompetitiveTableViewCell.m; sourceTree = "<group>"; };
 		A97F295C1AF0BA010077A79A /* ZCCheckTheScorecardTTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCCheckTheScorecardTTableViewCell.h; sourceTree = "<group>"; };
@@ -1221,6 +1224,8 @@
 				A9714E481A830BCD00571CB2 /* ZCregisterViewController.m */,
 				A9DDC6B91AD3CAAC002B89EA /* ZCRegisteredViewController.h */,
 				A9DDC6BA1AD3CAAC002B89EA /* ZCRegisteredViewController.m */,
+				A97BD3B61B340AC4004958C8 /* ZCForgetViewController.h */,
+				A97BD3B71B340AC4004958C8 /* ZCForgetViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1588,6 +1593,7 @@
 				A971489D1AEE2D75001F7992 /* ZCChildNameTableViewCell.m in Sources */,
 				A97345E11ADCECDB0066F5FA /* ZCAverageViewController.m in Sources */,
 				A98E19C71ADB7E8F005615A9 /* ZCProfessionalStatisticalViewController.m in Sources */,
+				A97BD3B81B340AC4004958C8 /* ZCForgetViewController.m in Sources */,
 				A982570D1ADE771300DC4B52 /* ZCRodNumberViewController.m in Sources */,
 				A97345E41ADD13AF0066F5FA /* ZCPushRodViewController.m in Sources */,
 				A95D73411AD668F3009062AF /* ZCDatapickerView.m in Sources */,
