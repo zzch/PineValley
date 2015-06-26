@@ -268,7 +268,7 @@
     CGFloat QrCodeW=50;
     CGFloat QrCodeH=50;
     
-    self.QrCode.frame=CGRectMake(QrCodeX, QrCodeY, QrCodeW, QrCodeH);
+    //self.QrCode.frame=CGRectMake(QrCodeX, QrCodeY, QrCodeW, QrCodeH);
     
     /**
      *  rankingLabel

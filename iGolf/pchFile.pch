@@ -23,9 +23,11 @@
 
 #pragma mark - 设备型号识别
 #define is_IOS_7 ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
+//正式服务器
+//#define API @"http://ilovegolfclub.com/api/v1/"
 
-#define API @"http://ilovegolfclub.com/api/v1/"
-//#define API @"http://192.168.0.124:3001/api/v1/"
+//测试服务器
+#define API @"http://123.57.210.52/api/v1/"
 
 // 2.获得RGB颜色
 #define ZCColor(r, g, b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1.0]

@@ -177,7 +177,7 @@
     //个人中心
     UIButton *personalCenter=[[UIButton alloc] init];
     CGFloat personalCenterX=0;
-    CGFloat personalCenterY=technicalStatisticsY+technicalStatisticsH+1;
+    CGFloat personalCenterY=technicalStatisticsY+technicalStatisticsH+0.5;
     CGFloat personalCenterW=SCREEN_WIDTH;
     CGFloat personalCenterH=SCREEN_HEIGHT-personalCenterY;
     personalCenter.frame=CGRectMake(personalCenterX, personalCenterY, personalCenterW, personalCenterH);

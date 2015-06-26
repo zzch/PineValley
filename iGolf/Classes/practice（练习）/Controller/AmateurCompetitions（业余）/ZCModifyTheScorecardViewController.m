@@ -688,7 +688,7 @@
     
     if ([self _valueOrNil:self.scorecard.score]==nil) {
         
-        if ([self.scorecard.par isEqual:@"3"]) {
+        if ([[NSString stringWithFormat:@"%@",self.scorecard.par] isEqual:@"3"]) {
             self.totalLabel.text=@"3";
             
             self.punish.text=@"0";
@@ -700,7 +700,7 @@
             self.count=3;
             self.punishcount=0;
             
-        }else if ([self.scorecard.par isEqual:@"4"])
+        }else if ([[NSString stringWithFormat:@"%@",self.scorecard.par] isEqual:@"4"])
         {
             self.totalLabel.text=@"4";
             self.punish.text=@"0";
@@ -737,11 +737,11 @@
         }else if([self.scorecard.direction isEqual:@"slice"])
         {
             self.hitLabel.text=@"右侧";
-            [self.pickView selectRow:1 inComponent:1 animated:YES];
+            [self.pickView selectRow:2 inComponent:1 animated:YES];
         }else
         {
             self.hitLabel.text=@"命中";
-            [self.pickView selectRow:2 inComponent:1 animated:YES];
+            [self.pickView selectRow:1 inComponent:1 animated:YES];
         }
         
         // self.hitLabel.text=[NSString stringWithFormat:@"%@",self.scorecard.direction];
@@ -791,8 +791,8 @@
     params[@"token"]=account.token;
     params[@"uuid"]=self.scorecard.uuid;
     params[@"score"]=self.totalLabel.text;
-    params[@"putts"]=self.punish.text;
-    params[@"penalties"]=self.pushLabel.text;
+    params[@"putts"]=self.pushLabel.text;
+    params[@"penalties"]=self.punish.text;
     params[@"distance_from_hole"]=self.distanceLabel.text;
     if ([self.hitLabel.text isEqualToString: @"左侧"]) {
         params[@"direction"]=@"hook";
@@ -912,7 +912,7 @@
         
         
         NSArray *pickArray2=[NSArray array];
-        pickArray2=@[@"左侧",@"右侧",@"命中"];
+        pickArray2=@[@"左侧",@"命中",@"右侧"];
         
         _pickArray=@[pickArray1,pickArray2];
         

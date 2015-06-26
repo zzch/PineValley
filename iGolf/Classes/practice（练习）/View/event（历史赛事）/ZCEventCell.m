@@ -209,6 +209,7 @@
     }else
     {
     self.scoreLabel.text=[NSString stringWithFormat:@"%@",self.event.player.strokes ];
+        self.scoreLabel.font=[UIFont systemFontOfSize:36];
     }
     
     
@@ -291,7 +292,7 @@
     
     CGFloat nameLabelX=scoringImageX+scoringImageW+10;
     CGFloat nameLabelY=10;
-    CGFloat nameLabelW=self.frame.size.width*0.6;
+    CGFloat nameLabelW=self.frame.size.width*0.6-20;
     CGFloat nameLabelH=23;
     
     self.nameLabel.frame=CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH);
@@ -310,7 +311,7 @@
     
     //startedAtLabel frame
     
-    CGFloat startedAtLabelX=timeImageX+timeImageW+6;
+    CGFloat startedAtLabelX=nameLabelX;
     CGFloat startedAtLabelY=timeImageY;
     CGFloat startedAtLabelW=170;
     CGFloat startedAtLabelH=15;
@@ -343,7 +344,7 @@
 
      //向右的图片
     
-    CGFloat rightImageX=self.frame.size.width-self.frame.size.width*0.1;
+    CGFloat rightImageX=self.frame.size.width-self.frame.size.width*0.06;
     CGFloat rightImageY=(self.frame.size.height-17)*0.5;
     CGFloat rightImageW=10;
     CGFloat rightImageH=17;
