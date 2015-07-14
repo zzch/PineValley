@@ -10,7 +10,7 @@
 #import "AFNetworking.h"
 #import "ZCAccount.h"
 #import "ZCPracticeVController.h"
-
+#import "ZCRegisteredSuccessfullyViewController.h"
 @implementation ZCAKeyToRegisterView
 
 
@@ -24,7 +24,7 @@
         CGFloat left = 10; // 左端盖宽度
         CGFloat right = 10; // 右端盖宽度
         UIEdgeInsets insets = UIEdgeInsetsMake(top, left, bottom, right);
-        UIImage *image1=[UIImage imageNamed:@"anniu_dianji" ];
+        UIImage *image1=[UIImage imageNamed:@"yijianzhuce_anniu" ];
         // 指定为拉伸模式，伸缩后重新赋值
         image1 = [image1 resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch];
         
@@ -34,9 +34,10 @@
         [self setBackgroundImage:image1 forState:UIControlStateNormal];
        
         [self setTitle:@"一键注册" forState:UIControlStateNormal];
+        [self setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 //        [self setBackgroundImage:[UIImage imageNamed:@"denglu_anniu-1"] forState:UIControlStateNormal];
 //        [self setBackgroundImage:[UIImage imageNamed:@"denglu_anniu_anxia"] forState:UIControlStateHighlighted];
-        [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+       
         
         [self addTarget:self action:@selector(clickKeyButton) forControlEvents:UIControlEventTouchUpInside];
         
@@ -74,8 +75,9 @@
         
          ZCLog(@"%@",account.token);
         
-        ZCPracticeVController *tabBarVc=[[ZCPracticeVController alloc] init];
-        UINavigationController *nav=[[UINavigationController alloc] initWithRootViewController:tabBarVc];
+       // ZCPracticeVController *tabBarVc=[[ZCPracticeVController alloc] init];
+        ZCRegisteredSuccessfullyViewController *vc=[[ZCRegisteredSuccessfullyViewController alloc] init];
+        UINavigationController *nav=[[UINavigationController alloc] initWithRootViewController:vc];
         
         self.window.rootViewController=nav;
         //去首页
@@ -84,7 +86,7 @@
         
         [MBProgressHUD hideHUD];
         
-         [MBProgressHUD showSuccess:@"注册成功"];
+         //[MBProgressHUD showSuccess:@"注册成功"];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         NSLog(@"请求失败%@",error);

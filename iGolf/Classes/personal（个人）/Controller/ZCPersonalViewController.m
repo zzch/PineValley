@@ -21,6 +21,7 @@
 #import "ZCAboutMeViewController.h"
 #import "ZCMobilePhoneViewController.h"
 #import "ZCMobilePhoneViewController.h"
+#import "ZCBindingViewController.h"
 @interface ZCPersonalViewController ()<UIActionSheetDelegate,UIAlertViewDelegate,ZCPersonalInformationViewControllerDelegate>
 //头像View
 @property(nonatomic,weak)UIButton *headImageView;
@@ -502,8 +503,8 @@ ZCLog(@"网络下的载111122222 ");
     ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
 
     if ([self _valueOrNil:account.phone ]==nil) {
-        ZCMobilePhoneViewController *MobilePhoneViewController=[[ZCMobilePhoneViewController alloc] init];
-        [self.navigationController pushViewController:MobilePhoneViewController animated:YES];
+        ZCBindingViewController *BindingViewController=[[ZCBindingViewController alloc] init];
+        [self.navigationController pushViewController:BindingViewController animated:YES];
     }else{
     
     
@@ -575,10 +576,11 @@ ZCLog(@"网络下的载111122222 ");
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 0) {
-        
-        ZCMobilePhoneViewController *MobilePhoneViewController=[[ZCMobilePhoneViewController alloc] init];
-        [self.navigationController pushViewController:MobilePhoneViewController animated:YES];
-        
+//        
+//        ZCMobilePhoneViewController *MobilePhoneViewController=[[ZCMobilePhoneViewController alloc] init];
+//        [self.navigationController pushViewController:MobilePhoneViewController animated:YES];
+        ZCBindingViewController *BindingViewController=[[ZCBindingViewController alloc] init];
+        [self.navigationController pushViewController:BindingViewController animated:YES];
         
     }else  if (buttonIndex == 1)
     {

@@ -54,13 +54,17 @@
         UITextField *phoneAccount=[[UITextField alloc] init];
         [phoneAccount setTextColor:ZCColor(85, 85, 85)];
         [phoneAccount setBackground:image1];
-        phoneAccount.placeholder=@"  请输入您的手机号";
+        phoneAccount.placeholder=@"请输入您的手机号";
         //设置键盘为数字键盘
         phoneAccount.keyboardType=UIKeyboardTypeNumberPad;
         //修改提示语的字体颜色
         [phoneAccount setValue:ZCColor(102, 102, 102)
                     forKeyPath:@"_placeholderLabel.textColor"];
         phoneAccount.font=[UIFont systemFontOfSize:14];
+        
+        UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 10)];
+        phoneAccount.leftView = paddingView;
+        phoneAccount.leftViewMode = UITextFieldViewModeAlways;
         [self addSubview:phoneAccount];
         self.phoneAccount=phoneAccount;
         
@@ -71,13 +75,18 @@
         [phonePassword setTextColor:ZCColor(85, 85, 85)];
         //实现密文形式
         phonePassword.secureTextEntry=YES;
-        phonePassword.placeholder=@"  请输入您的密码";
+        phonePassword.placeholder=@"请输入您的密码";
         //修改提示语的字体颜色
         [phonePassword setValue:ZCColor(102, 102, 102) forKeyPath:@"_placeholderLabel.textColor"];
         [phonePassword setBackground:image1];
          phonePassword.font=[UIFont systemFontOfSize:14];
+        
         [self addSubview:phonePassword];
        
+        
+       UIView *paddingView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 10)];
+        phonePassword.leftView = paddingView1;
+        phonePassword.leftViewMode = UITextFieldViewModeAlways;
         self.phonePassword=phonePassword;
         
         //忘记密码
@@ -369,10 +378,11 @@
 
     
     //手机登陆
-    CGFloat  phoneloginBthY=forgetBthY+forgetBthH+25;
+    
     CGFloat  phoneloginBthW=phonePasswordW;
     CGFloat  phoneloginBthH=40;
     CGFloat  phoneloginBthX=phonePasswordX;
+    CGFloat  phoneloginBthY=self.frame.size.height-phoneloginBthH-5;
     self.phoneloginBth.frame=CGRectMake(phoneloginBthX, phoneloginBthY, phoneloginBthW, phoneloginBthH);
 }
 @end
