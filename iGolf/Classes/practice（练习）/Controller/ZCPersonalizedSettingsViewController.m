@@ -354,7 +354,7 @@
 {
     //[self.photoView.image setImage:info[UIImagePickerControllerOriginalImage] forState:UIControlStateNormal];
     //self.photoView.image=info[UIImagePickerControllerOriginalImage];
-    [self.imageButton setImage:info[UIImagePickerControllerOriginalImage] forState:UIControlStateNormal];
+    [self.imageButton setImage:info[UIImagePickerControllerEditedImage] forState:UIControlStateNormal];
     self.chooseImage=info[UIImagePickerControllerEditedImage];
     //ZCLog(@"%@",[self.photoView.image class]);
     // 关闭视图控制器
@@ -404,7 +404,7 @@
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     NSString *url=[NSString stringWithFormat:@"%@%@",API,@"users/update_portrait_and_nickname_and_gender.json"];
     
-    NSData *imageData = UIImageJPEGRepresentation(self.chooseImage, 0.3);
+    NSData *imageData = UIImageJPEGRepresentation(self.chooseImage, 0.5);
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     params[@"token"]=account.token;
     params[@"nickname"]=self.nameTextField.text;

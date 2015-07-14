@@ -150,7 +150,7 @@
 {
     _scorecard=scorecard;
     
-    if ([scorecard.score intValue]-[scorecard.par intValue]>=0&&[scorecard.score intValue]-[scorecard.par intValue]<2) {
+    if ([scorecard.score intValue]-[scorecard.par intValue]>0&&[scorecard.score intValue]-[scorecard.par intValue]<2) {
         
         self.scoreLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"dayu1"]];
         

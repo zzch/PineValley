@@ -52,10 +52,14 @@
     //[phoneAccount setTextColor:[UIColor whiteColor]];
     [phoneAccount setBackground:bjimage];
     phoneAccount.textColor=ZCColor(85, 85, 85);
-    phoneAccount.placeholder=@"  请输入您的手机号";
+    phoneAccount.placeholder=@"请输入您的手机号";
     //修改提示语的字体颜色
     [phoneAccount setValue:ZCColor(102, 102, 102) forKeyPath:@"_placeholderLabel.textColor"];
     phoneAccount.font=[UIFont systemFontOfSize:14];
+    
+    UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 10)];
+    phoneAccount.leftView = paddingView;
+    phoneAccount.leftViewMode = UITextFieldViewModeAlways;
     [self.view addSubview:phoneAccount];
     self.phoneAccount=phoneAccount;
     
@@ -73,11 +77,15 @@
     CGFloat verificationCodeH=phoneAccountH;
     verificationCode.frame=CGRectMake(verificationCodeX, verificationCodeY, verificationCodeW, verificationCodeH);
     verificationCode.background=bjimage;
-    verificationCode.placeholder=@"  请输入验证码";
+    verificationCode.placeholder=@"请输入验证码";
     //修改提示语的字体颜色
     [verificationCode setValue:ZCColor(102, 102, 102) forKeyPath:@"_placeholderLabel.textColor"];
     self.verificationCode=verificationCode;
     verificationCode.font=[UIFont systemFontOfSize:14];
+    
+    UIView *paddingView1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 10)];
+    verificationCode.leftView = paddingView1;
+    verificationCode.leftViewMode = UITextFieldViewModeAlways;
     [self.view addSubview:verificationCode];
     
     
@@ -119,6 +127,10 @@
     
     [phonePassword setBackground:bjimage];
     phonePassword.font=[UIFont systemFontOfSize:14];
+    
+    UIView *paddingView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 10)];
+    phonePassword.leftView = paddingView2;
+    phonePassword.leftViewMode = UITextFieldViewModeAlways;
     [self.view addSubview:phonePassword];
     self.phonePassword=phonePassword;
     
@@ -139,6 +151,10 @@
     confirmPassword.secureTextEntry=YES;
     confirmPassword.font=[UIFont systemFontOfSize:14];
     [confirmPassword setBackground:bjimage];
+    UIView *paddingView3 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 10)];
+    confirmPassword.leftView = paddingView3;
+    confirmPassword.leftViewMode = UITextFieldViewModeAlways;
+
     [self.view addSubview:confirmPassword];
     self.confirmPassword=confirmPassword;
     

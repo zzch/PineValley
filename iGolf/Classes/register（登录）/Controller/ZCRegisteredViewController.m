@@ -51,10 +51,13 @@
     //[phoneAccount setTextColor:[UIColor whiteColor]];
     [phoneAccount setBackground:bjimage];
     phoneAccount.textColor=ZCColor(85, 85, 85);
-    phoneAccount.placeholder=@"  请输入您的手机号";
+    phoneAccount.placeholder=@"请输入您的手机号";
     //修改提示语的字体颜色
     [phoneAccount setValue:ZCColor(102, 102, 102) forKeyPath:@"_placeholderLabel.textColor"];
     phoneAccount.font=[UIFont systemFontOfSize:14];
+    UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 10)];
+    phoneAccount.leftView = paddingView;
+    phoneAccount.leftViewMode = UITextFieldViewModeAlways;
     [self.view addSubview:phoneAccount];
     self.phoneAccount=phoneAccount;
     
@@ -71,12 +74,15 @@
     [phonePassword setTextColor:ZCColor(85, 85, 85)];
     //实现密文形式
     phonePassword.secureTextEntry=YES;
-    phonePassword.placeholder=@"  至少输入6位的密码";
+    phonePassword.placeholder=@"至少输入6位的密码";
     //修改提示语的字体颜色
     [phonePassword setValue:ZCColor(102, 102, 102) forKeyPath:@"_placeholderLabel.textColor"];
     
     [phonePassword setBackground:bjimage];
     phonePassword.font=[UIFont systemFontOfSize:14];
+    UIView *paddingView1= [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 10)];
+    phonePassword.leftView = paddingView1;
+    phonePassword.leftViewMode = UITextFieldViewModeAlways;
     [self.view addSubview:phonePassword];
     self.phonePassword=phonePassword;
     
@@ -89,7 +95,7 @@
     CGFloat  confirmPasswordW=phoneAccountW;
     CGFloat  confirmPasswordH=phoneAccountH;
     confirmPassword.frame=CGRectMake(confirmPasswordX, confirmPasswordY, confirmPasswordW, confirmPasswordH);
-    confirmPassword.placeholder=@"  请再一次输入密码";
+    confirmPassword.placeholder=@"请再一次输入密码";
     //修改提示语的字体颜色
     [confirmPassword setValue:ZCColor(102, 102, 102) forKeyPath:@"_placeholderLabel.textColor"];
     [confirmPassword setTextColor:ZCColor(85, 85, 85)];
@@ -97,6 +103,10 @@
     confirmPassword.secureTextEntry=YES;
     confirmPassword.font=[UIFont systemFontOfSize:14];
     [confirmPassword setBackground:bjimage];
+    UIView *paddingView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 10)];
+    confirmPassword.leftView = paddingView2;
+    confirmPassword.leftViewMode = UITextFieldViewModeAlways;
+
     [self.view addSubview:confirmPassword];
     self.confirmPassword=confirmPassword;
 
@@ -115,11 +125,15 @@
     CGFloat verificationCodeH=phonePasswordH;
     verificationCode.frame=CGRectMake(verificationCodeX, verificationCodeY, verificationCodeW, verificationCodeH);
     verificationCode.background=bjimage;
-    verificationCode.placeholder=@"  请输入验证码";
+    verificationCode.placeholder=@"请输入验证码";
     //修改提示语的字体颜色
     [verificationCode setValue:ZCColor(102, 102, 102) forKeyPath:@"_placeholderLabel.textColor"];
     self.verificationCode=verificationCode;
     verificationCode.font=[UIFont systemFontOfSize:14];
+    UIView *paddingView3 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 10)];
+    verificationCode.leftView = paddingView3;
+    verificationCode.leftViewMode = UITextFieldViewModeAlways;
+
     [self.view addSubview:verificationCode];
     
     

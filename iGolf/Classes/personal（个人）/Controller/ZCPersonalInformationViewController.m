@@ -327,7 +327,12 @@
     //nameTextField.backgroundColor=[UIColor whiteColor];
     nameTextField.textColor=ZCColor(85, 85, 85);
     nameTextField.text=self.name;
+    UIView *paddingView3 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 10)];
+    nameTextField.leftView = paddingView3;
+    nameTextField.leftViewMode = UITextFieldViewModeAlways;
+    
     [self.scrollView addSubview:nameTextField];
+    
     self.nameTextField=nameTextField;
     
     //性别
@@ -818,6 +823,8 @@
 {
     UIActionSheet *sheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"从相册选取",nil];
     [sheet showInView:self.view];
+    
+    
 
 }
 
@@ -832,8 +839,9 @@
              UIImagePickerController *pick = [[UIImagePickerController alloc] init];
              //类型
              pick.sourceType=UIImagePickerControllerSourceTypeCamera;
-             [pick setAllowsEditing:YES];
+            // [pick setAllowsEditing:YES];
              pick.delegate=self;
+             pick.allowsEditing = YES;
              // 3. 展现
              [self presentViewController:pick animated:YES completion:nil];
          
@@ -841,6 +849,9 @@
              ZCLog(@"相ji不可用");
          
          }
+        
+        
+        
         
     
     }else if(buttonIndex == 1){
@@ -977,7 +988,7 @@
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     NSString *url=[NSString stringWithFormat:@"%@%@",API,@"users/update_portrait.json"];
     
-     NSData *imageData = UIImageJPEGRepresentation(self.photoView.image, 0.3);
+     NSData *imageData = UIImageJPEGRepresentation(self.photoView.image, 0.5);
      NSMutableDictionary *params = [NSMutableDictionary dictionary];
     params[@"token"]=account.token;
     

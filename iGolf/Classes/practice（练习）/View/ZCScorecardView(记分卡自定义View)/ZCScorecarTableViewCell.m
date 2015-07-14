@@ -235,7 +235,7 @@
 {
     _scorecard=scorecard;
     
-    ZCLog(@"妈的为啥执行上面那行%@",scorecard.score);
+   
     if([self _valueOrNil:scorecard.score])
     {
         if (self.nilButtom) {

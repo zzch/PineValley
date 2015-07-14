@@ -25,12 +25,16 @@
 #import "ZCInvitationViewController.h"
 #import "ZCListViewController.h"
 #import "ZCQuickScoringTableViewController.h"
-@interface ZCScorecardTableViewController ()<UITableViewDataSource,UITableViewDelegate,ZCScorecarDelegate,ZCModifyTheScorecardViewControllerDelegate,ZCModifyTheProfessionalScorecardControllerDelegate,ZCCompetitiveTableViewCellDelagate,ZCScorecarHeadViewDelagate>
+#import "MJRefresh.h"
+@interface ZCScorecardTableViewController ()<UITableViewDataSource,UITableViewDelegate,ZCScorecarDelegate,ZCModifyTheScorecardViewControllerDelegate,ZCModifyTheProfessionalScorecardControllerDelegate,ZCCompetitiveTableViewCellDelagate,ZCScorecarHeadViewDelagate,MJRefreshBaseViewDelegate>
 
 @property(nonatomic,weak)UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray *scorecards;
 
 @property (nonatomic, strong) NSIndexPath *indexPath;
+
+@property (nonatomic, weak) MJRefreshHeaderView *header;
+@property(nonatomic,weak)ZCScorecarHeadView *ScorecarHeadView;
 @end
 
 @implementation ZCScorecardTableViewController
@@ -57,10 +61,15 @@
     
     
     
+    ZCScorecarHeadView *ScorecarHeadView=[[ZCScorecarHeadView alloc] init];
+    ScorecarHeadView.frame=CGRectMake(0, 0, SCREEN_WIDTH, 134);
+    ScorecarHeadView.delegate=self;
+//    ScorecarHeadView.playerModel=self.totalScorecards.player;
+    [self.view addSubview:ScorecarHeadView];
+    self.ScorecarHeadView=ScorecarHeadView;
     
     
-    
-    [self online];
+    [self initTableView];
 
     
     
@@ -72,31 +81,36 @@
 -(void)initTableView
 {
     UITableView  *tableView=[[UITableView alloc] init];
-    tableView.frame=CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    tableView.frame=CGRectMake(0, 134, self.view.frame.size.width, self.view.frame.size.height-134);
     [self.view addSubview: tableView];
     self.tableView=tableView;
     
     
     //让tableView没有弹簧效果
-    self.tableView.bounces=NO;
+   // self.tableView.bounces=NO;
     
     
     //背景颜色suoyou_bj
-    self.tableView.backgroundColor=ZCColor(60, 57, 78);
+    self.tableView.backgroundColor=ZCColor(237, 237, 237);
     //去掉分割线
     //self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     //分割线颜色
     [self.tableView   setSeparatorColor:ZCColor(170, 170, 170)];
     
-    
     self.tableView.delegate=self;
     self.tableView.dataSource=self;
-    self.tableView.sectionHeaderHeight=134;
+    //self.tableView.sectionHeaderHeight=134;
     
     
     self.tableView.rowHeight=80;
     
-
+    // 1.下拉刷新
+    MJRefreshHeaderView *header = [MJRefreshHeaderView header];
+    header.scrollView = self.tableView;
+    header.delegate = self;
+    // 自动进入刷新状态
+    [header beginRefreshing];
+    self.header = header;
     
     
 
@@ -104,6 +118,27 @@
 
 
 
+/**
+ *  框架 刷新控件进入开始刷新状态的时候调用
+ */
+- (void)refreshViewBeginRefreshing:(MJRefreshBaseView *)refreshView
+{
+    if ([refreshView isKindOfClass:[MJRefreshFooterView class]]) { // 上拉刷新加载
+        
+    } else { // 下拉刷新
+        [self online];
+    }
+}
+
+
+
+
+- (void)dealloc
+{
+    // 释放内存
+    [self.header free];
+    
+}
 
 
 
@@ -156,7 +191,7 @@
 {
 
     //显示圈圈
-  [MBProgressHUD showMessage:@"加载中..."];
+ // [MBProgressHUD showMessage:@"加载中..."];
     
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
@@ -191,19 +226,19 @@
         self.totalScorecards=totalScorecards;
         
         
-        //创建tableView
-        [self initTableView];
+       
         
-        
+         self.ScorecarHeadView.playerModel=self.totalScorecards.player;
         
         [self.tableView reloadData ];
+            [self.header endRefreshing];
         }
         //隐藏圈圈
-        [MBProgressHUD hideHUD];
+       // [MBProgressHUD hideHUD];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         //隐藏圈圈
-      [MBProgressHUD hideHUD];
-
+     // [MBProgressHUD hideHUD];
+        [self.header endRefreshing];
         [ZCprompt initWithController:self andErrorCode:[NSString stringWithFormat:@"%ld",(long)[operation.response statusCode]]];
         ZCLog(@"%@",error);
     }];
@@ -279,14 +314,14 @@
 
 
 
-//头部
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    ZCScorecarHeadView *ScorecarHeadView=[[ZCScorecarHeadView alloc] init];
-    ScorecarHeadView.delegate=self;
-    ScorecarHeadView.playerModel=self.totalScorecards.player;
-    return ScorecarHeadView;
-}
+////头部
+//-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    ZCScorecarHeadView *ScorecarHeadView=[[ZCScorecarHeadView alloc] init];
+//    ScorecarHeadView.delegate=self;
+//    ScorecarHeadView.playerModel=self.totalScorecards.player;
+//    return ScorecarHeadView;
+//}
 
 
 - (id) _valueOrNil:(id)obj {
@@ -353,6 +388,7 @@
     }else if (button.tag==2777)
     {
         ZCQrCodeViewController *QrCode=[[ZCQrCodeViewController alloc] init];
+        QrCode.uuid=self.uuid;
         [self.navigationController pushViewController:QrCode animated:YES];
         
     }

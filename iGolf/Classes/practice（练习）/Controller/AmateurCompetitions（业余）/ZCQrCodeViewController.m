@@ -24,14 +24,34 @@
     
     //+ (UIImage *)qrImageForString:(NSString *)string imageSize:(CGFloat)size;
     
+    AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager]
+    ;
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
+    ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
     
-    UIImage *QrCode=[QRCodeGenerator qrImageForString:@"dasdsdasdasdddsdassda" imageSize:200];
+    params[@"token"]=account.token;
+    params[@"match_uuid"]=self.uuid;
+    NSString *url=[NSString stringWithFormat:@"%@%@",API,@"players/invite_caddie.json"];
+    [mgr PUT:url parameters:params success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        ZCLog(@"%@",responseObject);
+        
+        UIImage *QrCode=[QRCodeGenerator qrImageForString:[NSString stringWithFormat:@"%@",responseObject[@"url"]] imageSize:200];
+        
+        
+        UIImageView *QrCodeImage=[[UIImageView alloc] init];
+        QrCodeImage.frame=CGRectMake(0, 200, 200, 200);
+        QrCodeImage.image= QrCode;
+        [self.view addSubview:QrCodeImage];
+
+        
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+    }];
     
     
-    UIImageView *QrCodeImage=[[UIImageView alloc] init];
-    QrCodeImage.frame=CGRectMake(0, 200, 200, 200);
-    QrCodeImage.image= QrCode;
-    [self.view addSubview:QrCodeImage];
     
     
     

@@ -16,6 +16,9 @@
 #import "UIBarButtonItem+DC.h"
 #import "MBProgressHUD+NJ.h"
 #import "ZCprompt.h"
+#import "ZCAccount.h"
+#import "AFNetworking.h"
+#import "ZCTool.h"
 #endif
 
 

@@ -12,6 +12,12 @@
 #import "ZCAccount.h"
 #import "ZCPracticeVController.h"
 #import "ZCGuideViewController.h"
+
+#import "UMSocial.h"
+#import "UMSocialQQHandler.h"
+#import "UMSocialWechatHandler.h"
+#import "UMSocialSinaHandler.h"
+
 @interface AppDelegate ()
 
 @end
@@ -28,6 +34,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    //调用友盟
+    [self  callToShare];
+    
     //创建Window
     self.window=[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor=[UIColor whiteColor];
@@ -117,6 +126,29 @@
 
         return YES;
 }
+
+
+//调用友盟
+-(void)callToShare
+{
+    // Override point for customization after application launch.
+    
+    [UMSocialData setAppKey:UMAppKey];
+    //设置分享到QQ/Qzone的应用Id，和分享url 链接
+    [UMSocialQQHandler setQQWithAppId:QQWithAppId appKey:QQWithAppKey url:QQWithShareURL];
+    //设置微信AppId、appSecret，分享url
+    [UMSocialWechatHandler setWXAppId:WXWithAppId appSecret:WXWithAppSecret url:WXWithShareURL];
+    
+    //打开新浪微博的SSO开关，设置新浪微博回调地址，这里必须要和你在新浪微博后台设置的回调地址一致。若在新浪后台设置我们的回调地址，“http://sns.whalecloud.com/sina2/callback”，这里可以传nil
+    [UMSocialSinaHandler openSSOWithRedirectURL:@"http://ilovegolfclub.com"];
+    
+    //由于苹果审核政策需求，建议大家对未安装客户端平台进行隐藏，在设置QQ、微信AppID之后调用下面的方法
+    [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ,UMShareToQzone,UMShareToWechatSession,UMShareToWechatTimeline]];
+
+
+}
+
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
