@@ -116,6 +116,7 @@
     UITableView *tableView=[[UITableView alloc] init];
     tableView.frame=CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height-45)
     ;
+    tableView.bounces=NO;
     [self.view addSubview:tableView];
     self.tableView=tableView;
     
@@ -198,7 +199,7 @@
     imageView.frame=CGRectMake(10, (chooseBtn.frame.size.height-15)*0.5, 10, 15);
     [chooseBtn addSubview:imageView];
     
-    UILabel *nameLabel=[[UILabel alloc] initWithFrame:CGRectMake(30, (chooseBtn.frame.size.height-20)*0.5, 180, 20)];
+    UILabel *nameLabel=[[UILabel alloc] initWithFrame:CGRectMake(30, (chooseBtn.frame.size.height-20)*0.5, SCREEN_WIDTH-40, 20)];
     nameLabel.textColor=[UIColor whiteColor];
     self.nameLabel=nameLabel;
     [chooseBtn addSubview:nameLabel];

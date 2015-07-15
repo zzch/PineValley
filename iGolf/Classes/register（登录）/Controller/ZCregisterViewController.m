@@ -73,7 +73,7 @@
     CGFloat landingBtnW=registerW;
     CGFloat landingBtnH=registerH;
     landingBtn.frame=CGRectMake(landingBtnX, landingBtnY, landingBtnW, landingBtnH);
-    [landingBtn setTitle:@"登陆" forState:UIControlStateNormal];
+    [landingBtn setTitle:@"登录" forState:UIControlStateNormal];
     
     [landingBtn setTitleColor:ZCColor(97, 88, 148) forState:UIControlStateNormal];
     

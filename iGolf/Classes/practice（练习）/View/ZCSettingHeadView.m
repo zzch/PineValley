@@ -218,19 +218,20 @@
 
    
     CGFloat TTaiImageW=19;
-    CGFloat TTaiImageX=self.frame.size.width*0.62;
+    CGFloat TTaiImageX=self.frame.size.width*0.69;
     CGFloat TTaiImageH=19;
     CGFloat TTaiImageY=(self.frame.size.height-TTaiImageH)*0.5;
     
     self.TTaiImage.frame=CGRectMake(TTaiImageX, TTaiImageY, TTaiImageW, TTaiImageH);
     
+    CGFloat TTaiNameX=childNameX+childNameW+30;
     CGFloat TTaiNameY=childNameY;
-    CGFloat TTaiNameW=65;
-    CGFloat TTaiNameX=TTaiImageX+TTaiImageW;
+    CGFloat TTaiNameW=SCREEN_WIDTH-TTaiNameX-30;
+    
     CGFloat TTaiNameH=childNameH;
     
     self.TTaiName.frame=CGRectMake(TTaiNameX, TTaiNameY, TTaiNameW, TTaiNameH);
-    
+   
 
     
     
