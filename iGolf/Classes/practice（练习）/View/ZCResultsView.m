@@ -283,7 +283,7 @@
             
         }else if (index==9)
         {
-            holesResult.text=@"前九";
+            holesResult.text=@"OUT";
             
         }else if (index>9&&index<20)
         {

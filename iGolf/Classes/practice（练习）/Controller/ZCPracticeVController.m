@@ -14,7 +14,8 @@
 #import "ZCStatisticalViewController.h"
 #import "ZCPersonalViewController.h"
 #import "UIImageView+WebCache.h"
-#import "ZCAccount.h"
+
+#import "ZCSetupModeViewController.h"
 @interface ZCPracticeVController ()
 
 @end
@@ -190,7 +191,21 @@
     
     
     
+    UIButton *btn=[[UIButton alloc] init];
+    btn.frame=CGRectMake(59, personalCenterY+20, 100, 50);
+    [btn setBackgroundColor:[UIColor redColor]];
+    [btn addTarget:self action:@selector(clickTheBtn) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btn];
+    
 }
+
+-(void)clickTheBtn
+{
+    ZCSetupModeViewController *vc=[[ZCSetupModeViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+
+}
+
 
 
 //- (UIStatusBarStyle)preferredStatusBarStyle

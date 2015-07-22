@@ -1162,7 +1162,7 @@
             
         }else if (index==4)
         {
-            ballScoresLabel1.text=@"柏忌数";
+            ballScoresLabel1.text=@"柏忌球";
             
             if ([self _valueOrNil:self.statistical.bogey]==nil) {
                 ballScoresLabel2.text=@"-";
@@ -1173,7 +1173,7 @@
             
         }else if (index==5)
         {
-            ballScoresLabel1.text=@"双柏忌数";
+            ballScoresLabel1.text=@"双柏忌球";
             
             
            // ZCLog(@"%@",self.statistical);

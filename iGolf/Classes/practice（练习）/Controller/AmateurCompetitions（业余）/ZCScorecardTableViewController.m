@@ -84,7 +84,7 @@
     tableView.frame=CGRectMake(0, 134, self.view.frame.size.width, self.view.frame.size.height-134);
     [self.view addSubview: tableView];
     self.tableView=tableView;
-    
+    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 70, 0);
     
     //让tableView没有弹簧效果
    // self.tableView.bounces=NO;
