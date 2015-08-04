@@ -33,6 +33,20 @@
 @property(nonatomic,weak)UIButton *button2;
 
 
+
+
+@property(nonatomic,assign)int isOpen1;
+@property(nonatomic,assign)int isOpen2;
+@property(nonatomic,assign)int isOpen3;
+@property(nonatomic,assign)int isOpen4;
+@property(nonatomic,assign)int isOpen5;
+//谁赢 1代表 本机的用户赢，2代表添加用户赢
+@property(nonatomic,assign)int whoWin;
+
+
+@property(nonatomic,strong)NSMutableDictionary *userDict;
+@property(nonatomic,strong)NSMutableDictionary *otherDict;
+
 @end
 @implementation ZCHoleView
 
@@ -109,6 +123,11 @@
         drawToWinView.hidden=YES;
         self.drawToWinView=drawToWinView;
         [self addTheDrawToWinView:drawToWinView];
+        
+        
+        //默认值
+       
+      //  switchAction
         
         
     }
@@ -211,26 +230,31 @@
     self.winImage2=winImage2;
     
 
+    
 }
 
 
 -(void)clickTheButton2:(UIButton *)button
 {
+    self.whoWin=2;
+    
     [self.button1 setBackgroundColor:[UIColor whiteColor]];
     [self.button2 setBackgroundColor:[UIColor yellowColor]];
     self.winImage.hidden=YES;
     self.winImage2.hidden=NO;
-    
+     [self switchAction:nil];
    
 }
 
 -(void)clickTheButton1:(UIButton *)button
 {
+    self.whoWin=1;
     [self.button2 setBackgroundColor:[UIColor whiteColor]];
     [self.button1 setBackgroundColor:[UIColor yellowColor]];
     self.winImage2.hidden=YES;
     self.winImage.hidden=NO;
     
+    [self switchAction:nil];
 }
 
 -(void)addView:(UIView *)view andNameLabelText:(NSString *)nameStr
@@ -273,24 +297,103 @@
 //开关
 -(void)switchAction:(id)sender
 {
+    ZCLog(@"执行了码");
     UISwitch *switchButton = (UISwitch*)sender;
     BOOL isButtonOn = [switchButton isOn];
     if (isButtonOn) {
-        if (switchButton.tag==13005) {
-            self.drawToWinView.hidden=NO;
+        switch (switchButton.tag) {
+            case 13001:
+                self.isOpen1=1;
+                break;
+            case 13002:
+                self.isOpen2=1;
+                break;
+            case 13003:
+                self.isOpen3=1;
+                break;
+            case 13004:
+                self.isOpen4=1;
+                break;
+            case 13005:
+                self.isOpen5=1;
+                [self clickTheButton1:nil];
+                self.drawToWinView.hidden=NO;
+                //[self clickTheButton1:nil];
+                break;
+            default:
+                break;
         }
+//        if (switchButton.tag==13005) {
+//            
+//        }
         
         
         ZCLog(@"是");
-    }else {
-        if (switchButton.tag==13005) {
-            self.drawToWinView.hidden=YES;
+    }else if(isButtonOn==NO) {
+        switch (switchButton.tag) {
+            case 13001:
+                self.isOpen1=0;
+                break;
+            case 13002:
+                self.isOpen2=0;
+                break;
+            case 13003:
+                self.isOpen3=0;
+                break;
+            case 13004:
+                self.isOpen4=0;
+                break;
+            case 13005:
+                self.isOpen5=0;
+                self.whoWin=0;
+                self.drawToWinView.hidden=YES;
+                break;
+            default:
+                break;
         }
         ZCLog(@"否");
     }
+    [self agentByValue];
+   }
+
+//默认值
+-(void)theDefaultValue
+{
+
+    self.isOpen1=1;
+    self.isOpen2=1;
+    self.isOpen3=1;
+    self.isOpen4=1;
+    self.isOpen5=0;
+    self.whoWin=0;
+    
+    NSData *image= UIImagePNGRepresentation(self.personImage);
+    NSMutableDictionary *userDict=[NSMutableDictionary dictionary];
+    userDict[@"isUser"]=@(1);
+    userDict[@"name"]=self.personName;
+    userDict[@"personImage"]=image;
+    self.userDict=userDict;
+    
+    NSData *image2= UIImagePNGRepresentation(self.personImage);
+    NSMutableDictionary *otherDict=[NSMutableDictionary dictionary];
+    otherDict[@"isUser"]=@(0);
+    otherDict[@"name"]=self.personName;
+    otherDict[@"personImage"]=image2;
+    self.otherDict=otherDict;
+
+    
+    [self agentByValue];
 }
 
+-(void)agentByValue
+{
 
+        if ([self.delegate respondsToSelector:@selector(switchButtonIsOpen:andSwitch2:andSwitch3:andSwitch4:andSwitch5:andWhoWin:andUserDict:andOtherDict:)]) {
+        [self.delegate switchButtonIsOpen:self.isOpen1 andSwitch2:self.isOpen2 andSwitch3:self.isOpen3 andSwitch4:self.isOpen4 andSwitch5:self.isOpen5 andWhoWin:self.whoWin andUserDict:self.userDict andOtherDict:self.otherDict];
+        ZCLog(@"%d",self.whoWin);
+    }
+
+}
 
 
 -(void)layoutSubviews

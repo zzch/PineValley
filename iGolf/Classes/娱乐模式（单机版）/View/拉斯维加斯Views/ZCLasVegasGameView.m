@@ -1,35 +1,42 @@
 //
-//  ZCHoleScoringView.m
+//  ZCLasVegasGameView.m
 //  iGolf
 //
-//  Created by hh on 15/7/22.
+//  Created by hh on 15/7/23.
 //  Copyright (c) 2015年 Beijing iSports Co., Ltd. All rights reserved.
 //
 
-#import "ZCHoleScoringView.h"
+#import "ZCLasVegasGameView.h"
 #import "ZCHeadPortrait.h"
-@interface ZCHoleScoringView()
+@interface ZCLasVegasGameView()
 @property(nonatomic,weak)UILabel *holeNumber;
 @property(nonatomic,weak)UILabel *nameLabel;
-@property(nonatomic,weak)UILabel *scoreLabel;
+@property(nonatomic,weak)UIButton *scoreLabel;
 @property(nonatomic,weak)UILabel *promptLabel;
 @property(nonatomic,weak)ZCHeadPortrait *liftImageView;
+@property(nonatomic,weak)ZCHeadPortrait *middleImageView;
 @property(nonatomic,weak)ZCHeadPortrait *rightImageView;
-@property(nonatomic,weak)UILabel *liftScoreLabel;
-@property(nonatomic,weak)UILabel *rightScoreLabel;
+@property(nonatomic,weak)ZCHeadPortrait *lastImageView;
+@property(nonatomic,weak)UIButton *liftScoreLabel;
+@property(nonatomic,weak)UIButton *middleScoreLabel;
+@property(nonatomic,weak)UIButton *rightScoreLabel;
+@property(nonatomic,weak)UIButton *lastScoreLabel;
+@property(nonatomic,weak)UIImageView *VSImage;
+
 @end
-@implementation ZCHoleScoringView
+
+@implementation ZCLasVegasGameView
 
 -(instancetype)initWithFrame:(CGRect)frame
 {
-
     if (self=[super initWithFrame:frame]) {
-        
-        //self.backgroundColor=[UIColor redColor];
+        self.backgroundColor=[UIColor redColor];
         [self addControls];
+        
     }
     return self;
 }
+
 
 -(void)addControls
 {
@@ -43,10 +50,10 @@
     self.nameLabel=nameLabel;
     
     //计分成绩
-    UILabel *scoreLabel=[[UILabel alloc] init];
+    UIButton *scoreLabel=[[UIButton alloc] init];
     scoreLabel.backgroundColor=[UIColor redColor];
-    scoreLabel.text=@"-";
-    scoreLabel.textColor=[UIColor whiteColor];
+    
+    [scoreLabel setTitle:@"-" forState:UIControlStateNormal];
     [self addSubview:scoreLabel];
     self.scoreLabel=scoreLabel;
     
@@ -67,27 +74,55 @@
     self.liftImageView=liftImageView;
     
     
+    ZCHeadPortrait *middleImageView=[[ZCHeadPortrait alloc] init];
+    middleImageView.backgroundColor=[UIColor yellowColor];
+    [self addSubview:middleImageView];
+    self.middleImageView=middleImageView;
+    
     ZCHeadPortrait *rightImageView=[[ZCHeadPortrait alloc] init];
     rightImageView.backgroundColor=[UIColor yellowColor];
     [self addSubview:rightImageView];
     self.rightImageView=rightImageView;
     
+    ZCHeadPortrait *lastImageView=[[ZCHeadPortrait alloc] init];
+    lastImageView.backgroundColor=[UIColor yellowColor];
+    [self addSubview:lastImageView];
+    self.lastImageView=lastImageView;
     
-    UILabel *liftScoreLabel=[[UILabel alloc] init];
+    
+    UIButton *liftScoreLabel=[[UIButton alloc] init];
     liftScoreLabel.backgroundColor=[UIColor redColor];
-    liftScoreLabel.text=@"3";
+    
+    [liftScoreLabel setTitle:@"3" forState:UIControlStateNormal];
     [self addSubview:liftScoreLabel];
     self.liftScoreLabel=liftScoreLabel;
     
     
-    UILabel *rightScoreLabel=[[UILabel alloc] init];
+    UIButton *middleScoreLabel=[[UIButton alloc] init];
+    middleScoreLabel.backgroundColor=[UIColor redColor];
+   
+    [middleScoreLabel setTitle:@"4" forState:UIControlStateNormal];
+    [self addSubview:middleScoreLabel];
+    self.middleScoreLabel=middleScoreLabel;
+    
+    
+    UIButton *rightScoreLabel=[[UIButton alloc] init];
     rightScoreLabel.backgroundColor=[UIColor redColor];
-    rightScoreLabel.text=@"-";
+    
+    [rightScoreLabel setTitle:@"5" forState:UIControlStateNormal];
     [self addSubview:rightScoreLabel];
     self.rightScoreLabel=rightScoreLabel;
     
+    
+    UIButton *lastScoreLabel=[[UIButton alloc] init];
+    lastScoreLabel.backgroundColor=[UIColor redColor];
+    
+    [lastScoreLabel setTitle:@"6" forState:UIControlStateNormal];
+    [self addSubview:lastScoreLabel];
+    self.lastScoreLabel=lastScoreLabel;
+    
     //[self layoutIfNeeded];
-
+    
 }
 
 
@@ -98,6 +133,7 @@
     
     self.holeNumber.text=[NSString stringWithFormat:@"球洞%@",number];
 }
+
 
 
 -(void)layoutSubviews
@@ -131,18 +167,34 @@
     
     
     
-    CGFloat liftImageViewX=20;
+    CGFloat liftImageViewX=10;
     CGFloat liftImageViewY=promptLabelY+promptLabelH+30;
-    CGFloat liftImageViewW=60;
+    CGFloat liftImageViewW=(SCREEN_WIDTH-80)/4;
     CGFloat liftImageViewH=100;
     self.liftImageView.frame=CGRectMake(liftImageViewX, liftImageViewY, liftImageViewW, liftImageViewH);
+    
+    
+    
+    
+    CGFloat middleImageViewY=liftImageViewY;
+    CGFloat middleImageViewW=liftImageViewW;
+    CGFloat middleImageViewH=100;
+    CGFloat middleImageViewX=(SCREEN_WIDTH-middleImageViewW*3-60);
+    self.middleImageView.frame=CGRectMake(middleImageViewX, middleImageViewY, middleImageViewW, middleImageViewH);
     
     
     CGFloat rightImageViewY=liftImageViewY;
     CGFloat rightImageViewW=liftImageViewW;
     CGFloat rightImageViewH=liftImageViewH;
-    CGFloat rightImageViewX=SCREEN_WIDTH-rightImageViewW-20;
+    CGFloat rightImageViewX=SCREEN_WIDTH-rightImageViewW*2-20;
     self.rightImageView.frame=CGRectMake(rightImageViewX, rightImageViewY, rightImageViewW, rightImageViewH);
+    
+    CGFloat lastImageViewY=liftImageViewY;
+    CGFloat lastImageViewW=liftImageViewW;
+    CGFloat lastImageViewH=liftImageViewH;
+    CGFloat lastImageViewX=SCREEN_WIDTH-rightImageViewW-10;
+    self.lastImageView.frame=CGRectMake(lastImageViewX, lastImageViewY, lastImageViewW, lastImageViewH);
+    
     
     CGFloat liftScoreLabelX=liftImageViewX;
     CGFloat liftScoreLabelY=liftImageViewY+liftImageViewH+20;
@@ -151,12 +203,26 @@
     self.liftScoreLabel.frame=CGRectMake(liftScoreLabelX, liftScoreLabelY, liftScoreLabelW, liftScoreLabelH);
     
     
+    CGFloat middleScoreLabelX=middleImageViewX;
+    CGFloat middleScoreLabelY=middleImageViewY+middleImageViewH+20;
+    CGFloat middleScoreLabelW=liftImageViewW;
+    CGFloat middleScoreLabelH=liftImageViewW;
+    self.middleScoreLabel.frame=CGRectMake(middleScoreLabelX, middleScoreLabelY, middleScoreLabelW, middleScoreLabelH);
+    
+    
     CGFloat rightScoreLabelX=rightImageViewX;
     CGFloat rightScoreLabelY=rightImageViewY+liftImageViewH+20;
     CGFloat rightScoreLabelW=liftImageViewW;
     CGFloat rightScoreLabelH=liftImageViewW;
     self.rightScoreLabel.frame=CGRectMake(rightScoreLabelX, rightScoreLabelY, rightScoreLabelW, rightScoreLabelH);
-
+    
+    
+    CGFloat lastScoreLabelX=lastImageViewX;
+    CGFloat lastScoreLabelY=rightImageViewY+liftImageViewH+20;
+    CGFloat lastScoreLabelW=liftImageViewW;
+    CGFloat lastScoreLabelH=liftImageViewW;
+    self.lastScoreLabel.frame=CGRectMake(lastScoreLabelX, lastScoreLabelY, lastScoreLabelW, lastScoreLabelH);
+    
 }
 
 

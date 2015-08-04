@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@protocol ZCHoleViewDelegate <NSObject>
+@optional
+-(void)switchButtonIsOpen:(int)isOpen1 andSwitch2:(int)isOpen2 andSwitch3:(int)isOpen3 andSwitch4:(int)isOpen4 andSwitch5:(int)isOpen5 andWhoWin:(int)whoWin andUserDict:(NSMutableDictionary*)userDict andOtherDict:(NSMutableDictionary *)otherDict;
+@end
 @interface ZCHoleView : UIView
-
+@property(nonatomic,weak)id<ZCHoleViewDelegate> delegate;
+-(void)theDefaultValue;
 @end

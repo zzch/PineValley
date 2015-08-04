@@ -7,6 +7,7 @@
 //
 
 #import "ZCLasVegasView.h"
+#import "ZCDouModel.h"
 @interface ZCLasVegasView()
 @property(nonatomic,strong)NSMutableArray *myRects;
 @property(nonatomic,strong)NSMutableArray *frames;
@@ -20,6 +21,18 @@
 @property(nonatomic,assign)NSInteger tmptag;
 
 @property(nonatomic,assign)NSInteger indexTag;
+
+
+@property(nonatomic,assign)int isOpen1;
+@property(nonatomic,assign)int isOpen2;
+@property(nonatomic,assign)int isOpen3;
+
+
+@property(nonatomic,weak)UIImageView *imageView1;
+@property(nonatomic,weak)UIImageView *imageView2;
+@property(nonatomic,weak)UIImageView *imageView3;
+@property(nonatomic,weak)UIImageView *imageView4;
+
 @end
 @implementation ZCLasVegasView
 
@@ -42,6 +55,21 @@
 //添加控件
 -(void)addControls
 {
+    
+    // 获取路劲 取出图片
+    NSString *path=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject] stringByAppendingPathComponent:@"personImage.png"];
+    NSData *imageData=[NSData dataWithContentsOfFile:path];
+    UIImage *image=[[UIImage alloc] initWithData:imageData];
+    self.personImage=image;
+    
+    NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *file = [doc stringByAppendingPathComponent:@"account.data"];
+    ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
+    self.personName=account.nickname;
+
+    
+    
+    
     UIView *photoView=[[UIView alloc] init];
     photoView.frame=CGRectMake(0, 50, SCREEN_WIDTH, 120);
     //photoView.backgroundColor=[UIColor redColor];
@@ -56,7 +84,7 @@
     firstView.backgroundColor=[UIColor whiteColor];
     [self addSubview:firstView];
     //self.firstView=firstView;
-    [self addView:firstView andNameLabelText:@"小鸟球翻转"];
+    [self addView:firstView andNameLabelText:@"小鸟球和老鹰球翻转"];
     
     
     UIView *secondView=[[UIView alloc] init];
@@ -64,23 +92,26 @@
     secondView.backgroundColor=[UIColor whiteColor];
     [self addSubview:secondView];
     // self.secondView=secondView;
-    [self addView:secondView andNameLabelText:@"老鹰球翻转"];
+    [self addView:secondView andNameLabelText:@"双倍标准杆翻转"];
     
     UIView *thirdView=[[UIView alloc] init];
     thirdView.frame=CGRectMake(0, 232, SCREEN_WIDTH, 30);
     thirdView.backgroundColor=[UIColor whiteColor];
     [self addSubview:thirdView];
     //self.thirdView=thirdView;
-    [self addView:thirdView andNameLabelText:@"双倍标准杆翻转"];
+    [self addView:thirdView andNameLabelText:@"打平进入下一洞"];
     
-    UIView *fourthView=[[UIView alloc] init];
-    fourthView.frame=CGRectMake(0, 263, SCREEN_WIDTH, 30);
-    fourthView.backgroundColor=[UIColor whiteColor];
-    [self addSubview:fourthView];
-    //self.fourthView=fourthView;
-    [self addView:fourthView andNameLabelText:@"打平进入下一洞"];
+//    UIView *fourthView=[[UIView alloc] init];
+//    fourthView.frame=CGRectMake(0, 263, SCREEN_WIDTH, 30);
+//    fourthView.backgroundColor=[UIColor whiteColor];
+//    [self addSubview:fourthView];
+//    //self.fourthView=fourthView;
+//    [self addView:fourthView andNameLabelText:@"打平进入下一洞"];
     
 
+    self.isOpen1=1;
+    self.isOpen2=1;
+    self.isOpen3=1;
     
 }
 
@@ -110,15 +141,10 @@
     CGFloat switchViewY=5;
     switchView.frame=CGRectMake(switchViewX, switchViewY, switchViewW, switchViewH);
     
-    switchView.tag=13000+self.indexTag;
+    switchView.tag=15000+self.indexTag;
     
     [switchView addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
-    if ( switchView.tag==13005) {
-        switchView.on=NO;
-    }else
-    {
-        switchView.on=YES;
-    }
+     switchView.on=YES;
     [view addSubview:switchView];
     
 }
@@ -130,14 +156,43 @@
     UISwitch *switchButton = (UISwitch*)sender;
     BOOL isButtonOn = [switchButton isOn];
     if (isButtonOn) {
+        switch (switchButton.tag) {
+            case 15001:
+                self.isOpen1=1;
+                break;
+            case 15002:
+                self.isOpen2=1;
+                break;
+            case 15003:
+                self.isOpen3=1;
+                break;
+            default:
+                break;
+        }
+ 
         
         
-        
-        ZCLog(@"是");
+       
     }else  {
-        ZCLog(@"否");
+        switch (switchButton.tag) {
+            case 15001:
+                self.isOpen1=0;
+                break;
+            case 15002:
+                self.isOpen2=0;
+                break;
+            case 15003:
+                self.isOpen3=0;
+                break;
+            default:
+                break;
+        }
+
     }
+    
 }
+
+
 
 
 
@@ -201,7 +256,8 @@
     button3.tag = 2;
     button3.backgroundColor = [UIColor brownColor];
     //[button3 setTitle:[NSString stringWithFormat:@"btn 3"] forState:UIControlStateNormal];
-    [self addPersonView:button3 andPersonImage:self.personImage andPersonName:@"编辑名称"];
+    UIImage * image=[UIImage imageNamed:@"20141118042246536.jpg"];
+    [self addPersonView:button3 andPersonImage:image andPersonName:@"编辑名称"];
     [self.myRects addObject:button3];
     
     NSString * str3 = [NSString stringWithFormat:@"%@",NSStringFromCGRect(button3.frame)];
@@ -251,6 +307,19 @@
     imageView.layer.masksToBounds=YES;
     imageView.image=image;
     [button addSubview:imageView ];
+    if (button.tag==0) {
+        imageView.tag=2032;
+        self.imageView1=imageView;
+    }else if (button.tag==1)
+    {self.imageView2=imageView;
+    }else if (button.tag==2){
+      self.imageView3=imageView;
+    }else{
+        self.imageView4=imageView;
+    }
+
+    
+    
     
     UIButton *nameButton=[[UIButton alloc] init];
     nameButton.frame=CGRectMake(0, button.frame.size.width+5, button.frame.size.width, 20);
@@ -361,9 +430,139 @@
     
 }
 
+//返回给控制器开关属性
+-(NSMutableDictionary *)TheStateOfTheSwitch
+{
+    NSMutableDictionary *switchDict=[NSMutableDictionary dictionary];
+    switchDict[@"isOpen1"]=@(self.isOpen1);
+    switchDict[@"isOpen2"]=@(self.isOpen2);
+    switchDict[@"isOpen3"]=@(self.isOpen3);
+    
+    
+    return switchDict;
+}
 
+//返回数组头像
+-(NSMutableArray *)obtainCompetitorInformation
+{
+    NSMutableArray *teamArray=[NSMutableArray array];
+    UIButton *playBtn1=_myRects[0];
+    UIButton *playBtn2=_myRects[1];
+    UIButton *playBtn3=_myRects[2];
+    UIButton *playBtn4=_myRects[3];
+    
+    UIImageView *image1;
+    for (id view in playBtn1.subviews) {
+        if ([view isKindOfClass:[UIImageView class]]) {
+            image1=view;
+        }
+    }
+    
+    
+    UIImageView *image2;
+    for (id view in playBtn2.subviews) {
+        if ([view isKindOfClass:[UIImageView class]]) {
+            image2=view;
+        }
+    }
+    
+    
+    UIImageView *image3;
+    for (id view in playBtn3.subviews) {
+        if ([view isKindOfClass:[UIImageView class]]) {
+            image3=view;
+        }
+    }
+    
+    UIImageView *image4;
+    for (id view in playBtn4.subviews) {
+        if ([view isKindOfClass:[UIImageView class]]) {
+            image4=view;
+        }
+    }
 
+    
+    if (image1.tag==2032) {
+        ZCDouModel *userModel=[[ZCDouModel alloc] init];
+        userModel.isUser=1;
+        userModel.name=self.personName;
+        userModel.personImage=image1.image;
+        
+        [teamArray addObject:userModel];
+    }else
+    {
+        ZCDouModel *userModel=[[ZCDouModel alloc] init];
+        userModel.isUser=0;
+        userModel.name=self.personName;
+        userModel.personImage=image1.image;
+        
+        [teamArray addObject:userModel];
+        
+    }
+    
+    
+    
+    
+    if (image2.tag==2032) {
+        ZCDouModel *userModel=[[ZCDouModel alloc] init];
+        userModel.isUser=1;
+        userModel.name=@"张三";
+        userModel.personImage=image2.image;
+        
+        [teamArray addObject:userModel];
+    }else
+    {
+        ZCDouModel *userModel=[[ZCDouModel alloc] init];
+        userModel.isUser=0;
+        userModel.name=@"张三";
+        userModel.personImage=image2.image;
+        
+        [teamArray addObject:userModel];
+        
+    }
+    
+    
+    if (image3.tag==2032) {
+        ZCDouModel *userModel=[[ZCDouModel alloc] init];
+        userModel.isUser=1;
+        userModel.name=@"李四";
+        userModel.personImage=image3.image;
+        
+        [teamArray addObject:userModel];
+    }else
+    {
+        ZCDouModel *userModel=[[ZCDouModel alloc] init];
+        userModel.isUser=0;
+        userModel.name=@"李四";
+        userModel.personImage=image3.image;
+        
+        [teamArray addObject:userModel];
+        
+    }
+    
+    
+    if (image4.tag==2032) {
+        ZCDouModel *userModel=[[ZCDouModel alloc] init];
+        userModel.isUser=1;
+        userModel.name=@"王五";
+        userModel.personImage=image3.image;
+        
+        [teamArray addObject:userModel];
+    }else
+    {
+        ZCDouModel *userModel=[[ZCDouModel alloc] init];
+        userModel.isUser=0;
+        userModel.name=@"王五";
+        userModel.personImage=image3.image;
+        
+        [teamArray addObject:userModel];
+        
+    }
 
+    
+     return teamArray;
 
+}
 
+   
 @end

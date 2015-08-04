@@ -71,9 +71,18 @@
 -(void)online
 {
     
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+//    
+//    [ manager.requestSerializer setValue:nil forHTTPHeaderField:nil];
+//    
+    
+    
     [MBProgressHUD showMessage:@"加载中..."];
     
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager];
+//    [mgr.requestSerializer setValue:<#(NSString *)#> forHTTPHeaderField:<#(NSString *)#>]
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     NSString *doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSString *file = [doc stringByAppendingPathComponent:@"account.data"];

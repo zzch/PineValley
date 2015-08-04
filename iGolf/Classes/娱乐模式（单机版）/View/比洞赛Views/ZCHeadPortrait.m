@@ -39,7 +39,7 @@
        // photoView.backgroundColor=[UIColor redColor];
         photoView.layer.cornerRadius=30;
         photoView.layer.masksToBounds=YES;
-        photoView.image=image;
+       // photoView.image=image;
 
         [self addSubview:photoView];
         self.photoView=photoView;
@@ -58,7 +58,7 @@
          self.moneyImage=moneyImage;
 
         UILabel *numberLabel=[[UILabel alloc] init];
-        numberLabel.text=@"10";
+        numberLabel.text=@"0";
         numberLabel.textAlignment=NSTextAlignmentCenter;
         [self addSubview:numberLabel];
         self.numberLabel=numberLabel;
@@ -70,6 +70,30 @@
 
 }
 
+
+-(void)setScore:(int)score
+{
+    _score=score;
+    self.numberLabel.text=[NSString stringWithFormat:@"%d",score];
+
+}
+
+
+
+-(void)setOfflinePlayer:(ZCOfflinePlayer *)offlinePlayer
+{
+    _offlinePlayer=offlinePlayer;
+    
+    ZCLog(@"%@",offlinePlayer.portrait);
+    // 获取路劲 取出图片
+    NSString *path=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject] stringByAppendingPathComponent:offlinePlayer.portrait];
+    NSData *imageData=[NSData dataWithContentsOfFile:path];
+    UIImage *image=[[UIImage alloc] initWithData:imageData];
+    self.photoView.image=image;
+    self.nameLabel.text=offlinePlayer.nickname;
+    self.numberLabel.text=[NSString stringWithFormat:@"%ld",(long)offlinePlayer.score];
+    ZCLog(@"%@",[NSString stringWithFormat:@"%ld",(long)offlinePlayer.score]);
+}
 
 -(void)layoutSubviews
 {

@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+@protocol ZCLasVegasViewDelegate <NSObject>
+@optional
+-(void)asdasd;
+@end
 @interface ZCLasVegasView : UIView
-
+@property(nonatomic,weak)id<ZCLasVegasViewDelegate>delegate;
+-(NSMutableArray *)obtainCompetitorInformation;
+-(NSMutableDictionary *)TheStateOfTheSwitch;
 @end
