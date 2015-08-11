@@ -8,7 +8,12 @@
 
 #import "ZCLasVegasGameView.h"
 #import "ZCHeadPortrait.h"
-@interface ZCLasVegasGameView()
+#import "ZCKeyboardView.h"
+#import "ZCParKeyboardView.h"
+#import "ZCFightTheLandlordModel.h"
+#import "ZCOfflinePlayer.h"
+
+@interface ZCLasVegasGameView()<ZCKeyboardViewDelegate,ZCParKeyboardViewDelegate>
 @property(nonatomic,weak)UILabel *holeNumber;
 @property(nonatomic,weak)UILabel *nameLabel;
 @property(nonatomic,weak)UIButton *scoreLabel;
@@ -22,6 +27,15 @@
 @property(nonatomic,weak)UIButton *rightScoreLabel;
 @property(nonatomic,weak)UIButton *lastScoreLabel;
 @property(nonatomic,weak)UIImageView *VSImage;
+
+@property(nonatomic,weak)UILabel *liftLabel;
+@property(nonatomic,weak)UILabel *middleLabel;
+@property(nonatomic,weak)UILabel *rightLabel;
+@property(nonatomic,weak)UILabel *lastLabel;
+
+
+// 1为点击左边的成绩   2为点击中左间的成绩  3 为点击中右边的成绩 4为最右边
+@property(nonatomic,assign)int index;
 
 @end
 
@@ -49,11 +63,12 @@
     [self addSubview:nameLabel];
     self.nameLabel=nameLabel;
     
-    //计分成绩
+    //计分成绩cliclkThescoreButton
     UIButton *scoreLabel=[[UIButton alloc] init];
     scoreLabel.backgroundColor=[UIColor redColor];
     
     [scoreLabel setTitle:@"-" forState:UIControlStateNormal];
+    [scoreLabel addTarget:self action:@selector(cliclkThescoreButton) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:scoreLabel];
     self.scoreLabel=scoreLabel;
     
@@ -62,7 +77,7 @@
     UILabel *promptLabel=[[UILabel alloc] init];
     promptLabel.text=@"上3洞打平均数累计本洞获胜方将获得4洞的分数";
     //自动折行设置
-    promptLabel.lineBreakMode = UILineBreakModeWordWrap;
+   // promptLabel.lineBreakMode = UILineBreakModeWordWrap;
     promptLabel.numberOfLines = 0;
     [self addSubview:promptLabel];
     self.promptLabel=promptLabel;
@@ -90,34 +105,61 @@
     self.lastImageView=lastImageView;
     
     
+    
+    UILabel *liftLabel=[[UILabel alloc] init];
+    //liftLabel.text=@"+5";
+    [self addSubview:liftLabel];
+    self.liftLabel=liftLabel;
+    
+    UILabel *middleLabel=[[UILabel alloc] init];
+    // middleLabel.text=@"+5";
+    [self addSubview:middleLabel];
+    self.middleLabel=middleLabel;
+    
+    UILabel *rightLabel=[[UILabel alloc] init];
+    // rightLabel.text=@"+5";
+    [self addSubview:rightLabel];
+    self.rightLabel=rightLabel;
+    
+    
+    UILabel *lastLabel=[[UILabel alloc] init];
+    // rightLabel.text=@"+5";
+    [self addSubview:lastLabel];
+    self.lastLabel=lastLabel;
+    
+    
     UIButton *liftScoreLabel=[[UIButton alloc] init];
     liftScoreLabel.backgroundColor=[UIColor redColor];
-    
-    [liftScoreLabel setTitle:@"3" forState:UIControlStateNormal];
+    liftScoreLabel.tag=23300;
+    [liftScoreLabel setTitle:@"-" forState:UIControlStateNormal];
+    [liftScoreLabel addTarget:self action:@selector(cliclkTheScoreLabel:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:liftScoreLabel];
     self.liftScoreLabel=liftScoreLabel;
     
     
     UIButton *middleScoreLabel=[[UIButton alloc] init];
     middleScoreLabel.backgroundColor=[UIColor redColor];
-   
-    [middleScoreLabel setTitle:@"4" forState:UIControlStateNormal];
+    middleScoreLabel.tag=23301;
+    [middleScoreLabel setTitle:@"-" forState:UIControlStateNormal];
+    [middleScoreLabel addTarget:self action:@selector(cliclkTheScoreLabel:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:middleScoreLabel];
     self.middleScoreLabel=middleScoreLabel;
     
     
     UIButton *rightScoreLabel=[[UIButton alloc] init];
     rightScoreLabel.backgroundColor=[UIColor redColor];
-    
-    [rightScoreLabel setTitle:@"5" forState:UIControlStateNormal];
+    rightScoreLabel.tag=23302;
+    [rightScoreLabel setTitle:@"-" forState:UIControlStateNormal];
+    [rightScoreLabel addTarget:self action:@selector(cliclkTheScoreLabel:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:rightScoreLabel];
     self.rightScoreLabel=rightScoreLabel;
     
     
     UIButton *lastScoreLabel=[[UIButton alloc] init];
     lastScoreLabel.backgroundColor=[UIColor redColor];
-    
-    [lastScoreLabel setTitle:@"6" forState:UIControlStateNormal];
+    lastScoreLabel.tag=23303;
+    [lastScoreLabel setTitle:@"-" forState:UIControlStateNormal];
+    [lastScoreLabel addTarget:self action:@selector(cliclkTheScoreLabel:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:lastScoreLabel];
     self.lastScoreLabel=lastScoreLabel;
     
@@ -134,6 +176,139 @@
     self.holeNumber.text=[NSString stringWithFormat:@"球洞%@",number];
 }
 
+
+
+
+
+-(void)cliclkThescoreButton
+{
+    
+    ZCParKeyboardView *ParKeyboardView=[[ZCParKeyboardView alloc] init];
+    ParKeyboardView.frame=[UIScreen mainScreen].bounds;
+    ParKeyboardView.delegate=self;
+    UIWindow *wd = [[UIApplication sharedApplication].delegate window];
+    [wd addSubview:ParKeyboardView];
+    
+}
+
+
+//点击了个人成绩
+-(void)cliclkTheScoreLabel:(UIButton *)btn
+{
+    if (btn.tag==23300) {
+        self.index=1;
+    }else if (btn.tag==23301)
+    {
+        self.index=2;
+    }else if (btn.tag==23302){
+       self.index=3;
+    }else
+    {
+        self.index=4;
+    }
+    
+    ZCKeyboardView *keyboardView=[[ZCKeyboardView alloc] init];
+    keyboardView.frame=[UIScreen mainScreen].bounds;
+    keyboardView.delegate=self;
+    UIWindow *wd = [[UIApplication sharedApplication].delegate window];
+    [wd addSubview:keyboardView];
+    
+}
+
+
+//par的键盘代理方法
+-(void)ParKeyboardViewConfirmThatTheInput:(NSString *)number
+{
+    int intNum=[number intValue];
+    //int holeNumber=[self.number intValue];
+    self.lasVegasModel.par=intNum;
+//    if ([self.delegate respondsToSelector:@selector(doudizhuGameViewDelegateForScore:andForHoleNumber:)]) {
+//        [self.delegate doudizhuGameViewDelegateForScore:self.fightTheLandlordModel andForHoleNumber:holeNumber];
+//    }
+    
+    [self.scoreLabel setTitle:number forState:UIControlStateNormal];
+}
+
+
+
+//输入键盘代理方法
+-(void)keyboardViewConfirmThatTheInput:(NSString *)number{
+    
+    
+    int intNum=[number intValue];
+    //int holeNumber=[self.number intValue];
+    
+    if (self.index==1) {
+        [self.liftScoreLabel setTitle:number forState:UIControlStateNormal];
+        ZCOfflinePlayer *player=  self.lasVegasModel.plays[0];
+        player.stroke=intNum;
+        ZCLog(@"%ld",(long)player.stroke);
+    }else if (self.index==2){
+        [self.middleScoreLabel setTitle:number forState:UIControlStateNormal];
+        ZCOfflinePlayer *player=  self.lasVegasModel.plays[1];
+        player.stroke=intNum;
+        ZCLog(@"%ld",(long)player.stroke);
+    }else if (self.index==3)
+    {
+        
+        [self.rightScoreLabel setTitle:number forState:UIControlStateNormal];
+        ZCOfflinePlayer *player=  self.lasVegasModel.plays[2];
+        player.stroke=intNum;
+        ZCLog(@"%ld",(long)player.stroke);
+    }else
+    {
+        [self.lastScoreLabel setTitle:number forState:UIControlStateNormal];
+        ZCOfflinePlayer *player=  self.lasVegasModel.plays[3];
+        player.stroke=intNum;
+        ZCLog(@"%ld",(long)player.stroke);
+    }
+    
+    
+    
+//    if ([self.delegate respondsToSelector:@selector(doudizhuGameViewDelegateForScore:andForHoleNumber:)]) {
+//        [self.delegate doudizhuGameViewDelegateForScore:self.fightTheLandlordModel andForHoleNumber:holeNumber];
+//    }
+    
+    
+    
+}
+
+-(void)setLasVegasModel:(ZCFightTheLandlordModel *)lasVegasModel
+{
+    _lasVegasModel=lasVegasModel;
+
+    [self.scoreLabel setTitle:[NSString stringWithFormat:@"%d",lasVegasModel.par] forState:UIControlStateNormal];
+    
+    
+    self.liftImageView.offlinePlayer=lasVegasModel.plays[0];
+    self.middleImageView.offlinePlayer=lasVegasModel.plays[1];
+    self.rightImageView.offlinePlayer=lasVegasModel.plays[2];
+    self.lastImageView.offlinePlayer=lasVegasModel.plays[3];
+    
+    
+    
+    ZCOfflinePlayer *offPlayer1=lasVegasModel.plays[0];
+    ZCOfflinePlayer *offPlayer2=lasVegasModel.plays[1];
+    ZCOfflinePlayer *offPlayer3=lasVegasModel.plays[2];
+    ZCOfflinePlayer *offPlayer4=lasVegasModel.plays[3];
+    
+    [self.liftScoreLabel setTitle:[NSString stringWithFormat:@"%ld",offPlayer1.stroke] forState:UIControlStateNormal];
+    
+    [self.middleScoreLabel setTitle:[NSString stringWithFormat:@"%ld",offPlayer2.stroke] forState:UIControlStateNormal];
+    
+    [self.rightScoreLabel setTitle:[NSString stringWithFormat:@"%ld",offPlayer3.stroke] forState:UIControlStateNormal];
+    
+    [self.lastScoreLabel setTitle:[NSString stringWithFormat:@"%ld",offPlayer4.stroke] forState:UIControlStateNormal];
+    
+    
+    
+    self.liftLabel.text=[NSString stringWithFormat:@"%ld",(long)[lasVegasModel.plays[0] winScore]];
+    self.middleLabel.text=[NSString stringWithFormat:@"%ld",(long)[lasVegasModel.plays[1] winScore]];
+    self.rightLabel.text=[NSString stringWithFormat:@"%ld",(long)[lasVegasModel.plays[2] winScore]];
+    self.lastLabel.text=[NSString stringWithFormat:@"%ld",(long)[lasVegasModel.plays[3] winScore]];
+    
+    
+}
 
 
 -(void)layoutSubviews
@@ -196,29 +371,57 @@
     self.lastImageView.frame=CGRectMake(lastImageViewX, lastImageViewY, lastImageViewW, lastImageViewH);
     
     
+    
+    CGFloat  liftLabelX=liftImageViewX;
+    CGFloat  liftLabelY=liftImageViewY+liftImageViewH+10;
+    CGFloat  liftLabelW=liftImageViewW;
+    CGFloat  liftLabelH=20;
+    self.liftLabel.frame=CGRectMake(liftLabelX, liftLabelY, liftLabelW, liftLabelH);
+    
+    
+    CGFloat  middleLabelX=middleImageViewX;
+    CGFloat  middleLabelY=liftImageViewY+liftImageViewH+10;
+    CGFloat  middleLabelW=liftImageViewW;
+    CGFloat  middleLabelH=20;
+    self.middleLabel.frame=CGRectMake(middleLabelX, middleLabelY, middleLabelW, middleLabelH);
+    
+    CGFloat  rightLabelX=rightImageViewX;
+    CGFloat  rightLabelY=liftImageViewY+liftImageViewH+10;
+    CGFloat  rightLabelW=liftImageViewW;
+    CGFloat  rightLabelH=20;
+    self.rightLabel.frame=CGRectMake(rightLabelX, rightLabelY, rightLabelW, rightLabelH);
+    
+    CGFloat  lastLabelX=lastImageViewX;
+    CGFloat  lastLabelY=liftImageViewY+liftImageViewH+10;
+    CGFloat  lastLabelW=liftImageViewW;
+    CGFloat  lastLabelH=20;
+    self.lastLabel.frame=CGRectMake(lastLabelX, lastLabelY, lastLabelW, lastLabelH);
+    
+    
+    
     CGFloat liftScoreLabelX=liftImageViewX;
-    CGFloat liftScoreLabelY=liftImageViewY+liftImageViewH+20;
+    CGFloat liftScoreLabelY=liftImageViewY+liftImageViewH+30;
     CGFloat liftScoreLabelW=liftImageViewW;
     CGFloat liftScoreLabelH=liftImageViewW;
     self.liftScoreLabel.frame=CGRectMake(liftScoreLabelX, liftScoreLabelY, liftScoreLabelW, liftScoreLabelH);
     
     
     CGFloat middleScoreLabelX=middleImageViewX;
-    CGFloat middleScoreLabelY=middleImageViewY+middleImageViewH+20;
+    CGFloat middleScoreLabelY=middleImageViewY+middleImageViewH+30;
     CGFloat middleScoreLabelW=liftImageViewW;
     CGFloat middleScoreLabelH=liftImageViewW;
     self.middleScoreLabel.frame=CGRectMake(middleScoreLabelX, middleScoreLabelY, middleScoreLabelW, middleScoreLabelH);
     
     
     CGFloat rightScoreLabelX=rightImageViewX;
-    CGFloat rightScoreLabelY=rightImageViewY+liftImageViewH+20;
+    CGFloat rightScoreLabelY=rightImageViewY+liftImageViewH+30;
     CGFloat rightScoreLabelW=liftImageViewW;
     CGFloat rightScoreLabelH=liftImageViewW;
     self.rightScoreLabel.frame=CGRectMake(rightScoreLabelX, rightScoreLabelY, rightScoreLabelW, rightScoreLabelH);
     
     
     CGFloat lastScoreLabelX=lastImageViewX;
-    CGFloat lastScoreLabelY=rightImageViewY+liftImageViewH+20;
+    CGFloat lastScoreLabelY=rightImageViewY+liftImageViewH+30;
     CGFloat lastScoreLabelW=liftImageViewW;
     CGFloat lastScoreLabelH=liftImageViewW;
     self.lastScoreLabel.frame=CGRectMake(lastScoreLabelX, lastScoreLabelY, lastScoreLabelW, lastScoreLabelH);

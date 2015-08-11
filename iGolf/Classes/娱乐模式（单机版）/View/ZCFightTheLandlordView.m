@@ -29,7 +29,8 @@
 @property(nonatomic,strong)ZCDouModel *otherModel;
 @property(nonatomic,strong)ZCDouModel *anotherModel;
 
-
+//哪个被点击跟换头像
+@property(nonatomic,assign)int pointLocation;
 
 @property(nonatomic,weak)UIImageView *imageView1;
 @property(nonatomic,weak)UIImageView *imageView2;
@@ -226,14 +227,16 @@
     button2.layer.cornerRadius = 5;
     button2.tag = 1;
     button2.backgroundColor = [UIColor brownColor];
-    [button2 setTitle:[NSString stringWithFormat:@"btn 2"] forState:UIControlStateNormal];
+    //[button2 setTitle:[NSString stringWithFormat:@"btn 2"] forState:UIControlStateNormal];
     UIImage * image=[UIImage imageNamed:@"20141118042246536.jpg"];
     [self addPersonView:button2 andPersonImage:image andPersonName:[NSString stringWithFormat:@"%@",self.personName]];
     [self.myRects addObject:button2];
     
     NSString * str2 = [NSString stringWithFormat:@"%@",NSStringFromCGRect(button2.frame)];
-    
+    [button2 addTarget:self action:@selector(clickTheButton:) forControlEvents:UIControlEventTouchUpInside];
     [self.frames addObject:str2];
+    
+    
     
     //拖动手势
    UIPanGestureRecognizer * pan2 = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(dragButton:)];
@@ -263,7 +266,7 @@
     //拖动手势
     UIPanGestureRecognizer * pan3 = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(dragButton:)];
     [button3 addGestureRecognizer:pan3];
-    
+    [button3 addTarget:self action:@selector(clickTheButton:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:button3];
 //    //给背景view加点击事件，用于终止选中动画
 //    UITapGestureRecognizer * tapView3 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapView)];
@@ -288,19 +291,15 @@
     [button addSubview:imageView ];
     if (button.tag==0) {
         imageView.tag=2031;
-        self.imageView1=imageView;
-    }else if (button.tag==1)
-    {self.imageView2=imageView;
-    }else{
-    self.imageView3=imageView;
+       
     }
     
     
-    UIButton *nameButton=[[UIButton alloc] init];
-    nameButton.frame=CGRectMake(0, button.frame.size.width+5, button.frame.size.width, 20);
-    [nameButton setTitle:nameStr forState:UIControlStateNormal];
-    [nameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [button addSubview:nameButton];
+    UILabel *nameLabel=[[UILabel alloc] init];
+    nameLabel.frame=CGRectMake(0, button.frame.size.width+5, button.frame.size.width, 20);
+    nameLabel.text=nameStr;
+    nameLabel.textColor=[UIColor blackColor];
+    [button addSubview:nameLabel];
     
     
     
@@ -497,31 +496,58 @@
         
     }
 
-//
     
-    ZCLog(@"%d",[teamArray[0] isUser]) ;
-    ZCLog(@"%d",[teamArray[1] isUser]) ;
-    ZCLog(@"%d",[teamArray[2] isUser]) ;
     
-//    ZCDouModel *otherModel=[[ZCDouModel alloc] init];
-//    otherModel.isUser=0;
-//    otherModel.name=@"张三";
-//    otherModel.personImage=self.personImage;
-//    self.otherModel=otherModel;
-//    
-//    
-//    
-//    ZCDouModel *anotherModel=[[ZCDouModel alloc] init];
-//    anotherModel.isUser=0;
-//    anotherModel.name=@"李四";
-//    anotherModel.personImage=self.personImage;
-//    self.anotherModel=anotherModel;
+
     
     
     return teamArray;
 }
 
+//点击按钮
+-(void)clickTheButton:(UIButton *)btn
+{
+    if ([self.delegate respondsToSelector:@selector(buttonIsClickerForFightTheLandlordView:)]) {
+        [self.delegate buttonIsClickerForFightTheLandlordView:btn];
+    }
 
+    
+    if (btn.tag==1) {
+        self.pointLocation=1;
+    }else if(btn.tag==2){
+     self.pointLocation=2;
+    }else{
+    self.pointLocation=0;
+    }
+    
+    
+}
+
+
+
+
+//控制器传值过来
+-(void)acceptPersonalInformationForFightTheLandlordView:(UIImage *)image andName:(NSString *)name
+{
+    UIButton *playBtn1=_myRects[self.pointLocation];
+    
+    
+    UIImageView *image1;
+    UILabel *nameLabel;
+    for (id view in playBtn1.subviews) {
+        if ([view isKindOfClass:[UIImageView class]]) {
+            image1=view;
+        }
+        if ([view isKindOfClass:[UILabel class]]) {
+            nameLabel=view;
+        }
+
+    }
+    image1.image=image;
+    nameLabel.text=name;
+    
+
+}
 
 
 @end

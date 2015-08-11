@@ -84,6 +84,8 @@
 {
     _offlinePlayer=offlinePlayer;
     
+    
+    
     ZCLog(@"%@",offlinePlayer.portrait);
     // 获取路劲 取出图片
     NSString *path=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject] stringByAppendingPathComponent:offlinePlayer.portrait];

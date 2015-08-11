@@ -14,6 +14,7 @@
 #import "ZCFightTheLandlordModel.h"
 #import "ZCOfflinePlayer.h"
 #import "ZCDouModel.h"
+#import "ZCHistoricalRecordModel.h"
 @implementation ZCDatabaseTool
 
 
@@ -49,6 +50,26 @@ static FMDatabase *_db;
 //创建一场比洞比赛
 +(BOOL)ToCreateAGame:(NSDictionary *)dict
 {
+    ZCDouModel *player=dict[@"playerArray"][0];
+    ZCDouModel *player1=dict[@"playerArray"][1];
+
+    
+    NSString *userImageName=[NSString stringWithFormat:@"person%dImage%d.png",arc4random_uniform(1000),arc4random_uniform(1000)];
+    NSString *userPath=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject] stringByAppendingPathComponent:userImageName];
+    NSData *userdata=UIImagePNGRepresentation(player.personImage);
+    [userdata writeToFile:userPath atomically:YES];
+    
+    
+    NSString *otherImageName=[NSString stringWithFormat:@"person%dImage%d.png",arc4random_uniform(1000),arc4random_uniform(1000)];
+    NSString *otherPath=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject] stringByAppendingPathComponent:otherImageName];
+    NSData *userdata2=UIImagePNGRepresentation(player1.personImage);
+    [userdata2 writeToFile:otherPath atomically:YES];
+    
+    
+    
+    
+    
+    
     NSDate *  senddate=[NSDate date];
     NSDateFormatter  *dateformatter=[[NSDateFormatter alloc] init];
     [dateformatter setDateFormat:@"yyyy年MM月dd日"];
@@ -61,11 +82,11 @@ static FMDatabase *_db;
     NSInteger lastId = [_db lastInsertRowId];
     tool.uuid=lastId;
     ZCLog(@"%ld",(long)lastId);
-   BOOL success2=[_db executeUpdate:@"INSERT INTO t_player(is_owner,nickname,portrait,match_id) VALUES (?,?,?,?);",dict[@"userDict"][@"isUser"],dict[@"userDict"][@"name"],dict[@"userDict"][@"personImage"],@(lastId)];
+   BOOL success2=[_db executeUpdate:@"INSERT INTO t_player(is_owner,nickname,portrait,match_id) VALUES (?,?,?,?);",dict[@"userDict"][@"isUser"],player.name,userImageName,@(lastId)];
     NSInteger lastUserId = [_db lastInsertRowId];
     tool.userID=lastUserId;
     ZCLog(@"%ld",(long)lastUserId);
-   BOOL success3=[_db executeUpdate:@"INSERT INTO t_player(is_owner,nickname,portrait,match_id) VALUES (?,?,?,?);",dict[@"otherDict"][@"isUser"],dict[@"otherDict"][@"name"],dict[@"otherDict"][@"personImage"],@(lastId)];
+   BOOL success3=[_db executeUpdate:@"INSERT INTO t_player(is_owner,nickname,portrait,match_id) VALUES (?,?,?,?);",dict[@"otherDict"][@"isUser"],player1.name,otherImageName,@(lastId)];
     NSInteger lastOtherId = [_db lastInsertRowId];
     tool.otherID=lastOtherId;
     ZCLog(@"%ld",(long)lastOtherId);
@@ -226,19 +247,23 @@ static FMDatabase *_db;
 
 
 //添加洞成绩
-+(BOOL)saveEveryHole:(ZCHoleModel *)holeModel
++(BOOL)saveEveryHole:(ZCFightTheLandlordModel *)fightTheLandlordModel andHoleNumber:(int) holeNumber
 {
      ZCSingletonTool *tool=[ZCSingletonTool sharedEventUuidTool];
     
+    //拿出二人的成绩
+    ZCOfflinePlayer *play1= fightTheLandlordModel.plays[0];
+    ZCOfflinePlayer *play2= fightTheLandlordModel.plays[1];
     
-    NSString *t_match_sql=[NSString stringWithFormat:@"UPDATE t_match SET par_%d=%d WHERE  id=%ld",holeModel.holeNumber,holeModel.par,(long)tool.uuid];
+    NSString *t_match_sql=[NSString stringWithFormat:@"UPDATE t_match SET par_%d=%d WHERE  id=%ld",holeNumber+1,fightTheLandlordModel.par,(long)tool.uuid];
     BOOL success1=[_db executeUpdate:t_match_sql];
     
     
-     NSString *t_player_sql=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%d WHERE  id=%ld",holeModel.holeNumber,holeModel.userScore,(long)tool.userID];
+     NSString *t_player_sql=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,(long)play1.stroke,play1.player_id];
+    
     BOOL success2=[_db executeUpdate:t_player_sql];
     
-    NSString *t_player_sql2=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%d WHERE  id=%ld",holeModel.holeNumber,holeModel.otherScore,(long)tool.otherID];
+    NSString *t_player_sql2=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,(long)play2.stroke,play2.player_id];
     BOOL success3=[_db executeUpdate:t_player_sql2];
     if (success1&&success2&&success3) {
         return YES;
@@ -256,7 +281,15 @@ static FMDatabase *_db;
 +(BOOL)saveTheFightTheLandlord:(ZCFightTheLandlordModel *)fightTheLandlordModel  andHoleNumber:(int) holeNumber
 {
     ZCSingletonTool *tool=[ZCSingletonTool sharedEventUuidTool];
-    NSString *t_match_sql=[NSString stringWithFormat:@"UPDATE t_match SET par_%d=%d WHERE  id=%ld",holeNumber+1,fightTheLandlordModel.par,(long)tool.uuid];
+    NSInteger score = 0;
+    for (ZCOfflinePlayer *play in fightTheLandlordModel.plays) {
+        if (play.is_owner==1) {
+            score=play.score;
+            break;
+        }
+        }
+    
+    NSString *t_match_sql=[NSString stringWithFormat:@"UPDATE t_match SET earned=%ld,par_%d=%d WHERE  id=%ld",(long)score,holeNumber+1,fightTheLandlordModel.par,(long)tool.uuid];
     BOOL success1=[_db executeUpdate:t_match_sql];
     
     
@@ -288,6 +321,87 @@ static FMDatabase *_db;
     
 }
 
+
+//添加拉斯维加斯成绩
++(BOOL)saveTheLasVegasGamePerformance:(ZCFightTheLandlordModel *)fightTheLandlordModel  andHoleNumber:(int) holeNumber
+{
+    ZCSingletonTool *tool=[ZCSingletonTool sharedEventUuidTool];
+    NSString *t_match_sql=[NSString stringWithFormat:@"UPDATE t_match SET par_%d=%d WHERE  id=%ld",holeNumber+1,fightTheLandlordModel.par,(long)tool.uuid];
+    BOOL success1=[_db executeUpdate:t_match_sql];
+    
+    
+    //拿出三人的成绩
+    ZCOfflinePlayer *play1= fightTheLandlordModel.plays[0];
+    ZCOfflinePlayer *play2= fightTheLandlordModel.plays[1];
+    ZCOfflinePlayer *play3= fightTheLandlordModel.plays[2];
+    ZCOfflinePlayer *play4= fightTheLandlordModel.plays[3];
+    
+    
+    NSString *t_player_sql=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,play1.stroke,play1.player_id];
+    BOOL success2=[_db executeUpdate:t_player_sql];
+    
+    NSString *t_player_sql2=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,play2.stroke,play2.player_id];
+    BOOL success3=[_db executeUpdate:t_player_sql2];
+    
+    
+    NSString *t_player_sql3=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,play3.stroke,play3.player_id];
+    BOOL success4=[_db executeUpdate:t_player_sql3];
+    
+    NSString *t_player_sql4=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,play4.stroke,play4.player_id];
+    BOOL success5=[_db executeUpdate:t_player_sql4];
+    
+    
+    if (success1&&success2&&success3&&success4&&success5) {
+        return YES;
+    }else
+    {
+        return NO;
+    }
+    
+    
+    
+}
+
+
+
+
+//拉斯维加斯 数据保存
++(BOOL)saveTheLasVegas:(ZCFightTheLandlordModel *)lasVegasModel  andHoleNumber:(int) holeNumber
+{
+
+    ZCSingletonTool *tool=[ZCSingletonTool sharedEventUuidTool];
+    NSString *t_match_sql=[NSString stringWithFormat:@"UPDATE t_match SET par_%d=%d WHERE  id=%ld",holeNumber+1,lasVegasModel.par,(long)tool.uuid];
+    BOOL success1=[_db executeUpdate:t_match_sql];
+    
+    
+    //拿出三人的成绩
+    ZCOfflinePlayer *play1= lasVegasModel.plays[0];
+    ZCOfflinePlayer *play2= lasVegasModel.plays[1];
+    ZCOfflinePlayer *play3= lasVegasModel.plays[2];
+    ZCOfflinePlayer *play4= lasVegasModel.plays[3];
+    
+    NSString *t_player_sql=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,play1.stroke,play1.player_id];
+    BOOL success2=[_db executeUpdate:t_player_sql];
+    
+    NSString *t_player_sql2=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,play2.stroke,play2.player_id];
+    BOOL success3=[_db executeUpdate:t_player_sql2];
+    
+    
+    NSString *t_player_sql3=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,play3.stroke,play3.player_id];
+    BOOL success4=[_db executeUpdate:t_player_sql3];
+    
+    NSString *t_player_sql4=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,play4.stroke,play4.player_id];
+    BOOL success5=[_db executeUpdate:t_player_sql4];
+
+
+    if (success1&&success2&&success3&&success4&&success5) {
+        return YES;
+    }else
+    {
+        return NO;
+    }
+    
+}
 
 
 
@@ -342,11 +456,12 @@ static FMDatabase *_db;
     
     NSMutableArray *tempPlayerArray=[NSMutableArray array];
     NSString *strokeStr=[NSString stringWithFormat:@"stroke_%d",j];
-    NSString *sqlStr1=[NSString stringWithFormat:@"SELECT id,nickname,portrait, %@ FROM t_player WHERE match_id=%ld;",strokeStr,(long)tool.uuid];
+    NSString *sqlStr1=[NSString stringWithFormat:@"SELECT id,is_owner,nickname,portrait, %@ FROM t_player WHERE match_id=%ld;",strokeStr,(long)tool.uuid];
     
     FMResultSet *result1 = [_db executeQuery:sqlStr1];
     while ([result1 next]){
         ZCOfflinePlayer *OfflinePlayer=[[ZCOfflinePlayer alloc] init];
+        OfflinePlayer.is_owner=[result1 intForColumn:@"is_owner"];
         OfflinePlayer.player_id=[result1 intForColumn:@"id"];
         OfflinePlayer.nickname=[result1 stringForColumn:@"nickname"];
         OfflinePlayer.portrait=[result1  stringForColumn:@"portrait"];
@@ -446,6 +561,43 @@ static FMDatabase *_db;
 //    return fightTheLandlordModelArray;
 //
 //}
+
+
+//历史赛事纪录
++(NSMutableArray *)theHistoricalRecord
+{
+    NSMutableArray *array=[NSMutableArray array];
+    
+    NSString *sqlStr1=[NSString stringWithFormat:@"SELECT *  FROM t_match ORDER BY id DESC;"];
+    
+    FMResultSet *result = [_db executeQuery:sqlStr1];
+
+    while ([result next])
+    {
+        ZCHistoricalRecordModel *historicalRecordModel=[[ZCHistoricalRecordModel alloc] init];
+        
+        historicalRecordModel.uuid=[result intForColumn:@"id"];
+        historicalRecordModel.type=[result intForColumn:@"type"];
+        historicalRecordModel.earned=[result intForColumn:@"earned"];
+        historicalRecordModel.played_at=[result dateForColumn:@"played_at"];
+        
+        NSInteger count=0;
+        for (NSInteger i=1; i<19; i++) {
+            NSString *strokeStr=[NSString stringWithFormat:@"par_%ld",(long)i];
+            int par=[result intForColumn:strokeStr];
+            if (par==0) {
+                break;
+            }else{
+                count=i;
+            }
+//            ZCLog(@"panduan------------------%@",strokeStr);
+//            ZCLog(@"panduan------------------%d",par);
+        }
+        historicalRecordModel.count=count;
+        [array addObject:historicalRecordModel];
+    }
+    return array;
+}
 
 
 @end

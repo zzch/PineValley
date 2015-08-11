@@ -33,6 +33,9 @@
 @property(nonatomic,weak)UIImageView *imageView3;
 @property(nonatomic,weak)UIImageView *imageView4;
 
+//哪个被点击跟换头像
+@property(nonatomic,assign)int pointLocation;
+
 @end
 @implementation ZCLasVegasView
 
@@ -227,11 +230,12 @@
     button2.layer.cornerRadius = 5;
     button2.tag = 1;
     button2.backgroundColor = [UIColor brownColor];
-    [button2 setTitle:[NSString stringWithFormat:@"btn 2"] forState:UIControlStateNormal];
+    
     [self addPersonView:button2 andPersonImage:self.personImage andPersonName:[NSString stringWithFormat:@"%@",self.personName]];
     [self.myRects addObject:button2];
     
     NSString * str2 = [NSString stringWithFormat:@"%@",NSStringFromCGRect(button2.frame)];
+    [button2 addTarget:self action:@selector(clickTheButton:) forControlEvents:UIControlEventTouchUpInside];
     
     [self.frames addObject:str2];
     
@@ -259,7 +263,7 @@
     UIImage * image=[UIImage imageNamed:@"20141118042246536.jpg"];
     [self addPersonView:button3 andPersonImage:image andPersonName:@"编辑名称"];
     [self.myRects addObject:button3];
-    
+    [button3 addTarget:self action:@selector(clickTheButton:) forControlEvents:UIControlEventTouchUpInside];
     NSString * str3 = [NSString stringWithFormat:@"%@",NSStringFromCGRect(button3.frame)];
     [self.frames addObject:str3];
     
@@ -280,7 +284,7 @@
     //[button3 setTitle:[NSString stringWithFormat:@"btn 3"] forState:UIControlStateNormal];
     [self addPersonView:button4 andPersonImage:self.personImage andPersonName:@"编辑名称"];
     [self.myRects addObject:button4];
-    
+    [button4 addTarget:self action:@selector(clickTheButton:) forControlEvents:UIControlEventTouchUpInside];
     NSString * str4 = [NSString stringWithFormat:@"%@",NSStringFromCGRect(button4.frame)];
     [self.frames addObject:str4];
     
@@ -321,11 +325,12 @@
     
     
     
-    UIButton *nameButton=[[UIButton alloc] init];
-    nameButton.frame=CGRectMake(0, button.frame.size.width+5, button.frame.size.width, 20);
-    [nameButton setTitle:nameStr forState:UIControlStateNormal];
-    [nameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [button addSubview:nameButton];
+    UILabel *nameLabel=[[UILabel alloc] init];
+    nameLabel.frame=CGRectMake(0, button.frame.size.width+5, button.frame.size.width, 20);
+    nameLabel.text=nameStr;
+    nameLabel.textColor=[UIColor blackColor];
+    
+    [button addSubview:nameLabel];
     
     
     
@@ -452,40 +457,64 @@
     UIButton *playBtn4=_myRects[3];
     
     UIImageView *image1;
+    UILabel *label1;
     for (id view in playBtn1.subviews) {
         if ([view isKindOfClass:[UIImageView class]]) {
             image1=view;
         }
+        
+        if ([view isKindOfClass:[UILabel class]]) {
+            label1=view;
+        }
+
     }
     
     
     UIImageView *image2;
+    UILabel *label2;
     for (id view in playBtn2.subviews) {
         if ([view isKindOfClass:[UIImageView class]]) {
             image2=view;
         }
+        
+        if ([view isKindOfClass:[UILabel class]]) {
+            label2=view;
+        }
+
     }
     
     
     UIImageView *image3;
+    UILabel *label3;
     for (id view in playBtn3.subviews) {
         if ([view isKindOfClass:[UIImageView class]]) {
             image3=view;
         }
+        
+        if ([view isKindOfClass:[UILabel class]]) {
+            label3=view;
+        }
+
     }
     
     UIImageView *image4;
+    UILabel *label4;
     for (id view in playBtn4.subviews) {
         if ([view isKindOfClass:[UIImageView class]]) {
             image4=view;
         }
+        
+        if ([view isKindOfClass:[UILabel class]]) {
+            label4=view;
+        }
+
     }
 
     
     if (image1.tag==2032) {
         ZCDouModel *userModel=[[ZCDouModel alloc] init];
         userModel.isUser=1;
-        userModel.name=self.personName;
+        userModel.name=label1.text;
         userModel.personImage=image1.image;
         
         [teamArray addObject:userModel];
@@ -493,7 +522,7 @@
     {
         ZCDouModel *userModel=[[ZCDouModel alloc] init];
         userModel.isUser=0;
-        userModel.name=self.personName;
+        userModel.name=label1.text;
         userModel.personImage=image1.image;
         
         [teamArray addObject:userModel];
@@ -506,7 +535,7 @@
     if (image2.tag==2032) {
         ZCDouModel *userModel=[[ZCDouModel alloc] init];
         userModel.isUser=1;
-        userModel.name=@"张三";
+        userModel.name=label2.text;
         userModel.personImage=image2.image;
         
         [teamArray addObject:userModel];
@@ -514,7 +543,7 @@
     {
         ZCDouModel *userModel=[[ZCDouModel alloc] init];
         userModel.isUser=0;
-        userModel.name=@"张三";
+        userModel.name=label2.text;
         userModel.personImage=image2.image;
         
         [teamArray addObject:userModel];
@@ -525,7 +554,7 @@
     if (image3.tag==2032) {
         ZCDouModel *userModel=[[ZCDouModel alloc] init];
         userModel.isUser=1;
-        userModel.name=@"李四";
+        userModel.name=label3.text;
         userModel.personImage=image3.image;
         
         [teamArray addObject:userModel];
@@ -533,7 +562,7 @@
     {
         ZCDouModel *userModel=[[ZCDouModel alloc] init];
         userModel.isUser=0;
-        userModel.name=@"李四";
+        userModel.name=label3.text;
         userModel.personImage=image3.image;
         
         [teamArray addObject:userModel];
@@ -544,16 +573,16 @@
     if (image4.tag==2032) {
         ZCDouModel *userModel=[[ZCDouModel alloc] init];
         userModel.isUser=1;
-        userModel.name=@"王五";
-        userModel.personImage=image3.image;
+        userModel.name=label4.text;
+        userModel.personImage=image4.image;
         
         [teamArray addObject:userModel];
     }else
     {
         ZCDouModel *userModel=[[ZCDouModel alloc] init];
         userModel.isUser=0;
-        userModel.name=@"王五";
-        userModel.personImage=image3.image;
+        userModel.name=label4.text;
+        userModel.personImage=image4.image;
         
         [teamArray addObject:userModel];
         
@@ -563,6 +592,55 @@
      return teamArray;
 
 }
+
+
+//点击按钮
+-(void)clickTheButton:(UIButton *)btn
+{
+    if ([self.delegate respondsToSelector:@selector(buttonIsClickerForLasVegasView:)]) {
+        [self.delegate buttonIsClickerForLasVegasView:btn];
+    }
+    
+    
+    if (btn.tag==1) {
+        self.pointLocation=1;
+    }else if(btn.tag==2){
+        self.pointLocation=2;
+    }else if(btn.tag==3){
+        self.pointLocation=3;
+    }else{
+        self.pointLocation=0;
+    }
+    
+    
+}
+
+
+
+//控制器传值过来
+-(void)acceptPersonalInformationForFightTheLandlordView:(UIImage *)image andName:(NSString *)name
+{
+    UIButton *playBtn1=_myRects[self.pointLocation];
+    
+    
+    UIImageView *image1;
+    UILabel *nameLabel;
+    for (id view in playBtn1.subviews) {
+        if ([view isKindOfClass:[UIImageView class]]) {
+            image1=view;
+        }
+        if ([view isKindOfClass:[UILabel class]]) {
+            nameLabel=view;
+        }
+        
+    }
+    image1.image=image;
+    nameLabel.text=name;
+    
+    
+}
+
+
 
    
 @end

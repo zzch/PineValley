@@ -15,7 +15,9 @@
 #import "ZCLasVegasViewController.h"
 #import "ZCDatabaseTool.h"
 #import "ZCDouModel.h"
-@interface ZCSetupModeViewController ()<ZCHoleViewDelegate,ZCFightTheLandlordViewDelegate>
+#import "ZCEditView.h"
+#import "ZCHistoricalRecordTableViewController.h"
+@interface ZCSetupModeViewController ()<ZCHoleViewDelegate,ZCFightTheLandlordViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,ZCEditViewDelegate,ZCLasVegasViewDelegate>
 @property(nonatomic,weak)ZCHoleView *holeView;
 @property(nonatomic,weak)ZCFightTheLandlordView *fightTheLandlordView;
 @property(nonatomic,weak)ZCLasVegasView *lasVegasView;
@@ -23,6 +25,8 @@
 //开关
 @property(nonatomic,strong)NSMutableDictionary *switchDict;
 @property(nonatomic,strong)NSMutableDictionary *fightTheLandlordDict;
+
+@property(nonatomic,weak)ZCEditView *editView;
 @end
 
 @implementation ZCSetupModeViewController
@@ -32,9 +36,21 @@
     
     self.view.backgroundColor=[UIColor whiteColor];
     
+        UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"历史" style:UIBarButtonItemStyleDone target:self action:@selector(switchOtherView)];
+        self.navigationItem.rightBarButtonItem = newBar;
+    
+    
     [self addControls];
     
     
+}
+
+//点击历史
+-(void)switchOtherView
+{
+    ZCHistoricalRecordTableViewController *vc=[[ZCHistoricalRecordTableViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+
 }
 
 //添加控件
@@ -118,6 +134,8 @@
     
     
     if (self.index==1) {
+        NSMutableArray *array=[self.holeView obtainCompetitorInformation];
+        self.switchDict[@"playerArray"]=array;
         //创建比赛，讲比赛保存到数据库
         BOOL success=[ZCDatabaseTool ToCreateAGame:self.switchDict];
         if (success) {
@@ -212,6 +230,7 @@
         CGFloat holeViewH=SCREEN_HEIGHT-160;
         lasVegasView.frame=CGRectMake(holeViewX, holeViewY, holeViewW, holeViewH);
         [self.view addSubview:lasVegasView];
+        lasVegasView.delegate=self;
         self.lasVegasView=lasVegasView;
     }else
     {
@@ -266,30 +285,152 @@
 }
 
 
--(NSMutableDictionary *)switchDict
+//-(NSMutableDictionary *)switchDict
+//{
+//
+//    if (_switchDict==nil) {
+//        //用户不操作时默认状态
+//        _switchDict = [NSMutableDictionary dictionary];
+//        _switchDict[@"isOpen1"]=@(1);
+//        _switchDict[@"isOpen2"]=@(1);
+//        _switchDict[@"isOpen3"]=@(1);
+//        _switchDict[@"isOpen4"]=@(1);
+//        _switchDict[@"isOpen5"]=@(0);
+//        _switchDict[@"whoWin"]=@(0);
+//        _switchDict[@"type"]=@(self.index);
+//       
+//    }
+//    return _switchDict;
+//    
+//    
+//}
+
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    self.editView.hidden=NO;
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+  self.editView.hidden=YES;
+}
+//ZCHoleViewDelegate代理方法
+-(void)buttonIsClicker:(UIButton *)btn
+{
+    ZCEditView *editView=[[ZCEditView alloc] init];
+    editView.frame=[UIScreen mainScreen].bounds;
+    editView.delegate=self;
+    UIWindow *wd=[[UIApplication sharedApplication].delegate window];
+    [wd addSubview:editView];
+    self.editView=editView;
+
+
+}
+
+// 斗地主代理方法
+-(void)buttonIsClickerForFightTheLandlordView:(UIButton *)btn
+{
+    ZCEditView *editView=[[ZCEditView alloc] init];
+    editView.frame=[UIScreen mainScreen].bounds;
+    editView.delegate=self;
+    UIWindow *wd=[[UIApplication sharedApplication].delegate window];
+    [wd addSubview:editView];
+    self.editView=editView;
+    
+}
+
+-(void)buttonIsClickerForLasVegasView:(UIButton *)btn
 {
 
-    if (_switchDict==nil) {
-        //用户不操作时默认状态
-        _switchDict = [NSMutableDictionary dictionary];
-        _switchDict[@"isOpen1"]=@(1);
-        _switchDict[@"isOpen2"]=@(1);
-        _switchDict[@"isOpen3"]=@(1);
-        _switchDict[@"isOpen4"]=@(1);
-        _switchDict[@"isOpen5"]=@(0);
-        _switchDict[@"whoWin"]=@(0);
-        _switchDict[@"type"]=@(self.index);
-       
+    ZCEditView *editView=[[ZCEditView alloc] init];
+    editView.frame=[UIScreen mainScreen].bounds;
+    editView.delegate=self;
+    UIWindow *wd=[[UIApplication sharedApplication].delegate window];
+    [wd addSubview:editView];
+    self.editView=editView;
+}
+
+
+//ZCEditView代理方法
+-(void)editViewButtonIsClicked:(UIButton *)btn
+{
+    if (btn.tag==20995) {
+        
+        
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+        {
+            // 1. 实例化
+            UIImagePickerController *pick = [[UIImagePickerController alloc] init];
+            //类型
+            pick.sourceType=UIImagePickerControllerSourceTypeCamera;
+            // [pick setAllowsEditing:YES];
+            pick.delegate=self;
+            pick.allowsEditing = YES;
+            // 3. 展现
+            [self presentViewController:pick animated:YES completion:nil];
+            
+        }else{
+            ZCLog(@"相ji不可用");
+            
+        }
+        
+    }else{
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+            // 1. 实例化
+            UIImagePickerController *pick = [[UIImagePickerController alloc] init];
+            pick.sourceType=UIImagePickerControllerSourceTypePhotoLibrary;
+            // 2. 设置代理
+            pick.delegate = self;
+            [pick setAllowsEditing:YES];
+            // 3. 展现
+            [self presentViewController:pick animated:YES completion:nil];
+        }else{
+            ZCLog(@"相ce不可用");
+            
+            // [FXJDyTool showAlertViewWithMessage:@"相册不可用" delegate:self];
+        }
+   
+
     }
-    return _switchDict;
+}
+
+
+
+//ZCEditView代理方法
+-(void)editViewPersonalInformation:(UIImage *)image andName:(NSString *)nameStr
+{
+    if (self.index==1) {
+        //将值传给比洞赛
+        [self.holeView acceptPersonalInformation:image andName:nameStr];
+        
+    }else if (self.index==2){
+        [self.fightTheLandlordView acceptPersonalInformationForFightTheLandlordView:image andName:nameStr];
+    }else
+    {
+    [self.lasVegasView acceptPersonalInformationForFightTheLandlordView:image andName:nameStr];
+    }
+}
+
+
+#pragma mark - 照片选择器代理方法
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    self.editView.image=info[UIImagePickerControllerEditedImage];
+    //整个图片
+    //  self.photoView.image=info[UIImagePickerControllerOriginalImage];
+    //裁剪后的图片
+    //self.photoView.image=info[UIImagePickerControllerEditedImage];
     
+    //ZCLog(@"%@",[self.photoView.image class]);
+    // 关闭视图控制器
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    // [self saveImage:info[UIImagePickerControllerOriginalImage] WithName:nil];
+    //[self pictureUpload];
     
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 /*
 #pragma mark - Navigation

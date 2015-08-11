@@ -14,10 +14,14 @@
 //创建一场斗地主比赛
 +(BOOL)ToCreateDoudizhuGame:(NSDictionary *)dict;
 +(BOOL)createALasVegasGame:(NSMutableArray*)array andSwitch:(NSMutableDictionary *)dict;
-+(BOOL)saveEveryHole:(ZCHoleModel *)holeModel;
++(BOOL)saveEveryHole:(ZCFightTheLandlordModel *)fightTheLandlordModel andHoleNumber:(int) holeNumber;
 +(ZCSwitchModel *)querySwitchProperties;
 
 //创建比赛读取18洞的成绩
 +(NSMutableArray *)doudizhuGameData;
 +(BOOL)saveTheFightTheLandlord:(ZCFightTheLandlordModel *)fightTheLandlordModel  andHoleNumber:(int) holeNumber;
+//拉斯维加斯 数据保存
++(BOOL)saveTheLasVegas:(ZCFightTheLandlordModel *)lasVegasModel  andHoleNumber:(int) holeNumber;
++(NSMutableArray *)theHistoricalRecord;
+
 @end

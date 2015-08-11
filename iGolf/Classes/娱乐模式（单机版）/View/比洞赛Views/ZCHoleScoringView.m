@@ -135,7 +135,7 @@
 -(void)ParKeyboardViewConfirmThatTheInput:(NSString *)number
 {
     int intNum=[number intValue];
-    self.holeModel.par=intNum;
+    self.fightTheLandlordModel.par=intNum;
     if ([self.delegate respondsToSelector:@selector(holeScoringViewForScore:)]) {
         [self.delegate holeScoringViewForScore:self.holeModel];
     }
@@ -153,11 +153,14 @@
 
     if (self.index==1) {
         [self.liftScoreLabel setTitle:number forState:UIControlStateNormal];
-        self.holeModel.userScore=intNum;
+        ZCOfflinePlayer *player=  self.fightTheLandlordModel.plays[0];
+        player.stroke=intNum;
+       
     }else
     {
     [self.rightScoreLabel setTitle:number forState:UIControlStateNormal];
-     self.holeModel.otherScore=intNum;
+        ZCOfflinePlayer *player=  self.fightTheLandlordModel.plays[1];
+        player.stroke=intNum;
     }
     
     
@@ -199,23 +202,39 @@
 }
 
 
-//本机成绩
--(void)setUserWinPoints:(int)userWinPoints
-{
+////本机成绩
+//-(void)setUserWinPoints:(int)userWinPoints
+//{
+//
+//    userWinPoints=userWinPoints;
+//    
+//    self.liftImageView.score=userWinPoints;
+//}
 
-    userWinPoints=userWinPoints;
+////其他人成绩
+//-(void)setOtherWinPoints:(int)otherWinPoints
+//{
+//    _otherWinPoints=otherWinPoints;
+//    self.rightImageView.score=otherWinPoints;
+//
+//}
+
+
+-(void)setFightTheLandlordModel:(ZCFightTheLandlordModel *)fightTheLandlordModel
+{
+    _fightTheLandlordModel=fightTheLandlordModel;
+    ZCOfflinePlayer *offPlayer1=fightTheLandlordModel.plays[0];
+    ZCOfflinePlayer *offPlayer2=fightTheLandlordModel.plays[1];
     
-    self.liftImageView.score=userWinPoints;
+    self.liftImageView.offlinePlayer=offPlayer1;
+    self.rightImageView.offlinePlayer=offPlayer2;
+
+
+    [self.liftScoreLabel setTitle:[NSString stringWithFormat:@"%ld",offPlayer1.stroke] forState:UIControlStateNormal];
+    [self.rightScoreLabel setTitle:[NSString stringWithFormat:@"%ld",offPlayer2.stroke] forState:UIControlStateNormal];
+
+    
 }
-
-//其他人成绩
--(void)setOtherWinPoints:(int)otherWinPoints
-{
-    _otherWinPoints=otherWinPoints;
-    self.rightImageView.score=otherWinPoints;
-
-}
-
 
 -(void)setIsNext:(int)isNext
 {

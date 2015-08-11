@@ -7,9 +7,11 @@
 //
 
 #import "ZCHoleView.h"
-@interface ZCHoleView()
+#import "ZCEditView.h"
+#import "ZCDouModel.h"
+@interface ZCHoleView()<ZCEditViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 @property(nonatomic ,weak)UIView *personView;
-@property(nonatomic ,weak)UIView *rivalView;
+@property(nonatomic ,weak)UIButton *rivalView;
 @property(nonatomic ,weak)UILabel *VS;
 @property(nonatomic ,weak)UIView *firstView;
 @property(nonatomic ,weak)UIView *secondView;
@@ -26,14 +28,18 @@
 //对手的头像
 @property(nonatomic,weak)UIImage *otherImage;
 
-
+//对手的头像
+@property(nonatomic,weak)UIImageView *otherImageView;
+@property(nonatomic,weak)UILabel *otherNameLabel;
 @property(nonatomic,weak)UIImageView *winImage;
 @property(nonatomic,weak)UIImageView *winImage2;
 @property(nonatomic,weak)UIButton *button1;
 @property(nonatomic,weak)UIButton *button2;
 
-
-
+//开启平局让杆时候 对手的控件
+@property(nonatomic,weak)UIImageView *personImage2;
+//开启平局让杆时候 对手的名字
+@property(nonatomic,weak)UILabel *personLabel2;
 
 @property(nonatomic,assign)int isOpen1;
 @property(nonatomic,assign)int isOpen2;
@@ -81,12 +87,13 @@
         [self addSubview:VS];
         self.VS=VS;
         
-        UIView *rivalView=[[UIView alloc] init];
+        UIButton *rivalView=[[UIButton alloc] init];
+        rivalView.tag=3809;
         //rivalView.frame=CGRectMake(180, 10, 50, 80);
         [self addSubview:rivalView];
         rivalView.backgroundColor=[UIColor redColor];
         self.rivalView=rivalView;
-        
+        [rivalView addTarget:self action:@selector(clickTheRivalView) forControlEvents:UIControlEventTouchUpInside];
         [self addPersonView:rivalView andPersonImage:image andPersonName:@"编辑昵称"];
         
         
@@ -134,6 +141,28 @@
     return self;
 }
 
+//点击编辑昵称
+-(void)clickTheRivalView
+{
+    
+    if ([self.delegate respondsToSelector:@selector(buttonIsClicker:)]) {
+        [self.delegate buttonIsClicker:nil];
+    }
+    
+    
+}
+
+
+//控制器传个人信息过来
+-(void)acceptPersonalInformation:(UIImage *)image andName:(NSString *)name
+{
+    self.otherImageView.image=image;
+    self.otherNameLabel.text=name;
+    self.personLabel2.text=name;
+    self.personImage2.image=image;
+}
+
+
 
 -(void)addPersonView:(UIView *)view
   andPersonImage:(UIImage *)image andPersonName:(NSString *)nameStr
@@ -148,12 +177,18 @@
     imageView.image=image;
     [view addSubview:imageView ];
     
-    UIButton *nameButton=[[UIButton alloc] init];
-    nameButton.frame=CGRectMake(0, view.frame.size.width+5, view.frame.size.width, 20);
-    [nameButton setTitle:nameStr forState:UIControlStateNormal];
-    [nameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [view addSubview:nameButton];
+    UILabel *nameLabel=[[UILabel alloc] init];
+    nameLabel.frame=CGRectMake(0, view.frame.size.width+5, view.frame.size.width, 20);
+    nameLabel.text=nameStr;
+    nameLabel.textColor=[UIColor blackColor];
+   
+    [view addSubview:nameLabel];
     
+    
+    if (view.tag==3809) {
+        self.otherImageView=imageView;
+        self.otherNameLabel=nameLabel;
+    }
     
     
 }
@@ -212,14 +247,16 @@
     personImage2.frame=CGRectMake(10, 10, 70, 70);
     personImage2.layer.cornerRadius=35;
     personImage2.layer.masksToBounds=YES;
-    personImage2.image=self.personImage;
+    personImage2.image=self.otherImageView.image;
     [button2 addSubview:personImage2];
+    self.personImage2=personImage2;
     
     //名字
     UILabel *nameLabel2=[[UILabel alloc] init];
     nameLabel2.frame=CGRectMake(10, 75, 70, 20);
-    nameLabel2.text=self.personName;
+    nameLabel2.text=self.otherNameLabel.text;
     [button2 addSubview:nameLabel2];
+    self.personLabel2=nameLabel2;
     
     //胜利的图片
     UIImageView *winImage2=[[UIImageView alloc] init];
@@ -374,10 +411,24 @@
     userDict[@"personImage"]=image;
     self.userDict=userDict;
     
-    NSData *image2= UIImagePNGRepresentation(self.personImage);
+    
+    UIImageView *image1;
+    UILabel *label1;
+    for (id view in self.rivalView.subviews) {
+        if ([view isKindOfClass:[UIImageView class]]) {
+            image1=view;
+        }
+        if ([view isKindOfClass:[UILabel class]]) {
+            label1=view;
+        }
+        
+    }
+   // ZCLog(@"%@",label1.text);
+    
+    NSData *image2= UIImagePNGRepresentation(image1.image);
     NSMutableDictionary *otherDict=[NSMutableDictionary dictionary];
     otherDict[@"isUser"]=@(0);
-    otherDict[@"name"]=self.personName;
+    otherDict[@"name"]=label1.text;
     otherDict[@"personImage"]=image2;
     self.otherDict=otherDict;
 
@@ -394,6 +445,65 @@
     }
 
 }
+
+
+
+//返回数组头像
+-(NSMutableArray *)obtainCompetitorInformation
+{
+   NSMutableArray *teamArray=[NSMutableArray array];
+   
+    UIImageView *image1;
+    UILabel *label1;
+    for (id view in self.personView.subviews) {
+        if ([view isKindOfClass:[UIImageView class]]) {
+            image1=view;
+        }
+        if ([view isKindOfClass:[UILabel class]]) {
+            label1=view;
+        }
+        
+    }
+
+    
+    UIImageView *image2;
+    UILabel *label2;
+    for (id view in self.rivalView.subviews) {
+        if ([view isKindOfClass:[UIImageView class]]) {
+            image2=view;
+        }
+        if ([view isKindOfClass:[UILabel class]]) {
+            label2=view;
+        }
+        
+    }
+
+    
+    
+    
+    ZCDouModel *userModel=[[ZCDouModel alloc] init];
+    userModel.isUser=1;
+    userModel.name=label1.text;
+    userModel.personImage=image1.image;
+    
+    [teamArray addObject:userModel];
+    
+    
+    ZCDouModel *userModel2=[[ZCDouModel alloc] init];
+    userModel2.isUser=0;
+    userModel2.name=label2.text;
+    userModel2.personImage=image2.image;
+    
+    [teamArray addObject:userModel2];
+    
+    
+    
+    return teamArray;
+}
+
+
+
+
 
 
 -(void)layoutSubviews

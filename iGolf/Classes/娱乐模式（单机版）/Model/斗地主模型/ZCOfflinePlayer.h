@@ -26,6 +26,11 @@
  */
 @property(nonatomic,assign)NSInteger player_id;
 /**
+ 是否是自己
+ */
+@property(nonatomic,assign)NSInteger is_owner;
+
+/**
   当前的洞累计分数
  */
 @property(nonatomic,assign)NSInteger score;
@@ -33,4 +38,9 @@
  本洞得多少分
  */
 @property(nonatomic,assign)NSInteger winScore;
+
+/**
+ 作为比较属性
+ */
+@property(nonatomic,assign)CGFloat strokeToCompare;
 @end

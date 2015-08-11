@@ -230,8 +230,18 @@
     
     self.liftImageView.offlinePlayer=fightTheLandlordModel.plays[0];
     self.middleImageView.offlinePlayer=fightTheLandlordModel.plays[1];
-    self.rightImageView.offlinePlayer=fightTheLandlordModel.plays[2];
+    self.rightImageView.offlinePlayer=fightTheLandlordModel.plays[2] ;
     
+    
+    ZCOfflinePlayer *offPlayer1=fightTheLandlordModel.plays[0];
+    ZCOfflinePlayer *offPlayer2=fightTheLandlordModel.plays[1];
+    ZCOfflinePlayer *offPlayer3=fightTheLandlordModel.plays[2];
+   
+    [self.liftScoreLabel setTitle:[NSString stringWithFormat:@"%ld",offPlayer1.stroke] forState:UIControlStateNormal];
+    
+    [self.middleScoreLabel setTitle:[NSString stringWithFormat:@"%ld",offPlayer2.stroke] forState:UIControlStateNormal];
+    
+    [self.rightScoreLabel setTitle:[NSString stringWithFormat:@"%ld",offPlayer3.stroke] forState:UIControlStateNormal];
     
     
     self.liftLabel.text=[NSString stringWithFormat:@"%ld",(long)[fightTheLandlordModel.plays[0] winScore]];

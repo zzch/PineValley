@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 @protocol ZCLasVegasViewDelegate <NSObject>
 @optional
--(void)asdasd;
+-(void)buttonIsClickerForLasVegasView:(UIButton *)btn;
 @end
 @interface ZCLasVegasView : UIView
 @property(nonatomic,weak)id<ZCLasVegasViewDelegate>delegate;
 -(NSMutableArray *)obtainCompetitorInformation;
 -(NSMutableDictionary *)TheStateOfTheSwitch;
+-(void)acceptPersonalInformationForFightTheLandlordView:(UIImage *)image andName:(NSString *)name;
 @end

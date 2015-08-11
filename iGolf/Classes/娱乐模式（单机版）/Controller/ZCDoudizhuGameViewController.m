@@ -11,6 +11,7 @@
 #import "ZCDatabaseTool.h"
 #import "ZCSwitchModel.h"
 #import "ZCOfflinePlayer.h"
+#import "ZCEntertainmentRankingTableViewController.h"
 @interface ZCDoudizhuGameViewController ()<ZCDoudizhuGameViewDelegate>
 @property(nonatomic,weak)ZCDoudizhuGameView *doudizhuGameView;
 @property(nonatomic,strong)NSMutableArray *viewArray;
@@ -34,6 +35,9 @@
     [super viewDidLoad];
     
     
+    UIBarButtonItem *ButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"排名" style:UIBarButtonItemStyleDone target:self action:@selector(clickTherightItem)];
+    
+    self.navigationItem.rightBarButtonItem = ButtonItem;
     
     self.view.backgroundColor=[UIColor whiteColor];
    //从数据库拿到数据
@@ -47,6 +51,31 @@
         doudizhuGameView.number=[NSString stringWithFormat:@"%d",i];
         [self.viewArray addObject:doudizhuGameView];
     }
+    
+    //历史进来打了多少球
+    int historyCount = 0;
+    for (int j=0; j<18; j++) {
+        ZCFightTheLandlordModel *fightTheLandlordModel=self.dataArray[j];
+        if (fightTheLandlordModel.par==0) {
+            break;
+        }else{
+        historyCount++;
+        }
+        
+    }
+    
+    ZCLog(@"%d",historyCount);
+    
+    for (int i=0; i<historyCount; i++) {
+        
+        [self saveDouTheData];
+        ZCDoudizhuGameView *doudizhuGameView=self.viewArray[i];
+        
+        doudizhuGameView.fightTheLandlordModel=self.dataArray[i];
+        self.index++;
+        
+    }
+    
     
     
     
@@ -96,6 +125,8 @@
 {
     self.index--;
     
+    self.isYES=YES;
+    [self.afterBtn setTitle:@"下一洞" forState:UIControlStateNormal];
     
     [UIView animateWithDuration:0.5 animations:^{
         self.doudizhuGameView.transform = CGAffineTransformMakeScale(0.01, 0.01);
@@ -103,7 +134,7 @@
         [self.doudizhuGameView removeFromSuperview];
         
         ZCDoudizhuGameView *doudizhuGameView=self.viewArray[self.index];
-        doudizhuGameView.fightTheLandlordModel=self.dataArray[self.index-1];
+        //doudizhuGameView.fightTheLandlordModel=self.dataArray[self.index-1];
         doudizhuGameView.transform = CGAffineTransformIdentity;
         doudizhuGameView.frame=CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-120);
         [self.view addSubview:doudizhuGameView];
@@ -122,12 +153,11 @@
 -(void)clickTheStartBtn
 {
     
-    
     self.isYES=!self.isYES;
     
     if (self.isYES) {//确认成绩
         [self.afterBtn setTitle:@"下一洞" forState:UIControlStateNormal];
-        self.doudizhuGameView.number=@"asdasd";
+        //self.doudizhuGameView.number=@"asdasd";
         // [self.viewArray replaceObjectAtIndex:self.index withObject:self.holeScoringView];
         [self saveDouTheData];
         
@@ -142,8 +172,12 @@
             [self.doudizhuGameView removeFromSuperview];
             
             ZCDoudizhuGameView *doudizhuGameView=self.viewArray[self.index];
-            doudizhuGameView.fightTheLandlordModel=self.dataArray[self.index];
-            doudizhuGameView.isNext=self.isNext;
+            ZCFightTheLandlordModel *FightTheLandlordModel=self.dataArray[self.index];
+            if (FightTheLandlordModel.par==0) {
+                doudizhuGameView.fightTheLandlordModel=self.dataArray[self.index];
+                doudizhuGameView.isNext=self.isNext;
+            }
+            
             doudizhuGameView.transform = CGAffineTransformIdentity;
             doudizhuGameView.frame=CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-120);
             [self.view addSubview:doudizhuGameView];
@@ -151,7 +185,17 @@
             
         }];
         
-        [self.afterBtn setTitle:@"确认比赛" forState:UIControlStateNormal];
+        ZCFightTheLandlordModel *FightTheLandlordModel=self.dataArray[self.index];
+        if (FightTheLandlordModel.par==0) {
+            self.isYES=NO;
+            [self.afterBtn setTitle:@"确认比赛" forState:UIControlStateNormal];
+        }else{
+            self.isYES=YES;
+            [self.afterBtn setTitle:@"下一洞" forState:UIControlStateNormal];
+        }
+
+        
+        
     }
     
 }
@@ -160,16 +204,13 @@
 //保存成绩
 -(void)saveDouTheData
 {
+     ZCDoudizhuGameView *doudizhuGameView=  self.viewArray[self.index];
     
     ZCFightTheLandlordModel *fightTheLandlordModel=self.dataArray[self.index];
     
     
     //拿出比赛设置数据
      ZCSwitchModel *switchModel= [ZCDatabaseTool querySwitchProperties];
-//    ZCLog(@"%d",switchModel.birdie_x2);
-//    ZCLog(@"%d",switchModel.eagle_x4);
-//    ZCLog(@"%d",switchModel.double_par_x2);
-//    ZCLog(@"%d",switchModel.drau_to_next);
     
     //拿出三人的成绩
     ZCOfflinePlayer *play1= fightTheLandlordModel.plays[0];
@@ -278,7 +319,8 @@
         
         
         if (self.isNext) {
-            self.doudizhuGameView.clues=@"本洞获胜方获得了累计分数";
+          
+            doudizhuGameView.clues=@"本洞获胜方获得了累计分数";
         }
         self.isNext=0;
         //位置变化
@@ -287,7 +329,8 @@
         
         if (switchModel.drau_to_next==1) {//打开了打球进入下一洞
             self.isNext++;
-            self.doudizhuGameView.clues=@"本洞比分打平,分数累至下一洞";
+            
+            doudizhuGameView.clues=@"本洞比分打平,分数累至下一洞";
             [self drawTheNextHoleLocationChange];
         }else{
         
@@ -320,7 +363,8 @@
         }
         
         if (self.isNext) {
-            self.doudizhuGameView.clues=@"本洞获胜方获得了累计分数";
+           
+            doudizhuGameView.clues=@"本洞获胜方获得了累计分数";
         }
         self.isNext=0;
         //位置变化
@@ -348,6 +392,7 @@
 -(void)drawTheNextHoleLocationChange
 {
     ZCFightTheLandlordModel *fightTheLandlordModel=self.dataArray[self.index];
+    
     //拿出三人的成绩
     ZCOfflinePlayer *play1= fightTheLandlordModel.plays[0];
     ZCOfflinePlayer *play2= fightTheLandlordModel.plays[1];
@@ -355,6 +400,7 @@
 
     //给下一洞头像移动位置
     ZCFightTheLandlordModel *fightTheLandlordModelNext=self.dataArray[self.index+1];
+   // fightTheLandlordModelNext.isNext=self.isNext;
     
     NSMutableArray *teamArray=[NSMutableArray array];
     for (ZCOfflinePlayer *play in fightTheLandlordModelNext.plays) {
@@ -616,6 +662,22 @@
 //    ZCLog(@"%d",FightTheLandlordModel1.par);
     
 }
+
+
+
+//点击排名
+-(void)clickTherightItem
+{
+    ZCEntertainmentRankingTableViewController *vc=[[ZCEntertainmentRankingTableViewController alloc] init];
+    ZCFightTheLandlordModel *FightTheLandlordModel=self.dataArray[self.index];
+    vc.dataArray=FightTheLandlordModel.plays;
+    [self.navigationController pushViewController:vc animated:YES];
+
+}
+
+
+
+
 
 
 
