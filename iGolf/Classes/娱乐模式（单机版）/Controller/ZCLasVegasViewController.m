@@ -12,6 +12,7 @@
 #import "ZCOfflinePlayer.h"
 #import "ZCFightTheLandlordModel.h"
 #import "ZCSwitchModel.h"
+#import "ZCEntertainmentRankingTableViewController.h"
 @interface ZCLasVegasViewController ()
 @property(nonatomic,weak)ZCLasVegasGameView *lasVegasGameView;
 @property(nonatomic,strong)NSMutableArray *viewArray;
@@ -27,6 +28,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    //返回
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(dataToModify:) target:self];
+    
+    UIBarButtonItem *ButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"排名" style:UIBarButtonItemStyleDone target:self action:@selector(clickTherightItem)];
+    
+    self.navigationItem.rightBarButtonItem = ButtonItem;
+    
     self.view.backgroundColor=[UIColor whiteColor];
     
     //从数据库拿到数据
@@ -37,7 +46,7 @@
     
     for (int i=0; i<18; i++) {
         ZCLasVegasGameView *lasVegasGameView=[[ZCLasVegasGameView alloc] init];
-        lasVegasGameView.number=[NSString stringWithFormat:@"%d",i];
+        lasVegasGameView.number=[NSString stringWithFormat:@"%d",i+1];
         [self.viewArray addObject:lasVegasGameView];
     }
     
@@ -74,7 +83,7 @@
     ZCLasVegasGameView *lasVegasGameView=self.viewArray[self.index];
     
     
-    lasVegasGameView.frame=CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-120);
+    lasVegasGameView.frame=CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-114);
     
     [self.view addSubview:lasVegasGameView];
     lasVegasGameView.lasVegasModel=self.dataArray[self.index];
@@ -84,24 +93,26 @@
     
     
     UIButton *beforeBtn=[[UIButton alloc] init];
-    beforeBtn.backgroundColor=[UIColor redColor];
+    beforeBtn.backgroundColor=ZCColor(8, 188, 80);
     CGFloat beforeBtnX=0;
-    CGFloat beforeBtnY=self.view.frame.size.height-94;
+    CGFloat beforeBtnY=self.view.frame.size.height-114;
     CGFloat beforeBtnW=SCREEN_WIDTH/2;
-    CGFloat beforeBtnH=30;
+    CGFloat beforeBtnH=50;
     beforeBtn.frame=CGRectMake(beforeBtnX, beforeBtnY, beforeBtnW, beforeBtnH);
     [beforeBtn setTitle:@"上一洞" forState:UIControlStateNormal];
+    [beforeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [beforeBtn addTarget:self action:@selector(clickTheBeforeBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:beforeBtn];
     
     UIButton *afterBtn=[[UIButton alloc] init];
-    afterBtn.backgroundColor=[UIColor redColor];
+    afterBtn.backgroundColor=ZCColor(255, 150, 29);
     CGFloat afterBtnX=beforeBtnW;
-    CGFloat afterBtnY=self.view.frame.size.height-94;
+    CGFloat afterBtnY=self.view.frame.size.height-114;
     CGFloat afterBtnW=beforeBtnW;
-    CGFloat afterBtnH=30;
+    CGFloat afterBtnH=50;
     afterBtn.frame=CGRectMake(afterBtnX, afterBtnY, afterBtnW, afterBtnH);
     [afterBtn setTitle:@"确认成绩" forState:UIControlStateNormal];
+    [afterBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [afterBtn addTarget:self action:@selector(clickTheStartBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:afterBtn];
     self.afterBtn=afterBtn;
@@ -127,7 +138,7 @@
         
         ZCLasVegasGameView *lasVegasGameView=self.viewArray[self.index];
         lasVegasGameView.transform = CGAffineTransformIdentity;
-        lasVegasGameView.frame=CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-120);
+        lasVegasGameView.frame=CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-114);
         [self.view addSubview:lasVegasGameView];
         self.lasVegasGameView=lasVegasGameView;
         
@@ -148,10 +159,18 @@
     self.isYES=!self.isYES;
     
     if (self.isYES) {//确认成绩
-        [self.afterBtn setTitle:@"下一洞" forState:UIControlStateNormal];
-        self.lasVegasGameView.number=@"asdasd";
-        // [self.viewArray replaceObjectAtIndex:self.index withObject:self.holeScoringView];
-         [self savelasVegasGameTheData];
+        if ([self valueIsNotEmpty]) {
+            
+            [self.afterBtn setTitle:@"下一洞" forState:UIControlStateNormal];
+            
+            // [self.viewArray replaceObjectAtIndex:self.index withObject:self.holeScoringView];
+            [self savelasVegasGameTheData];
+        }else{
+            self.isYES=!self.isYES;
+            [MBProgressHUD showSuccess:@"请填写标准杆和所有玩家的成绩"];
+            
+        }
+
         
     }else{
         self.index++;
@@ -166,7 +185,7 @@
             ZCLasVegasGameView *lasVegasGameView=self.viewArray[self.index];
             lasVegasGameView.lasVegasModel=self.dataArray[self.index];
             lasVegasGameView.transform = CGAffineTransformIdentity;
-            lasVegasGameView.frame=CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-120);
+            lasVegasGameView.frame=CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-114);
             [self.view addSubview:lasVegasGameView];
             self.lasVegasGameView=lasVegasGameView;
             
@@ -186,6 +205,26 @@
     }
     
 }
+
+
+//判断是否值为空
+-(BOOL)valueIsNotEmpty
+{
+    ZCFightTheLandlordModel *fightTheLandlordModel=self.dataArray[self.index];
+    ZCOfflinePlayer *play1=fightTheLandlordModel.plays[0];
+    ZCOfflinePlayer *play2=fightTheLandlordModel.plays[1];
+    ZCLog(@"%ld",(long)fightTheLandlordModel.par);
+    ZCLog(@"%ld",(long)play1.stroke);
+    ZCLog(@"%ld",(long)play2.stroke);
+    if ( fightTheLandlordModel.par==0 || play1.stroke==0 || play2.stroke==0 ) {
+        return NO;
+    }else {
+        return  YES;
+    }
+    
+    
+}
+
 
 
 
@@ -435,6 +474,56 @@
 
     
 }
+
+
+-(void)clickTherightItem
+{
+    ZCEntertainmentRankingTableViewController *vc=[[ZCEntertainmentRankingTableViewController alloc] init];
+    ZCFightTheLandlordModel *FightTheLandlordModel=self.dataArray[self.index];
+    vc.dataArray=FightTheLandlordModel.plays;
+    [self.navigationController pushViewController:vc animated:YES];
+    
+}
+
+
+//点击返回按钮
+-(void)dataToModify:(UIButton *)bth
+{
+    // 弹框
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"确定要返回吗？" message:@"返回后您可以通过历史重新进入" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    
+    // 设置对话框的类型
+    alert.alertViewStyle = UIKeyboardTypeNumberPad;
+    
+    [alert show];
+    
+    
+}
+
+
+
+
+#pragma mark - alertView的代理方法
+/**
+ *  点击了alertView上面的按钮就会调用这个方法
+ *
+ *  @param buttonIndex 按钮的索引,从0开始
+ */
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+    {
+        
+    }else
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    
+    // 按钮的索引肯定不是0
+    
+}
+
 
 
 

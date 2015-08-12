@@ -40,14 +40,18 @@
 -(void)AddControls
 {
     UIView *bjView=[[UIView alloc] init];
-    bjView.backgroundColor=[UIColor whiteColor];
+    bjView.backgroundColor=ZCColor(237, 237, 237);
     bjView.alpha=1.0;
+    bjView.layer.cornerRadius=5;//设置圆角的半径为10
+    
+    bjView.layer.masksToBounds=YES;
     [self addSubview:bjView];
     self.bjView=bjView;
     
     
     UILabel *nameLabel=[[UILabel alloc] init];
-    nameLabel.text=@"姓名";
+    nameLabel.text=@"昵称";
+    nameLabel.textColor=ZCColor(85, 85, 85);
     [bjView addSubview:nameLabel];
     self.nameLabel=nameLabel;
     
@@ -57,59 +61,62 @@
     
     
     UIView *bjColorView=[[UIView alloc] init];
-    bjColorView.backgroundColor=[UIColor redColor];
+    bjColorView.backgroundColor=ZCColor(163, 163, 163);
     [bjView addSubview:bjColorView];
     self.bjColorView=bjColorView;
     
     UILabel *photoLabel=[[UILabel alloc] init];
     photoLabel.text=@"头像";
+    photoLabel.textColor=ZCColor(85, 85, 85);
     [bjView addSubview:photoLabel];
     self.photoLabel=photoLabel;
     
     UIImageView *photoImage=[[UIImageView alloc] init];
-    photoImage.image=[UIImage imageNamed:@"20141118042246536.jpg"];
+    photoImage.image=[UIImage imageNamed:@"photography"];
     [bjView addSubview:photoImage];
     self.photoImage=photoImage;
     
     UIButton *paiButton=[[UIButton alloc] init];
     paiButton.tag=20995;
+    [paiButton setBackgroundImage:[UIImage imageNamed:@"paizhao_anniu"] forState:UIControlStateNormal];
     [paiButton setTitle:@"拍照" forState:UIControlStateNormal];
-    [paiButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [paiButton setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
     [paiButton addTarget:self action:@selector(clickTheButton:) forControlEvents:UIControlEventTouchUpInside];
     [bjView addSubview:paiButton];
     self.paiButton=paiButton;
     
     UIButton *photoButton=[[UIButton alloc] init];
     photoButton.tag=20996;
+    [photoButton setBackgroundImage:[UIImage imageNamed:@"paizhao_anniu"] forState:UIControlStateNormal];
     [photoButton setTitle:@"相册" forState:UIControlStateNormal];
-    [photoButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [photoButton setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
     [photoButton addTarget:self action:@selector(clickTheButton:) forControlEvents:UIControlEventTouchUpInside];
     [bjView addSubview:photoButton];
     self.photoButton=photoButton;
     
     UIView *bjColorView2=[[UIView alloc] init];
-    bjColorView2.backgroundColor=[UIColor redColor];
+    bjColorView2.backgroundColor=ZCColor(163, 163, 163);
     [bjView addSubview:bjColorView2];
     self.bjColorView2=bjColorView2;
     
     
     UIView *bjColorView3=[[UIView alloc] init];
-    bjColorView3.backgroundColor=[UIColor redColor];
+    bjColorView3.backgroundColor=ZCColor(163, 163, 163);
     [bjView addSubview:bjColorView3];
     self.bjColorView3=bjColorView3;
     
     UIButton *cancelButton=[[UIButton alloc] init];
     cancelButton.tag=20997;
     [cancelButton setTitle:@"取消" forState:UIControlStateNormal];
-    [cancelButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [cancelButton setTitleColor:ZCColor(21, 126, 251) forState:UIControlStateNormal];
     [cancelButton addTarget:self action:@selector(clickTheButton:) forControlEvents:UIControlEventTouchUpInside];
     [bjView addSubview:cancelButton];
     self.cancelButton=cancelButton;
     
     UIButton *determineButton=[[UIButton alloc] init];
     determineButton.tag=20998;
-    [determineButton setTitle:@"确定" forState:UIControlStateNormal];
-    [determineButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [determineButton setTitle:@"好" forState:UIControlStateNormal];
+    [determineButton setTitleColor:ZCColor(21, 126, 251) forState:UIControlStateNormal];
     [determineButton addTarget:self action:@selector(clickTheButton:) forControlEvents:UIControlEventTouchUpInside];
     [bjView addSubview:determineButton];
     self.determineButton=determineButton;
@@ -164,13 +171,14 @@
     
     CGFloat bjViewX=20;
     CGFloat bjViewW=self.frame.size.width-2*bjViewX;
-    CGFloat bjViewH=160;
+    CGFloat bjViewH=207;
     CGFloat bjViewY=(SCREEN_HEIGHT-bjViewH)/2;
+    
     self.bjView.frame=CGRectMake(bjViewX, bjViewY, bjViewW, bjViewH);
     
     
-    CGFloat nameLabelX=10;
-    CGFloat nameLabelY=25;
+    CGFloat nameLabelX=18;
+    CGFloat nameLabelY=38;
     CGFloat nameLabelW=40;
     CGFloat nameLabelH=20;
     self.nameLabel.frame=CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH);
@@ -191,31 +199,31 @@
     CGFloat photoLabelX=nameLabelX;
     CGFloat photoLabelY=bjColorViewY+5;
     CGFloat photoLabelW=40;
-    CGFloat photoLabelH=60;
+    CGFloat photoLabelH=100;
     self.photoLabel.frame=CGRectMake(photoLabelX, photoLabelY, photoLabelW, photoLabelH);
     
-    CGFloat photoImageX=photoLabelX+photoLabelW;
-    CGFloat photoImageY=bjColorViewY+5;
-    CGFloat photoImageW=60;
-    CGFloat photoImageH=60;
+    CGFloat photoImageX=photoLabelX+photoLabelW+20;
+    CGFloat photoImageY=bjColorViewY+15;
+    CGFloat photoImageW=70;
+    CGFloat photoImageH=70;
     self.photoImage.frame=CGRectMake(photoImageX, photoImageY, photoImageW, photoImageH);
 
     
-    CGFloat paiButtonW=60;
-    CGFloat paiButtonH=30;
-    CGFloat paiButtonX=bjViewW-10-paiButtonW;
-    CGFloat paiButtonY=photoImageY;
+    CGFloat paiButtonW=76;
+    CGFloat paiButtonH=26;
+    CGFloat paiButtonX=photoImageX+photoImageW+SCREEN_WIDTH*0.065;
+    CGFloat paiButtonY=bjColorViewY+(100-paiButtonH*2-8)/2;
     self.paiButton.frame=CGRectMake(paiButtonX, paiButtonY, paiButtonW, paiButtonH);
     
     
-    CGFloat photoButtonW=60;
-    CGFloat photoButtonH=30;
-    CGFloat photoButtonX=bjViewW-10-paiButtonW;
-    CGFloat photoButtonY=paiButtonY+paiButtonH+10;
+    CGFloat photoButtonW=76;
+    CGFloat photoButtonH=26;
+    CGFloat photoButtonX=paiButtonX;
+    CGFloat photoButtonY=paiButtonY+paiButtonH+8;
     self.photoButton.frame=CGRectMake(photoButtonX, photoButtonY, photoButtonW, photoButtonH);
     
     CGFloat bjColorView2X=0;
-    CGFloat bjColorView2Y=photoLabelY+photoLabelH+10;
+    CGFloat bjColorView2Y=photoLabelY+photoLabelH;
     CGFloat bjColorView2W=bjViewW;
     CGFloat bjColorView2H=0.5;
     self.bjColorView2.frame=CGRectMake(bjColorView2X, bjColorView2Y, bjColorView2W, bjColorView2H);
@@ -230,7 +238,7 @@
     CGFloat bjColorView3X=cancelButtonW;
     CGFloat bjColorView3Y=cancelButtonY;
     CGFloat bjColorView3W=0.5;
-    CGFloat bjColorView3H=cancelButtonH;
+    CGFloat bjColorView3H=cancelButtonH+5;
     self.bjColorView3.frame=CGRectMake(bjColorView3X, bjColorView3Y, bjColorView3W, bjColorView3H);
     
     

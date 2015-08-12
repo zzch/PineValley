@@ -8,7 +8,8 @@
 
 #import "ZCHistoricalRecordCell.h"
 @interface ZCHistoricalRecordCell()
-@property(nonatomic,weak)UILabel *typeImageView;
+@property(nonatomic,weak)UIImageView *typeImageView;
+@property(nonatomic,weak)UIImageView *payBJIamge;
 @property(nonatomic,weak)UILabel *parLabel;
 @property(nonatomic,weak)UILabel *timeLabel;
 @property(nonatomic,weak)UIImageView *moneyImage;
@@ -30,27 +31,37 @@
     if (self=[super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
         
-        UILabel *typeImageView=[[UILabel alloc] init];
-        typeImageView.backgroundColor=[UIColor redColor];
+        UIImageView *typeImageView=[[UIImageView alloc] init];
+        
         [self.contentView addSubview:typeImageView];
         self.typeImageView=typeImageView;
         
         UILabel *timeLabel=[[UILabel alloc] init];
-        timeLabel.text=@"+23asdasdasd";
+        
+        timeLabel.textColor=ZCColor(85, 85, 85);
         [self.contentView addSubview:timeLabel];
         self.timeLabel=timeLabel;
         
+        
+        UIImageView *payBJIamge=[[UIImageView alloc] init];
+        self.payBJIamge=payBJIamge;
+        payBJIamge.image=[UIImage imageNamed:@"jjbs_renshu_icon"];
+        [self.contentView addSubview:payBJIamge];
+        
         UILabel *parLabel=[[UILabel alloc] init];
+        parLabel.textAlignment=NSTextAlignmentCenter;
+        parLabel.textColor=ZCColor(85, 85, 85);
         [self.contentView addSubview:parLabel];
         self.parLabel=parLabel;
         
         UIImageView *moneyImage=[[UIImageView alloc] init];
-        moneyImage.backgroundColor=[UIColor redColor];
+        moneyImage.image=[UIImage imageNamed:@"jinbi"];
         [self.contentView addSubview:moneyImage];
         self.moneyImage=moneyImage;
         
         UILabel *scoreLabel=[[UILabel alloc] init];
-        scoreLabel.text=@"+23";
+        scoreLabel.font=[UIFont systemFontOfSize:25];
+        scoreLabel.textColor=ZCColor(255, 150, 29);
         scoreLabel.textAlignment=NSTextAlignmentCenter;
         [self.contentView addSubview:scoreLabel];
         self.scoreLabel=scoreLabel;
@@ -63,13 +74,13 @@
 {
     _historicalRecordModel=historicalRecordModel;
     if (historicalRecordModel.type==1) {
-        self.typeImageView.text=@"比洞赛";
+        self.typeImageView.image=[UIImage imageNamed:@"bidongsai"];
     }else if (historicalRecordModel.type==2)
     {
-    self.typeImageView.text=@"斗地主";
+    self.typeImageView.image=[UIImage imageNamed:@"doudizhu"];
     }else
     {
-    self.typeImageView.text=@"拉斯维加斯";
+    self.typeImageView.image=[UIImage imageNamed:@"lswjs"];
     }
     
       NSDateFormatter  *dateformatter=[[NSDateFormatter alloc] init];
@@ -78,7 +89,11 @@
     self.timeLabel.text=locationString;
     
     self.parLabel.text=[NSString stringWithFormat:@"%ld/18",historicalRecordModel.count];
-    self.scoreLabel.text=[NSString stringWithFormat:@"%ld",(long)historicalRecordModel.earned];
+    if (historicalRecordModel.earned>=0) {
+        self.scoreLabel.text=[NSString stringWithFormat:@"+%ld",(long)historicalRecordModel.earned];
+    }else{
+        self.scoreLabel.text=[NSString stringWithFormat:@"%ld",(long)historicalRecordModel.earned];
+    }
 
 }
 
@@ -88,34 +103,38 @@
     [super layoutSubviews];
     
     
-    CGFloat typeImageViewX=10;
-    CGFloat typeImageViewY=0;
-    CGFloat typeImageViewW=90;
-    CGFloat typeImageViewH=90;
+    CGFloat typeImageViewX=15;
+    
+    CGFloat typeImageViewW=75;
+    CGFloat typeImageViewH=75;
+    CGFloat typeImageViewY=(self.frame.size.height-typeImageViewH)/2;
     self.typeImageView.frame=CGRectMake(typeImageViewX, typeImageViewY, typeImageViewW, typeImageViewH);
     
-    CGFloat timeLabelX=typeImageViewX+typeImageViewW+10;
-    CGFloat timeLabelY=10;
-    CGFloat timeLabelW=100;
+    CGFloat timeLabelX=typeImageViewX+typeImageViewW+15;
+    CGFloat timeLabelY=typeImageViewY+5;
+    CGFloat timeLabelW=150;
     CGFloat timeLabelH=20;
     self.timeLabel.frame=CGRectMake(timeLabelX, timeLabelY, timeLabelW, timeLabelH);
     
     CGFloat parLabelX=timeLabelX;
-    CGFloat parLabelY=timeLabelY+timeLabelH+10;
-    CGFloat parLabelW=60;
+    CGFloat parLabelY=timeLabelY+timeLabelH+22;
+    CGFloat parLabelW=75;
     CGFloat parLabelH=20;
+    self.payBJIamge.frame=CGRectMake(parLabelX, parLabelY, parLabelW, parLabelH);
     self.parLabel.frame=CGRectMake(parLabelX, parLabelY, parLabelW, parLabelH);
     
-    CGFloat moneyImageX=self.frame.size.width-100;
-    CGFloat moneyImageW=20;
-    CGFloat moneyImageH=20;
+    
+    CGFloat moneyImageW=18;
+    CGFloat moneyImageH=17;
+    CGFloat moneyImageX=self.frame.size.width-(self.frame.size.width*0.0818)-40;
     CGFloat moneyImageY=(self.frame.size.height-moneyImageH)/2;
     self.moneyImage.frame=CGRectMake(moneyImageX, moneyImageY, moneyImageW, moneyImageH);
     
-    CGFloat scoreLabelX=moneyImageX+moneyImageW+5;
+    
     CGFloat scoreLabelW=40;
     CGFloat scoreLabelH=40;
     CGFloat scoreLabelY=(self.frame.size.height-scoreLabelH)/2;
+    CGFloat scoreLabelX=SCREEN_WIDTH-scoreLabelW-(SCREEN_WIDTH*0.0312);
     self.scoreLabel.frame=CGRectMake(scoreLabelX, scoreLabelY, scoreLabelW, scoreLabelH);
     
 }

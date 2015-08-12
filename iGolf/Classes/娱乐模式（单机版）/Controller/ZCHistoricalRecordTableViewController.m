@@ -23,7 +23,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.tableView.rowHeight=120;
+    self.tableView.rowHeight=100;
+    self.tableView.sectionHeaderHeight=140;
     self.dataArray= [ZCDatabaseTool theHistoricalRecord];
     
 }
@@ -55,6 +56,31 @@
     cell.historicalRecordModel=self.dataArray[indexPath.row];
     return cell;
 }
+
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *headView=[[UIView alloc] init];
+    headView.backgroundColor=[UIColor redColor];
+    UILabel *nameLabel=[[UILabel alloc] init];
+    nameLabel.textColor=[UIColor whiteColor];
+    nameLabel.text=@"累计分数";
+    nameLabel.font=[UIFont systemFontOfSize:20];
+    nameLabel.frame=CGRectMake(10, 15, 80, 25);
+    [headView addSubview:nameLabel];
+    
+    
+    UILabel *totalScoreLabel=[[UILabel alloc] init];
+    totalScoreLabel.text=@"0";
+    totalScoreLabel.textAlignment=NSTextAlignmentCenter;
+    totalScoreLabel.textColor=[UIColor whiteColor];
+    totalScoreLabel.font=[UIFont systemFontOfSize:25];
+    totalScoreLabel.frame=CGRectMake(0, (140-(nameLabel.frame.size.height+15))/2, SCREEN_WIDTH, 50);
+    [headView addSubview:totalScoreLabel];
+    
+    return headView;
+}
+
 
 
 

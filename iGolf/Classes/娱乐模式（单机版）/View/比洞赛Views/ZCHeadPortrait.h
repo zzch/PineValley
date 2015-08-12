@@ -11,4 +11,6 @@
 @interface ZCHeadPortrait : UIView
 @property(nonatomic,assign)int score;
 @property(nonatomic,strong)ZCOfflinePlayer *offlinePlayer;
+//1为红色 2 为黄色
+@property(nonatomic,assign)int indexColor;
 @end

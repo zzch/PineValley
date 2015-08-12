@@ -15,4 +15,8 @@
 @end
 @interface ZCKeyboardView : UIView
 @property(nonatomic,weak)id<ZCKeyboardViewDelegate> delegate;
+@property(nonatomic,copy)NSString *imageStr;
+@property(nonatomic,copy)NSString *name;
+// 1为红色 2为黄色
+@property(nonatomic,assign)int colorIndex;
 @end

@@ -260,6 +260,8 @@
 }
 
 
+
+
 //创建显示成绩的页面
 -(void)distanceViewContent
 {

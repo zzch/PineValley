@@ -42,17 +42,18 @@
 //    }
     
     
-    
-    AppDelegate *app=  (AppDelegate *)[UIApplication sharedApplication].delegate;
-    [app setAllowRotation:NO];
-    
-    
-    
-    if ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0) {
-        self.edgesForExtendedLayout = UIRectEdgeNone;
-    }
-    
+//    
+//    AppDelegate *app=  (AppDelegate *)[UIApplication sharedApplication].delegate;
+//    [app setAllowRotation:NO];
+//    
+//    
+//    
+//    if ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0) {
+//        self.edgesForExtendedLayout = UIRectEdgeNone;
+//    }
+//    
    
+    self.navigationItem.title=@"我爱高尔夫";
      //[self setNeedsStatusBarAppearanceUpdate];
     
     //背景颜色suoyou_bj
@@ -70,28 +71,28 @@
 //    self.navigationItem.titleView = customLab;
     
 
-    UIImage *topimage;
-    if (SCREEN_HEIGHT==480) {
-        topimage=[UIImage imageNamed:@"shouye_4s"];
-    }else if (SCREEN_HEIGHT==568)
-    {
-    topimage=[UIImage imageNamed:@"bn_01"];
-    }else
-    {
-    topimage=[UIImage imageNamed:@"shouye_6"];
-    }
+//    UIImage *topimage;
+//    if (SCREEN_HEIGHT==480) {
+//        topimage=[UIImage imageNamed:@"shouye_4s"];
+//    }else if (SCREEN_HEIGHT==568)
+//    {
+//    topimage=[UIImage imageNamed:@"bn_01"];
+//    }else
+//    {
+//    topimage=[UIImage imageNamed:@"shouye_6"];
+//    }
     
     
     
-    UIImageView *persinImage=[[UIImageView alloc] init];
-    
-    CGFloat  persinImageY=0;
-    CGFloat  persinImageW=SCREEN_WIDTH;
-    CGFloat  persinImageH=topimage.size.height;
-    CGFloat  persinImageX=0;
-    persinImage.frame=CGRectMake(persinImageX, persinImageY, persinImageW, persinImageH);
-    persinImage.image=topimage;
-    [self.view addSubview:persinImage];
+//    UIImageView *persinImage=[[UIImageView alloc] init];
+//    
+//    CGFloat  persinImageY=0;
+//    CGFloat  persinImageW=SCREEN_WIDTH;
+//    CGFloat  persinImageH=topimage.size.height;
+//    CGFloat  persinImageX=0;
+//    persinImage.frame=CGRectMake(persinImageX, persinImageY, persinImageW, persinImageH);
+//    persinImage.image=topimage;
+//    [self.view addSubview:persinImage];
 //    persinImage.layer.cornerRadius=10;//设置圆角的半径为10
 //    persinImage.layer.masksToBounds=YES;
     
@@ -144,46 +145,57 @@
 //    nameLabel.textColor=ZCColor(85, 85, 85);
 //    nameLabel.textAlignment=NSTextAlignmentCenter;
 //    [self.view addSubview:nameLabel];
-//    
+//
+    
     //竞技比赛
     UIButton *sportsCompetition=[[UIButton alloc] init];
-    CGFloat sportsCompetitionX=0;
-    CGFloat sportsCompetitionY=persinImageH+0.5;
-    CGFloat sportsCompetitionW=SCREEN_WIDTH;
-    CGFloat sportsCompetitionH=(SCREEN_HEIGHT-persinImageH-3)/3;
+    CGFloat sportsCompetitionX=7;
+    CGFloat sportsCompetitionY=10;
+    CGFloat sportsCompetitionW=SCREEN_WIDTH-16;
+    CGFloat sportsCompetitionH=(SCREEN_HEIGHT-50)/4-15;
     sportsCompetition.frame=CGRectMake(sportsCompetitionX, sportsCompetitionY, sportsCompetitionW, sportsCompetitionH);
-    sportsCompetition.backgroundColor=ZCColor(248, 67, 67);
-    [sportsCompetition setTitle:@"竞技比赛" forState:UIControlStateNormal];
+    [sportsCompetition setImage:[UIImage imageNamed:@"shouye_jingjibisai"] forState:UIControlStateNormal];
+    
     [sportsCompetition addTarget:self action:@selector(clickThesportsCompetition) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:sportsCompetition];
     
-    
-    
+    //娱乐
+    UIButton *entertainmentBtn=[[UIButton alloc] init];
+    CGFloat entertainmentBtnX=sportsCompetitionX;
+    CGFloat entertainmentBtnY=sportsCompetitionY+sportsCompetitionH+10;
+    CGFloat entertainmentBtnW=sportsCompetitionW;
+    CGFloat entertainmentBtnH=sportsCompetitionH;
+    entertainmentBtn.frame=CGRectMake(entertainmentBtnX, entertainmentBtnY, entertainmentBtnW, entertainmentBtnH);
+    [entertainmentBtn setImage:[UIImage imageNamed:@"shouye_yulemoshi"] forState:UIControlStateNormal];
+    [entertainmentBtn addTarget:self action:@selector(clickTheBtn) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:entertainmentBtn];
+
     
     
     
     //技术统计
     UIButton *technicalStatistics=[[UIButton alloc] init];
-    CGFloat technicalStatisticsX=0;
-    CGFloat technicalStatisticsY=sportsCompetitionY+sportsCompetitionH+0.5;
-    CGFloat technicalStatisticsW=SCREEN_WIDTH;
+    CGFloat technicalStatisticsX=sportsCompetitionX;
+    CGFloat technicalStatisticsY=entertainmentBtnY+entertainmentBtnH+10;
+    CGFloat technicalStatisticsW=sportsCompetitionW;
     CGFloat technicalStatisticsH=sportsCompetitionH;
     technicalStatistics.frame=CGRectMake(technicalStatisticsX, technicalStatisticsY, technicalStatisticsW, technicalStatisticsH);
-    technicalStatistics.backgroundColor=ZCColor(76, 160, 255);
-    [technicalStatistics setTitle:@"技术统计" forState:UIControlStateNormal];
+    [technicalStatistics setImage:[UIImage imageNamed:@"shouye_jishutongji"] forState:UIControlStateNormal];
+
+    
     [technicalStatistics addTarget:self action:@selector(clickTheTechnicalStatistics) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:technicalStatistics];
 
     
     //个人中心
     UIButton *personalCenter=[[UIButton alloc] init];
-    CGFloat personalCenterX=0;
-    CGFloat personalCenterY=technicalStatisticsY+technicalStatisticsH+0.5;
-    CGFloat personalCenterW=SCREEN_WIDTH;
-    CGFloat personalCenterH=SCREEN_HEIGHT-personalCenterY;
+    CGFloat personalCenterX=sportsCompetitionX;
+    CGFloat personalCenterY=technicalStatisticsY+technicalStatisticsH+10;
+    CGFloat personalCenterW=sportsCompetitionW;
+    CGFloat personalCenterH=sportsCompetitionH;
     personalCenter.frame=CGRectMake(personalCenterX, personalCenterY, personalCenterW, personalCenterH);
-    personalCenter.backgroundColor=ZCColor(248, 129, 57);
-    [personalCenter setTitle:@"个人中心" forState:UIControlStateNormal];
+    [personalCenter setImage:[UIImage imageNamed:@"shouye_gerenzhongxin"] forState:UIControlStateNormal];
+    
     [personalCenter addTarget:self action:@selector(clickThePersonalCenter) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:personalCenter];
 
@@ -191,11 +203,6 @@
     
     
     
-    UIButton *btn=[[UIButton alloc] init];
-    btn.frame=CGRectMake(59, personalCenterY+20, 100, 50);
-    [btn setBackgroundColor:[UIColor redColor]];
-    [btn addTarget:self action:@selector(clickTheBtn) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:btn];
     
 }
 
@@ -213,18 +220,18 @@
 //    return UIStatusBarStyleDefault;
 //}
 
--(void)viewWillAppear:(BOOL)animated
-{
-    //影藏状态栏
-  //  [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
- self.navigationController.navigationBarHidden=YES;
-}
--(void)viewWillDisappear:(BOOL)animated
-{
-    //影藏状态栏
-   // [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
-self.navigationController.navigationBarHidden=NO;
-}
+//-(void)viewWillAppear:(BOOL)animated
+//{
+//    //影藏状态栏
+//  //  [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+// self.navigationController.navigationBarHidden=YES;
+//}
+//-(void)viewWillDisappear:(BOOL)animated
+//{
+//    //影藏状态栏
+//   // [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+//self.navigationController.navigationBarHidden=NO;
+//}
 
 //点击竞技比赛
 -(void)clickThesportsCompetition

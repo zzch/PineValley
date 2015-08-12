@@ -73,36 +73,111 @@
     
     
     
-    UIView *photoView=[[UIView alloc] init];
-    photoView.frame=CGRectMake(0, 50, SCREEN_WIDTH, 120);
-    //photoView.backgroundColor=[UIColor redColor];
+    
+    
+    UILabel *numberLabel=[[UILabel alloc] init];
+    CGFloat numberLabelX=15;
+    CGFloat numberLabelY=17;
+    CGFloat numberLabelW=(SCREEN_WIDTH-30-47)/4;
+    CGFloat numberLabelH=20;
+    numberLabel.frame=CGRectMake(numberLabelX, numberLabelY, numberLabelW, numberLabelH);
+    numberLabel.text=@"1号发球";
+    numberLabel.font=[UIFont systemFontOfSize:12];
+    numberLabel.textAlignment=NSTextAlignmentCenter;
+    [self addSubview:numberLabel];
+    
+    UILabel *numberLabel2=[[UILabel alloc] init];
+    CGFloat numberLabel2X=numberLabelX+numberLabelW;
+    CGFloat numberLabel2Y=17;
+    CGFloat numberLabel2W=(SCREEN_WIDTH-30)/4;
+    CGFloat numberLabel2H=20;
+    numberLabel2.frame=CGRectMake(numberLabel2X, numberLabel2Y, numberLabel2W, numberLabel2H);
+    numberLabel2.text=@"4号发球";
+    numberLabel2.font=[UIFont systemFontOfSize:12];
+    numberLabel2.textAlignment=NSTextAlignmentCenter;
+    [self addSubview:numberLabel2];
+    
+    UILabel *numberLabel3=[[UILabel alloc] init];
+    CGFloat numberLabel3X=numberLabel2X+numberLabel2W+27;
+    CGFloat numberLabel3Y=17;
+    CGFloat numberLabel3W=(SCREEN_WIDTH-30)/4;
+    CGFloat numberLabel3H=20;
+    numberLabel3.frame=CGRectMake(numberLabel3X, numberLabel3Y, numberLabel3W, numberLabel3H);
+    numberLabel3.text=@"2号发球";
+    numberLabel3.font=[UIFont systemFontOfSize:12];
+    numberLabel3.textAlignment=NSTextAlignmentCenter;
+    [self addSubview:numberLabel3];
+    
+    
+    UILabel *numberLabel4=[[UILabel alloc] init];
+    CGFloat numberLabel4X=numberLabel3X+numberLabel3W;
+    CGFloat numberLabel4Y=17;
+    CGFloat numberLabel4W=(SCREEN_WIDTH-30)/4;
+    CGFloat numberLabel4H=20;
+    numberLabel4.frame=CGRectMake(numberLabel4X, numberLabel4Y, numberLabel4W, numberLabel4H);
+    numberLabel4.text=@"3号发球";
+    numberLabel4.font=[UIFont systemFontOfSize:12];
+    numberLabel4.textAlignment=NSTextAlignmentCenter;
+    [self addSubview:numberLabel4];
+    
+    
+    
+    
+    
+    
+    UIImageView *photoView=[[UIImageView alloc] init];
+    photoView.frame=CGRectMake(10, numberLabelY+numberLabelH+10, SCREEN_WIDTH-20, 136);
+    photoView.image=[ZCTool imagePullLitre:@"taimian"];
+    photoView.userInteractionEnabled=YES;
     [self addSubview:photoView];
     self.photoView=photoView;
     [self addView:photoView];
     
     
+//        //添加VS图片
+//    UIImageView*VSImage=[[UIImageView alloc] init];
+//    CGFloat  VSImageW=
+//    CGFloat  VSImageH=
+//    CGFloat  VSImageX=
+//    CGFloat  VSImageY=
+//    
+//    VSImage.frame=CGRectMake((SCREEN_WIDTH-20)/2, button.frame.size.height-50, 20, 20);
+//    VSImage.backgroundColor=[UIColor redColor];
+//    [photoView addSubview:VSImage];
+
     
+    
+    UILabel *textLabel=[[UILabel alloc] init];
+    textLabel.frame=CGRectMake(0, photoView.frame.size.height+photoView.frame.origin.y, SCREEN_WIDTH, 35);
+    textLabel.textColor=ZCColor(34, 34, 34);
+    textLabel.textAlignment=NSTextAlignmentCenter;
+    textLabel.text=@"拖动头像来改变发球的顺序";
+    textLabel.font=[UIFont systemFontOfSize:13];
+    [self addSubview:textLabel];
+    
+    
+     CGFloat firstViewY=textLabel.frame.size.height+textLabel.frame.origin.y;
     UIView *firstView=[[UIView alloc] init];
-    firstView.frame=CGRectMake(0, 170, SCREEN_WIDTH, 30);
+    firstView.frame=CGRectMake(0, firstViewY, SCREEN_WIDTH, 40);
     firstView.backgroundColor=[UIColor whiteColor];
     [self addSubview:firstView];
     //self.firstView=firstView;
     [self addView:firstView andNameLabelText:@"小鸟球和老鹰球翻转"];
     
-    
+    CGFloat secondViewY=firstViewY+40+1;
     UIView *secondView=[[UIView alloc] init];
-    secondView.frame=CGRectMake(0, 201, SCREEN_WIDTH, 30);
+    secondView.frame=CGRectMake(0, secondViewY, SCREEN_WIDTH, 40);
     secondView.backgroundColor=[UIColor whiteColor];
     [self addSubview:secondView];
     // self.secondView=secondView;
     [self addView:secondView andNameLabelText:@"双倍标准杆翻转"];
     
-    UIView *thirdView=[[UIView alloc] init];
-    thirdView.frame=CGRectMake(0, 232, SCREEN_WIDTH, 30);
-    thirdView.backgroundColor=[UIColor whiteColor];
-    [self addSubview:thirdView];
-    //self.thirdView=thirdView;
-    [self addView:thirdView andNameLabelText:@"打平进入下一洞"];
+//    UIView *thirdView=[[UIView alloc] init];
+//    thirdView.frame=CGRectMake(0, 232, SCREEN_WIDTH, 30);
+//    thirdView.backgroundColor=[UIColor whiteColor];
+//    [self addSubview:thirdView];
+//    //self.thirdView=thirdView;
+//    [self addView:thirdView andNameLabelText:@"打平进入下一洞"];
     
 //    UIView *fourthView=[[UIView alloc] init];
 //    fourthView.frame=CGRectMake(0, 263, SCREEN_WIDTH, 30);
@@ -200,13 +275,18 @@
 
 
 -(void)addView:(UIView *)view
-{
+{   //间距
+    CGFloat spacing=SCREEN_WIDTH*0.016;
+    
     UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(20 , 5, 60, 120);
-    button.layer.cornerRadius = 5;
+    CGFloat buttonX=10+spacing;
+    CGFloat buttonY=25;
+    CGFloat buttonW=(view.frame.size.width-20-47-6*spacing)/4;
+    CGFloat buttonH=view.frame.size.height-2*buttonY;
+    button.frame = CGRectMake(buttonX , buttonY, buttonW,buttonH);
+    
+
     button.tag = 0;
-    button.backgroundColor = [UIColor brownColor];
-    // [button setTitle:[NSString stringWithFormat:@"btn 1"] forState:UIControlStateNormal];
     [self addPersonView:button andPersonImage:self.personImage andPersonName:[NSString stringWithFormat:@"%@",self.personName]];
     [self.myRects addObject:button];
     
@@ -218,20 +298,19 @@
     [button addGestureRecognizer:pan];
     
     [view addSubview:button];
-    //    //给背景view加点击事件，用于终止选中动画
-    //    UITapGestureRecognizer * tapView = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapView)];
-    //    [view addGestureRecognizer:tapView];
-    
     
     
     
     UIButton * button2 = [UIButton buttonWithType:UIButtonTypeCustom];
-    button2.frame = CGRectMake(90 , 5, 60, 120);
-    button2.layer.cornerRadius = 5;
+    CGFloat button2X=buttonX+buttonW+spacing;
+    CGFloat button2Y=25;
+    CGFloat button2W=buttonW;
+    CGFloat button2H=buttonH;
+    button2.frame = CGRectMake(button2X , button2Y, button2W,button2H);
     button2.tag = 1;
-    button2.backgroundColor = [UIColor brownColor];
     
-    [self addPersonView:button2 andPersonImage:self.personImage andPersonName:[NSString stringWithFormat:@"%@",self.personName]];
+    
+    [self addPersonView:button2 andPersonImage:[UIImage imageNamed:@"morentouxiang"] andPersonName:@"玩家1"];
     [self.myRects addObject:button2];
     
     NSString * str2 = [NSString stringWithFormat:@"%@",NSStringFromCGRect(button2.frame)];
@@ -247,21 +326,27 @@
     
     
     
-//    //添加VS图片
-//    UIImageView*VSImage=[[UIImageView alloc] init];
-//    VSImage.frame=CGRectMake((SCREEN_WIDTH-20)/2, button.frame.size.height-50, 20, 20);
-//    VSImage.backgroundColor=[UIColor redColor];
-//    [button addSubview:VSImage];
+            //添加VS图片
+     UIImageView*VSImage=[[UIImageView alloc] init];
+    CGFloat  VSImageW=47;
+    CGFloat  VSImageH=20;
+    CGFloat  VSImageX=(view.frame.size.width-VSImageW)/2;
+    CGFloat  VSImageY=(view.frame.size.height-VSImageH)/2;
+    
+    VSImage.frame=CGRectMake(VSImageX, VSImageY, VSImageW, VSImageH);
+    VSImage.image=[UIImage imageNamed:@"vs"];
+    [view addSubview:VSImage];
     
     
     UIButton * button3 = [UIButton buttonWithType:UIButtonTypeCustom];
-    button3.frame = CGRectMake((SCREEN_WIDTH-20)/2+25 , 5, 60, 120);
-    button3.layer.cornerRadius = 5;
-    button3.tag = 2;
-    button3.backgroundColor = [UIColor brownColor];
-    //[button3 setTitle:[NSString stringWithFormat:@"btn 3"] forState:UIControlStateNormal];
-    UIImage * image=[UIImage imageNamed:@"20141118042246536.jpg"];
-    [self addPersonView:button3 andPersonImage:image andPersonName:@"编辑名称"];
+    CGFloat button3X=VSImageX+VSImageW+spacing;
+    CGFloat button3Y=25;
+    CGFloat button3W=buttonW;
+    CGFloat button3H=buttonH;
+    button3.frame = CGRectMake(button3X , button3Y, button3W,button3H);
+   button3.tag = 2;
+    
+    [self addPersonView:button3 andPersonImage:[UIImage imageNamed:@"morentouxiang"] andPersonName:@"玩家2"];
     [self.myRects addObject:button3];
     [button3 addTarget:self action:@selector(clickTheButton:) forControlEvents:UIControlEventTouchUpInside];
     NSString * str3 = [NSString stringWithFormat:@"%@",NSStringFromCGRect(button3.frame)];
@@ -277,12 +362,15 @@
     
     
     UIButton * button4 = [UIButton buttonWithType:UIButtonTypeCustom];
-    button4.frame = CGRectMake(button3.frame.origin.x+button3.frame.size.width+5 , 5, 60, 120);
-    button4.layer.cornerRadius = 5;
+   
+    CGFloat button4X=button3X+button3W+spacing;
+    CGFloat button4Y=25;
+    CGFloat button4W=buttonW;
+    CGFloat button4H=buttonH;
+    button4.frame = CGRectMake(button4X , button4Y, button4W,button4H);
     button4.tag = 3;
-    button4.backgroundColor = [UIColor brownColor];
-    //[button3 setTitle:[NSString stringWithFormat:@"btn 3"] forState:UIControlStateNormal];
-    [self addPersonView:button4 andPersonImage:self.personImage andPersonName:@"编辑名称"];
+   
+    [self addPersonView:button4 andPersonImage:[UIImage imageNamed:@"morentouxiang"] andPersonName:@"玩家3"];
     [self.myRects addObject:button4];
     [button4 addTarget:self action:@selector(clickTheButton:) forControlEvents:UIControlEventTouchUpInside];
     NSString * str4 = [NSString stringWithFormat:@"%@",NSStringFromCGRect(button4.frame)];
@@ -302,36 +390,45 @@
 -(void)addPersonView:(UIButton *)button
       andPersonImage:(UIImage *)image andPersonName:(NSString *)nameStr
 {
-    [self layoutIfNeeded];
+   
     
     UIImageView *imageView=[[UIImageView alloc] init];
-    //CGFloat imageViewX=
-    imageView.frame=CGRectMake(0, 0, button.frame.size.width, button.frame.size.width);
+    
+    imageView.frame=CGRectMake(0, 7, button.frame.size.width, button.frame.size.width);
     imageView.layer.cornerRadius=button.frame.size.width/2;
     imageView.layer.masksToBounds=YES;
     imageView.image=image;
+    imageView.layer.borderWidth=2;
     [button addSubview:imageView ];
-    if (button.tag==0) {
-        imageView.tag=2032;
-        self.imageView1=imageView;
-    }else if (button.tag==1)
-    {self.imageView2=imageView;
-    }else if (button.tag==2){
-      self.imageView3=imageView;
-    }else{
-        self.imageView4=imageView;
-    }
-
+    
     
     
     
     UILabel *nameLabel=[[UILabel alloc] init];
-    nameLabel.frame=CGRectMake(0, button.frame.size.width+5, button.frame.size.width, 20);
+    nameLabel.frame=CGRectMake(0, button.frame.size.width+15, button.frame.size.width, 20);
     nameLabel.text=nameStr;
-    nameLabel.textColor=[UIColor blackColor];
-    
+    nameLabel.textAlignment=NSTextAlignmentCenter;
+    nameLabel.font=[UIFont systemFontOfSize:12];
     [button addSubview:nameLabel];
+
     
+    
+    if (button.tag==0) {
+        imageView.tag=2032;
+        imageView.layer.borderColor=[UIColor redColor].CGColor;
+        nameLabel.textColor=[UIColor redColor];
+    }else if (button.tag==1)
+    {
+        imageView.layer.borderColor=[UIColor redColor].CGColor;
+        nameLabel.textColor=[UIColor redColor];
+    }else if (button.tag==2){
+        imageView.layer.borderColor=[UIColor yellowColor].CGColor;
+        nameLabel.textColor=[UIColor yellowColor];
+    }else{
+        imageView.layer.borderColor=[UIColor yellowColor].CGColor;
+        nameLabel.textColor=[UIColor yellowColor];
+    }
+
     
     
 }
@@ -370,8 +467,8 @@
                 
                 _tmptag = btn.tag;
                 // NSLog(@"tmptag ==> %d",tmptag);
-                btn.layer.borderWidth = 3;
-                btn.layer.borderColor = [[UIColor redColor]CGColor];
+//                btn.layer.borderWidth = 3;
+//                btn.layer.borderColor = [[UIColor redColor]CGColor];
                 return;
             }
             else
@@ -423,6 +520,36 @@
                  btn.layer.borderColor = [[UIColor clearColor]CGColor];
                  btn.layer.borderWidth = 0;
                  // NSLog(@"ttttr%d",btn.tag);
+                 if (btn.tag==1 ||btn.tag==0 ) {
+                     for (id view in btn.subviews) {
+                         UIImageView *image;
+                         UILabel *nameLabel;
+                         if ([view isKindOfClass:[UIImageView class]]) {
+                             image=view;
+                         }
+                         if ([view isKindOfClass:[UILabel class]]) {
+                             nameLabel=view;
+                         }
+                         
+                         image.layer.borderColor=[[UIColor redColor]CGColor];
+                         nameLabel.textColor=[UIColor redColor];
+                     }
+                 }else{
+                 
+                     for (id view in btn.subviews) {
+                         UIImageView *image;
+                         UILabel *nameLabel;
+                         if ([view isKindOfClass:[UIImageView class]]) {
+                             image=view;
+                         }
+                         if ([view isKindOfClass:[UILabel class]]) {
+                             nameLabel=view;
+                         }
+                         
+                         image.layer.borderColor=[[UIColor yellowColor]CGColor];
+                         nameLabel.textColor=[UIColor yellowColor];
+                     }
+                 }
              }
          }];
         

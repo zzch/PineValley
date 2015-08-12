@@ -27,6 +27,11 @@
 @property(nonatomic,strong)NSMutableDictionary *fightTheLandlordDict;
 
 @property(nonatomic,weak)ZCEditView *editView;
+
+
+@property(nonatomic,weak)UIButton *holeBtn;
+@property(nonatomic,weak)UIButton *landlordsBtn;
+@property(nonatomic,weak)UIButton *lasVegasBtn;
 @end
 
 @implementation ZCSetupModeViewController
@@ -57,52 +62,60 @@
 -(void)addControls
 {
     UIButton *holeBtn=[[UIButton alloc] init];
-    CGFloat  holeBtnX=20;
-    CGFloat  holeBtnY=20;
-    CGFloat  holeBtnW=(SCREEN_WIDTH-80)/3;
-    CGFloat  holeBtnH=30;
+    CGFloat  holeBtnX=0;
+    CGFloat  holeBtnY=0;
+    CGFloat  holeBtnW=(SCREEN_WIDTH)/3;
+    CGFloat  holeBtnH=40;
     holeBtn.frame=CGRectMake(holeBtnX, holeBtnY, holeBtnW, holeBtnH);
-    holeBtn.backgroundColor=[UIColor redColor];
-    [holeBtn setTitle:@"比洞" forState:UIControlStateNormal];
-    [holeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [holeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateSelected];
-    [holeBtn addTarget:self action:@selector(clickTheHoleBtn) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:holeBtn];
     
+    [holeBtn setTitle:@"比洞" forState:UIControlStateNormal];
+    
+    [holeBtn setBackgroundImage:[UIImage imageNamed:@"xuanxiangka_bj"] forState:UIControlStateSelected];
+    [holeBtn setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
+    [holeBtn setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
+    [holeBtn addTarget:self action:@selector(clickTheHoleBtn) forControlEvents:UIControlEventTouchUpInside];
+    holeBtn.selected=YES;
+    [self.view addSubview:holeBtn];
+    self.holeBtn=holeBtn;
     
     
     UIButton *landlordsBtn=[[UIButton alloc] init];
-    CGFloat  landlordsBtnX=20+holeBtnW+20;
-    CGFloat  landlordsBtnY=20;
-    CGFloat  landlordsBtnW=(SCREEN_WIDTH-80)/3;
-    CGFloat  landlordsBtnH=30;
+    CGFloat  landlordsBtnX=holeBtnW;
+    CGFloat  landlordsBtnY=0;
+    CGFloat  landlordsBtnW=(SCREEN_WIDTH)/3;
+    CGFloat  landlordsBtnH=40;
     landlordsBtn.frame=CGRectMake(landlordsBtnX, landlordsBtnY, landlordsBtnW, landlordsBtnH);
     [landlordsBtn setTitle:@"斗地主" forState:UIControlStateNormal];
-    [landlordsBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [landlordsBtn setBackgroundImage:[UIImage imageNamed:@"xuanxiangka_bj"] forState:UIControlStateSelected];
+    [landlordsBtn setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
+    [landlordsBtn setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
     [landlordsBtn addTarget:self action:@selector(clickTheLandlordsBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:landlordsBtn];
-    
+    self.landlordsBtn=landlordsBtn;
     
     UIButton *lasVegasBtn=[[UIButton alloc] init];
-    CGFloat  lasVegasBtnX=20+holeBtnW+20+holeBtnW+20;
-    CGFloat  lasVegasBtnY=20;
-    CGFloat  lasVegasBtnW=(SCREEN_WIDTH-80)/3;
-    CGFloat  lasVegasBtnH=30;
+    CGFloat  lasVegasBtnX=holeBtnW+holeBtnW;
+    CGFloat  lasVegasBtnY=0;
+    CGFloat  lasVegasBtnW=(SCREEN_WIDTH)/3;
+    CGFloat  lasVegasBtnH=40;
     lasVegasBtn.frame=CGRectMake(lasVegasBtnX, lasVegasBtnY, lasVegasBtnW, lasVegasBtnH);
     [lasVegasBtn setTitle:@"拉斯维加斯" forState:UIControlStateNormal];
-    [lasVegasBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [lasVegasBtn setBackgroundImage:[UIImage imageNamed:@"xuanxiangka_bj"] forState:UIControlStateSelected];
+    [lasVegasBtn setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
+    [lasVegasBtn setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
+    
     [lasVegasBtn addTarget:self action:@selector(clickTheLasVegasBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:lasVegasBtn];
-    
+    self.lasVegasBtn=lasVegasBtn;
     
     
     self.index=1;
     ZCHoleView *holeView=[[ZCHoleView alloc] init];
     //ZCFightTheLandlordView *holeView=[[ZCFightTheLandlordView alloc ] init];
     CGFloat holeViewX=0;
-    CGFloat holeViewY=60;
+    CGFloat holeViewY=40;
     CGFloat holeViewW=SCREEN_WIDTH;
-    CGFloat holeViewH=SCREEN_HEIGHT-160;
+    CGFloat holeViewH=SCREEN_HEIGHT-140;
     holeView.frame=CGRectMake(holeViewX, holeViewY, holeViewW, holeViewH);
     holeView.delegate=self;
     [self.view addSubview:holeView];
@@ -113,11 +126,11 @@
    
 
     UIButton *startBtn=[[UIButton alloc] init];
-    startBtn.backgroundColor=[UIColor redColor];
+    startBtn.backgroundColor=ZCColor(9, 133, 12);
     CGFloat startBtnX=0;
-    CGFloat startBtnY=self.view.frame.size.height-100;
+    CGFloat startBtnY=self.view.frame.size.height-108;
     CGFloat startBtnW=SCREEN_WIDTH;
-    CGFloat startBtnH=30;
+    CGFloat startBtnH=45;
     startBtn.frame=CGRectMake(startBtnX, startBtnY, startBtnW, startBtnH);
     [startBtn setTitle:@"开始" forState:UIControlStateNormal];
     [startBtn addTarget:self action:@selector(clickTheStartBtn) forControlEvents:UIControlEventTouchUpInside];
@@ -180,6 +193,9 @@
 //比洞模式
 -(void)clickTheHoleBtn
 {
+    self.holeBtn.selected=YES;
+    self.landlordsBtn.selected=NO;
+    self.lasVegasBtn.selected=NO;
     self.index=1;
     self.holeView.hidden=NO;
     self.fightTheLandlordView.hidden=YES;
@@ -190,15 +206,18 @@
 //斗地主模式
 -(void)clickTheLandlordsBtn
 {
+    self.holeBtn.selected=NO;
+    self.landlordsBtn.selected=YES;
+    self.lasVegasBtn.selected=NO;
     self.index=2;
     if (self.fightTheLandlordView==nil) {
         self.holeView.hidden=YES;
         self.lasVegasView.hidden=YES;
         ZCFightTheLandlordView *fightTheLandlordView=[[ZCFightTheLandlordView alloc ] init];
         CGFloat holeViewX=0;
-        CGFloat holeViewY=60;
+        CGFloat holeViewY=40;
         CGFloat holeViewW=SCREEN_WIDTH;
-        CGFloat holeViewH=SCREEN_HEIGHT-160;
+        CGFloat holeViewH=SCREEN_HEIGHT-140;
         fightTheLandlordView.frame=CGRectMake(holeViewX, holeViewY, holeViewW, holeViewH);
         [self.view addSubview:fightTheLandlordView];
         fightTheLandlordView.delegate=self;
@@ -219,15 +238,20 @@
 //拉斯维加斯
 -(void)clickTheLasVegasBtn
 {
+    self.holeBtn.selected=NO;
+    self.landlordsBtn.selected=NO;
+    self.lasVegasBtn.selected=YES;
+    //self.lasVegasView
+    
     self.index=3;
     if (self.lasVegasView==nil) {
         self.holeView.hidden=YES;
         self.fightTheLandlordView.hidden=YES;
         ZCLasVegasView *lasVegasView=[[ZCLasVegasView alloc ] init];
         CGFloat holeViewX=0;
-        CGFloat holeViewY=60;
+        CGFloat holeViewY=40;
         CGFloat holeViewW=SCREEN_WIDTH;
-        CGFloat holeViewH=SCREEN_HEIGHT-160;
+        CGFloat holeViewH=SCREEN_HEIGHT-140;
         lasVegasView.frame=CGRectMake(holeViewX, holeViewY, holeViewW, holeViewH);
         [self.view addSubview:lasVegasView];
         lasVegasView.delegate=self;
@@ -258,8 +282,8 @@
     switchDict[@"isOpen5"]=@(isOpen5);
     switchDict[@"whoWin"]=@(whoWin);
     switchDict[@"type"]=@(self.index);
-    switchDict[@"userDict"]=userDict;
-    switchDict[@"otherDict"]=otherDict;
+//    switchDict[@"userDict"]=userDict;
+//    switchDict[@"otherDict"]=otherDict;
     self.switchDict=switchDict;
     
     //ZCLog(@"%@",self.switchDict[@"userDict"]);

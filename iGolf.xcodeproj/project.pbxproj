@@ -24,6 +24,7 @@
 		A90A0FCA1B4F877100195211 /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A90A0FB41B4F877100195211 /* TencentOpenApi_IOS_Bundle.bundle */; };
 		A90A0FCB1B4F877100195211 /* libSocialWechat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A90A0FB71B4F877100195211 /* libSocialWechat.a */; };
 		A90A0FCC1B4F877100195211 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A90A0FB81B4F877100195211 /* libWeChatSDK.a */; };
+		A90B5B1F1B7B15F70089F1FF /* ZCLasVegasPhotoView.m in Sources */ = {isa = PBXBuildFile; fileRef = A90B5B1E1B7B15F70089F1FF /* ZCLasVegasPhotoView.m */; };
 		A911BE0E1AC963EA00819F52 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = A911BDDD1AC963EA00819F52 /* AFHTTPRequestOperation.m */; };
 		A911BE0F1AC963EA00819F52 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A911BDDF1AC963EA00819F52 /* AFHTTPRequestOperationManager.m */; };
 		A911BE101AC963EA00819F52 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A911BDE11AC963EA00819F52 /* AFHTTPSessionManager.m */; };
@@ -300,6 +301,8 @@
 		A90A0FB91B4F877100195211 /* UMSocialWechatHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialWechatHandler.h; sourceTree = "<group>"; };
 		A90A0FBA1B4F877100195211 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		A90A0FBB1B4F877100195211 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		A90B5B1D1B7B15F70089F1FF /* ZCLasVegasPhotoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCLasVegasPhotoView.h; sourceTree = "<group>"; };
+		A90B5B1E1B7B15F70089F1FF /* ZCLasVegasPhotoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCLasVegasPhotoView.m; sourceTree = "<group>"; };
 		A911BDDC1AC963EA00819F52 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		A911BDDD1AC963EA00819F52 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		A911BDDE1AC963EA00819F52 /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -1462,6 +1465,8 @@
 			children = (
 				A947E6B81B60CD7B001C3E92 /* ZCLasVegasGameView.h */,
 				A947E6B91B60CD7B001C3E92 /* ZCLasVegasGameView.m */,
+				A90B5B1D1B7B15F70089F1FF /* ZCLasVegasPhotoView.h */,
+				A90B5B1E1B7B15F70089F1FF /* ZCLasVegasPhotoView.m */,
 			);
 			path = "拉斯维加斯Views";
 			sourceTree = "<group>";
@@ -2259,6 +2264,7 @@
 				A953D9421ACCE868004CA165 /* ZCChooseView.m in Sources */,
 				A976B0CD1AE4BB5000D8EA92 /* ZCTimeView.m in Sources */,
 				A92814FC1B05F508006AF185 /* ZCVenue.m in Sources */,
+				A90B5B1F1B7B15F70089F1FF /* ZCLasVegasPhotoView.m in Sources */,
 				A94D47E01AA8426300971FAD /* ZCscorecard.m in Sources */,
 				A9A703271AD7C54000D84C66 /* ZCPersonalURL.m in Sources */,
 				A946280C1AEF438600AE2B9C /* ZCPlayerModel.m in Sources */,

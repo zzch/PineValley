@@ -11,7 +11,7 @@
 @interface ZCFightTheLandlordView()
 @property(nonatomic,strong)NSMutableArray *myRects;
 @property(nonatomic,strong)NSMutableArray *frames;
-@property(nonatomic,weak)UIView *personView;
+@property(nonatomic,weak)UIImageView *personView;
 @property(nonatomic,weak)UIImage *personImage;
 //机主的名字
 @property(nonatomic,copy)NSString *personName;
@@ -56,29 +56,117 @@
         ZCAccount *account=[NSKeyedUnarchiver unarchiveObjectWithFile:file];
         self.personName=account.nickname;
         
+        self.backgroundColor=ZCColor(237, 237, 237);
         
-        UIView *personView=[[UIView alloc] init];
-        personView.frame=CGRectMake(0, 30, SCREEN_WIDTH, 130);
+        
+        
+        UILabel *farmersLabel=[[UILabel alloc] init];
+        CGFloat farmersLabelX=15;
+        CGFloat farmersLabelY=17;
+        CGFloat farmersLabelW=(SCREEN_WIDTH-30)/3;
+        CGFloat farmersLabelH=20;
+        farmersLabel.frame=CGRectMake(farmersLabelX, farmersLabelY, farmersLabelW, farmersLabelH);
+        farmersLabel.text=@"平民";
+        farmersLabel.textColor=ZCColor(34, 34, 34);
+        farmersLabel.textAlignment=NSTextAlignmentCenter;
+        [self addSubview:farmersLabel];
+        
+        UILabel *numberLabel=[[UILabel alloc] init];
+        numberLabel.frame=CGRectMake(farmersLabelX, farmersLabelY+farmersLabelH+5, farmersLabelW, farmersLabelH);
+        numberLabel.text=@"1号发球";
+        numberLabel.font=[UIFont systemFontOfSize:12];
+        numberLabel.textAlignment=NSTextAlignmentCenter;
+        [self addSubview:numberLabel];
+        
+        
+        
+        UILabel *diZhuLabel=[[UILabel alloc] init];
+        CGFloat diZhuLabelX=farmersLabelX+farmersLabelW;
+        CGFloat diZhuLabelY=17;
+        CGFloat diZhuLabelW=(SCREEN_WIDTH-20)/3;
+        CGFloat diZhuLabelH=20;
+        diZhuLabel.frame=CGRectMake(diZhuLabelX, diZhuLabelY, diZhuLabelW, diZhuLabelH);
+        diZhuLabel.text=@"地主";
+        diZhuLabel.textColor=ZCColor(34, 34, 34);
+        diZhuLabel.textAlignment=NSTextAlignmentCenter;
+        [self addSubview:diZhuLabel];
+        
+        UILabel *numberLabel2=[[UILabel alloc] init];
+        numberLabel2.frame=CGRectMake(diZhuLabelX, farmersLabelY+farmersLabelH+5, farmersLabelW, farmersLabelH);
+        numberLabel2.text=@"2号发球";
+        numberLabel2.font=[UIFont systemFontOfSize:12];
+        numberLabel2.textAlignment=NSTextAlignmentCenter;
+        [self addSubview:numberLabel2];
+
+        
+        
+        
+        UILabel *farmersLabel2=[[UILabel alloc] init];
+        CGFloat farmersLabel2X=diZhuLabelX+diZhuLabelW;
+        CGFloat farmersLabel2Y=17;
+        CGFloat farmersLabel2W=(SCREEN_WIDTH-20)/3;
+        CGFloat farmersLabel2H=20;
+        farmersLabel2.frame=CGRectMake(farmersLabel2X, farmersLabel2Y, farmersLabel2W, farmersLabel2H);
+        farmersLabel2.text=@"平民";
+        farmersLabel2.textColor=ZCColor(34, 34, 34);
+        farmersLabel2.textAlignment=NSTextAlignmentCenter;
+        [self addSubview:farmersLabel2];
+        
+        UILabel *numberLabel3=[[UILabel alloc] init];
+        numberLabel3.frame=CGRectMake(farmersLabel2X, farmersLabelY+farmersLabelH+5, farmersLabelW, farmersLabelH);
+        numberLabel3.text=@"3号发球";
+        numberLabel3.font=[UIFont systemFontOfSize:12];
+        numberLabel3.textAlignment=NSTextAlignmentCenter;
+        [self addSubview:numberLabel3];
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        UIImageView *personView=[[UIImageView alloc] init];
+        personView.frame=CGRectMake(10, farmersLabel2Y+50, SCREEN_WIDTH-20, 136);
+        personView.image=[ZCTool imagePullLitre:@"taimian"];
+        personView.userInteractionEnabled=YES;
         [self addSubview:personView];
         [self addView:personView];
         self.personView=personView;
         
         
+        UILabel *textLabel=[[UILabel alloc] init];
+        textLabel.frame=CGRectMake(0, personView.frame.size.height+personView.frame.origin.y, SCREEN_WIDTH, 35);
+        textLabel.textColor=ZCColor(34, 34, 34);
+        textLabel.textAlignment=NSTextAlignmentCenter;
+        textLabel.text=@"拖动头像来改变发球的顺序";
+        textLabel.font=[UIFont systemFontOfSize:13];
+        [self addSubview:textLabel];
+        
+        
+        CGFloat firstViewY=textLabel.frame.size.height+textLabel.frame.origin.y;
         UIView *firstView=[[UIView alloc] init];
-        firstView.frame=CGRectMake(0, 170, SCREEN_WIDTH, 30);
+        firstView.frame=CGRectMake(0, firstViewY, SCREEN_WIDTH, 40);
+        firstView.backgroundColor=[UIColor whiteColor];
         [self addSubview:firstView];
-        //self.firstView=firstView;
+        
         [self addView:firstView andNameLabelText:@"小鸟球翻一倍"];
         
-        
+        CGFloat secondViewY=firstViewY+40+1;
+
         UIView *secondView=[[UIView alloc] init];
-        secondView.frame=CGRectMake(0, 201, SCREEN_WIDTH, 30);
+        secondView.frame=CGRectMake(0, secondViewY, SCREEN_WIDTH, 40);
+        secondView.backgroundColor=[UIColor whiteColor];
         [self addSubview:secondView];
        // self.secondView=secondView;
         [self addView:secondView andNameLabelText:@"老鹰球翻两倍"];
         
+        CGFloat thirdViewY=secondViewY+40+1;
         UIView *thirdView=[[UIView alloc] init];
-        thirdView.frame=CGRectMake(0, 232, SCREEN_WIDTH, 30);
+        thirdView.frame=CGRectMake(0, thirdViewY, SCREEN_WIDTH, 40);
+        thirdView.backgroundColor=[UIColor whiteColor];
         [self addSubview:thirdView];
         //self.thirdView=thirdView;
         [self addView:thirdView andNameLabelText:@"打平进入下一洞"];
@@ -198,12 +286,16 @@
 
 -(void)addView:(UIView *)view
 {
+    CGFloat spacing=SCREEN_WIDTH*0.05625;
      UIButton * button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.frame = CGRectMake(30 , 5, 80, 120);
-    button.layer.cornerRadius = 5;
+    CGFloat buttonX=10+spacing;
+    CGFloat buttonY=25;
+    CGFloat buttonW=(view.frame.size.width-20)/4;
+    CGFloat buttonH=view.frame.size.height-2*buttonY;
+    button.frame = CGRectMake(buttonX , buttonY, buttonW,buttonH);
+    
     button.tag = 0;
-    button.backgroundColor = [UIColor brownColor];
-   // [button setTitle:[NSString stringWithFormat:@"btn 1"] forState:UIControlStateNormal];
+   
      [self addPersonView:button andPersonImage:self.personImage andPersonName:[NSString stringWithFormat:@"%@",self.personName]];
     [self.myRects addObject:button];
     
@@ -215,21 +307,19 @@
     [button addGestureRecognizer:pan];
 
     [view addSubview:button];
-//    //给背景view加点击事件，用于终止选中动画
-//    UITapGestureRecognizer * tapView = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapView)];
-//    [view addGestureRecognizer:tapView];
     
     
     
     
     UIButton * button2 = [UIButton buttonWithType:UIButtonTypeCustom];
-    button2.frame = CGRectMake(150 , 5, 80, 120);
-    button2.layer.cornerRadius = 5;
+    CGFloat button2X=buttonX+buttonW+spacing;
+    CGFloat button2Y=25;
+    CGFloat button2W=buttonW;
+    CGFloat button2H=buttonH;
+    button2.frame = CGRectMake(button2X , button2Y, button2W,button2H);
     button2.tag = 1;
-    button2.backgroundColor = [UIColor brownColor];
-    //[button2 setTitle:[NSString stringWithFormat:@"btn 2"] forState:UIControlStateNormal];
-    UIImage * image=[UIImage imageNamed:@"20141118042246536.jpg"];
-    [self addPersonView:button2 andPersonImage:image andPersonName:[NSString stringWithFormat:@"%@",self.personName]];
+    
+    [self addPersonView:button2 andPersonImage:[UIImage imageNamed:@"morentouxiang"] andPersonName:@"玩家1"];
     [self.myRects addObject:button2];
     
     NSString * str2 = [NSString stringWithFormat:@"%@",NSStringFromCGRect(button2.frame)];
@@ -252,12 +342,13 @@
     
     
     UIButton * button3 = [UIButton buttonWithType:UIButtonTypeCustom];
-    button3.frame = CGRectMake(270 , 5, 80, 120);
-    button3.layer.cornerRadius = 5;
+    CGFloat button3X=button2X+button2W+spacing;
+    CGFloat button3Y=25;
+    CGFloat button3W=buttonW;
+    CGFloat button3H=buttonH;
+    button3.frame = CGRectMake(button3X , button3Y, button3W,button3H);
     button3.tag = 2;
-    button3.backgroundColor = [UIColor brownColor];
-    //[button3 setTitle:[NSString stringWithFormat:@"btn 3"] forState:UIControlStateNormal];
-    [self addPersonView:button3 andPersonImage:self.personImage andPersonName:@"编辑名称"];
+    [self addPersonView:button3 andPersonImage:[UIImage imageNamed:@"morentouxiang"] andPersonName:@"玩家2"];
     [self.myRects addObject:button3];
     
     NSString * str3 = [NSString stringWithFormat:@"%@",NSStringFromCGRect(button3.frame)];
@@ -280,28 +371,38 @@
 -(void)addPersonView:(UIButton *)button
       andPersonImage:(UIImage *)image andPersonName:(NSString *)nameStr
 {
-    [self layoutIfNeeded];
+    //[self layoutIfNeeded];
     
     UIImageView *imageView=[[UIImageView alloc] init];
-    //CGFloat imageViewX=
     imageView.frame=CGRectMake(0, 0, button.frame.size.width, button.frame.size.width);
     imageView.layer.cornerRadius=button.frame.size.width/2;
     imageView.layer.masksToBounds=YES;
+    imageView.layer.borderWidth=2;
     imageView.image=image;
     [button addSubview:imageView ];
     if (button.tag==0) {
         imageView.tag=2031;
-       
+     imageView.layer.borderColor=[UIColor yellowColor].CGColor;
+    }else if (button.tag==1){
+    imageView.layer.borderColor=[UIColor redColor].CGColor;
+    }else{
+    imageView.layer.borderColor=[UIColor yellowColor].CGColor;
     }
     
     
     UILabel *nameLabel=[[UILabel alloc] init];
     nameLabel.frame=CGRectMake(0, button.frame.size.width+5, button.frame.size.width, 20);
     nameLabel.text=nameStr;
-    nameLabel.textColor=[UIColor blackColor];
+    nameLabel.textAlignment=NSTextAlignmentCenter;
+    nameLabel.textColor=[UIColor redColor];
+    nameLabel.font=[UIFont systemFontOfSize:14];
     [button addSubview:nameLabel];
     
-    
+    if (button.tag==1) {
+        nameLabel.textColor=[UIColor redColor];
+    }else{
+    nameLabel.textColor=[UIColor yellowColor];
+    }
     
 }
 
@@ -341,8 +442,8 @@
                 
                 _tmptag = btn.tag;
                 // NSLog(@"tmptag ==> %d",tmptag);
-                btn.layer.borderWidth = 3;
-                btn.layer.borderColor = [[UIColor redColor]CGColor];
+//                btn.layer.borderWidth = 3;
+//                btn.layer.borderColor = [[UIColor redColor]CGColor];
                 return;
             }
             else
@@ -394,6 +495,41 @@
                  btn.layer.borderColor = [[UIColor clearColor]CGColor];
                  btn.layer.borderWidth = 0;
                 // NSLog(@"ttttr%d",btn.tag);
+                 
+                 if (btn.tag==1  ) {
+                     for (id view in btn.subviews) {
+                         UIImageView *image;
+                         UILabel *nameLabel;
+                         if ([view isKindOfClass:[UIImageView class]]) {
+                             image=view;
+                         }
+                         if ([view isKindOfClass:[UILabel class]]) {
+                             nameLabel=view;
+                         }
+
+                         image.layer.borderColor=[[UIColor redColor]CGColor];
+                         nameLabel.textColor=[UIColor redColor];
+                     }
+                 }else
+                 {
+                 
+                     for (id view in btn.subviews) {
+                         UIImageView *image;
+                         UILabel *nameLabel;
+                         if ([view isKindOfClass:[UIImageView class]]) {
+                             image=view;
+                         }
+                         if ([view isKindOfClass:[UILabel class]]) {
+                             nameLabel=view;
+                         }
+
+                         image.layer.borderColor=[[UIColor yellowColor]CGColor];
+                         nameLabel.textColor=[UIColor yellowColor];
+                     }
+
+                 
+                 }
+                 
              }
          }];
         
@@ -415,26 +551,41 @@
     UIButton *playBtn3=_myRects[2];
 
     UIImageView *image1;
+    UILabel *label1;
     for (id view in playBtn1.subviews) {
         if ([view isKindOfClass:[UIImageView class]]) {
             image1=view;
         }
+        
+        if ([view isKindOfClass:[UILabel class]]) {
+            label1=view;
+        }
+
     }
     
     
     UIImageView *image2;
+    UILabel *label2;
     for (id view in playBtn2.subviews) {
         if ([view isKindOfClass:[UIImageView class]]) {
             image2=view;
+        }
+        if ([view isKindOfClass:[UILabel class]]) {
+            label2=view;
         }
     }
 
     
     UIImageView *image3;
+    UILabel *label3;
     for (id view in playBtn3.subviews) {
         if ([view isKindOfClass:[UIImageView class]]) {
             image3=view;
         }
+        if ([view isKindOfClass:[UILabel class]]) {
+            label3=view;
+        }
+
     }
 
     
@@ -462,7 +613,7 @@
     if (image2.tag==2031) {
         ZCDouModel *userModel=[[ZCDouModel alloc] init];
         userModel.isUser=1;
-        userModel.name=@"张三";
+        userModel.name=label2.text;
         userModel.personImage=image2.image;
         self.userModel=userModel;
         [teamArray addObject:userModel];
@@ -470,7 +621,7 @@
     {
         ZCDouModel *userModel=[[ZCDouModel alloc] init];
         userModel.isUser=0;
-        userModel.name=@"张三";
+        userModel.name=label2.text;
         userModel.personImage=image2.image;
         self.userModel=userModel;
         [teamArray addObject:userModel];
@@ -481,7 +632,7 @@
     if (image3.tag==2031) {
         ZCDouModel *userModel=[[ZCDouModel alloc] init];
         userModel.isUser=1;
-        userModel.name=@"李四";
+        userModel.name=label3.text;
         userModel.personImage=image3.image;
         self.userModel=userModel;
         [teamArray addObject:userModel];
@@ -489,7 +640,7 @@
     {
         ZCDouModel *userModel=[[ZCDouModel alloc] init];
         userModel.isUser=0;
-        userModel.name=@"李四";
+        userModel.name=label3.text;
         userModel.personImage=image3.image;
         self.userModel=userModel;
         [teamArray addObject:userModel];

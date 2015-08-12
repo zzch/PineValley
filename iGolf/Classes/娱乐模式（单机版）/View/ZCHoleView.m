@@ -10,9 +10,9 @@
 #import "ZCEditView.h"
 #import "ZCDouModel.h"
 @interface ZCHoleView()<ZCEditViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
-@property(nonatomic ,weak)UIView *personView;
+@property(nonatomic ,weak)UIButton *personView;
 @property(nonatomic ,weak)UIButton *rivalView;
-@property(nonatomic ,weak)UILabel *VS;
+@property(nonatomic ,weak)UIImageView *VS;
 @property(nonatomic ,weak)UIView *firstView;
 @property(nonatomic ,weak)UIView *secondView;
 @property(nonatomic ,weak)UIView *thirdView;
@@ -48,11 +48,16 @@
 @property(nonatomic,assign)int isOpen5;
 //谁赢 1代表 本机的用户赢，2代表添加用户赢
 @property(nonatomic,assign)int whoWin;
-
+@property(nonatomic,weak)UIScrollView *scollView;
+@property(nonatomic,weak)UIImageView *bjImage;
 
 @property(nonatomic,strong)NSMutableDictionary *userDict;
 @property(nonatomic,strong)NSMutableDictionary *otherDict;
 
+@property(nonatomic,weak)UIImageView *meImage1;
+@property(nonatomic,weak)UIImageView *otherImage2;
+@property(nonatomic,weak)UILabel *meLabel1;
+@property(nonatomic,weak)UILabel *otherLabel2;
 @end
 @implementation ZCHoleView
 
@@ -60,6 +65,14 @@
 -(instancetype)initWithFrame:(CGRect)frame
 {
     if (self=[super initWithFrame:frame]) {
+        
+        
+        UIScrollView *scollView=[[UIScrollView  alloc] init];
+        scollView.backgroundColor=ZCColor(237, 237, 237);
+        scollView.bounces=NO;
+        [self addSubview:scollView];
+        
+        self.scollView=scollView;
         
         // 获取路劲 取出图片
         NSString *path=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject] stringByAppendingPathComponent:@"personImage.png"];
@@ -75,58 +88,72 @@
 
         
         
-        UIView *personView=[[UIView alloc] init];
-        [self addSubview:personView];
+        
+        UIImageView *bjImage=[[UIImageView alloc] init];
+        bjImage.userInteractionEnabled=YES;
+        bjImage.image=[ZCTool imagePullLitre:@"taimian"];
+        [self.scollView addSubview:bjImage];
+        self.bjImage=bjImage;
+        
+        
+        UIButton *personView=[[UIButton alloc] init];
+        [bjImage addSubview:personView];
         self.personView=personView;
         [self addPersonView:personView andPersonImage:image andPersonName:[NSString stringWithFormat:@"%@",account.nickname]];
         
         
-        UILabel *VS=[[UILabel alloc] init];
-        VS.text=@"VS";
-        VS.textColor=[UIColor blackColor];
-        [self addSubview:VS];
+        UIImageView *VS=[[UIImageView alloc] init];
+        VS.image=[UIImage imageNamed:@"vs"];
+        [bjImage addSubview:VS];
         self.VS=VS;
+        
         
         UIButton *rivalView=[[UIButton alloc] init];
         rivalView.tag=3809;
-        //rivalView.frame=CGRectMake(180, 10, 50, 80);
-        [self addSubview:rivalView];
-        rivalView.backgroundColor=[UIColor redColor];
+        [bjImage addSubview:rivalView];
         self.rivalView=rivalView;
+        
+        [self addPersonView:rivalView andPersonImage:[UIImage imageNamed:@"morentouxiang"] andPersonName:@"玩家1"];
         [rivalView addTarget:self action:@selector(clickTheRivalView) forControlEvents:UIControlEventTouchUpInside];
-        [self addPersonView:rivalView andPersonImage:image andPersonName:@"编辑昵称"];
+       
+        
+        
         
         
         UIView *firstView=[[UIView alloc] init];
-        [self addSubview:firstView];
+        firstView.backgroundColor=[UIColor whiteColor];
+        [self.scollView addSubview:firstView];
          self.firstView=firstView;
         [self addView:firstView andNameLabelText:@"小鸟球翻一倍"];
-        
-        
         UIView *secondView=[[UIView alloc] init];
-        [self addSubview:secondView];
+        secondView.backgroundColor=[UIColor whiteColor];
+        [self.scollView addSubview:secondView];
         self.secondView=secondView;
         [self addView:secondView andNameLabelText:@"老鹰球翻两倍"];
         
         UIView *thirdView=[[UIView alloc] init];
-        [self addSubview:thirdView];
+        thirdView.backgroundColor=[UIColor whiteColor];
+        [self.scollView addSubview:thirdView];
         self.thirdView=thirdView;
         [self addView:thirdView andNameLabelText:@"双倍标准杆翻一倍"];
         
         UIView *fourthView=[[UIView alloc] init];
-        [self addSubview:fourthView];
+        fourthView.backgroundColor=[UIColor whiteColor];
+        [self.scollView addSubview:fourthView];
         self.fourthView=fourthView;
         [self addView:fourthView andNameLabelText:@"打平进入下一洞"];
         
         UIView *fifthView=[[UIView alloc] init];
-        [self addSubview:fifthView];
+        fifthView.backgroundColor=[UIColor whiteColor];
+        [self.scollView addSubview:fifthView];
         self.fifthView=fifthView;
         [self addView:fifthView andNameLabelText:@"平局让杆"];
 
 
         
         UIView *drawToWinView=[[UIView alloc] init];
-        [self addSubview:drawToWinView];
+        drawToWinView.backgroundColor=[UIColor whiteColor];
+        [self.scollView addSubview:drawToWinView];
         drawToWinView.hidden=YES;
         self.drawToWinView=drawToWinView;
         [self addTheDrawToWinView:drawToWinView];
@@ -167,27 +194,40 @@
 -(void)addPersonView:(UIView *)view
   andPersonImage:(UIImage *)image andPersonName:(NSString *)nameStr
 {
-    [self layoutIfNeeded];
+    [self layoutSubviews];
     
+    
+//    UIImageView *biImage=[[UIImageView alloc] init];
+//    biImage.image=[UIImage imageNamed:@""];
+//    biImage.frame=CGRectMake(0, 0, view.frame.size.width, view.frame.size.width);
+//    [view addSubview:biImage ];
     UIImageView *imageView=[[UIImageView alloc] init];
-    //CGFloat imageViewX=
     imageView.frame=CGRectMake(0, 0, view.frame.size.width, view.frame.size.width);
     imageView.layer.cornerRadius=view.frame.size.width/2;
     imageView.layer.masksToBounds=YES;
+    imageView.layer.borderWidth=2;
+    if (view.tag==3809)
+    {
+        imageView.layer.borderColor=[UIColor yellowColor].CGColor;
+    }else{
+    imageView.layer.borderColor=[UIColor redColor].CGColor;
+    }
     imageView.image=image;
     [view addSubview:imageView ];
     
     UILabel *nameLabel=[[UILabel alloc] init];
     nameLabel.frame=CGRectMake(0, view.frame.size.width+5, view.frame.size.width, 20);
     nameLabel.text=nameStr;
-    nameLabel.textColor=[UIColor blackColor];
-   
+    nameLabel.textAlignment=NSTextAlignmentCenter;
+    nameLabel.textColor=[UIColor redColor];
+    nameLabel.font=[UIFont systemFontOfSize:14];
     [view addSubview:nameLabel];
     
     
     if (view.tag==3809) {
         self.otherImageView=imageView;
         self.otherNameLabel=nameLabel;
+        nameLabel.textColor=[UIColor yellowColor];
     }
     
     
@@ -196,47 +236,54 @@
 //平局让杆
 -(void)addTheDrawToWinView:(UIView *)view
 {
-    [self layoutIfNeeded];
-    
-    UILabel *textLabel=[[UILabel alloc] init];
-    textLabel.frame=CGRectMake(0, 0, view.frame.size.width, 20);
-    textLabel.text=@"平局谁获胜？";
-    textLabel.textAlignment=NSTextAlignmentCenter;
-    [view addSubview:textLabel];
+    [self layoutSubviews];
+//    
+//    UILabel *textLabel=[[UILabel alloc] init];
+//    textLabel.frame=CGRectMake(0, 0, view.frame.size.width, 20);
+//    textLabel.text=@"平局谁获胜？";
+//    textLabel.textAlignment=NSTextAlignmentCenter;
+//    [view addSubview:textLabel];
     
     UIButton *button1=[[UIButton alloc] init];
-    button1.frame=CGRectMake(0, 25, SCREEN_WIDTH/2, view.frame.size.height-25) ;
+    button1.frame=CGRectMake(0, 0, SCREEN_WIDTH/2, view.frame.size.height) ;
     [button1 addTarget:self action:@selector(clickTheButton1:) forControlEvents:UIControlEventTouchUpInside];
-    button1.backgroundColor=[UIColor yellowColor];
+    
     [view addSubview:button1];
     self.button1=button1;
     
         //添加button1上的内容
-    UIImageView *personImage=[[UIImageView alloc] init];
-    personImage.backgroundColor=[UIColor redColor];
-    personImage.frame=CGRectMake(10, 10, 70, 70);
-    personImage.layer.cornerRadius=35;
-    personImage.layer.masksToBounds=YES;
-    personImage.image=self.personImage;
-    [button1 addSubview:personImage];
+    UIImageView *personImage1=[[UIImageView alloc] init];
+    //personImage.backgroundColor=[UIColor redColor];
+    personImage1.frame=CGRectMake((SCREEN_WIDTH/2-80)/2, 10, 80, 80);
+    personImage1.layer.cornerRadius=40;
+    personImage1.layer.masksToBounds=YES;
+    personImage1.layer.borderWidth=2;
+    personImage1.layer.borderColor=[UIColor whiteColor].CGColor;
+    personImage1.image=self.personImage;
+    [button1 addSubview:personImage1];
+    self.meImage1=personImage1;
+    
     
     //名字
-    UILabel *nameLabel=[[UILabel alloc] init];
-    nameLabel.frame=CGRectMake(10, 75, 70, 20);
-    nameLabel.text=self.personName;
-    [button1 addSubview:nameLabel];
+    UILabel *nameLabel1=[[UILabel alloc] init];
+    nameLabel1.frame=CGRectMake(0, 95, SCREEN_WIDTH/2, 20);
+    nameLabel1.text=self.personName;
+    nameLabel1.textAlignment=NSTextAlignmentCenter;
+    nameLabel1.textColor=[UIColor whiteColor];
+    [button1 addSubview:nameLabel1];
+    self.meLabel1=nameLabel1;
     
     //胜利的图片
     UIImageView *winImage=[[UIImageView alloc] init];
-    winImage.frame=CGRectMake(85, 10, 30, 75);
-    winImage.backgroundColor=[UIColor redColor];
+    winImage.frame=CGRectMake(SCREEN_WIDTH/2-31-5, 5, 31, 31);
+    winImage.image=[UIImage imageNamed:@"pingjun_xuanzhong"];
     [button1 addSubview:winImage];
     self.winImage=winImage;
     
 
     UIButton *button2=[[UIButton alloc] init];
     
-    button2.frame=CGRectMake(SCREEN_WIDTH/2, 25, SCREEN_WIDTH/2, view.frame.size.height-25) ;
+    button2.frame=CGRectMake(SCREEN_WIDTH/2, 0, SCREEN_WIDTH/2, view.frame.size.height) ;
     [button2 addTarget:self action:@selector(clickTheButton2:) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:button2];
     self.button2=button2;
@@ -244,24 +291,30 @@
     //添加button2上的内容
     UIImageView *personImage2=[[UIImageView alloc] init];
     personImage2.backgroundColor=[UIColor redColor];
-    personImage2.frame=CGRectMake(10, 10, 70, 70);
-    personImage2.layer.cornerRadius=35;
+    personImage2.frame=CGRectMake((SCREEN_WIDTH/2-80)/2, 10, 80, 80);
+    personImage2.layer.cornerRadius=40;
     personImage2.layer.masksToBounds=YES;
+    personImage2.layer.borderWidth=2;
+    personImage2.layer.borderColor=[UIColor yellowColor].CGColor;
+
     personImage2.image=self.otherImageView.image;
     [button2 addSubview:personImage2];
-    self.personImage2=personImage2;
+    self.otherImage2=personImage2;
+    
     
     //名字
     UILabel *nameLabel2=[[UILabel alloc] init];
-    nameLabel2.frame=CGRectMake(10, 75, 70, 20);
+    nameLabel2.frame=CGRectMake(0, 95, SCREEN_WIDTH/2, 20);
     nameLabel2.text=self.otherNameLabel.text;
     [button2 addSubview:nameLabel2];
+    nameLabel2.textAlignment=NSTextAlignmentCenter;
     self.personLabel2=nameLabel2;
+    self.otherLabel2=nameLabel2;
     
     //胜利的图片
     UIImageView *winImage2=[[UIImageView alloc] init];
-    winImage2.frame=CGRectMake(85, 10, 30, 75);
-    winImage2.backgroundColor=[UIColor redColor];
+    winImage2.frame=CGRectMake(SCREEN_WIDTH/2-31-5, 5, 31, 31);
+    winImage2.image=[UIImage imageNamed:@"pingjun_xuanzhong"];
     winImage2.hidden=YES;
     [button2 addSubview:winImage2];
     self.winImage2=winImage2;
@@ -279,6 +332,13 @@
     [self.button2 setBackgroundColor:[UIColor yellowColor]];
     self.winImage.hidden=YES;
     self.winImage2.hidden=NO;
+    
+    self.meImage1.layer.borderColor=[UIColor redColor].CGColor;
+    self.meLabel1.textColor=[UIColor redColor];
+    
+    self.otherImage2.layer.borderColor=[UIColor whiteColor].CGColor;
+    self.otherLabel2.textColor=[UIColor blackColor];
+    
      [self switchAction:nil];
    
 }
@@ -287,8 +347,16 @@
 {
     self.whoWin=1;
     [self.button2 setBackgroundColor:[UIColor whiteColor]];
-    [self.button1 setBackgroundColor:[UIColor yellowColor]];
+    [self.button1 setBackgroundColor:[UIColor redColor]];
     self.winImage2.hidden=YES;
+    
+    self.meImage1.layer.borderColor=[UIColor whiteColor].CGColor;
+    self.meLabel1.textColor=[UIColor whiteColor];
+    
+    self.otherImage2.layer.borderColor=[UIColor yellowColor].CGColor;
+    self.otherLabel2.textColor=[UIColor yellowColor];
+
+
     self.winImage.hidden=NO;
     
     [self switchAction:nil];
@@ -296,7 +364,7 @@
 
 -(void)addView:(UIView *)view andNameLabelText:(NSString *)nameStr
 {
-    [self layoutIfNeeded];
+    [self layoutSubviews];
     
     UILabel *nameLabel=[[UILabel alloc] init];
     CGFloat nameLabelX=10;
@@ -334,7 +402,7 @@
 //开关
 -(void)switchAction:(id)sender
 {
-    ZCLog(@"执行了码");
+   
     UISwitch *switchButton = (UISwitch*)sender;
     BOOL isButtonOn = [switchButton isOn];
     if (isButtonOn) {
@@ -355,7 +423,9 @@
                 self.isOpen5=1;
                 [self clickTheButton1:nil];
                 self.drawToWinView.hidden=NO;
+                [self layoutSubviews];
                 //[self clickTheButton1:nil];
+                
                 break;
             default:
                 break;
@@ -384,6 +454,7 @@
                 self.isOpen5=0;
                 self.whoWin=0;
                 self.drawToWinView.hidden=YES;
+                [self layoutSubviews];
                 break;
             default:
                 break;
@@ -404,34 +475,34 @@
     self.isOpen5=0;
     self.whoWin=0;
     
-    NSData *image= UIImagePNGRepresentation(self.personImage);
-    NSMutableDictionary *userDict=[NSMutableDictionary dictionary];
-    userDict[@"isUser"]=@(1);
-    userDict[@"name"]=self.personName;
-    userDict[@"personImage"]=image;
-    self.userDict=userDict;
-    
-    
-    UIImageView *image1;
-    UILabel *label1;
-    for (id view in self.rivalView.subviews) {
-        if ([view isKindOfClass:[UIImageView class]]) {
-            image1=view;
-        }
-        if ([view isKindOfClass:[UILabel class]]) {
-            label1=view;
-        }
-        
-    }
-   // ZCLog(@"%@",label1.text);
-    
-    NSData *image2= UIImagePNGRepresentation(image1.image);
-    NSMutableDictionary *otherDict=[NSMutableDictionary dictionary];
-    otherDict[@"isUser"]=@(0);
-    otherDict[@"name"]=label1.text;
-    otherDict[@"personImage"]=image2;
-    self.otherDict=otherDict;
-
+//    NSData *image= UIImagePNGRepresentation(self.personImage);
+//    NSMutableDictionary *userDict=[NSMutableDictionary dictionary];
+//    userDict[@"isUser"]=@(1);
+//    userDict[@"name"]=self.personName;
+//    userDict[@"personImage"]=image;
+//    self.userDict=userDict;
+//    
+//    
+//    UIImageView *image1;
+//    UILabel *label1;
+//    for (id view in self.rivalView.subviews) {
+//        if ([view isKindOfClass:[UIImageView class]]) {
+//            image1=view;
+//        }
+//        if ([view isKindOfClass:[UILabel class]]) {
+//            label1=view;
+//        }
+//        
+//    }
+//   // ZCLog(@"%@",label1.text);
+//    
+//    NSData *image2= UIImagePNGRepresentation(image1.image);
+//    NSMutableDictionary *otherDict=[NSMutableDictionary dictionary];
+//    otherDict[@"isUser"]=@(0);
+//    otherDict[@"name"]=label1.text;
+//    otherDict[@"personImage"]=image2;
+//    self.otherDict=otherDict;
+//
     
     [self agentByValue];
 }
@@ -510,16 +581,61 @@
 {
     [super layoutSubviews];
     
+    self.scollView.frame=CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
     
-    self.personView.frame=CGRectMake(10, 10, 80, 120);
-    self.VS.frame=CGRectMake((SCREEN_WIDTH-30)/2, 90, 30, 40);
-    self.rivalView.frame=CGRectMake(180, 10, 80, 120);
-    self.firstView.frame=CGRectMake(0, 140, SCREEN_WIDTH, 30);
-    self.secondView.frame=CGRectMake(0, 171, SCREEN_WIDTH, 30);
-    self.thirdView.frame=CGRectMake(0, 202, SCREEN_WIDTH, 30);
-    self.fourthView.frame=CGRectMake(0, 233, SCREEN_WIDTH, 30);
-    self.fifthView.frame=CGRectMake(0, 264, SCREEN_WIDTH, 30);
-    self.drawToWinView.frame=CGRectMake(0, 300, SCREEN_WIDTH, 110);
+    CGFloat bjImageX=10;
+    CGFloat bjImageY=22;
+    CGFloat bjImageW=SCREEN_WIDTH-bjImageX*2;
+    CGFloat bjImageH=135;
+    self.bjImage.frame=CGRectMake(bjImageX, bjImageY, bjImageW, bjImageH);
+    
+    
+    CGFloat personViewX=26;
+    CGFloat personViewY=24;
+    CGFloat personViewW=68;
+    CGFloat personViewH=bjImageH-2*personViewY;
+    self.personView.frame=CGRectMake(personViewX, personViewY, personViewW, personViewH);
+    
+    
+    CGFloat vsW=47;
+    CGFloat vsH=20;
+    CGFloat vsX=(bjImageW-vsW)/2;
+    CGFloat vsY=(bjImageH-vsH)/2;
+    self.VS.frame=CGRectMake(vsX, vsY, vsW, vsH);
+    
+    
+    CGFloat rivalViewW=personViewW;
+    CGFloat rivalViewH=personViewH;
+    CGFloat rivalViewX=bjImageW-rivalViewW-26;
+    CGFloat rivalViewY=personViewY;
+    self.rivalView.frame=CGRectMake(rivalViewX, rivalViewY, rivalViewW, rivalViewH);
+    
+    
+    CGFloat firstViewY=bjImageY+bjImageH+23;
+    self.firstView.frame=CGRectMake(0,firstViewY, SCREEN_WIDTH, 40);
+    
+    CGFloat secondViewY=firstViewY+40+1;
+    self.secondView.frame=CGRectMake(0, secondViewY, SCREEN_WIDTH, 40);
+    
+    CGFloat thirdViewY=secondViewY+40+1;
+    self.thirdView.frame=CGRectMake(0, thirdViewY, SCREEN_WIDTH, 40);
+    
+    CGFloat fourthViewY=thirdViewY+40+1;
+    self.fourthView.frame=CGRectMake(0, fourthViewY, SCREEN_WIDTH, 40);
+    
+    
+    CGFloat fifthViewY=fourthViewY+40+1;
+    self.fifthView.frame=CGRectMake(0, fifthViewY, SCREEN_WIDTH, 40);
+    
+    CGFloat drawToWinViewY=fifthViewY+40+30;
+    self.drawToWinView.frame=CGRectMake(0, drawToWinViewY, SCREEN_WIDTH, 118);
+    
+    if (self.isOpen5) {
+        self.scollView.contentSize = CGSizeMake(0,drawToWinViewY+150 );
+    }else
+    {
+    self.scollView.contentSize = CGSizeMake(0,fifthViewY+100 );
+    }
     
 
 }
