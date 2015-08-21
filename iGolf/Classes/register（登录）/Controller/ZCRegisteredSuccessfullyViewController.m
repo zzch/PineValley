@@ -20,7 +20,7 @@
     
     UIImageView *bjImage=[[UIImageView alloc] init];
     bjImage.frame=self.view.bounds;
-    bjImage.image=[UIImage imageNamed:@"dengluye_bj"];
+    bjImage.image=[UIImage imageNamed:@"denglu_bj_shouye.jpg"];
     [self.view addSubview:bjImage];
 
     
@@ -58,7 +58,7 @@
     CGFloat textLabel2Y=textLabelY+20+SCREEN_HEIGHT*0.142;
     textLabel2.frame=CGRectMake(0, textLabel2Y, SCREEN_WIDTH, 20);
     textLabel2.text=@"是否绑定手机号";
-    textLabel2.textColor=ZCColor(170, 170, 170);
+    textLabel2.textColor=ZCColor(237, 237, 237);
     textLabel2.font=[UIFont systemFontOfSize:20];
     textLabel2.textAlignment=NSTextAlignmentCenter;
     [self.view addSubview:textLabel2];
@@ -68,7 +68,7 @@
     CGFloat textLabel3Y=textLabel2Y+20+5;
     textLabel3.frame=CGRectMake(0, textLabel3Y, SCREEN_WIDTH, 20);
     textLabel3.text=@"绑定后数据永久保存";
-    textLabel3.textColor=ZCColor(170, 170, 170);
+    textLabel3.textColor=ZCColor(237, 237, 237);
     textLabel3.font=[UIFont systemFontOfSize:12];
     textLabel3.textAlignment=NSTextAlignmentCenter;
     [self.view addSubview:textLabel3];

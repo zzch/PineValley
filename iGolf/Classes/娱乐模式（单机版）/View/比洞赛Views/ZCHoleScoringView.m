@@ -97,6 +97,7 @@
     //自动折行设置
    // promptLabel.lineBreakMode = UILineBreakModeWordWrap;
     promptLabel.numberOfLines = 0;
+    promptLabel.textAlignment=NSTextAlignmentCenter;
     [scollView addSubview:promptLabel];
     self.promptLabel=promptLabel;
     
@@ -393,7 +394,7 @@
     }else
     {
         self.promptLabel.hidden=NO;
-        self.promptLabel.text=[NSString stringWithFormat:@"上%d洞打平，本洞获胜方将获得%d洞成绩",isNext,isNext];
+        self.promptLabel.text=[NSString stringWithFormat:@"上%d洞打平\r本洞获胜方将获得累计分数",isNext];
     }
 
 }

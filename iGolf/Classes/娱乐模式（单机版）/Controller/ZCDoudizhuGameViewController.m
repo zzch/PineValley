@@ -179,6 +179,12 @@
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     
+    
+    if (self.open && self.index==18) {
+        self.index=17;
+    }
+
+    
     ZCFightTheLandlordModel *fightTheLandlordModel=self.dataArray[self.index];
     
     

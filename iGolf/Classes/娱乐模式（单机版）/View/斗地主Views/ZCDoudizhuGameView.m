@@ -96,6 +96,7 @@
     promptLabel.text=@"上3洞打平均数累计本洞获胜方将获得4洞的分数";
     //自动折行设置
     //promptLabel.lineBreakMode = UILineBreakModeWordWrap;
+    promptLabel.textAlignment=NSTextAlignmentCenter;
     promptLabel.numberOfLines = 0;
     [scollView addSubview:promptLabel];
     self.promptLabel=promptLabel;
@@ -469,7 +470,7 @@
     }else
     {
         self.promptLabel.hidden=NO;
-        self.promptLabel.text=[NSString stringWithFormat:@"上%d洞打平，本洞获胜方将获得%d洞成绩",isNext,isNext];
+        self.promptLabel.text=[NSString stringWithFormat:@"上%d洞打平\r本洞获胜方将获得累计分数",isNext];
     }
     
 }

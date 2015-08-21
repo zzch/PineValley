@@ -191,10 +191,13 @@
 //观察者调用方法
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    
+    ZCLog(@"---------------------%d",self.index);
     
 //    self.isYES=NO;
 //    [self.afterBtn setTitle:@"确认成绩" forState:UIControlStateNormal];
+    if (self.open && self.index==18) {
+        self.index=17;
+    }
     
     ZCFightTheLandlordModel *fightTheLandlordModel=self.dataArray[self.index];
     
@@ -392,9 +395,7 @@
         
         if (self.index<=17) {
             
-//        }else{
 
-//    self.index++;
            
             
     [UIView animateWithDuration:0.5 animations:^{
@@ -434,11 +435,6 @@
 
         }
        
-//    }else
-//    {
-//        [MBProgressHUD showSuccess:@"已经是最后一洞了"];
-//
-//    }
   
         
     }

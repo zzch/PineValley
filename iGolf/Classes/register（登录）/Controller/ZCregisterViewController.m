@@ -34,7 +34,7 @@
     
     UIImageView *bjImage=[[UIImageView alloc] init];
     bjImage.frame=self.view.bounds;
-    bjImage.image=[UIImage imageNamed:@"dengluye_bj"];
+    bjImage.image=[UIImage imageNamed:@"denglu_bj_shouye.jpg"];
     [self.view addSubview:bjImage];
      
     
@@ -63,7 +63,7 @@
     describeLabel.frame=CGRectMake(0, textLabelY, SCREEN_WIDTH, 20);
     describeLabel.text=@"已经有我爱高尔夫账户了?";
     describeLabel.font=[UIFont systemFontOfSize:14];
-    describeLabel.textColor=ZCColor(170, 170, 170);
+    describeLabel.textColor=ZCColor(237, 237, 237);
     describeLabel.textAlignment=NSTextAlignmentCenter;
     [self.view addSubview:describeLabel];
     
@@ -78,9 +78,9 @@
     landingBtn.frame=CGRectMake(landingBtnX, landingBtnY, landingBtnW, landingBtnH);
     [landingBtn setTitle:@"登录" forState:UIControlStateNormal];
     
-    [landingBtn setTitleColor:ZCColor(170, 170, 170) forState:UIControlStateNormal];
+    [landingBtn setTitleColor:ZCColor(237, 237, 237) forState:UIControlStateNormal];
     
-    UIImage *image2=[UIImage imageNamed:@"denglu_bj" ];
+    UIImage *image2=[UIImage imageNamed:@"denglu_kuang_bjkuang" ];
     // 指定为拉伸模式，伸缩后重新赋值
     image2 = [image2 resizableImageWithCapInsets:UIEdgeInsetsMake(25,25,10,10) resizingMode:UIImageResizingModeStretch];
     [landingBtn setBackgroundImage:image2 forState:UIControlStateNormal];
