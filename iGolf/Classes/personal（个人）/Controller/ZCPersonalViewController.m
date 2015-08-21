@@ -22,6 +22,7 @@
 #import "ZCMobilePhoneViewController.h"
 #import "ZCMobilePhoneViewController.h"
 #import "ZCBindingViewController.h"
+#import "ZCDatabaseTool.h"
 @interface ZCPersonalViewController ()<UIActionSheetDelegate,UIAlertViewDelegate,ZCPersonalInformationViewControllerDelegate>
 //头像View
 @property(nonatomic,weak)UIButton *headImageView;
@@ -618,6 +619,14 @@ ZCLog(@"网络下的载111122222 ");
     
     //删除文件
     [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+    
+    
+   //删除数据库
+    
+    [ZCDatabaseTool deleteTheAll];
+//    NSString *filename = [doc stringByAppendingPathComponent:@"status.sqlite"];
+//    //删除文件
+//    [[NSFileManager defaultManager] removeItemAtPath:filename error:nil];
     
   //  ZCregisterViewController *registerViewController=[[ZCregisterViewController alloc] init];
     

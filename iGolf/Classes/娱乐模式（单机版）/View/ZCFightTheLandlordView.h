@@ -12,7 +12,7 @@
 @optional
 -(void)switchButtonIsOpen:(int)isOpen1 andSwitch2:(int)isOpen2 andSwitch3:(int)isOpen3  andUserDict:(ZCDouModel*)userDict andOtherDict:(ZCDouModel *)otherDict  andAnotherDict:(ZCDouModel *)anotherDict;
 
--(void)buttonIsClickerForFightTheLandlordView:(UIButton *)btn;
+-(void)buttonIsClickerForFightTheLandlordView:(NSString *)nameStr;
 @end
 
 @interface ZCFightTheLandlordView : UIView

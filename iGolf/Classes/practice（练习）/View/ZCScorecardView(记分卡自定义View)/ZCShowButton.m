@@ -147,20 +147,20 @@
 }
 
 -(void)setScorecard:(ZCscorecard *)scorecard
-{
+{//[scorecard.score intValue]-[scorecard.par intValue]>0&&[scorecard.score intValue]-[scorecard.par intValue]<2
     _scorecard=scorecard;
     
-    if ([scorecard.score intValue]-[scorecard.par intValue]>0&&[scorecard.score intValue]-[scorecard.par intValue]<2) {
+    if ([scorecard.score intValue]-[scorecard.par intValue]>=2) {
         
-        self.scoreLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"dayu1"]];
+        self.scoreLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_dayu2"]];
         
-    }else if ([scorecard.score intValue]-[scorecard.par intValue]>=2)
+    }else if ([scorecard.score intValue]-[scorecard.par intValue]==1)
     {
-    self.scoreLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_dayu2"]];
+    self.scoreLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"dayu1"]];
     }else if ([scorecard.score intValue]-[scorecard.par intValue]==-1)
     {
     self.scoreLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"jfk_xiaoyu"]];
-    }else if ([scorecard.score intValue]-[scorecard.par intValue]<=2)
+    }else if ([scorecard.score intValue]-[scorecard.par intValue]<=-2)
     {
         self.scoreLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"xiaoyu2ge"]];
     }

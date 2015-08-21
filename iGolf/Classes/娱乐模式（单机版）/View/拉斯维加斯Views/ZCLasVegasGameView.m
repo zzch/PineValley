@@ -12,7 +12,7 @@
 #import "ZCParKeyboardView.h"
 #import "ZCFightTheLandlordModel.h"
 #import "ZCOfflinePlayer.h"
-
+#import "ZCSingletonTool.h"
 @interface ZCLasVegasGameView()<ZCKeyboardViewDelegate,ZCParKeyboardViewDelegate>
 @property(nonatomic,weak)UIScrollView *scollView;
 @property(nonatomic,weak)UILabel *holeNumber;
@@ -34,10 +34,12 @@
 @property(nonatomic,weak)UILabel *rightLabel;
 @property(nonatomic,weak)UILabel *lastLabel;
 
-
+@property(nonatomic,weak)UILabel *numberLabel;
+@property(nonatomic,weak)UILabel *numberLabel2;
+@property(nonatomic,weak)UILabel *numberLabel3;
+@property(nonatomic,weak)UILabel *numberLabel4;
 // 1为点击左边的成绩   2为点击中左间的成绩  3 为点击中右边的成绩 4为最右边
 @property(nonatomic,assign)int index;
-
 @end
 
 @implementation ZCLasVegasGameView
@@ -89,6 +91,39 @@
 //    [self addSubview:promptLabel];
 //    self.promptLabel=promptLabel;
     
+    
+    
+    UILabel *numberLabel=[[UILabel alloc] init];
+    
+    numberLabel.text=@"1号发球";
+    numberLabel.font=[UIFont systemFontOfSize:12];
+    numberLabel.textAlignment=NSTextAlignmentCenter;
+    [scollView addSubview:numberLabel];
+    self.numberLabel=numberLabel;
+    
+    UILabel *numberLabel2=[[UILabel alloc] init];
+   
+    numberLabel2.text=@"4号发球";
+    numberLabel2.font=[UIFont systemFontOfSize:12];
+    numberLabel2.textAlignment=NSTextAlignmentCenter;
+    [scollView addSubview:numberLabel2];
+    self.numberLabel2=numberLabel2;
+    
+    UILabel *numberLabel3=[[UILabel alloc] init];
+    
+    numberLabel3.text=@"2号发球";
+    numberLabel3.font=[UIFont systemFontOfSize:12];
+    numberLabel3.textAlignment=NSTextAlignmentCenter;
+    [scollView addSubview:numberLabel3];
+    self.numberLabel3=numberLabel3;
+    
+    UILabel *numberLabel4=[[UILabel alloc] init];
+    
+    numberLabel4.text=@"3号发球";
+    numberLabel4.font=[UIFont systemFontOfSize:12];
+    numberLabel4.textAlignment=NSTextAlignmentCenter;
+    [scollView addSubview:numberLabel4];
+    self.numberLabel4=numberLabel4;
     
     ZCLasVegasPhotoView *liftImageView=[[ZCLasVegasPhotoView alloc] init];
     liftImageView.indexColor=1;
@@ -196,19 +231,24 @@
 
 -(void)cliclkThescoreButton
 {
-    
+    if (self.isClick) {
+        [MBProgressHUD showSuccess:@"已经不可以修改数据了"];
+    }else{
     ZCParKeyboardView *ParKeyboardView=[[ZCParKeyboardView alloc] init];
     ParKeyboardView.frame=[UIScreen mainScreen].bounds;
     ParKeyboardView.delegate=self;
     UIWindow *wd = [[UIApplication sharedApplication].delegate window];
     [wd addSubview:ParKeyboardView];
-    
+    }
 }
 
 
 //点击了个人成绩
 -(void)cliclkTheScoreLabel:(UIButton *)btn
 {
+    if (self.isClick) {
+        [MBProgressHUD showSuccess:@"已经不可以修改数据了"];
+    }else{
     ZCOfflinePlayer *player;
     int colorIndex;
 
@@ -245,7 +285,7 @@
     keyboardView.delegate=self;
     UIWindow *wd = [[UIApplication sharedApplication].delegate window];
     [wd addSubview:keyboardView];
-    
+    }
 }
 
 
@@ -253,13 +293,22 @@
 -(void)ParKeyboardViewConfirmThatTheInput:(NSString *)number
 {
     int intNum=[number intValue];
-    //int holeNumber=[self.number intValue];
+    
+    if (self.lasVegasModel.isSave)
+    {
+        if (self.lasVegasModel.isSavePar==0) {
+             self.lasVegasModel.isSavePar=self.lasVegasModel.par;
+        }
+       
+    }
     self.lasVegasModel.par=intNum;
-//    if ([self.delegate respondsToSelector:@selector(doudizhuGameViewDelegateForScore:andForHoleNumber:)]) {
-//        [self.delegate doudizhuGameViewDelegateForScore:self.fightTheLandlordModel andForHoleNumber:holeNumber];
-//    }
+
     
     [self.scoreLabel setTitle:number forState:UIControlStateNormal];
+    
+    //通知控制器数据已经修改重新计算成绩
+    ZCSingletonTool *tool=[ZCSingletonTool sharedEventUuidTool];
+    tool.isModify=YES;
 }
 
 
@@ -269,8 +318,57 @@
     
     
     int intNum=[number intValue];
-    //int holeNumber=[self.number intValue];
-    
+   
+   if (self.lasVegasModel.isSave) {
+      
+       if (self.index==1) {
+           [self.liftScoreLabel setTitle:number forState:UIControlStateNormal];
+           ZCOfflinePlayer *player=  self.lasVegasModel.plays[0];
+           //用于修改取消修改后的成绩
+           if (player.isSaveStroke==0) {
+               player.isSaveStroke=player.stroke;
+           }
+
+           player.stroke=intNum;
+           ZCLog(@"%ld",(long)player.stroke);
+       }else if (self.index==2){
+           [self.middleScoreLabel setTitle:number forState:UIControlStateNormal];
+           ZCOfflinePlayer *player=  self.lasVegasModel.plays[1];
+           //用于修改取消修改后的成绩
+           if (player.isSaveStroke==0) {
+               player.isSaveStroke=player.stroke;
+           }
+
+           player.stroke=intNum;
+           ZCLog(@"%ld",(long)player.stroke);
+       }else if (self.index==3)
+       {
+           
+           [self.rightScoreLabel setTitle:number forState:UIControlStateNormal];
+           ZCOfflinePlayer *player=  self.lasVegasModel.plays[2];
+           //用于修改取消修改后的成绩
+           if (player.isSaveStroke==0) {
+               player.isSaveStroke=player.stroke;
+           }
+
+           player.stroke=intNum;
+           ZCLog(@"%ld",(long)player.stroke);
+       }else
+       {
+           [self.lastScoreLabel setTitle:number forState:UIControlStateNormal];
+           ZCOfflinePlayer *player=  self.lasVegasModel.plays[3];
+           //用于修改取消修改后的成绩
+           if (player.isSaveStroke==0) {
+               player.isSaveStroke=player.stroke;
+           }
+
+           player.stroke=intNum;
+           ZCLog(@"%ld",(long)player.stroke);
+       }
+
+       
+       
+   }else{
     if (self.index==1) {
         [self.liftScoreLabel setTitle:number forState:UIControlStateNormal];
         ZCOfflinePlayer *player=  self.lasVegasModel.plays[0];
@@ -295,8 +393,12 @@
         player.stroke=intNum;
         ZCLog(@"%ld",(long)player.stroke);
     }
+       
+   }
     
-    
+    //通知控制器数据已经修改重新计算成绩
+    ZCSingletonTool *tool=[ZCSingletonTool sharedEventUuidTool];
+    tool.isModify=YES;
     
 //    if ([self.delegate respondsToSelector:@selector(doudizhuGameViewDelegateForScore:andForHoleNumber:)]) {
 //        [self.delegate doudizhuGameViewDelegateForScore:self.fightTheLandlordModel andForHoleNumber:holeNumber];
@@ -340,9 +442,9 @@
     
     
     if (offPlayer2.stroke==0) {
-        [self.liftScoreLabel setTitle:@"-" forState:UIControlStateNormal];
+        [self.middleScoreLabel setTitle:@"-" forState:UIControlStateNormal];
     }else{
-        [self.liftScoreLabel setTitle:[NSString stringWithFormat:@"%ld",offPlayer1.stroke] forState:UIControlStateNormal];
+        [self.middleScoreLabel setTitle:[NSString stringWithFormat:@"%ld",offPlayer2.stroke] forState:UIControlStateNormal];
     }
 
     
@@ -358,7 +460,7 @@
 
     
     if (offPlayer4.stroke==0) {
-        [self.middleScoreLabel setTitle:@"-" forState:UIControlStateNormal];
+        [self.lastScoreLabel setTitle:@"-" forState:UIControlStateNormal];
     }else{
         [self.lastScoreLabel setTitle:[NSString stringWithFormat:@"%ld",offPlayer4.stroke] forState:UIControlStateNormal];
     }
@@ -379,6 +481,65 @@
     
     
 }
+
+
+
+
+//点击取消后传回修改前的值
+-(void)setBeforeTheChangeModel:(ZCFightTheLandlordModel *)beforeTheChangeModel
+{
+    _beforeTheChangeModel=beforeTheChangeModel;
+    
+    if (beforeTheChangeModel.isSavePar==0) {
+        
+    }else{
+        
+        [self.scoreLabel setTitle:[NSString stringWithFormat:@"%ld",(long)beforeTheChangeModel.isSavePar] forState:UIControlStateNormal];
+    }
+    
+    
+    ZCOfflinePlayer *offPlayer1=beforeTheChangeModel.plays[0];
+    ZCOfflinePlayer *offPlayer2=beforeTheChangeModel.plays[1];
+    ZCOfflinePlayer *offPlayer3=beforeTheChangeModel.plays[2];
+    ZCOfflinePlayer *offPlayer4=beforeTheChangeModel.plays[3];
+    
+    
+    
+    
+    if (offPlayer1.isSaveStroke==0) {
+        
+    }else{
+        [self.liftScoreLabel setTitle:[NSString stringWithFormat:@"%ld",(long)offPlayer1.isSaveStroke] forState:UIControlStateNormal];
+    }
+    
+    if (offPlayer2.isSaveStroke==0) {
+        
+    }else{
+        ZCLog(@"%ld",(long)offPlayer2.isSaveStroke);
+        [self.middleScoreLabel setTitle:[NSString stringWithFormat:@"%ld",(long)offPlayer2.isSaveStroke] forState:UIControlStateNormal];
+    }
+    
+    
+    
+    if (offPlayer3.isSaveStroke==0) {
+        
+    }else{
+        [self.rightScoreLabel setTitle:[NSString stringWithFormat:@"%ld",(long)offPlayer3.isSaveStroke] forState:UIControlStateNormal];
+    }
+    
+    
+    if (offPlayer4.isSaveStroke==0) {
+        
+    }else{
+        [self.lastScoreLabel setTitle:[NSString stringWithFormat:@"%ld",(long)offPlayer4.isSaveStroke] forState:UIControlStateNormal];
+    }
+    
+    
+    
+}
+
+
+
 
 
 -(void)layoutSubviews
@@ -412,10 +573,36 @@
 //    CGFloat promptLabelH=[ZCTool getFrame:CGSizeMake(promptLabelW, 2000) content:self.promptLabel.text fontSize:[UIFont systemFontOfSize:18]].size.height;
 //    self.promptLabel.frame=CGRectMake(promptLabelX, promptLabelY, promptLabelW, promptLabelH);
     
+    CGFloat numberLabelX=10;
+    CGFloat numberLabelY=scoreLabelY+scoreLabelH+30;
+    CGFloat numberLabelW=(SCREEN_WIDTH-70)/4;
+    CGFloat numberLabelH=20;
+    self.numberLabel.frame=CGRectMake(numberLabelX, numberLabelY, numberLabelW, numberLabelH);
+    
+    CGFloat numberLabel2X=numberLabelX+numberLabelW+8;
+
+    CGFloat numberLabel2Y=numberLabelY;
+    CGFloat numberLabel2W=numberLabelW;
+    CGFloat numberLabel2H=20;
+   self.numberLabel2.frame=CGRectMake(numberLabel2X, numberLabel2Y, numberLabel2W, numberLabel2H);
+    
+    
+    CGFloat numberLabel3X=numberLabel2X+numberLabel2W+33;
+    CGFloat numberLabel3Y=numberLabelY;
+    CGFloat numberLabel3W=numberLabelW;
+    CGFloat numberLabel3H=20;
+    self.numberLabel3.frame=CGRectMake(numberLabel3X, numberLabel3Y, numberLabel3W, numberLabel3H);
+    
+    
+    CGFloat numberLabel4X=numberLabel3X+numberLabel3W+8;
+    CGFloat numberLabel4Y=numberLabelY;
+    CGFloat numberLabel4W=numberLabelW;
+    CGFloat numberLabel4H=20;
+    self.numberLabel4.frame=CGRectMake(numberLabel4X, numberLabel4Y, numberLabel4W, numberLabel4H);
     
     
     CGFloat liftImageViewX=10;
-    CGFloat liftImageViewY=scoreLabelY+scoreLabelH+30;
+    CGFloat liftImageViewY=scoreLabelY+scoreLabelH+55;
     CGFloat liftImageViewW=(SCREEN_WIDTH-70)/4;
     CGFloat liftImageViewH=120;
     self.liftImageView.frame=CGRectMake(liftImageViewX, liftImageViewY, liftImageViewW, liftImageViewH);

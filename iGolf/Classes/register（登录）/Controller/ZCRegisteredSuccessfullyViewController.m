@@ -18,16 +18,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor=ZCColor(60, 57, 78);
+    UIImageView *bjImage=[[UIImageView alloc] init];
+    bjImage.frame=self.view.bounds;
+    bjImage.image=[UIImage imageNamed:@"dengluye_bj"];
+    [self.view addSubview:bjImage];
+
     
     
     UIImageView *nameimageView=[[UIImageView alloc] init];
-    CGFloat nameimageViewW=230;
-    CGFloat nameimageViewH=60;
+    CGFloat nameimageViewW=226;
+    CGFloat nameimageViewH=59;
     CGFloat nameimageViewX=(SCREEN_WIDTH-nameimageViewW)/2;
     CGFloat nameimageViewY=SCREEN_HEIGHT*0.163;
     nameimageView.frame=CGRectMake(nameimageViewX, nameimageViewY, nameimageViewW, nameimageViewH);
-    nameimageView.image=[UIImage imageNamed:@"woaigaoerfu"];
+    nameimageView.image=[UIImage imageNamed:@"wenzi_logo"];
     [self.view addSubview:nameimageView];
     
     
@@ -54,7 +58,7 @@
     CGFloat textLabel2Y=textLabelY+20+SCREEN_HEIGHT*0.142;
     textLabel2.frame=CGRectMake(0, textLabel2Y, SCREEN_WIDTH, 20);
     textLabel2.text=@"是否绑定手机号";
-    textLabel2.textColor=[UIColor whiteColor];
+    textLabel2.textColor=ZCColor(170, 170, 170);
     textLabel2.font=[UIFont systemFontOfSize:20];
     textLabel2.textAlignment=NSTextAlignmentCenter;
     [self.view addSubview:textLabel2];
@@ -64,7 +68,7 @@
     CGFloat textLabel3Y=textLabel2Y+20+5;
     textLabel3.frame=CGRectMake(0, textLabel3Y, SCREEN_WIDTH, 20);
     textLabel3.text=@"绑定后数据永久保存";
-    textLabel3.textColor=[UIColor whiteColor];
+    textLabel3.textColor=ZCColor(170, 170, 170);
     textLabel3.font=[UIFont systemFontOfSize:12];
     textLabel3.textAlignment=NSTextAlignmentCenter;
     [self.view addSubview:textLabel3];
@@ -112,9 +116,11 @@
 -(void)clickThecanCelBtn
 {
     ZCPracticeVController *vc=[[ZCPracticeVController alloc] init];
-   
-    [self.navigationController pushViewController:vc animated:YES];
-    //self.window.rootViewController=nav;
+    UINavigationController *nav=[[UINavigationController alloc] initWithRootViewController:vc];
+    
+    UIWindow *dw=[[UIApplication sharedApplication].delegate window];
+
+    dw.rootViewController=nav;
 }
 
 //点击确定

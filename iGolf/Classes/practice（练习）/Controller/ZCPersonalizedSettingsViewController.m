@@ -13,6 +13,7 @@
 #import "ZCpasswordViewController.h"
 #import "ZCToJoinTheGameTableViewController.h"
 #import "ZCEventUuidTool.h"
+#import "ZCSetupModeViewController.h"
 @interface ZCPersonalizedSettingsViewController ()<UIActionSheetDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UITextFieldDelegate>
 @property(nonatomic,weak)UIButton *imageButton;
 @property(nonatomic,assign,getter=isOpen) BOOL bKeyBoardHide;
@@ -22,6 +23,8 @@
 @property(nonatomic,weak)UIButton *manBtn;
 @property(nonatomic,weak)UIButton *wonamBtn;
 @property(nonatomic,weak)UIButton *startBtn;
+//是否可以点击开始
+@property(nonatomic,assign,getter=isClick)BOOL click;
 @end
 
 @implementation ZCPersonalizedSettingsViewController
@@ -192,7 +195,7 @@
     CGFloat startBtnW=SCREEN_WIDTH;
     CGFloat startBtnH=50;
     startBtn.frame=CGRectMake(startBtnX, startBtnY, startBtnW, startBtnH);
-    startBtn.enabled=NO;
+    
     startBtn.backgroundColor=ZCColor(100, 175, 102);
     [startBtn setTitle:@"保存" forState:UIControlStateNormal];
     [startBtn addTarget:self action:@selector(clickTheStartBtn) forControlEvents:UIControlEventTouchUpInside];
@@ -270,12 +273,12 @@
         // [self.startBtn setBackgroundColor:[UIColor redColor]];
     if (self.index&&![self.nameTextField.text isEqual:@""]&&self.chooseImage) {
         
-        self.startBtn.enabled=YES;
+        self.click=YES;
         //self.startBtn.backgroundColor=ZCColor(9, 133, 12);
         [self.startBtn setBackgroundColor:ZCColor(9, 133, 12)];
     }else{
         
-        self.startBtn.enabled=NO;
+        self.click=NO;
         self.startBtn.backgroundColor=ZCColor(100, 175, 102);
 
            }
@@ -393,6 +396,9 @@
 //点击保存 上传网络
 -(void)clickTheStartBtn
 {
+    if (self.click==NO) {
+        [MBProgressHUD showSuccess:@"请选择头像，名字与性别"];
+    }else{
 
     //显示圈圈
     [MBProgressHUD showMessage:@"上传中..."];
@@ -443,16 +449,11 @@
         
         ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
         
-        if (tool.isJoin==YES) {
+        if (tool.typeIndex==1) {
+            ZCSetupModeViewController *vc=[[ZCSetupModeViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
             
-            ZCpasswordViewController *passwordViewController=[[ZCpasswordViewController alloc] init];
-            
-//            ZCToJoinTheGameTableViewController *ToJoinTheGame=[[ZCToJoinTheGameTableViewController alloc] init];
-            
-           // ToJoinTheGame.uuid=self.uuid;
-            
-            [self.navigationController pushViewController:passwordViewController animated:YES];
-        }else
+        }else if(tool.typeIndex==2)
         {
         
             
@@ -462,7 +463,17 @@
             InvitationViewController.uuid=self.uuid;
             [self.navigationController pushViewController:InvitationViewController animated:YES];
 
+        }else{
+            ZCpasswordViewController *passwordViewController=[[ZCpasswordViewController alloc] init];
+            
+            //            ZCToJoinTheGameTableViewController *ToJoinTheGame=[[ZCToJoinTheGameTableViewController alloc] init];
+            
+            // ToJoinTheGame.uuid=self.uuid;
+            
+            [self.navigationController pushViewController:passwordViewController animated:YES];
+            
         }
+            
             //隐藏圈圈
             [MBProgressHUD hideHUD];
             
@@ -487,7 +498,7 @@
     // fire the request
     [requestOperation start];
     
-
+    }
 }
 
 

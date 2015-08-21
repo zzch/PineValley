@@ -742,7 +742,7 @@
         //单利
         
         ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
-        tool.isJoin=YES;
+        tool.typeIndex=3;
         
         ZCPersonalizedSettingsViewController *ZPersonalizedSettingsViewController=[[ZCPersonalizedSettingsViewController alloc] init];
        // ZPersonalizedSettingsViewController.uuid=responseObject[@"uuid"];

@@ -25,6 +25,10 @@
  */
 @property(nonatomic,assign,getter=isJoin) BOOL isJoin;
 
+/**
+ *  1 为从首页进入 2 为从邀请好友进入 3为
+ */
+@property(nonatomic,assign) int typeIndex;
 
 
 @end

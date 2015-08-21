@@ -18,4 +18,5 @@
 @interface ZCEditView : UIView
 @property(nonatomic,weak)id<ZCEditViewDelegate> delegate;
 @property(nonatomic,strong)UIImage *image;
+@property(nonatomic,copy)NSString *nameStr;
 @end

@@ -47,6 +47,22 @@ static FMDatabase *_db;
 }
 
 
++(BOOL)deleteTheAll
+{
+    BOOL success1=[_db executeUpdate:@"DELETE FROM t_match"];
+    BOOL success2=[_db executeUpdate:@"DELETE FROM t_player"];
+    
+    
+    
+    if (success1&&success2) {
+        return YES;
+    }else{
+        return NO;
+    }
+  // DROP TABLE IF EXISTS t_student;
+}
+
+
 //创建一场比洞比赛
 +(BOOL)ToCreateAGame:(NSDictionary *)dict
 {
@@ -153,13 +169,13 @@ static FMDatabase *_db;
     
     
     
-    NSString *sql3=[NSString stringWithFormat:@"INSERT INTO t_player(is_owner,nickname,portrait,match_id) VALUES (%d,'%@','%@',%ld);",player1.isUser,player1.name ,otherImageName,tool.uuid];
+    NSString *sql3=[NSString stringWithFormat:@"INSERT INTO t_player(is_owner,nickname,portrait,match_id) VALUES (%d,'%@','%@',%ld);",player1.isUser,player1.name ,otherImageName,(long)tool.uuid];
     
     BOOL success3=[_db executeUpdate:sql3];
  //  BOOL success3=[_db executeUpdate:@"INSERT INTO t_player(is_owner,nickname,portrait,match_id) VALUES (?,?,?,?);",@([dict[@"otherDict"] isUser]),[dict[@"otherDict"] name] ,otherPath,@(tool.uuid)];
     
     
-    NSString *sql4=[NSString stringWithFormat:@"INSERT INTO t_player(is_owner,nickname,portrait,match_id) VALUES (%d,'%@','%@',%ld);",player2.isUser,player2.name ,anotherName,tool.uuid];
+    NSString *sql4=[NSString stringWithFormat:@"INSERT INTO t_player(is_owner,nickname,portrait,match_id) VALUES (%d,'%@','%@',%ld);",player2.isUser,player2.name ,anotherName,(long)tool.uuid];
     BOOL success4=[_db executeUpdate:sql4];
    // BOOL success4=[_db executeUpdate:@"INSERT INTO t_player(is_owner,nickname,portrait,match_id) VALUES (?,?,?,?);",@([dict[@"anotherDict"] isUser]),[dict[@"anotherDict"] name] ,anotherDictPath,@(tool.uuid)];
     
@@ -220,17 +236,17 @@ static FMDatabase *_db;
     BOOL success2=[_db executeUpdate:sql2];
 
     
-    NSString *sql3=[NSString stringWithFormat:@"INSERT INTO t_player(is_owner,nickname,portrait,match_id) VALUES (%d,'%@','%@',%ld);",player1.isUser,player1.name ,otherImageName,tool.uuid];
+    NSString *sql3=[NSString stringWithFormat:@"INSERT INTO t_player(is_owner,nickname,portrait,match_id) VALUES (%d,'%@','%@',%ld);",player1.isUser,player1.name ,otherImageName,(long)tool.uuid];
     
     BOOL success3=[_db executeUpdate:sql3];
    
     
     
-    NSString *sql4=[NSString stringWithFormat:@"INSERT INTO t_player(is_owner,nickname,portrait,match_id) VALUES (%d,'%@','%@',%ld);",player2.isUser,player2.name ,anotherName,tool.uuid];
+    NSString *sql4=[NSString stringWithFormat:@"INSERT INTO t_player(is_owner,nickname,portrait,match_id) VALUES (%d,'%@','%@',%ld);",player2.isUser,player2.name ,anotherName,(long)tool.uuid];
     BOOL success4=[_db executeUpdate:sql4];
     
     
-    NSString *sql5=[NSString stringWithFormat:@"INSERT INTO t_player(is_owner,nickname,portrait,match_id) VALUES (%d,'%@','%@',%ld);",player3.isUser,player3.name ,lastPlayer,tool.uuid];
+    NSString *sql5=[NSString stringWithFormat:@"INSERT INTO t_player(is_owner,nickname,portrait,match_id) VALUES (%d,'%@','%@',%ld);",player3.isUser,player3.name ,lastPlayer,(long)tool.uuid];
     BOOL success5=[_db executeUpdate:sql5];
 
     if (success1&&success2&&success3&&success4&&success5) {
@@ -255,15 +271,15 @@ static FMDatabase *_db;
     ZCOfflinePlayer *play1= fightTheLandlordModel.plays[0];
     ZCOfflinePlayer *play2= fightTheLandlordModel.plays[1];
     
-    NSString *t_match_sql=[NSString stringWithFormat:@"UPDATE t_match SET par_%d=%d WHERE  id=%ld",holeNumber+1,fightTheLandlordModel.par,(long)tool.uuid];
+    NSString *t_match_sql=[NSString stringWithFormat:@"UPDATE t_match SET earned=%ld, par_%d=%d WHERE  id=%ld",(long)play1.score, holeNumber+1,fightTheLandlordModel.par,(long)tool.uuid];
     BOOL success1=[_db executeUpdate:t_match_sql];
     
     
-     NSString *t_player_sql=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,(long)play1.stroke,play1.player_id];
+     NSString *t_player_sql=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,(long)play1.stroke,(long)play1.player_id];
     
     BOOL success2=[_db executeUpdate:t_player_sql];
     
-    NSString *t_player_sql2=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,(long)play2.stroke,play2.player_id];
+    NSString *t_player_sql2=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,(long)play2.stroke,(long)play2.player_id];
     BOOL success3=[_db executeUpdate:t_player_sql2];
     if (success1&&success2&&success3) {
         return YES;
@@ -299,14 +315,14 @@ static FMDatabase *_db;
     ZCOfflinePlayer *play3= fightTheLandlordModel.plays[2];
 
     
-    NSString *t_player_sql=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,play1.stroke,play1.player_id];
+    NSString *t_player_sql=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,(long)play1.stroke,(long)play1.player_id];
     BOOL success2=[_db executeUpdate:t_player_sql];
 
-    NSString *t_player_sql2=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,play2.stroke,play2.player_id];
+    NSString *t_player_sql2=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,(long)play2.stroke,(long)play2.player_id];
     BOOL success3=[_db executeUpdate:t_player_sql2];
 
     
-    NSString *t_player_sql3=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,play3.stroke,play3.player_id];
+    NSString *t_player_sql3=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,(long)play3.stroke,(long)play3.player_id];
     BOOL success4=[_db executeUpdate:t_player_sql3];
 
 
@@ -326,7 +342,17 @@ static FMDatabase *_db;
 +(BOOL)saveTheLasVegasGamePerformance:(ZCFightTheLandlordModel *)fightTheLandlordModel  andHoleNumber:(int) holeNumber
 {
     ZCSingletonTool *tool=[ZCSingletonTool sharedEventUuidTool];
-    NSString *t_match_sql=[NSString stringWithFormat:@"UPDATE t_match SET par_%d=%d WHERE  id=%ld",holeNumber+1,fightTheLandlordModel.par,(long)tool.uuid];
+     NSInteger score = 0;
+    for (ZCOfflinePlayer *play in fightTheLandlordModel.plays) {
+        if (play.is_owner==1) {
+            score=play.score;
+            break;
+        }
+    }
+
+    ZCLog(@"%d",score);
+    
+    NSString *t_match_sql=[NSString stringWithFormat:@"UPDATE t_match SET earned=%ld, par_%d=%d WHERE  id=%ld",(long)score,holeNumber+1,fightTheLandlordModel.par,(long)tool.uuid];
     BOOL success1=[_db executeUpdate:t_match_sql];
     
     
@@ -337,17 +363,17 @@ static FMDatabase *_db;
     ZCOfflinePlayer *play4= fightTheLandlordModel.plays[3];
     
     
-    NSString *t_player_sql=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,play1.stroke,play1.player_id];
+    NSString *t_player_sql=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,(long)play1.stroke,(long)play1.player_id];
     BOOL success2=[_db executeUpdate:t_player_sql];
     
-    NSString *t_player_sql2=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,play2.stroke,play2.player_id];
+    NSString *t_player_sql2=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,(long)play2.stroke,(long)play2.player_id];
     BOOL success3=[_db executeUpdate:t_player_sql2];
     
     
-    NSString *t_player_sql3=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,play3.stroke,play3.player_id];
+    NSString *t_player_sql3=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,(long)play3.stroke,(long)play3.player_id];
     BOOL success4=[_db executeUpdate:t_player_sql3];
     
-    NSString *t_player_sql4=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,play4.stroke,play4.player_id];
+    NSString *t_player_sql4=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,(long)play4.stroke,(long)play4.player_id];
     BOOL success5=[_db executeUpdate:t_player_sql4];
     
     
@@ -370,7 +396,16 @@ static FMDatabase *_db;
 {
 
     ZCSingletonTool *tool=[ZCSingletonTool sharedEventUuidTool];
-    NSString *t_match_sql=[NSString stringWithFormat:@"UPDATE t_match SET par_%d=%d WHERE  id=%ld",holeNumber+1,lasVegasModel.par,(long)tool.uuid];
+    NSInteger score = 0;
+    for (ZCOfflinePlayer *play in lasVegasModel.plays) {
+        if (play.is_owner==1) {
+            score=play.score;
+            break;
+        }
+    }
+
+    
+    NSString *t_match_sql=[NSString stringWithFormat:@"UPDATE t_match SET earned=%ld,par_%d=%d WHERE  id=%ld",(long)score,holeNumber+1,lasVegasModel.par,(long)tool.uuid];
     BOOL success1=[_db executeUpdate:t_match_sql];
     
     
@@ -380,17 +415,17 @@ static FMDatabase *_db;
     ZCOfflinePlayer *play3= lasVegasModel.plays[2];
     ZCOfflinePlayer *play4= lasVegasModel.plays[3];
     
-    NSString *t_player_sql=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,play1.stroke,play1.player_id];
+    NSString *t_player_sql=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,(long)play1.stroke,(long)play1.player_id];
     BOOL success2=[_db executeUpdate:t_player_sql];
     
-    NSString *t_player_sql2=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,play2.stroke,play2.player_id];
+    NSString *t_player_sql2=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,(long)play2.stroke,(long)play2.player_id];
     BOOL success3=[_db executeUpdate:t_player_sql2];
     
     
-    NSString *t_player_sql3=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,play3.stroke,play3.player_id];
+    NSString *t_player_sql3=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,(long)play3.stroke,(long)play3.player_id];
     BOOL success4=[_db executeUpdate:t_player_sql3];
     
-    NSString *t_player_sql4=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,play4.stroke,play4.player_id];
+    NSString *t_player_sql4=[NSString stringWithFormat:@"UPDATE t_player SET stroke_%d=%ld WHERE  id=%ld",holeNumber+1,(long)play4.stroke,(long)play4.player_id];
     BOOL success5=[_db executeUpdate:t_player_sql4];
 
 
@@ -598,6 +633,25 @@ static FMDatabase *_db;
     }
     return array;
 }
+
+
+//删除历史
++(BOOL)deleteTheData:(NSInteger )uuid
+{
+    NSString *sqlStr1=[NSString stringWithFormat:@"DELETE FROM t_match WHERE id=%ld;",(long)uuid];
+    NSString *sqlStr2=[NSString stringWithFormat:@"DELETE FROM t_player WHERE match_id=%ld;",(long)uuid];
+    
+    BOOL success1=[_db executeUpdate:sqlStr1];
+    BOOL success2=[_db executeUpdate:sqlStr2];
+
+    if (success1 &&success2) {
+        return YES;
+    }else{
+       return NO;
+    }
+   
+}
+
 
 
 @end

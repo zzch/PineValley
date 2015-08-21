@@ -14,6 +14,7 @@
 @property(nonatomic,weak)UILabel *resultsLabel;
 @property(nonatomic,weak)UILabel *progressLabel;
 @property(nonatomic,assign)int index;
+@property(nonatomic,weak)UIImageView *moneyImage;
 @end
 @implementation ZCEntertainmentRankingCell
 
@@ -64,9 +65,14 @@
     
     //用户名字
     UILabel *userLabel=[[UILabel alloc] init];
-    userLabel.backgroundColor=[UIColor redColor];
+    
     [self.contentView addSubview:userLabel];
     self.userLabel=userLabel;
+    
+    UIImageView *moneyImage=[[UIImageView alloc] init];
+    moneyImage.image=[UIImage imageNamed:@"jinbi"];
+    [self.contentView addSubview:moneyImage];
+    self.moneyImage=moneyImage;
     
     //成绩
     UILabel *resultsLabel=[[UILabel alloc] init];
@@ -77,12 +83,7 @@
     self.resultsLabel=resultsLabel;
     
     
-    //进度
-    UILabel *progressLabel=[[UILabel alloc] init];
-    [self.contentView addSubview:progressLabel];
-    progressLabel.textAlignment=NSTextAlignmentCenter;
-    self.progressLabel=progressLabel;
-    
+      
     
 }
 
@@ -139,20 +140,22 @@
     CGFloat  userLabelH=self.frame.size.height;
     self.userLabel.frame=CGRectMake(userLabelX, userLabelY, userLabelW, userLabelH);
     
+    CGFloat moneyImageW=18;
+    CGFloat moneyImageH=17;
+    CGFloat moneyImageX=self.frame.size.width-(self.frame.size.width*0.0818)-60;
+    CGFloat moneyImageY=(self.frame.size.height-moneyImageH)/2;
+    self.moneyImage.frame=CGRectMake(moneyImageX, moneyImageY, moneyImageW, moneyImageH);
+    
     
     
     CGFloat  resultsLabelX=self.frame.size.width-70;
     CGFloat  resultsLabelW=70;
     CGFloat  resultsLabelH=40;
-    CGFloat  resultsLabelY=(self.frame.size.height/2)-resultsLabelH;
+    CGFloat  resultsLabelY=(self.frame.size.height-resultsLabelH)/2;
     self.resultsLabel.frame=CGRectMake(resultsLabelX, resultsLabelY, resultsLabelW, resultsLabelH);
     
     
-    CGFloat  progressLabelX=self.frame.size.width-70;
-    CGFloat  progressLabelW=70;
-    CGFloat  progressLabelH=30;
-    CGFloat  progressLabelY=resultsLabelY+resultsLabelH;
-    self.progressLabel.frame=CGRectMake(progressLabelX, progressLabelY, progressLabelW, progressLabelH);
+    
     
     
 }

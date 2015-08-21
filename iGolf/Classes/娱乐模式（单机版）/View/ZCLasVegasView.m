@@ -73,11 +73,20 @@
     
     
     
-    
+    UILabel *redLabel=[[UILabel alloc] init];
+    CGFloat redLabelX=15;
+    CGFloat redLabelY=17;
+    CGFloat redLabelW=(SCREEN_WIDTH-30-47)/4;
+    CGFloat redLabelH=30;
+    redLabel.frame=CGRectMake(redLabelX, redLabelY, redLabelW, redLabelH);
+    redLabel.text=@"蓝队";
+    redLabel.textAlignment=NSTextAlignmentCenter;
+    redLabel.font=[UIFont systemFontOfSize:17];
+    [self addSubview:redLabel];
     
     UILabel *numberLabel=[[UILabel alloc] init];
     CGFloat numberLabelX=15;
-    CGFloat numberLabelY=17;
+    CGFloat numberLabelY=47;
     CGFloat numberLabelW=(SCREEN_WIDTH-30-47)/4;
     CGFloat numberLabelH=20;
     numberLabel.frame=CGRectMake(numberLabelX, numberLabelY, numberLabelW, numberLabelH);
@@ -86,10 +95,24 @@
     numberLabel.textAlignment=NSTextAlignmentCenter;
     [self addSubview:numberLabel];
     
+    
+    UILabel *redLabel2=[[UILabel alloc] init];
+    CGFloat redLabel2X=numberLabelX+numberLabelW;
+    CGFloat redLabel2Y=17;
+    CGFloat redLabel2W=(SCREEN_WIDTH-30-47)/4;
+    CGFloat redLabel2H=30;
+    redLabel2.frame=CGRectMake(redLabel2X, redLabel2Y, redLabel2W, redLabel2H);
+    redLabel2.text=@"蓝队";
+    redLabel2.textAlignment=NSTextAlignmentCenter;
+    redLabel2.font=[UIFont systemFontOfSize:17];
+    [self addSubview:redLabel2];
+
+    
+    
     UILabel *numberLabel2=[[UILabel alloc] init];
     CGFloat numberLabel2X=numberLabelX+numberLabelW;
-    CGFloat numberLabel2Y=17;
-    CGFloat numberLabel2W=(SCREEN_WIDTH-30)/4;
+    CGFloat numberLabel2Y=47;
+    CGFloat numberLabel2W=(SCREEN_WIDTH-30-47)/4;
     CGFloat numberLabel2H=20;
     numberLabel2.frame=CGRectMake(numberLabel2X, numberLabel2Y, numberLabel2W, numberLabel2H);
     numberLabel2.text=@"4号发球";
@@ -97,10 +120,24 @@
     numberLabel2.textAlignment=NSTextAlignmentCenter;
     [self addSubview:numberLabel2];
     
+    
+    
+    
+    UILabel *greenLabel=[[UILabel alloc] init];
+    CGFloat greenLabelX=numberLabel2X+numberLabel2W+47;
+    CGFloat greenLabelY=17;
+    CGFloat greenLabelW=(SCREEN_WIDTH-30-47)/4;
+    CGFloat greenLabelH=30;
+    greenLabel.frame=CGRectMake(greenLabelX, greenLabelY, greenLabelW, greenLabelH);
+    greenLabel.text=@"绿队";
+    greenLabel.textAlignment=NSTextAlignmentCenter;
+    greenLabel.font=[UIFont systemFontOfSize:17];
+    [self addSubview:greenLabel];
+    
     UILabel *numberLabel3=[[UILabel alloc] init];
-    CGFloat numberLabel3X=numberLabel2X+numberLabel2W+27;
-    CGFloat numberLabel3Y=17;
-    CGFloat numberLabel3W=(SCREEN_WIDTH-30)/4;
+    CGFloat numberLabel3X=numberLabel2X+numberLabel2W+47;
+    CGFloat numberLabel3Y=47;
+    CGFloat numberLabel3W=(SCREEN_WIDTH-30-47)/4;
     CGFloat numberLabel3H=20;
     numberLabel3.frame=CGRectMake(numberLabel3X, numberLabel3Y, numberLabel3W, numberLabel3H);
     numberLabel3.text=@"2号发球";
@@ -109,15 +146,31 @@
     [self addSubview:numberLabel3];
     
     
+    
+    
+    UILabel *greenLabel2=[[UILabel alloc] init];
+    CGFloat greenLabel2X=numberLabel3X+numberLabel3W;
+    CGFloat greenLabel2Y=17;
+    CGFloat greenLabel2W=(SCREEN_WIDTH-30-47)/4;
+    CGFloat greenLabel2H=30;
+    greenLabel2.frame=CGRectMake(greenLabel2X, greenLabel2Y, greenLabel2W, greenLabel2H);
+    greenLabel2.text=@"绿队";
+    greenLabel2.textAlignment=NSTextAlignmentCenter;
+   
+    greenLabel2.font=[UIFont systemFontOfSize:17];
+    [self addSubview:greenLabel2];
+    
+    
     UILabel *numberLabel4=[[UILabel alloc] init];
     CGFloat numberLabel4X=numberLabel3X+numberLabel3W;
-    CGFloat numberLabel4Y=17;
-    CGFloat numberLabel4W=(SCREEN_WIDTH-30)/4;
+    CGFloat numberLabel4Y=47;
+    CGFloat numberLabel4W=(SCREEN_WIDTH-30-47)/4;
     CGFloat numberLabel4H=20;
     numberLabel4.frame=CGRectMake(numberLabel4X, numberLabel4Y, numberLabel4W, numberLabel4H);
     numberLabel4.text=@"3号发球";
     numberLabel4.font=[UIFont systemFontOfSize:12];
     numberLabel4.textAlignment=NSTextAlignmentCenter;
+    
     [self addSubview:numberLabel4];
     
     
@@ -310,7 +363,7 @@
     button2.tag = 1;
     
     
-    [self addPersonView:button2 andPersonImage:[UIImage imageNamed:@"morentouxiang"] andPersonName:@"玩家1"];
+    [self addPersonView:button2 andPersonImage:[UIImage imageNamed:@"yule_touxiang"] andPersonName:@"玩家1"];
     [self.myRects addObject:button2];
     
     NSString * str2 = [NSString stringWithFormat:@"%@",NSStringFromCGRect(button2.frame)];
@@ -346,7 +399,7 @@
     button3.frame = CGRectMake(button3X , button3Y, button3W,button3H);
    button3.tag = 2;
     
-    [self addPersonView:button3 andPersonImage:[UIImage imageNamed:@"morentouxiang"] andPersonName:@"玩家2"];
+    [self addPersonView:button3 andPersonImage:[UIImage imageNamed:@"yule_touxiang"] andPersonName:@"玩家2"];
     [self.myRects addObject:button3];
     [button3 addTarget:self action:@selector(clickTheButton:) forControlEvents:UIControlEventTouchUpInside];
     NSString * str3 = [NSString stringWithFormat:@"%@",NSStringFromCGRect(button3.frame)];
@@ -370,7 +423,7 @@
     button4.frame = CGRectMake(button4X , button4Y, button4W,button4H);
     button4.tag = 3;
    
-    [self addPersonView:button4 andPersonImage:[UIImage imageNamed:@"morentouxiang"] andPersonName:@"玩家3"];
+    [self addPersonView:button4 andPersonImage:[UIImage imageNamed:@"yule_touxiang"] andPersonName:@"玩家3"];
     [self.myRects addObject:button4];
     [button4 addTarget:self action:@selector(clickTheButton:) forControlEvents:UIControlEventTouchUpInside];
     NSString * str4 = [NSString stringWithFormat:@"%@",NSStringFromCGRect(button4.frame)];
@@ -398,7 +451,7 @@
     imageView.layer.cornerRadius=button.frame.size.width/2;
     imageView.layer.masksToBounds=YES;
     imageView.image=image;
-    imageView.layer.borderWidth=2;
+    imageView.layer.borderWidth=3;
     [button addSubview:imageView ];
     
     
@@ -415,18 +468,18 @@
     
     if (button.tag==0) {
         imageView.tag=2032;
-        imageView.layer.borderColor=[UIColor redColor].CGColor;
-        nameLabel.textColor=[UIColor redColor];
+        imageView.layer.borderColor=ZCColor(45, 219, 254).CGColor;
+        nameLabel.textColor=ZCColor(45, 219, 254);
     }else if (button.tag==1)
     {
-        imageView.layer.borderColor=[UIColor redColor].CGColor;
-        nameLabel.textColor=[UIColor redColor];
+        imageView.layer.borderColor=ZCColor(45, 219, 254).CGColor;
+        nameLabel.textColor=ZCColor(45, 219, 254);
     }else if (button.tag==2){
-        imageView.layer.borderColor=[UIColor yellowColor].CGColor;
-        nameLabel.textColor=[UIColor yellowColor];
+        imageView.layer.borderColor=ZCColor(69, 226, 57).CGColor;
+        nameLabel.textColor=ZCColor(69, 226, 57);
     }else{
-        imageView.layer.borderColor=[UIColor yellowColor].CGColor;
-        nameLabel.textColor=[UIColor yellowColor];
+        imageView.layer.borderColor=ZCColor(69, 226, 57).CGColor;
+        nameLabel.textColor=ZCColor(69, 226, 57);
     }
 
     
@@ -531,8 +584,8 @@
                              nameLabel=view;
                          }
                          
-                         image.layer.borderColor=[[UIColor redColor]CGColor];
-                         nameLabel.textColor=[UIColor redColor];
+                         image.layer.borderColor=[ZCColor(45, 219, 254) CGColor];
+                         nameLabel.textColor=ZCColor(45, 219, 254);
                      }
                  }else{
                  
@@ -546,8 +599,8 @@
                              nameLabel=view;
                          }
                          
-                         image.layer.borderColor=[[UIColor yellowColor]CGColor];
-                         nameLabel.textColor=[UIColor yellowColor];
+                         image.layer.borderColor=[ZCColor(69, 226, 57) CGColor];
+                         nameLabel.textColor=ZCColor(69, 226, 57);
                      }
                  }
              }
@@ -724,8 +777,17 @@
 //点击按钮
 -(void)clickTheButton:(UIButton *)btn
 {
+    UILabel *textLabel;
+    for (id view in btn.subviews) {
+        if ([view isKindOfClass:[UILabel class]]) {
+            textLabel=view;
+            break;
+        }
+    }
+
+    
     if ([self.delegate respondsToSelector:@selector(buttonIsClickerForLasVegasView:)]) {
-        [self.delegate buttonIsClickerForLasVegasView:btn];
+        [self.delegate buttonIsClickerForLasVegasView:textLabel.text];
     }
     
     
@@ -761,8 +823,19 @@
         }
         
     }
-    image1.image=image;
-    nameLabel.text=name;
+    
+    if (image==nil) {
+    }else{
+        image1.image=image;
+    }
+    if (name.length==0) {
+    }else{
+        nameLabel.text=name;
+    }
+
+    
+//    image1.image=image;
+//    nameLabel.text=name;
     
     
 }

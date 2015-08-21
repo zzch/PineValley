@@ -319,7 +319,7 @@
     button2.frame = CGRectMake(button2X , button2Y, button2W,button2H);
     button2.tag = 1;
     
-    [self addPersonView:button2 andPersonImage:[UIImage imageNamed:@"morentouxiang"] andPersonName:@"玩家1"];
+    [self addPersonView:button2 andPersonImage:[UIImage imageNamed:@"yule_touxiang"] andPersonName:@"玩家1"];
     [self.myRects addObject:button2];
     
     NSString * str2 = [NSString stringWithFormat:@"%@",NSStringFromCGRect(button2.frame)];
@@ -348,7 +348,7 @@
     CGFloat button3H=buttonH;
     button3.frame = CGRectMake(button3X , button3Y, button3W,button3H);
     button3.tag = 2;
-    [self addPersonView:button3 andPersonImage:[UIImage imageNamed:@"morentouxiang"] andPersonName:@"玩家2"];
+    [self addPersonView:button3 andPersonImage:[UIImage imageNamed:@"yule_touxiang"] andPersonName:@"玩家2"];
     [self.myRects addObject:button3];
     
     NSString * str3 = [NSString stringWithFormat:@"%@",NSStringFromCGRect(button3.frame)];
@@ -377,16 +377,16 @@
     imageView.frame=CGRectMake(0, 0, button.frame.size.width, button.frame.size.width);
     imageView.layer.cornerRadius=button.frame.size.width/2;
     imageView.layer.masksToBounds=YES;
-    imageView.layer.borderWidth=2;
+    imageView.layer.borderWidth=3;
     imageView.image=image;
     [button addSubview:imageView ];
     if (button.tag==0) {
         imageView.tag=2031;
-     imageView.layer.borderColor=[UIColor yellowColor].CGColor;
+     imageView.layer.borderColor=ZCColor(69, 226, 57).CGColor;
     }else if (button.tag==1){
-    imageView.layer.borderColor=[UIColor redColor].CGColor;
+    imageView.layer.borderColor=ZCColor(45, 219, 254) .CGColor;
     }else{
-    imageView.layer.borderColor=[UIColor yellowColor].CGColor;
+    imageView.layer.borderColor=ZCColor(69, 226, 57).CGColor;
     }
     
     
@@ -399,9 +399,9 @@
     [button addSubview:nameLabel];
     
     if (button.tag==1) {
-        nameLabel.textColor=[UIColor redColor];
+        nameLabel.textColor=ZCColor(45, 219, 254) ;
     }else{
-    nameLabel.textColor=[UIColor yellowColor];
+    nameLabel.textColor=ZCColor(69, 226, 57);
     }
     
 }
@@ -507,8 +507,8 @@
                              nameLabel=view;
                          }
 
-                         image.layer.borderColor=[[UIColor redColor]CGColor];
-                         nameLabel.textColor=[UIColor redColor];
+                         image.layer.borderColor=[ZCColor(45, 219, 254)  CGColor];
+                         nameLabel.textColor=ZCColor(45, 219, 254)  ;
                      }
                  }else
                  {
@@ -523,8 +523,8 @@
                              nameLabel=view;
                          }
 
-                         image.layer.borderColor=[[UIColor yellowColor]CGColor];
-                         nameLabel.textColor=[UIColor yellowColor];
+                         image.layer.borderColor=[ZCColor(69, 226, 57) CGColor];
+                         nameLabel.textColor=ZCColor(69, 226, 57);
                      }
 
                  
@@ -658,8 +658,17 @@
 //点击按钮
 -(void)clickTheButton:(UIButton *)btn
 {
+    UILabel *textLabel;
+    for (id view in btn.subviews) {
+        if ([view isKindOfClass:[UILabel class]]) {
+            textLabel=view;
+            break;
+        }
+    }
+    
+    
     if ([self.delegate respondsToSelector:@selector(buttonIsClickerForFightTheLandlordView:)]) {
-        [self.delegate buttonIsClickerForFightTheLandlordView:btn];
+        [self.delegate buttonIsClickerForFightTheLandlordView:textLabel.text];
     }
 
     
@@ -694,8 +703,24 @@
         }
 
     }
-    image1.image=image;
-    nameLabel.text=name;
+    
+    
+    
+    
+    if (image==nil) {
+    }else{
+         image1.image=image;
+    }
+    if (name.length==0) {
+    }else{
+       nameLabel.text=name;
+    }
+
+    
+    
+    
+   
+    
     
 
 }

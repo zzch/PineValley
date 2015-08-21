@@ -18,4 +18,6 @@
 //哪一个人的成绩
 @property (nonatomic, assign) NSInteger otherID;
 
+//点击成绩后是否是修改的数据
+@property(nonatomic,assign)BOOL isModify;
 @end

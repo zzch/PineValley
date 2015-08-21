@@ -41,7 +41,7 @@
         // photoView.backgroundColor=[UIColor redColor];
         photoView.layer.cornerRadius=self.frame.size.width/2;
         photoView.layer.masksToBounds=YES;
-        photoView.layer.borderWidth=2;
+        photoView.layer.borderWidth=3;
         photoView.layer.borderColor=[UIColor redColor].CGColor;
         [self addSubview:photoView];
         self.photoView=photoView;
@@ -94,11 +94,11 @@
 {
     _indexColor=indexColor;
     if (indexColor==1) {
-        self.photoView.layer.borderColor=[UIColor redColor].CGColor;
-        self.nameLabel.textColor=[UIColor redColor];
+        self.photoView.layer.borderColor=ZCColor(45, 219, 254) .CGColor;
+        self.nameLabel.textColor=ZCColor(45, 219, 254) ;
     }else{
-        self.photoView.layer.borderColor=[UIColor yellowColor].CGColor;
-        self.nameLabel.textColor=[UIColor yellowColor];
+        self.photoView.layer.borderColor=ZCColor(69, 226, 57).CGColor;
+        self.nameLabel.textColor=ZCColor(69, 226, 57);
     }
     
 }
@@ -120,6 +120,8 @@
     self.nameLabel.text=offlinePlayer.nickname;
     self.numberLabel.text=[NSString stringWithFormat:@"%ld",(long)offlinePlayer.score];
     ZCLog(@"%@",[NSString stringWithFormat:@"%ld",(long)offlinePlayer.score]);
+    
+    [self layoutSubviews];
 }
 
 
@@ -159,7 +161,7 @@
     
     CGFloat numberLabelX=moneyImageX+moneyImageW+3;
     CGFloat numberLabelY=moneyImageY;
-    CGFloat numberLabelW=w+10;
+    CGFloat numberLabelW=w+15;
     CGFloat numberLabelH=17;
     self.numberLabel.frame=CGRectMake(numberLabelX, numberLabelY, numberLabelW, numberLabelH);
     

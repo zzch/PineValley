@@ -7,11 +7,12 @@
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "bn_01.png"
+      "filename" : "sbbzg_ts@2x.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "sbbzg_ts@3x.png"
     }
   ],
   "info" : {

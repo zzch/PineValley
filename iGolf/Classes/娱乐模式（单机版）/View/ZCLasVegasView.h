@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @protocol ZCLasVegasViewDelegate <NSObject>
 @optional
--(void)buttonIsClickerForLasVegasView:(UIButton *)btn;
+-(void)buttonIsClickerForLasVegasView:(NSString *)nameStr;
 @end
 @interface ZCLasVegasView : UIView
 @property(nonatomic,weak)id<ZCLasVegasViewDelegate>delegate;

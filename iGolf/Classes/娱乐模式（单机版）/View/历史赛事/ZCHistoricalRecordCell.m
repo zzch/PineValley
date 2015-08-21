@@ -74,13 +74,13 @@
 {
     _historicalRecordModel=historicalRecordModel;
     if (historicalRecordModel.type==1) {
-        self.typeImageView.image=[UIImage imageNamed:@"bidongsai"];
+        self.typeImageView.image=[UIImage imageNamed:@"lisi_bds"];
     }else if (historicalRecordModel.type==2)
     {
-    self.typeImageView.image=[UIImage imageNamed:@"doudizhu"];
+    self.typeImageView.image=[UIImage imageNamed:@"lisi_ddz"];
     }else
     {
-    self.typeImageView.image=[UIImage imageNamed:@"lswjs"];
+    self.typeImageView.image=[UIImage imageNamed:@"lisi_lswjs"];
     }
     
       NSDateFormatter  *dateformatter=[[NSDateFormatter alloc] init];
@@ -126,12 +126,12 @@
     
     CGFloat moneyImageW=18;
     CGFloat moneyImageH=17;
-    CGFloat moneyImageX=self.frame.size.width-(self.frame.size.width*0.0818)-40;
+    CGFloat moneyImageX=self.frame.size.width-(self.frame.size.width*0.0818)-50;
     CGFloat moneyImageY=(self.frame.size.height-moneyImageH)/2;
     self.moneyImage.frame=CGRectMake(moneyImageX, moneyImageY, moneyImageW, moneyImageH);
     
     
-    CGFloat scoreLabelW=40;
+    CGFloat scoreLabelW=50;
     CGFloat scoreLabelH=40;
     CGFloat scoreLabelY=(self.frame.size.height-scoreLabelH)/2;
     CGFloat scoreLabelX=SCREEN_WIDTH-scoreLabelW-(SCREEN_WIDTH*0.0312);

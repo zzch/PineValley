@@ -43,4 +43,8 @@
  作为比较属性
  */
 @property(nonatomic,assign)CGFloat strokeToCompare;
+
+
+@property(nonatomic,assign)NSInteger isSaveStroke;
+
 @end

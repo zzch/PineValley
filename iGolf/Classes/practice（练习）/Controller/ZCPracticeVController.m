@@ -14,7 +14,7 @@
 #import "ZCStatisticalViewController.h"
 #import "ZCPersonalViewController.h"
 #import "UIImageView+WebCache.h"
-
+#import "ZCPersonalizedSettingsViewController.h"
 #import "ZCSetupModeViewController.h"
 @interface ZCPracticeVController ()
 
@@ -180,7 +180,7 @@
     CGFloat technicalStatisticsW=sportsCompetitionW;
     CGFloat technicalStatisticsH=sportsCompetitionH;
     technicalStatistics.frame=CGRectMake(technicalStatisticsX, technicalStatisticsY, technicalStatisticsW, technicalStatisticsH);
-    [technicalStatistics setImage:[UIImage imageNamed:@"shouye_jishutongji"] forState:UIControlStateNormal];
+    [technicalStatistics setImage:[UIImage imageNamed:@"3"] forState:UIControlStateNormal];
 
     
     [technicalStatistics addTarget:self action:@selector(clickTheTechnicalStatistics) forControlEvents:UIControlEventTouchUpInside];
@@ -194,7 +194,7 @@
     CGFloat personalCenterW=sportsCompetitionW;
     CGFloat personalCenterH=sportsCompetitionH;
     personalCenter.frame=CGRectMake(personalCenterX, personalCenterY, personalCenterW, personalCenterH);
-    [personalCenter setImage:[UIImage imageNamed:@"shouye_gerenzhongxin"] forState:UIControlStateNormal];
+    [personalCenter setImage:[UIImage imageNamed:@"4"] forState:UIControlStateNormal];
     
     [personalCenter addTarget:self action:@selector(clickThePersonalCenter) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:personalCenter];
@@ -208,9 +208,27 @@
 
 -(void)clickTheBtn
 {
-    ZCSetupModeViewController *vc=[[ZCSetupModeViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+    // 获取路劲 取出图片
+    NSString *path=[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)lastObject] stringByAppendingPathComponent:@"personImage.png"];
+    NSData *imageData=[NSData dataWithContentsOfFile:path];
+    UIImage *image=[[UIImage alloc] initWithData:imageData];
+    
 
+    if (image) {
+        ZCSetupModeViewController *vc=[[ZCSetupModeViewController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+
+    }else{
+    //进入个性化设置
+    ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
+   
+    tool.typeIndex=1;
+    ZCPersonalizedSettingsViewController *ZPersonalizedSettingsViewController=[[ZCPersonalizedSettingsViewController alloc] init];
+    
+    [self.navigationController pushViewController:ZPersonalizedSettingsViewController animated:YES];
+
+    }
+    
 }
 
 

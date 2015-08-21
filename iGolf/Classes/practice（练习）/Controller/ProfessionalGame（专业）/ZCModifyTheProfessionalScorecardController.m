@@ -59,9 +59,12 @@
     [super viewDidLoad];
     
     
+    
     //背景颜色suoyou_bj
     self.view.backgroundColor=ZCColor(237, 237, 237);
 
+    self.navigationItem.title=[NSString stringWithFormat:@"%@洞",self.scorecard.number];
+    
     
     UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"保存" style:UIBarButtonItemStyleDone target:self action:@selector(clickOnTheProfessionalSave)];
 //    //改变UIBarButtonItem字体颜色

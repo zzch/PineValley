@@ -20,6 +20,8 @@
 @property(nonatomic,weak)UIButton *photoButton;
 @property(nonatomic,weak)UIButton *cancelButton;
 @property(nonatomic,weak)UIButton *determineButton;
+
+@property(nonatomic,assign,getter=isOpen)BOOL open;
 @end
 @implementation ZCEditView
 
@@ -56,6 +58,8 @@
     self.nameLabel=nameLabel;
     
     UITextField *nameTextField=[[UITextField alloc] init];
+    nameTextField.textColor=ZCColor(85, 85, 85);
+    nameTextField.font=[UIFont systemFontOfSize:15];
     [bjView addSubview:nameTextField];
     self.nameTextField=nameTextField;
     
@@ -125,16 +129,37 @@
     
 }
 
+
+-(void)setNameStr:(NSString *)nameStr
+{
+    _nameStr=nameStr;
+    self.nameTextField.text=self.nameStr;
+
+}
+
 //点击拍照
 -(void)clickTheButton:(UIButton *)btn
 {
     if (btn.tag==20997) {//点击取消
+        
         [self removeFromSuperview];
+//        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+//            self.bjView.transform=CGAffineTransformIdentity;
+//            self.alpha=0.0;
+//        } completion:^(BOOL finished) {
+//            self.open=NO;
+//            
+//            [self removeFromSuperview];
+//        }];
+        
+        
+        
     }else if (btn.tag==20998)
     {//点击确定
     
+        ZCLog(@"%@",self.nameTextField.text);
         if ([self.delegate respondsToSelector:@selector(editViewPersonalInformation:andName:)]) {
-            [self.delegate editViewPersonalInformation:self.photoImage.image andName:self.nameTextField.text];
+            [self.delegate editViewPersonalInformation:self.image andName:self.nameTextField.text];
             [self removeFromSuperview];
         }
         
@@ -176,6 +201,17 @@
     
     self.bjView.frame=CGRectMake(bjViewX, bjViewY, bjViewW, bjViewH);
     
+    
+//    if (!self.open) {
+//        
+//    [UIView animateWithDuration:0.5 delay:0 options: UIViewAnimationOptionCurveEaseOut animations:^{
+//        //CGFloat move=(SCREEN_HEIGHT-bjViewH)/2;
+//        self.bjView.transform=CGAffineTransformMakeTranslation(0, -SCREEN_HEIGHT);
+//    } completion:^(BOOL finished) {
+//        self.open=YES;
+//    }];
+//    
+//    }
     
     CGFloat nameLabelX=18;
     CGFloat nameLabelY=38;

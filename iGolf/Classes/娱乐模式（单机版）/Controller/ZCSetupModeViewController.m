@@ -16,6 +16,7 @@
 #import "ZCDatabaseTool.h"
 #import "ZCDouModel.h"
 #import "ZCEditView.h"
+#import "ZCPracticeVController.h"
 #import "ZCHistoricalRecordTableViewController.h"
 @interface ZCSetupModeViewController ()<ZCHoleViewDelegate,ZCFightTheLandlordViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,ZCEditViewDelegate,ZCLasVegasViewDelegate>
 @property(nonatomic,weak)ZCHoleView *holeView;
@@ -41,6 +42,10 @@
     
     self.view.backgroundColor=[UIColor whiteColor];
     
+    self.navigationItem.title=@"娱乐模式";
+    //返回
+    self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(liftBthClick) target:self];
+    
         UIBarButtonItem *newBar= [[UIBarButtonItem alloc] initWithTitle:@"历史" style:UIBarButtonItemStyleDone target:self action:@selector(switchOtherView)];
         self.navigationItem.rightBarButtonItem = newBar;
     
@@ -55,6 +60,17 @@
 {
     ZCHistoricalRecordTableViewController *vc=[[ZCHistoricalRecordTableViewController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
+
+}
+
+//返回
+-(void)liftBthClick
+{
+    for (id vc in self.navigationController.viewControllers) {
+        if ([vc isKindOfClass:[ZCPracticeVController class]]) {
+            [self.navigationController popToViewController:vc animated:YES];
+        }
+    }
 
 }
 
@@ -115,7 +131,7 @@
     CGFloat holeViewX=0;
     CGFloat holeViewY=40;
     CGFloat holeViewW=SCREEN_WIDTH;
-    CGFloat holeViewH=SCREEN_HEIGHT-140;
+    CGFloat holeViewH=SCREEN_HEIGHT-150;
     holeView.frame=CGRectMake(holeViewX, holeViewY, holeViewW, holeViewH);
     holeView.delegate=self;
     [self.view addSubview:holeView];
@@ -217,7 +233,7 @@
         CGFloat holeViewX=0;
         CGFloat holeViewY=40;
         CGFloat holeViewW=SCREEN_WIDTH;
-        CGFloat holeViewH=SCREEN_HEIGHT-140;
+        CGFloat holeViewH=SCREEN_HEIGHT-150;
         fightTheLandlordView.frame=CGRectMake(holeViewX, holeViewY, holeViewW, holeViewH);
         [self.view addSubview:fightTheLandlordView];
         fightTheLandlordView.delegate=self;
@@ -251,7 +267,7 @@
         CGFloat holeViewX=0;
         CGFloat holeViewY=40;
         CGFloat holeViewW=SCREEN_WIDTH;
-        CGFloat holeViewH=SCREEN_HEIGHT-140;
+        CGFloat holeViewH=SCREEN_HEIGHT-150;
         lasVegasView.frame=CGRectMake(holeViewX, holeViewY, holeViewW, holeViewH);
         [self.view addSubview:lasVegasView];
         lasVegasView.delegate=self;
@@ -340,11 +356,12 @@
   self.editView.hidden=YES;
 }
 //ZCHoleViewDelegate代理方法
--(void)buttonIsClicker:(UIButton *)btn
+-(void)buttonIsClicker:(NSString *)nameStr
 {
     ZCEditView *editView=[[ZCEditView alloc] init];
     editView.frame=[UIScreen mainScreen].bounds;
     editView.delegate=self;
+    editView.nameStr=nameStr;
     UIWindow *wd=[[UIApplication sharedApplication].delegate window];
     [wd addSubview:editView];
     self.editView=editView;
@@ -353,23 +370,25 @@
 }
 
 // 斗地主代理方法
--(void)buttonIsClickerForFightTheLandlordView:(UIButton *)btn
+-(void)buttonIsClickerForFightTheLandlordView:(NSString *)nameStr
 {
     ZCEditView *editView=[[ZCEditView alloc] init];
     editView.frame=[UIScreen mainScreen].bounds;
     editView.delegate=self;
+    editView.nameStr=nameStr;
     UIWindow *wd=[[UIApplication sharedApplication].delegate window];
     [wd addSubview:editView];
     self.editView=editView;
     
 }
 
--(void)buttonIsClickerForLasVegasView:(UIButton *)btn
+-(void)buttonIsClickerForLasVegasView:(NSString *)nameStr
 {
 
     ZCEditView *editView=[[ZCEditView alloc] init];
     editView.frame=[UIScreen mainScreen].bounds;
     editView.delegate=self;
+    editView.nameStr=nameStr;
     UIWindow *wd=[[UIApplication sharedApplication].delegate window];
     [wd addSubview:editView];
     self.editView=editView;

@@ -45,6 +45,7 @@
 		A911BE1F1AC963EA00819F52 /* NSObject+MJMember.m in Sources */ = {isa = PBXBuildFile; fileRef = A911BE021AC963EA00819F52 /* NSObject+MJMember.m */; };
 		A911BE281AC963F300819F52 /* ZCEventUuidTool.m in Sources */ = {isa = PBXBuildFile; fileRef = A911BE271AC963F300819F52 /* ZCEventUuidTool.m */; };
 		A917808E1B293D2B003C66B3 /* ZCProfessionalStatisticsPromptView.m in Sources */ = {isa = PBXBuildFile; fileRef = A917808D1B293D2B003C66B3 /* ZCProfessionalStatisticsPromptView.m */; };
+		A91914131B7C4D990077FC8F /* ZCBirdBallView.m in Sources */ = {isa = PBXBuildFile; fileRef = A91914121B7C4D990077FC8F /* ZCBirdBallView.m */; };
 		A91BA1E31B0350D00085DCA6 /* ZCPersonalizedSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A91BA1E21B0350D00085DCA6 /* ZCPersonalizedSettingsViewController.m */; };
 		A923066D1B53923D00979EB5 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = A92306631B53923D00979EB5 /* MJRefresh.bundle */; };
 		A923066E1B53923D00979EB5 /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = A92306661B53923D00979EB5 /* MJRefreshBaseView.m */; };
@@ -345,6 +346,8 @@
 		A911BE271AC963F300819F52 /* ZCEventUuidTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCEventUuidTool.m; sourceTree = "<group>"; };
 		A917808C1B293D2B003C66B3 /* ZCProfessionalStatisticsPromptView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCProfessionalStatisticsPromptView.h; sourceTree = "<group>"; };
 		A917808D1B293D2B003C66B3 /* ZCProfessionalStatisticsPromptView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCProfessionalStatisticsPromptView.m; sourceTree = "<group>"; };
+		A91914111B7C4D990077FC8F /* ZCBirdBallView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCBirdBallView.h; sourceTree = "<group>"; };
+		A91914121B7C4D990077FC8F /* ZCBirdBallView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCBirdBallView.m; sourceTree = "<group>"; };
 		A91BA1E11B0350D00085DCA6 /* ZCPersonalizedSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZCPersonalizedSettingsViewController.h; sourceTree = "<group>"; };
 		A91BA1E21B0350D00085DCA6 /* ZCPersonalizedSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZCPersonalizedSettingsViewController.m; sourceTree = "<group>"; };
 		A92306631B53923D00979EB5 /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
@@ -1480,6 +1483,8 @@
 				A95C9CC31B6620D700BE8883 /* ZCParKeyboardView.m */,
 				A9FF86161B730D8500C652E3 /* ZCEditView.h */,
 				A9FF86171B730D8500C652E3 /* ZCEditView.m */,
+				A91914111B7C4D990077FC8F /* ZCBirdBallView.h */,
+				A91914121B7C4D990077FC8F /* ZCBirdBallView.m */,
 			);
 			path = "输入框";
 			sourceTree = "<group>";
@@ -2152,6 +2157,7 @@
 				A93737AC1B5E3030005C0FD2 /* ZCFightTheLandlordView.m in Sources */,
 				A98E19C71ADB7E8F005615A9 /* ZCProfessionalStatisticalViewController.m in Sources */,
 				A97BD3B81B340AC4004958C8 /* ZCForgetViewController.m in Sources */,
+				A91914131B7C4D990077FC8F /* ZCBirdBallView.m in Sources */,
 				A9DB4F921B4D1CC5007B0356 /* ZCLandingViewController.m in Sources */,
 				A982570D1ADE771300DC4B52 /* ZCRodNumberViewController.m in Sources */,
 				A97345E41ADD13AF0066F5FA /* ZCPushRodViewController.m in Sources */,

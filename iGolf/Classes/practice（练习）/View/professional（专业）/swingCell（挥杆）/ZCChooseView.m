@@ -481,7 +481,7 @@
             
         }else
         {
-            self.index1=(distance-50)/5+49;
+            self.index1=(distance-50)/5+50;
         }
         
         
@@ -567,30 +567,27 @@
         }else if ([selectTheDisplay.club isEqual:@"6 Iron"])
         {
             self.index4=14;
-        }else if ([selectTheDisplay.club isEqual:@"3 Iron"])
-        {
-            self.index4=15;
         }else if ([selectTheDisplay.club isEqual:@"7 Iron"])
         {
-            self.index4=16;
+            self.index4=15;
         }else if ([selectTheDisplay.club isEqual:@"8 Iron"])
         {
-            self.index4=17;
+            self.index4=16;
         }else if ([selectTheDisplay.club isEqual:@"9 Iron"])
         {
-            self.index4=18;
+            self.index4=17;
         }else if ([selectTheDisplay.club isEqual:@"PW"])
         {
-            self.index4=19;
+            self.index4=18;
         }else if ([selectTheDisplay.club isEqual:@"GW"])
         {
-            self.index4=20;
+            self.index4=19;
         }else if ([selectTheDisplay.club isEqual:@"LW"])
         {
             self.index4=21;
         }else if ([selectTheDisplay.club isEqual:@"SW"])
         {
-            self.index4=22;
+            self.index4=20;
         }
 
         

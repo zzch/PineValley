@@ -12,27 +12,47 @@
 #import "ZCSwitchModel.h"
 #import "ZCOfflinePlayer.h"
 #import "ZCEntertainmentRankingTableViewController.h"
+#import "ZCBirdBallView.h"
+#import "ZCSingletonTool.h"
 @interface ZCDoudizhuGameViewController ()<ZCDoudizhuGameViewDelegate>
 @property(nonatomic,weak)ZCDoudizhuGameView *doudizhuGameView;
 @property(nonatomic,strong)NSMutableArray *viewArray;
 @property(nonatomic,assign)int index;
 @property(nonatomic,weak)UIButton *afterBtn;
+@property(nonatomic,weak)UIButton *beforeBtn;
 @property(nonatomic,assign)BOOL isYES;
 @property(nonatomic,strong)NSMutableArray *dataArray;
-
+@property(nonatomic,strong)ZCBirdBallView *birdBallView;
 @property(nonatomic,assign) int liftScore;
 @property(nonatomic,assign) int middleScore;
 @property(nonatomic,assign) int rightScore;
 @property(nonatomic,strong)ZCFightTheLandlordModel*fightTheLandlordModel;
 
-//打平进入下一洞的次数
-@property(nonatomic,assign)int isNext;
+////打平进入下一洞的次数
+//@property(nonatomic,assign)int isNext;
+
+//判断是否是历史进来执行提示语
+@property(nonatomic,assign)BOOL isLiShi;
+//判断是否从历史进来是18个都记满的情况下
+@property(nonatomic,assign)BOOL open;
+
+
+//取消按钮
+@property(nonatomic,weak)UIButton *cancelBtn;
+//确认修改按钮
+@property(nonatomic,weak)UIButton *confirmBtn;
+
+//判断是否是修改的成绩，控制修改打平后的累计属性
+@property(nonatomic,assign)BOOL isModify;
 @end
 
 @implementation ZCDoudizhuGameViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.navigationItem.title=@"斗地主";
+   // self.birdBallView.delegate=self;
     
     //返回
     self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(dataToModify:) target:self];
@@ -42,6 +62,39 @@
     self.navigationItem.rightBarButtonItem = ButtonItem;
     
     self.view.backgroundColor=[UIColor whiteColor];
+    
+    
+    
+    
+    UIButton *beforeBtn=[[UIButton alloc] init];
+    beforeBtn.backgroundColor=ZCColor(8, 188, 80);
+    CGFloat beforeBtnX=0;
+    CGFloat beforeBtnY=self.view.frame.size.height-114;
+    CGFloat beforeBtnW=SCREEN_WIDTH/2;
+    CGFloat beforeBtnH=50;
+    beforeBtn.frame=CGRectMake(beforeBtnX, beforeBtnY, beforeBtnW, beforeBtnH);
+    [beforeBtn setTitle:@"上一洞" forState:UIControlStateNormal];
+    [beforeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [beforeBtn addTarget:self action:@selector(clickTheBeforeBtn) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:beforeBtn];
+    self.beforeBtn=beforeBtn;
+    
+    UIButton *afterBtn=[[UIButton alloc] init];
+    afterBtn.backgroundColor=ZCColor(255, 150, 29);
+    CGFloat afterBtnX=beforeBtnW;
+    CGFloat afterBtnY=self.view.frame.size.height-114;
+    CGFloat afterBtnW=beforeBtnW;
+    CGFloat afterBtnH=50;
+    afterBtn.frame=CGRectMake(afterBtnX, afterBtnY, afterBtnW, afterBtnH);
+    [afterBtn setTitle:@"确认成绩" forState:UIControlStateNormal];
+    [afterBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [afterBtn addTarget:self action:@selector(clickTheStartBtn) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:afterBtn];
+    self.afterBtn=afterBtn;
+
+    
+    
+    
    //从数据库拿到数据
    self.dataArray= [ZCDatabaseTool doudizhuGameData];
     
@@ -71,6 +124,8 @@
     for (int i=0; i<historyCount; i++) {
         
         [self saveDouTheData];
+        //关闭交互
+        [self whetherCloseInteraction];
         ZCDoudizhuGameView *doudizhuGameView=self.viewArray[i];
         
         doudizhuGameView.fightTheLandlordModel=self.dataArray[i];
@@ -79,7 +134,16 @@
     }
     
     
-    
+    if (self.index==18) {
+        ZCDoudizhuGameView *doudizhuGameView=self.viewArray[self.index-1];
+        
+        doudizhuGameView.fightTheLandlordModel=self.dataArray[self.index-1];
+        doudizhuGameView.frame=CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-114);
+        self.open=YES;
+        [self.view addSubview:doudizhuGameView];
+        self.doudizhuGameView=doudizhuGameView;
+        [self.afterBtn setTitle:@"下一洞" forState:UIControlStateNormal];
+    }else{
     
     ZCDoudizhuGameView *doudizhuGameView=self.viewArray[self.index];
     
@@ -90,33 +154,65 @@
    // doudizhuGameView.delegate=self;
     self.doudizhuGameView=doudizhuGameView;
     
+    }
     
     
     
-    UIButton *beforeBtn=[[UIButton alloc] init];
-    beforeBtn.backgroundColor=ZCColor(8, 188, 80);
-    CGFloat beforeBtnX=0;
-    CGFloat beforeBtnY=self.view.frame.size.height-114;
-    CGFloat beforeBtnW=SCREEN_WIDTH/2;
-    CGFloat beforeBtnH=50;
-    beforeBtn.frame=CGRectMake(beforeBtnX, beforeBtnY, beforeBtnW, beforeBtnH);
-    [beforeBtn setTitle:@"上一洞" forState:UIControlStateNormal];
-    [beforeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [beforeBtn addTarget:self action:@selector(clickTheBeforeBtn) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:beforeBtn];
     
-    UIButton *afterBtn=[[UIButton alloc] init];
-    afterBtn.backgroundColor=ZCColor(255, 150, 29);
-    CGFloat afterBtnX=beforeBtnW;
-    CGFloat afterBtnY=self.view.frame.size.height-114;
-    CGFloat afterBtnW=beforeBtnW;
-    CGFloat afterBtnH=50;
-    afterBtn.frame=CGRectMake(afterBtnX, afterBtnY, afterBtnW, afterBtnH);
-    [afterBtn setTitle:@"确认成绩" forState:UIControlStateNormal];
-    [afterBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [afterBtn addTarget:self action:@selector(clickTheStartBtn) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:afterBtn];
-    self.afterBtn=afterBtn;
+    //注册观察者
+    ZCSingletonTool *tool=[ZCSingletonTool sharedEventUuidTool];
+    [tool addObserver:self forKeyPath:@"isModify" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:nil];
+    
+}
+
+
+-(void)dealloc
+{
+    ZCSingletonTool *tool=[ZCSingletonTool sharedEventUuidTool];
+    // 移除观察者
+    [tool removeObserver:self forKeyPath:@"isModify"];
+    
+}
+
+
+//观察者调用方法
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    
+    ZCFightTheLandlordModel *fightTheLandlordModel=self.dataArray[self.index];
+    
+    
+    if (fightTheLandlordModel.isSave) {
+        
+        if (self.cancelBtn==nil) {
+            UIButton *cancelBtn=[[UIButton alloc] init];
+            cancelBtn.backgroundColor=ZCColor(8, 188, 80);
+            
+            cancelBtn.frame=self.beforeBtn.bounds;
+            [cancelBtn setTitle:@"取消" forState:UIControlStateNormal];
+            [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [cancelBtn addTarget:self action:@selector(clickThecancelBtn) forControlEvents:UIControlEventTouchUpInside];
+            [self.beforeBtn addSubview:cancelBtn];
+            self.cancelBtn=cancelBtn;
+            
+            
+            
+            UIButton *confirmBtn=[[UIButton alloc] init];
+            confirmBtn.backgroundColor=ZCColor(255, 150, 29);
+            
+            confirmBtn.frame=self.afterBtn.bounds;
+            [confirmBtn setTitle:@"确认修改" forState:UIControlStateNormal];
+            [confirmBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [confirmBtn addTarget:self action:@selector(clickTheConfirmBtn) forControlEvents:UIControlEventTouchUpInside];
+            [self.afterBtn addSubview:confirmBtn];
+            self.confirmBtn=confirmBtn;
+            
+        }
+        
+        
+        
+        
+    }
     
     
 
@@ -124,9 +220,110 @@
 }
 
 
+//点击修改成绩
+-(void)clickTheConfirmBtn
+{
+    self.isLiShi=YES;
+    
+    ZCFightTheLandlordModel *fightTheLandlordModel=self.dataArray[self.index];
+    //拿出二人的成绩
+    ZCOfflinePlayer *play1= fightTheLandlordModel.plays[0];
+    ZCOfflinePlayer *play2= fightTheLandlordModel.plays[1];
+    ZCOfflinePlayer *play3= fightTheLandlordModel.plays[2];
+    
+    if (self.index==0) {
+        play1.score=0;
+        play2.score=0;
+        play3.score=0;
+        
+    }else{
+        ZCFightTheLandlordModel *upFightTheLandlordModel=self.dataArray[self.index-1];
+//        //拿出二人的成绩
+//        ZCOfflinePlayer *upPlay1= upFightTheLandlordModel.plays[0];
+//        ZCOfflinePlayer *upPlay2= upFightTheLandlordModel.plays[1];
+//        ZCOfflinePlayer *upPlay3= upFightTheLandlordModel.plays[2];
+        
+        
+        for (ZCOfflinePlayer *play in upFightTheLandlordModel.plays) {
+            if (play1.player_id==play.player_id) {
+                play1.score=play.score;
+                break;
+            }
+        }
+
+        for (ZCOfflinePlayer *play in upFightTheLandlordModel.plays) {
+            if (play2.player_id==play.player_id) {
+                play2.score=play.score;
+                break;
+            }
+        }
+        
+        
+        for (ZCOfflinePlayer *play in upFightTheLandlordModel.plays) {
+            if (play3.player_id==play.player_id) {
+                play3.score=play.score;
+                break;
+            }
+        }
+
+        
+        
+    }
+    
+    //计算分数之前，确定为修改成绩
+    self.isModify=YES;
+    
+    if ([self valueIsNotEmpty]) {
+        //计算分数
+        [self saveDouTheData];
+       
+        //计算分数之后，确定为修改成绩
+        self.isModify=NO;
+        
+        
+        fightTheLandlordModel.isSavePar=0;
+        play1.isSaveStroke=0;
+        play2.isSaveStroke=0;
+        play3.isSaveStroke=0;
+        
+        [_cancelBtn removeFromSuperview];
+        [_confirmBtn removeFromSuperview];
+        
+    }else{
+        [MBProgressHUD showSuccess:@"请填写标准杆和所有玩家的成绩"];
+    }
+}
+
+
+
+
+//取消修改
+-(void)clickThecancelBtn
+{
+    ZCFightTheLandlordModel *fightTheLandlordModel=self.dataArray[self.index];
+    self.doudizhuGameView.beforeTheChangeModel=fightTheLandlordModel;
+    
+    
+    [_cancelBtn removeFromSuperview];
+    [_confirmBtn removeFromSuperview];
+}
+
+
+
+
+
+
 //上一洞
 -(void)clickTheBeforeBtn
 {
+    // 如果是历史18个洞进来点击上一洞
+    if (self.open && self.index==18) {
+        self.index=17;
+    }
+    
+    if (self.index==0) {
+        [MBProgressHUD showSuccess:@"已经没有了"];
+    }else{
     self.index--;
     
     self.isYES=YES;
@@ -149,7 +346,7 @@
     }];
     
     
-    
+    }
 }
 
 
@@ -157,13 +354,21 @@
 -(void)clickTheStartBtn
 {
     
+    if (self.index>=17 && [self.dataArray[17] isSave]) {
+        
+        [MBProgressHUD showSuccess:@"已经是最后一洞了"];
+        
+    }else{
+    
     self.isYES=!self.isYES;
     
     if (self.isYES) {//确认成绩
+        //关闭交互
+        [self whetherCloseInteraction];
+        self.isLiShi=YES;
         if ([self valueIsNotEmpty]) {
             [self.afterBtn setTitle:@"下一洞" forState:UIControlStateNormal];
-            //self.doudizhuGameView.number=@"asdasd";
-            // [self.viewArray replaceObjectAtIndex:self.index withObject:self.holeScoringView];
+            
             [self saveDouTheData];
         }else{
             self.isYES=!self.isYES;
@@ -172,6 +377,8 @@
         
         
     }else{
+        
+        
         self.index++;
         
         
@@ -185,7 +392,7 @@
             ZCFightTheLandlordModel *FightTheLandlordModel=self.dataArray[self.index];
             if (FightTheLandlordModel.par==0) {
                 doudizhuGameView.fightTheLandlordModel=self.dataArray[self.index];
-                doudizhuGameView.isNext=self.isNext;
+                doudizhuGameView.isNext=FightTheLandlordModel.isNext;
             }
             
             doudizhuGameView.transform = CGAffineTransformIdentity;
@@ -207,9 +414,24 @@
         
         
     }
+    }
+    
     
 }
 
+
+
+//关闭前一洞的交互
+-(void)whetherCloseInteraction
+{
+    
+    if (self.index>0) {
+        ZCDoudizhuGameView *DoudizhuGameView=self.viewArray[self.index-1];
+        DoudizhuGameView.isClick=YES;
+    }
+    
+    
+}
 
 
 //判断是否值为空
@@ -218,10 +440,11 @@
     ZCFightTheLandlordModel *fightTheLandlordModel=self.dataArray[self.index];
     ZCOfflinePlayer *play1=fightTheLandlordModel.plays[0];
     ZCOfflinePlayer *play2=fightTheLandlordModel.plays[1];
+    ZCOfflinePlayer *play3=fightTheLandlordModel.plays[2];
     ZCLog(@"%ld",(long)fightTheLandlordModel.par);
     ZCLog(@"%ld",(long)play1.stroke);
     ZCLog(@"%ld",(long)play2.stroke);
-    if ( fightTheLandlordModel.par==0 || play1.stroke==0 || play2.stroke==0 ) {
+    if ( fightTheLandlordModel.par==0 || play1.stroke==0 || play2.stroke==0 ||play3.stroke==0) {
         return NO;
     }else {
         return  YES;
@@ -278,7 +501,19 @@
         if (switchModel.eagle_x4==1){
             first=4;
         }else{
+            if (play1.stroke-fightTheLandlordModel.par<=-1) {
+                if (switchModel.birdie_x2==1) {
+                    first=2;
+                }else{
+                first=1;
+                }
+                
+            }else
+            {
             first=1;
+            }
+            
+            
         }
 
     }else{
@@ -299,7 +534,16 @@
         if (switchModel.eagle_x4==1){
             second=4;
         }else{
-            second=1;
+            if (play2.stroke-fightTheLandlordModel.par<=-1) {
+                if (switchModel.birdie_x2==1) {
+                    second=2;
+                }else{
+                second=1;
+                }
+            }else{
+             second=1;
+            }
+           
         }
         
     }else{
@@ -321,7 +565,18 @@
         if (switchModel.eagle_x4==1){
             third=4;
         }else{
-            third=1;
+            
+            if (play3.stroke-fightTheLandlordModel.par<=-1) {
+                if (switchModel.birdie_x2==1) {
+                    third=2;
+                }else{
+                third=1;
+                }
+               
+            }else{
+                third=1;
+            }
+            
         }
         
     }else{
@@ -335,71 +590,160 @@
     int j=second;
     int k=third;
    
+   
+    
+    
+   
+    
+    
     
     //地主赢
     if (2*play2.stroke<(play1.stroke+play3.stroke)) {
         
-        play1.winScore=0-j*(self.isNext+1);
-        play2.winScore=j*(self.isNext+1)*2;
-        play3.winScore=0-j*(self.isNext+1);
+        if (self.index==0) {
+            fightTheLandlordModel.isNext=0;
+        }else{
+        ZCFightTheLandlordModel *beforFightTheLandlordModel=self.dataArray[self.index-1];
+        fightTheLandlordModel.isNext=beforFightTheLandlordModel.isNext;
+        }
+        
+        play1.winScore=0-j*(fightTheLandlordModel.isNext+1);
+        play2.winScore=j*(fightTheLandlordModel.isNext+1)*2;
+        play3.winScore=0-j*(fightTheLandlordModel.isNext+1);
         
         
-        play1.score=play1.score-j*(self.isNext+1);
-        play2.score=play2.score+j*(self.isNext+1)*2;
-        play3.score=play3.score-j*(self.isNext+1);
+        play1.score=play1.score-j*(fightTheLandlordModel.isNext+1);
+        play2.score=play2.score+j*(fightTheLandlordModel.isNext+1)*2;
+        play3.score=play3.score-j*(fightTheLandlordModel.isNext+1);
         
         
-        if (self.isNext) {
+        if (fightTheLandlordModel.isNext) {
           
             doudizhuGameView.clues=@"本洞获胜方获得了累计分数";
         }
-        self.isNext=0;
+        fightTheLandlordModel.isNext=0;
+        doudizhuGameView.isNext=fightTheLandlordModel.isNext;
+        
+        if (self.index<17) {
         //位置变化
         [self TheNextHoleLocationChange];
+        }
+        
+        //判断是打了什么球提示语
+        if (self.isLiShi) {
+            
+            [self ToJudgeWhatIsPlayingTheBall:first andSecond:second andThird:third];
+        }
+
+        ZCLog(@"%ld,%ld,%ld",(long)play1.stroke,(long)play2.stroke,(long)play3.stroke);
+        ZCLog(@"%ld,%ld,%ld",(long)play1.score,(long)play2.score,(long)play3.score);
+        
     }else if (2*play2.stroke==(play1.stroke+play3.stroke)){//平局
         
         if (switchModel.drau_to_next==1) {//打开了打球进入下一洞
-            self.isNext++;
+            
+            if (self.isModify) {
+                
+                
+                if (self.index==0) {
+                    fightTheLandlordModel.isNext=0;
+                }else{
+                    ZCFightTheLandlordModel *beforFightTheLandlordModel=self.dataArray[self.index-1];
+                    fightTheLandlordModel.isNext=beforFightTheLandlordModel.isNext;
+                    fightTheLandlordModel.isNext++;
+                }
+
+                
+            }else{
+            fightTheLandlordModel.isNext++;
+            }
+
             
             doudizhuGameView.clues=@"本洞比分打平,分数累至下一洞";
-            [self drawTheNextHoleLocationChange];
+            play1.winScore=0;
+            play2.winScore=0;
+            play3.winScore=0;
+            play1.score=play1.score;
+            play2.score=play2.score;
+            play3.score=play3.score;
+            
+            
         }else{
         
             play1.winScore=0;
             play2.winScore=0;
             play3.winScore=0;
+            play1.score=play1.score;
+            play2.score=play2.score;
+            play3.score=play3.score;
 
         }
         
-        
+        if (self.index<17){
+            [self drawTheNextHoleLocationChange];
+        }
         
     }else{
     
+        if (self.index==0) {
+            fightTheLandlordModel.isNext=0;
+        }else{
+            ZCFightTheLandlordModel *beforFightTheLandlordModel=self.dataArray[self.index-1];
+            fightTheLandlordModel.isNext=beforFightTheLandlordModel.isNext;
+        }
+
+        
         if (i<k) {
-            play1.winScore=k*(self.isNext+1);
-            play2.winScore=0-k*(self.isNext+1)*2;
-            play3.winScore=k*(self.isNext+1);
-            play1.score=play1.score+k*(self.isNext+1);
-            play2.score=play2.score-k*(self.isNext+1)*2;
-            play3.score=play3.score+k*(self.isNext+1);
+            play1.winScore=k*(fightTheLandlordModel.isNext+1);
+            play2.winScore=0-k*(fightTheLandlordModel.isNext+1)*2;
+            play3.winScore=k*(fightTheLandlordModel.isNext+1);
+            
+            ZCLog(@"%ld,%ld,%ld",(long)play1.stroke,(long)play2.stroke,(long)play3.stroke);
+            ZCLog(@"%ld,%ld,%ld",(long)play1.score,(long)play2.score,(long)play3.score);
+            
+            play1.score=play1.score+k*(fightTheLandlordModel.isNext+1);
+            play2.score=play2.score-k*(fightTheLandlordModel.isNext+1)*2;
+            play3.score=play3.score+k*(fightTheLandlordModel.isNext+1);
+            
+            ZCLog(@"%ld,%ld,%ld",(long)play1.stroke,(long)play2.stroke,(long)play3.stroke);
+            ZCLog(@"%ld,%ld,%ld",(long)play1.score,(long)play2.score,(long)play3.score);
         }else
         {
-            play1.winScore=i*(self.isNext+1);
-            play2.winScore=0-i*(self.isNext+1)*2;
-            play3.winScore=i*(self.isNext+1);
+            play1.winScore=i*(fightTheLandlordModel.isNext+1);
+            play2.winScore=0-i*(fightTheLandlordModel.isNext+1)*2;
+            play3.winScore=i*(fightTheLandlordModel.isNext+1);
             
-            play1.score=play1.score+i*(self.isNext+1);
-            play2.score=play2.score-i*(self.isNext+1)*2;
-            play3.score=play3.score+i*(self.isNext+1);
+            ZCLog(@"%ld,%ld,%ld",(long)play1.stroke,(long)play2.stroke,(long)play3.stroke);
+            ZCLog(@"%ld,%ld,%ld",(long)play1.score,(long)play2.score,(long)play3.score);
+            
+            play1.score=play1.score+i*(fightTheLandlordModel.isNext+1);
+            play2.score=play2.score-i*(fightTheLandlordModel.isNext+1)*2;
+            play3.score=play3.score+i*(fightTheLandlordModel.isNext+1);
         }
         
-        if (self.isNext) {
+        if (fightTheLandlordModel.isNext) {
            
             doudizhuGameView.clues=@"本洞获胜方获得了累计分数";
         }
-        self.isNext=0;
+        fightTheLandlordModel.isNext=0;
+        doudizhuGameView.isNext=fightTheLandlordModel.isNext;
+        
+        if (self.index<17) {
         //位置变化
         [self TheNextHoleLocationChange];
+        }
+        
+        
+        //判断是打了什么球提示语
+        if (self.isLiShi) {
+            
+            [self ToJudgeWhatIsPlayingTheBall:first andSecond:second andThird:third];
+        }
+        
+        
+        ZCLog(@"%ld,%ld,%ld",(long)play1.stroke,(long)play2.stroke,(long)play3.stroke);
+         ZCLog(@"%ld,%ld,%ld",(long)play1.score,(long)play2.score,(long)play3.score);
+
     }
     
     
@@ -407,16 +751,54 @@
     
     BOOL success=[ZCDatabaseTool saveTheFightTheLandlord:fightTheLandlordModel andHoleNumber:self.index];
     if (success) {
+        fightTheLandlordModel.isSave=YES;
         self.doudizhuGameView.fightTheLandlordModel=fightTheLandlordModel;
         
     }
-    ZCLog(@"%p",fightTheLandlordModel);
+   
 
    
 
 
     
 }
+
+//判断打出的球提示语
+-(void)ToJudgeWhatIsPlayingTheBall:(int)first andSecond:(int)second andThird:(int)third
+{
+    
+    ZCLog(@"%d,%d,%d",first,second,third);
+    
+    
+   ZCFightTheLandlordModel *fightTheLandlordModel=self.dataArray[self.index];
+    
+    //拿出三人的成绩
+    ZCOfflinePlayer *play1= fightTheLandlordModel.plays[0];
+    ZCOfflinePlayer *play2= fightTheLandlordModel.plays[1];
+    ZCOfflinePlayer *play3= fightTheLandlordModel.plays[2];
+
+    
+    if (2*play2.stroke<(play1.stroke+play3.stroke)) {//地主赢
+        
+//        if (first>=third) {
+//            index=first;
+//        }else{
+//            index=third;
+//        }
+        
+        [self ToJudgeWhetherAMultipleGoalsAndWin:@"地主" andTimes:second andLost:nil andLostTimes:0];
+    }else{//地主输
+        if (play1.stroke<play3.stroke) {
+            [self ToJudgeWhetherAMultipleGoalsAndWin:@"平民" andTimes:first andLost:@"地主" andLostTimes:second];
+        }else{
+            [self ToJudgeWhetherAMultipleGoalsAndWin:@"平民" andTimes:third andLost:@"地主" andLostTimes:second];
+        }
+        
+    }
+
+    
+}
+
 
 
 //打平进入下一洞位置变化
@@ -431,7 +813,7 @@
 
     //给下一洞头像移动位置
     ZCFightTheLandlordModel *fightTheLandlordModelNext=self.dataArray[self.index+1];
-   // fightTheLandlordModelNext.isNext=self.isNext;
+    fightTheLandlordModelNext.isNext=fightTheLandlordModel.isNext;
     
     NSMutableArray *teamArray=[NSMutableArray array];
     for (ZCOfflinePlayer *play in fightTheLandlordModelNext.plays) {
@@ -483,7 +865,7 @@
     
     //给下一洞头像移动位置
     ZCFightTheLandlordModel *fightTheLandlordModelNext=self.dataArray[self.index+1];
-    
+    fightTheLandlordModelNext.isNext=fightTheLandlordModel.isNext;
     if (playScore1<playScore2&&playScore1<playScore3&&playScore2<playScore3) {
         
         NSMutableArray *teamArray=[NSMutableArray array];
@@ -680,6 +1062,12 @@
     }
 
 
+    
+    ZCLog(@"%@,%@,%@",[fightTheLandlordModel.plays[0] nickname],[fightTheLandlordModel.plays[1] nickname],[fightTheLandlordModel.plays[2] nickname]);
+    
+    ZCLog(@"%@,%@,%@",[fightTheLandlordModelNext.plays[0] nickname],[fightTheLandlordModelNext.plays[1] nickname],[fightTheLandlordModelNext.plays[2] nickname]);
+    
+    
 }
 
 
@@ -695,6 +1083,50 @@
 }
 
 
+//判断是什么球提示用户
+-(void)ToJudgeWhetherAMultipleGoalsAndWin:(NSString *)playerName andTimes:(int)few andLost:(NSString *) otherPlayerName andLostTimes:(int)otherFew
+{
+    ZCLog(@"%d",otherFew);
+    
+    UIWindow *wd = [[[UIApplication sharedApplication] windows] lastObject];
+    
+    if (few==2 || few==4) {//小鸟
+       // ZCBirdBallView *birdBallView=[[ZCBirdBallView alloc] init];
+        
+        self.birdBallView.frame=[UIScreen mainScreen].bounds;
+        [self.birdBallView setName:playerName andIndex:few];
+        self.birdBallView.douDoulePar=otherFew;
+        self.birdBallView.name=otherPlayerName;
+        [wd addSubview:self.birdBallView];
+    }   else{
+        if (otherFew==2) {
+            ZCBirdBallView *birdBallView=[[ZCBirdBallView alloc] init];
+            birdBallView.frame=[UIScreen mainScreen].bounds;
+           [self.birdBallView setName:otherPlayerName andIndex:otherFew];
+            [wd addSubview:birdBallView];
+            
+            
+        }
+    
+        
+}
+
+    
+    
+    
+}
+
+
+//-(void)ZCBirdBallViewWhetherPopUpNextWithDouDiZhu:(NSString *)playerName andIndexDoulePar:(int)doulePar{
+//
+//    UIWindow *wd = [[[UIApplication sharedApplication] windows] lastObject];
+//    self.birdBallView.frame=[UIScreen mainScreen].bounds;
+//    [self.birdBallView setName:playerName andIndex:doulePar];
+//    
+//    [wd addSubview:self.birdBallView];
+//
+//}
+//
 
 //点击排名
 -(void)clickTherightItem
@@ -747,7 +1179,14 @@
 }
 
 
-
+-(ZCBirdBallView *)birdBallView
+{
+    if (_birdBallView==nil) {
+        _birdBallView=[[ZCBirdBallView alloc] init];
+        _birdBallView.delegate=self;
+    }
+    return _birdBallView;
+}
 
 
 - (void)didReceiveMemoryWarning {

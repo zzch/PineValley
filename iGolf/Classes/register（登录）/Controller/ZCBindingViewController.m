@@ -292,8 +292,12 @@
             //存储
             [NSKeyedArchiver archiveRootObject:account toFile:file];
 
+            UINavigationController *nav=[[UINavigationController alloc] initWithRootViewController:vc];
+            UIWindow *dw=[[UIApplication sharedApplication].delegate window];
             
-            [self.navigationController pushViewController:vc animated:YES];
+            dw.rootViewController=nav;
+            
+           // [self.navigationController pushViewController:vc animated:YES];
             
             
             

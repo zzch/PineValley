@@ -33,6 +33,8 @@
 @property(nonatomic,weak)UILabel *otherNameLabel;
 @property(nonatomic,weak)UIImageView *winImage;
 @property(nonatomic,weak)UIImageView *winImage2;
+@property(nonatomic,weak)UIImageView *winImage3;
+@property(nonatomic,weak)UIImageView *winImage4;
 @property(nonatomic,weak)UIButton *button1;
 @property(nonatomic,weak)UIButton *button2;
 
@@ -58,6 +60,11 @@
 @property(nonatomic,weak)UIImageView *otherImage2;
 @property(nonatomic,weak)UILabel *meLabel1;
 @property(nonatomic,weak)UILabel *otherLabel2;
+
+//打平进入下一洞开关
+@property(nonatomic,weak)UISwitch *switch1;
+//平局让杆
+@property(nonatomic,weak)UISwitch *switch2;
 @end
 @implementation ZCHoleView
 
@@ -113,7 +120,7 @@
         [bjImage addSubview:rivalView];
         self.rivalView=rivalView;
         
-        [self addPersonView:rivalView andPersonImage:[UIImage imageNamed:@"morentouxiang"] andPersonName:@"玩家1"];
+        [self addPersonView:rivalView andPersonImage:[UIImage imageNamed:@"yule_touxiang"] andPersonName:@"玩家1"];
         [rivalView addTarget:self action:@selector(clickTheRivalView) forControlEvents:UIControlEventTouchUpInside];
        
         
@@ -173,7 +180,7 @@
 {
     
     if ([self.delegate respondsToSelector:@selector(buttonIsClicker:)]) {
-        [self.delegate buttonIsClicker:nil];
+        [self.delegate buttonIsClicker:self.otherNameLabel.text];
     }
     
     
@@ -183,10 +190,21 @@
 //控制器传个人信息过来
 -(void)acceptPersonalInformation:(UIImage *)image andName:(NSString *)name
 {
-    self.otherImageView.image=image;
-    self.otherNameLabel.text=name;
-    self.personLabel2.text=name;
-    self.personImage2.image=image;
+    
+    
+    if (image==nil) {
+    }else{
+        self.otherImageView.image=image;
+        self.personImage2.image=image;
+    }
+    if (name.length==0) {
+    }else{
+        self.otherNameLabel.text=name;
+        self.personLabel2.text=name;
+
+    }
+    
+    
 }
 
 
@@ -205,12 +223,12 @@
     imageView.frame=CGRectMake(0, 0, view.frame.size.width, view.frame.size.width);
     imageView.layer.cornerRadius=view.frame.size.width/2;
     imageView.layer.masksToBounds=YES;
-    imageView.layer.borderWidth=2;
+    imageView.layer.borderWidth=3;
     if (view.tag==3809)
     {
-        imageView.layer.borderColor=[UIColor yellowColor].CGColor;
+        imageView.layer.borderColor=ZCColor(69, 226, 57).CGColor;
     }else{
-    imageView.layer.borderColor=[UIColor redColor].CGColor;
+    imageView.layer.borderColor=ZCColor(45, 219, 254).CGColor;
     }
     imageView.image=image;
     [view addSubview:imageView ];
@@ -219,7 +237,7 @@
     nameLabel.frame=CGRectMake(0, view.frame.size.width+5, view.frame.size.width, 20);
     nameLabel.text=nameStr;
     nameLabel.textAlignment=NSTextAlignmentCenter;
-    nameLabel.textColor=[UIColor redColor];
+    nameLabel.textColor=ZCColor(45, 219, 254);
     nameLabel.font=[UIFont systemFontOfSize:14];
     [view addSubview:nameLabel];
     
@@ -227,7 +245,7 @@
     if (view.tag==3809) {
         self.otherImageView=imageView;
         self.otherNameLabel=nameLabel;
-        nameLabel.textColor=[UIColor yellowColor];
+        nameLabel.textColor=ZCColor(69, 226, 57);
     }
     
     
@@ -237,12 +255,7 @@
 -(void)addTheDrawToWinView:(UIView *)view
 {
     [self layoutSubviews];
-//    
-//    UILabel *textLabel=[[UILabel alloc] init];
-//    textLabel.frame=CGRectMake(0, 0, view.frame.size.width, 20);
-//    textLabel.text=@"平局谁获胜？";
-//    textLabel.textAlignment=NSTextAlignmentCenter;
-//    [view addSubview:textLabel];
+    
     
     UIButton *button1=[[UIButton alloc] init];
     button1.frame=CGRectMake(0, 0, SCREEN_WIDTH/2, view.frame.size.height) ;
@@ -275,10 +288,18 @@
     
     //胜利的图片
     UIImageView *winImage=[[UIImageView alloc] init];
-    winImage.frame=CGRectMake(SCREEN_WIDTH/2-31-5, 5, 31, 31);
-    winImage.image=[UIImage imageNamed:@"pingjun_xuanzhong"];
+    winImage.frame=CGRectMake(5, (button1.frame.size.height-23)/2, 25, 23);
+    winImage.image=[UIImage imageNamed:@"sheng"];
     [button1 addSubview:winImage];
     self.winImage=winImage;
+    
+    //胜利的图片
+    UIImageView *winImage2=[[UIImageView alloc] init];
+    
+    winImage2.frame=CGRectMake(SCREEN_WIDTH/2-25-5, (button1.frame.size.height-23)/2, 25, 23);
+    winImage2.image=[UIImage imageNamed:@"li"];
+    [button1 addSubview:winImage2];
+    self.winImage2=winImage2;
     
 
     UIButton *button2=[[UIButton alloc] init];
@@ -295,12 +316,12 @@
     personImage2.layer.cornerRadius=40;
     personImage2.layer.masksToBounds=YES;
     personImage2.layer.borderWidth=2;
-    personImage2.layer.borderColor=[UIColor yellowColor].CGColor;
+    personImage2.layer.borderColor=[UIColor whiteColor].CGColor;
 
     personImage2.image=self.otherImageView.image;
     [button2 addSubview:personImage2];
-    self.otherImage2=personImage2;
-    
+   // self.otherImage2=personImage2;
+    self.personImage2=personImage2;
     
     //名字
     UILabel *nameLabel2=[[UILabel alloc] init];
@@ -308,17 +329,24 @@
     nameLabel2.text=self.otherNameLabel.text;
     [button2 addSubview:nameLabel2];
     nameLabel2.textAlignment=NSTextAlignmentCenter;
+    nameLabel2.textColor=[UIColor whiteColor];
     self.personLabel2=nameLabel2;
     self.otherLabel2=nameLabel2;
     
     //胜利的图片
-    UIImageView *winImage2=[[UIImageView alloc] init];
-    winImage2.frame=CGRectMake(SCREEN_WIDTH/2-31-5, 5, 31, 31);
-    winImage2.image=[UIImage imageNamed:@"pingjun_xuanzhong"];
-    winImage2.hidden=YES;
-    [button2 addSubview:winImage2];
-    self.winImage2=winImage2;
+    UIImageView *winImage3=[[UIImageView alloc] init];
+    winImage3.frame=CGRectMake(5, (button2.frame.size.height-23)/2, 25, 23);
+    winImage3.image=[UIImage imageNamed:@"sheng"];
+    [button2 addSubview:winImage3];
+    self.winImage3=winImage3;
     
+    //胜利的图片
+    UIImageView *winImage4=[[UIImageView alloc] init];
+    
+    winImage4.frame=CGRectMake(SCREEN_WIDTH/2-25-5, (button2.frame.size.height-23)/2, 25, 23);
+    winImage4.image=[UIImage imageNamed:@"li"];
+    [button2 addSubview:winImage4];
+    self.winImage4=winImage4;
 
     
 }
@@ -328,16 +356,18 @@
 {
     self.whoWin=2;
     
-    [self.button1 setBackgroundColor:[UIColor whiteColor]];
-    [self.button2 setBackgroundColor:[UIColor yellowColor]];
+    [self.button1 setBackgroundColor:ZCColor(226, 226, 226)];
+    [self.button2 setBackgroundColor:ZCColor(255, 119, 29)];
     self.winImage.hidden=YES;
-    self.winImage2.hidden=NO;
+    self.winImage2.hidden=YES;
+    self.winImage3.hidden=NO;
+    self.winImage4.hidden=NO;
     
-    self.meImage1.layer.borderColor=[UIColor redColor].CGColor;
-    self.meLabel1.textColor=[UIColor redColor];
-    
-    self.otherImage2.layer.borderColor=[UIColor whiteColor].CGColor;
-    self.otherLabel2.textColor=[UIColor blackColor];
+//    self.meImage1.layer.borderColor=[UIColor redColor].CGColor;
+//    self.meLabel1.textColor=[UIColor redColor];
+//    
+//    self.otherImage2.layer.borderColor=[UIColor whiteColor].CGColor;
+//    self.otherLabel2.textColor=[UIColor blackColor];
     
      [self switchAction:nil];
    
@@ -346,18 +376,20 @@
 -(void)clickTheButton1:(UIButton *)button
 {
     self.whoWin=1;
-    [self.button2 setBackgroundColor:[UIColor whiteColor]];
-    [self.button1 setBackgroundColor:[UIColor redColor]];
-    self.winImage2.hidden=YES;
+    [self.button2 setBackgroundColor:ZCColor(226, 226, 226)];
+    [self.button1 setBackgroundColor:ZCColor(255, 119, 29)];
+    self.winImage3.hidden=YES;
+    self.winImage4.hidden=YES;
     
-    self.meImage1.layer.borderColor=[UIColor whiteColor].CGColor;
-    self.meLabel1.textColor=[UIColor whiteColor];
-    
-    self.otherImage2.layer.borderColor=[UIColor yellowColor].CGColor;
-    self.otherLabel2.textColor=[UIColor yellowColor];
+//    self.meImage1.layer.borderColor=[UIColor whiteColor].CGColor;
+//    self.meLabel1.textColor=[UIColor whiteColor];
+//    
+//    self.otherImage2.layer.borderColor=[UIColor yellowColor].CGColor;
+//    self.otherLabel2.textColor=[UIColor yellowColor];
 
 
     self.winImage.hidden=NO;
+    self.winImage2.hidden=NO;
     
     [self switchAction:nil];
 }
@@ -389,8 +421,13 @@
     switchView.tag=13000+self.indexTag;
     
   [switchView addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];
+    if (switchView.tag==13004) {
+        self.switch1=switchView;
+    }
+    
     if ( switchView.tag==13005) {
         switchView.on=NO;
+        self.switch2=switchView;
     }else
     {
         switchView.on=YES;
@@ -418,9 +455,16 @@
                 break;
             case 13004:
                 self.isOpen4=1;
+                self.switch2.on=NO;
+                self.drawToWinView.hidden=YES;
+                
+                self.isOpen5=0;
+                [self layoutSubviews];
                 break;
             case 13005:
                 self.isOpen5=1;
+                self.switch1.on=NO;
+                self.isOpen4=0;
                 [self clickTheButton1:nil];
                 self.drawToWinView.hidden=NO;
                 [self layoutSubviews];
@@ -449,10 +493,17 @@
                 break;
             case 13004:
                 self.isOpen4=0;
+                self.drawToWinView.hidden=NO;
+                [self clickTheButton1:nil];
+                self.isOpen5=1;
+                self.switch2.on=YES;
+                [self layoutSubviews];
                 break;
             case 13005:
                 self.isOpen5=0;
                 self.whoWin=0;
+                self.switch1.on=YES;
+                self.isOpen4=1;
                 self.drawToWinView.hidden=YES;
                 [self layoutSubviews];
                 break;

@@ -11,6 +11,7 @@
 #import "ZCKeyboardView.h"
 #import "ZCParKeyboardView.h"
 #import "ZCHoleModel.h"
+#import "ZCSingletonTool.h"
 @interface ZCHoleScoringView()<ZCKeyboardViewDelegate,ZCParKeyboardViewDelegate>
 @property(nonatomic,weak)UIScrollView *scollView;
 @property(nonatomic,weak)UILabel *holeNumber;
@@ -156,35 +157,84 @@
 -(void)cliclkThescoreLabel
 {
 
+    if (self.isClick) {
+        [MBProgressHUD showSuccess:@"已经不可以修改数据了"];
+    }else{
     ZCParKeyboardView *ParKeyboardView=[[ZCParKeyboardView alloc] init];
     ParKeyboardView.frame=[UIScreen mainScreen].bounds;
     ParKeyboardView.delegate=self;
     UIWindow *wd = [[UIApplication sharedApplication].delegate window];
     [wd addSubview:ParKeyboardView];
-    
+    }
 }
 
 //par的键盘代理方法
 -(void)ParKeyboardViewConfirmThatTheInput:(NSString *)number
 {
     int intNum=[number intValue];
+    
+    if (self.fightTheLandlordModel.isSave) {
+        if (self.fightTheLandlordModel.isSavePar==0) {
+            
+           self.fightTheLandlordModel.isSavePar=self.fightTheLandlordModel.par;
+                   }
+        int intNum=[number intValue];
+        self.fightTheLandlordModel.par=intNum;
+        [self.scoreLabel setTitle:number forState:UIControlStateNormal];
+        
+    }else{
+    
+    
     self.fightTheLandlordModel.par=intNum;
-    if ([self.delegate respondsToSelector:@selector(holeScoringViewForScore:)]) {
-        [self.delegate holeScoringViewForScore:self.holeModel];
-    }
+//    if ([self.delegate respondsToSelector:@selector(holeScoringViewForScore:)]) {
+//        [self.delegate holeScoringViewForScore:self.holeModel];
+//    }
 
     [self.scoreLabel setTitle:number forState:UIControlStateNormal];
+    
+    
+        
+    }
+    
+    //通知控制器数据已经修改重新计算成绩
+    ZCSingletonTool *tool=[ZCSingletonTool sharedEventUuidTool];
+    tool.isModify=YES;
+    
 }
 
 
 //输入键盘代理方法
 -(void)keyboardViewConfirmThatTheInput:(NSString *)number{
 
-   
-
     int intNum=[number intValue];
     self.holeModel.holeNumber=[self.number intValue]+1;
+   
+    if (self.fightTheLandlordModel.isSave) {
+       
+        if (self.index==1) {
+            [self.liftScoreLabel setTitle:number forState:UIControlStateNormal];
+            ZCOfflinePlayer *player=  self.fightTheLandlordModel.plays[0];
+            //用于修改取消修改后的成绩
+            if (player.isSaveStroke==0) {
+                player.isSaveStroke=player.stroke;
+            }
+            player.stroke=intNum;
+            
+        }else
+        {
+            [self.rightScoreLabel setTitle:number forState:UIControlStateNormal];
+            ZCOfflinePlayer *player=  self.fightTheLandlordModel.plays[1];
+            //用于修改取消修改后的成绩
+            if (player.isSaveStroke==0) {
+                player.isSaveStroke=player.stroke;
+            }
 
+            player.stroke=intNum;
+        }
+        
+
+    }else{//数据没有保存到数据库
+  
     if (self.index==1) {
         [self.liftScoreLabel setTitle:number forState:UIControlStateNormal];
         ZCOfflinePlayer *player=  self.fightTheLandlordModel.plays[0];
@@ -197,13 +247,15 @@
         player.stroke=intNum;
     }
     
-    
+    }
     
         if ([self.delegate respondsToSelector:@selector(holeScoringViewForScore:)]) {
             [self.delegate holeScoringViewForScore:self.holeModel];
         }
 
-    
+    //通知控制器数据已经修改重新计算成绩
+    ZCSingletonTool *tool=[ZCSingletonTool sharedEventUuidTool];
+    tool.isModify=YES;
     
 }
 
@@ -211,6 +263,10 @@
 
 -(void)cliclkTheScore:(UIButton *)btn
 {
+    if (self.isClick) {
+        [MBProgressHUD showSuccess:@"已经不可以修改数据了"];
+    }else{
+    
     ZCOfflinePlayer *player;
     int colorIndex;
     if (btn.tag==23001) {
@@ -237,7 +293,7 @@
     [wd addSubview:keyboardView];
     
    
-
+    }
 }
 
 -(void)setNumber:(NSString *)number
@@ -249,22 +305,47 @@
 }
 
 
-////本机成绩
-//-(void)setUserWinPoints:(int)userWinPoints
-//{
-//
-//    userWinPoints=userWinPoints;
-//    
-//    self.liftImageView.score=userWinPoints;
-//}
 
-////其他人成绩
-//-(void)setOtherWinPoints:(int)otherWinPoints
-//{
-//    _otherWinPoints=otherWinPoints;
-//    self.rightImageView.score=otherWinPoints;
-//
-//}
+//点击取消后传回修改前的值
+-(void)setBeforeTheChangeModel:(ZCFightTheLandlordModel *)beforeTheChangeModel
+{
+    _beforeTheChangeModel=beforeTheChangeModel;
+    
+    if (beforeTheChangeModel.isSavePar==0) {
+        
+    }else{
+        
+        [self.scoreLabel setTitle:[NSString stringWithFormat:@"%ld",(long)beforeTheChangeModel.isSavePar] forState:UIControlStateNormal];
+    }
+    
+    
+    ZCOfflinePlayer *offPlayer1=beforeTheChangeModel.plays[0];
+    ZCOfflinePlayer *offPlayer2=beforeTheChangeModel.plays[1];
+    
+    
+    
+    
+    if (offPlayer1.isSaveStroke==0) {
+        
+    }else{
+        [self.liftScoreLabel setTitle:[NSString stringWithFormat:@"%ld",(long)offPlayer1.isSaveStroke] forState:UIControlStateNormal];
+    }
+    
+    if (offPlayer2.isSaveStroke==0) {
+       
+    }else{
+        [self.rightScoreLabel setTitle:[NSString stringWithFormat:@"%ld",(long)offPlayer2.isSaveStroke] forState:UIControlStateNormal];
+    }
+
+    
+    
+    
+
+    
+
+}
+
+
 
 
 -(void)setFightTheLandlordModel:(ZCFightTheLandlordModel *)fightTheLandlordModel
@@ -288,21 +369,22 @@
     if (offPlayer1.stroke==0) {
         [self.liftScoreLabel setTitle:@"-" forState:UIControlStateNormal];
     }else{
-    [self.liftScoreLabel setTitle:[NSString stringWithFormat:@"%ld",offPlayer1.stroke] forState:UIControlStateNormal];
+    [self.liftScoreLabel setTitle:[NSString stringWithFormat:@"%ld",(long)offPlayer1.stroke] forState:UIControlStateNormal];
     }
     
     if (offPlayer2.stroke==0) {
         [self.rightScoreLabel setTitle:@"-" forState:UIControlStateNormal];
     }else{
-    [self.rightScoreLabel setTitle:[NSString stringWithFormat:@"%ld",offPlayer2.stroke] forState:UIControlStateNormal];
+    [self.rightScoreLabel setTitle:[NSString stringWithFormat:@"%ld",(long)offPlayer2.stroke] forState:UIControlStateNormal];
     }
     
 
-    self.liftLabel.text=[NSString stringWithFormat:@"%ld",offPlayer1.winScore];
+    self.liftLabel.text=[NSString stringWithFormat:@"%ld",(long)offPlayer1.winScore];
    
-    self.rightLabel.text=[NSString stringWithFormat:@"%ld",offPlayer2.winScore];
+    self.rightLabel.text=[NSString stringWithFormat:@"%ld",(long)offPlayer2.winScore];
     
 }
+
 
 -(void)setIsNext:(int)isNext
 {

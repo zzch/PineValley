@@ -16,6 +16,7 @@
 #import "ZCHoleViewController.h"
 @interface ZCHistoricalRecordTableViewController ()
 @property(nonatomic,strong)NSMutableArray *dataArray;
+@property(nonatomic,assign)NSInteger totalScore;
 @end
 
 @implementation ZCHistoricalRecordTableViewController
@@ -26,6 +27,14 @@
     self.tableView.rowHeight=100;
     self.tableView.sectionHeaderHeight=140;
     self.dataArray= [ZCDatabaseTool theHistoricalRecord];
+    
+     self.totalScore = 0;
+    
+    //计算总分
+    for (ZCHistoricalRecordModel *model in self.dataArray) {
+        self.totalScore=self.totalScore+ model.earned;
+    }
+    
     
 }
 
@@ -61,20 +70,20 @@
 -(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *headView=[[UIView alloc] init];
-    headView.backgroundColor=[UIColor redColor];
+    headView.backgroundColor=ZCColor(223, 66, 50);
     UILabel *nameLabel=[[UILabel alloc] init];
     nameLabel.textColor=[UIColor whiteColor];
     nameLabel.text=@"累计分数";
-    nameLabel.font=[UIFont systemFontOfSize:20];
-    nameLabel.frame=CGRectMake(10, 15, 80, 25);
+    nameLabel.font=[UIFont systemFontOfSize:23];
+    nameLabel.frame=CGRectMake(10, 15, 180, 25);
     [headView addSubview:nameLabel];
     
     
     UILabel *totalScoreLabel=[[UILabel alloc] init];
-    totalScoreLabel.text=@"0";
+    totalScoreLabel.text=[NSString stringWithFormat:@"%ld",(long)self.totalScore];
     totalScoreLabel.textAlignment=NSTextAlignmentCenter;
     totalScoreLabel.textColor=[UIColor whiteColor];
-    totalScoreLabel.font=[UIFont systemFontOfSize:25];
+    totalScoreLabel.font=[UIFont systemFontOfSize:45];
     totalScoreLabel.frame=CGRectMake(0, (140-(nameLabel.frame.size.height+15))/2, SCREEN_WIDTH, 50);
     [headView addSubview:totalScoreLabel];
     
@@ -105,5 +114,39 @@
 
 }
 
+
+
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+        if (editingStyle == UITableViewCellEditingStyleDelete)
+        {
+            
+            ZCHistoricalRecordModel *HistoricalRecordModel=self.dataArray[indexPath.row];
+            BOOL scuess=[ZCDatabaseTool deleteTheData: HistoricalRecordModel.uuid];
+            
+            if (scuess) {
+                
+           
+           // self.indexPath=indexPath;
+            // 从数据源删除数据
+                  [self.dataArray removeObjectAtIndex:indexPath.row];
+            
+            //       // 表格删除数据，会重新调用数据源方法，产生越界
+                   [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                
+               
+                self.totalScore=0;
+        }
+        }
+
+
+    //计算总分
+    for (ZCHistoricalRecordModel *model in self.dataArray) {
+        self.totalScore=self.totalScore+ model.earned;
+    }
+
+    [self.tableView reloadData];
+}
 
 @end

@@ -9,7 +9,7 @@
 #import "ZCQrCodeViewController.h"
 #import "QRCodeGenerator.h"
 @interface ZCQrCodeViewController ()
-
+@property(nonatomic,weak)UIImageView *QrCodeImage;
 @end
 
 @implementation ZCQrCodeViewController
@@ -17,12 +17,45 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title=@"二维码";
+    self.navigationItem.title=@"球童";
     
     self.view.backgroundColor=ZCColor(237, 237, 237);
     
     
+    UIImageView *QrCodeImage=[[UIImageView alloc] init];
+    QrCodeImage.frame=CGRectMake((SCREEN_WIDTH-200)/2, 50, 200, 200);
+    [self.view addSubview:QrCodeImage];
+    self.QrCodeImage=QrCodeImage;
+
+    
+    
+    UILabel *textLabel1=[[UILabel alloc] init];
+    textLabel1.text=@"球童使用微信扫描二维码";
+    textLabel1.frame=CGRectMake(0, 300, SCREEN_WIDTH, 20);
+    textLabel1.textAlignment=NSTextAlignmentCenter;
+    [self.view addSubview:textLabel1];
+    
+    UILabel *textLabel2=[[UILabel alloc] init];
+    textLabel2.text=@"为您记录本场比赛成绩";
+    textLabel2.frame=CGRectMake(0, 320, SCREEN_WIDTH, 20);
+    textLabel2.textAlignment=NSTextAlignmentCenter;
+    [self.view addSubview:textLabel2];
+    
     //+ (UIImage *)qrImageForString:(NSString *)string imageSize:(CGFloat)size;
+    
+    
+    
+    
+    
+    [self networkRequestData];
+    
+    
+}
+
+
+//网络请求
+-(void)networkRequestData
+{
     
     AFHTTPRequestOperationManager *mgr=[AFHTTPRequestOperationManager manager]
     ;
@@ -40,24 +73,16 @@
         UIImage *QrCode=[QRCodeGenerator qrImageForString:[NSString stringWithFormat:@"%@",responseObject[@"url"]] imageSize:200];
         
         
-        UIImageView *QrCodeImage=[[UIImageView alloc] init];
-        QrCodeImage.frame=CGRectMake(0, 200, 200, 200);
-        QrCodeImage.image= QrCode;
-        [self.view addSubview:QrCodeImage];
-
+        self.QrCodeImage.image= QrCode;
         
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
     }];
-    
-    
-    
-    
-    
-    
-    
+
+
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

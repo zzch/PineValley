@@ -47,6 +47,12 @@
     
     self.view.backgroundColor=[UIColor whiteColor];
     self.navigationItem.title=@"记分卡";
+    
+    
+    
+    UIBarButtonItem *rightBtn=[[UIBarButtonItem alloc] initWithTitle:@"球童计分" style:UIBarButtonItemStyleDone target:self action:@selector(clickTheRightBtn)];
+    self.navigationItem.rightBarButtonItem = rightBtn;
+    
 //    UILabel *customLab = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
 //    customLab.textAlignment=NSTextAlignmentCenter;
 //    [customLab setTextColor:ZCColor(240, 208, 122)];
@@ -75,6 +81,14 @@
     
  }
 
+
+//点击球童计分
+-(void)clickTheRightBtn
+{
+    ZCQrCodeViewController *QrCode=[[ZCQrCodeViewController alloc] init];
+    QrCode.uuid=self.uuid;
+    [self.navigationController pushViewController:QrCode animated:YES];
+}
 
 
 
@@ -344,6 +358,7 @@
             
             ZCEventUuidTool *tool=[ZCEventUuidTool sharedEventUuidTool];
             tool.isJoin=NO;
+            tool.typeIndex=2;
             ZCPersonalizedSettingsViewController *ZPersonalizedSettingsViewController=[[ZCPersonalizedSettingsViewController alloc] init];
             ZPersonalizedSettingsViewController.uuid=self.uuid;
             [self.navigationController pushViewController:ZPersonalizedSettingsViewController animated:YES];
@@ -387,9 +402,9 @@
     
     }else if (button.tag==2777)
     {
-        ZCQrCodeViewController *QrCode=[[ZCQrCodeViewController alloc] init];
-        QrCode.uuid=self.uuid;
-        [self.navigationController pushViewController:QrCode animated:YES];
+//        ZCQrCodeViewController *QrCode=[[ZCQrCodeViewController alloc] init];
+//        QrCode.uuid=self.uuid;
+//        [self.navigationController pushViewController:QrCode animated:YES];
         
     }
 }
@@ -416,9 +431,7 @@
     
     NSMutableArray *scorecards=self.totalScorecards.scorecards;
     ZCscorecard *scorecard=scorecards[indexPath.row];
-//    
-//    //单利
-//    ZCEventUuidTool *UuidTool=[ZCEventUuidTool sharedEventUuidTool];
+
     if ([self.totalScorecards.player.scoring_type isEqual:@"simple"]) {
         ZCModifyTheScorecardViewController *fillView=[[ZCModifyTheScorecardViewController alloc] init];
         //传递数据模型给下个控制器

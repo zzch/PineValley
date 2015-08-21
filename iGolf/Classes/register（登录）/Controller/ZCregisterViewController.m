@@ -32,16 +32,19 @@
    
     
     
-    self.view.backgroundColor=ZCColor(60, 57, 78);
-   
+    UIImageView *bjImage=[[UIImageView alloc] init];
+    bjImage.frame=self.view.bounds;
+    bjImage.image=[UIImage imageNamed:@"dengluye_bj"];
+    [self.view addSubview:bjImage];
+     
     
     UIImageView *nameimageView=[[UIImageView alloc] init];
-    CGFloat nameimageViewW=230;
-    CGFloat nameimageViewH=60;
+    CGFloat nameimageViewW=226;
+    CGFloat nameimageViewH=59;
     CGFloat nameimageViewX=(SCREEN_WIDTH-nameimageViewW)/2;
     CGFloat nameimageViewY=SCREEN_HEIGHT*0.163;
     nameimageView.frame=CGRectMake(nameimageViewX, nameimageViewY, nameimageViewW, nameimageViewH);
-    nameimageView.image=[UIImage imageNamed:@"denglu_woaigaoerfu"];
+    nameimageView.image=[UIImage imageNamed:@"wenzi_logo"];
     [self.view addSubview:nameimageView];
     
     
@@ -60,7 +63,7 @@
     describeLabel.frame=CGRectMake(0, textLabelY, SCREEN_WIDTH, 20);
     describeLabel.text=@"已经有我爱高尔夫账户了?";
     describeLabel.font=[UIFont systemFontOfSize:14];
-    describeLabel.textColor=ZCColor(97, 88, 148);
+    describeLabel.textColor=ZCColor(170, 170, 170);
     describeLabel.textAlignment=NSTextAlignmentCenter;
     [self.view addSubview:describeLabel];
     
@@ -75,9 +78,9 @@
     landingBtn.frame=CGRectMake(landingBtnX, landingBtnY, landingBtnW, landingBtnH);
     [landingBtn setTitle:@"登录" forState:UIControlStateNormal];
     
-    [landingBtn setTitleColor:ZCColor(97, 88, 148) forState:UIControlStateNormal];
+    [landingBtn setTitleColor:ZCColor(170, 170, 170) forState:UIControlStateNormal];
     
-    UIImage *image2=[UIImage imageNamed:@"denglu_anniu1" ];
+    UIImage *image2=[UIImage imageNamed:@"denglu_bj" ];
     // 指定为拉伸模式，伸缩后重新赋值
     image2 = [image2 resizableImageWithCapInsets:UIEdgeInsetsMake(25,25,10,10) resizingMode:UIImageResizingModeStretch];
     [landingBtn setBackgroundImage:image2 forState:UIControlStateNormal];

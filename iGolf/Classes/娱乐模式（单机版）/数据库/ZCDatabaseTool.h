@@ -23,5 +23,7 @@
 //拉斯维加斯 数据保存
 +(BOOL)saveTheLasVegas:(ZCFightTheLandlordModel *)lasVegasModel  andHoleNumber:(int) holeNumber;
 +(NSMutableArray *)theHistoricalRecord;
-
++(BOOL)deleteTheData:(NSInteger )uuid;
+//删除表
++(BOOL)deleteTheAll;
 @end

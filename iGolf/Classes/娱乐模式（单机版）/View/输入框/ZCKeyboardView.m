@@ -101,14 +101,14 @@
     }
     
 }
-
+//ZCColor(69, 226, 57) ZCColor(45, 219, 254)
 -(void)setColorIndex:(int )colorIndex
 {
     _colorIndex=colorIndex;
     if (colorIndex==1) {
-        self.imageView.layer.borderColor=[UIColor redColor].CGColor;
+        self.imageView.layer.borderColor=ZCColor(45, 219, 254).CGColor;
     }else{
-    self.imageView.layer.borderColor=[UIColor yellowColor].CGColor;
+    self.imageView.layer.borderColor=ZCColor(69, 226, 57).CGColor;
     }
 
 }
@@ -134,16 +134,11 @@
 //点击按钮
 -(void)clickTheButton:(UIButton *)button
 {
-    if ([self.scoreLabel.text isEqual:@"-"]) {
-        self.scoreLabel.text=nil;
-    }
+    
     
     if (button.tag==50555) {
-        if (self.scoreLabel.text.length==0) {
+        if (self.scoreLabel.text.length==1) {
             [self removeFromSuperview];
-        }else if (self.scoreLabel.text.length==1) {
-            self.scoreLabel.text=nil;
-            
         }else{
        NSString *text = [self.scoreLabel.text substringWithRange:NSMakeRange(self.scoreLabel.text.length-1, 1)];
         self.scoreLabel.text=text;
@@ -158,6 +153,10 @@
         
     }else
     {
+        if ([self.scoreLabel.text isEqual:@"-"]) {
+            self.scoreLabel.text=nil;
+        }
+        
         if (self.scoreLabel.text.length==1) {
             //self.scoreLabel.text=nil;
             NSString *str=[NSString stringWithFormat:@"%@%@",self.scoreLabel.text,button.titleLabel.text];
@@ -177,7 +176,13 @@
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self removeFromSuperview];
+    ZCLog(@"%@",self.scoreLabel.text);
+    
+    if ([self.delegate respondsToSelector:@selector(keyboardViewConfirmThatTheInput:)]) {
+        [self.delegate keyboardViewConfirmThatTheInput:self.scoreLabel.text];
+        [self removeFromSuperview];
+    }
+
 }
 
 

@@ -11,7 +11,7 @@
 @optional
 -(void)switchButtonIsOpen:(int)isOpen1 andSwitch2:(int)isOpen2 andSwitch3:(int)isOpen3 andSwitch4:(int)isOpen4 andSwitch5:(int)isOpen5 andWhoWin:(int)whoWin andUserDict:(NSMutableDictionary*)userDict andOtherDict:(NSMutableDictionary *)otherDict;
 
--(void)buttonIsClicker:(UIButton *)btn;
+-(void)buttonIsClicker:(NSString *)nameStr;
 @end
 @interface ZCHoleView : UIView
 @property(nonatomic,weak)id<ZCHoleViewDelegate> delegate;
