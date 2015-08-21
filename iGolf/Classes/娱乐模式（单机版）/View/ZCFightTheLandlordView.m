@@ -592,7 +592,7 @@
     if (image1.tag==2031) {
         ZCDouModel *userModel=[[ZCDouModel alloc] init];
         userModel.isUser=1;
-        userModel.name=self.personName;
+        userModel.name=label1.text;
         userModel.personImage=image1.image;
         self.userModel=userModel;
         [teamArray addObject:userModel];
@@ -600,7 +600,7 @@
     {
         ZCDouModel *userModel=[[ZCDouModel alloc] init];
         userModel.isUser=0;
-        userModel.name=self.personName;
+        userModel.name=label1.text;
         userModel.personImage=image1.image;
         self.userModel=userModel;
         [teamArray addObject:userModel];
