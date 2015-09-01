@@ -350,7 +350,7 @@ static FMDatabase *_db;
         }
     }
 
-    ZCLog(@"%d",score);
+    ZCLog(@"%ld",(long)score);
     
     NSString *t_match_sql=[NSString stringWithFormat:@"UPDATE t_match SET earned=%ld, par_%d=%d WHERE  id=%ld",(long)score,holeNumber+1,fightTheLandlordModel.par,(long)tool.uuid];
     BOOL success1=[_db executeUpdate:t_match_sql];

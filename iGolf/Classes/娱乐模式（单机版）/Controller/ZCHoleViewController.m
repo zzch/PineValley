@@ -56,10 +56,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title=@"比洞赛";
+    
     
     //返回
     self.navigationItem.leftBarButtonItem=[UIBarButtonItem barBtnItemWithNormalImageName:@"fanhui" hightImageName:@"fanhui" action:@selector(dataToModify:) target:self];
+    
+    
     
     self.view.backgroundColor=[UIColor whiteColor];
     UIBarButtonItem *ButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"排名" style:UIBarButtonItemStyleDone target:self action:@selector(clickTherightItem)];
@@ -108,6 +110,7 @@
     for (int i=0; i<18; i++) {
         ZCHoleScoringView *holeScoringView=[[ZCHoleScoringView alloc] init];
         holeScoringView.delegate=self;
+        
         holeScoringView.number=[NSString stringWithFormat:@"%d",i+1];
         [self.viewArray addObject:holeScoringView];
     }
@@ -154,6 +157,8 @@
         
         
         [self.afterBtn setTitle:@"下一洞" forState:UIControlStateNormal];
+        
+        self.navigationItem.title=[NSString stringWithFormat:@"球洞%d",self.index];
     }else{
     
     
@@ -166,6 +171,8 @@
     
     [self.view addSubview:holeScoringView];
     self.holeScoringView=holeScoringView;
+        
+    self.navigationItem.title=[NSString stringWithFormat:@"球洞%d",self.index+1];
     
     }
 
@@ -312,6 +319,8 @@
 //上一洞
 -(void)clickTheBeforeBtn
 {
+    
+    
     if (self.open && self.index==18) {
         self.index=17;
     }
@@ -319,11 +328,12 @@
     if (self.index==0) {
         [MBProgressHUD showSuccess:@"已经没有了"];
     }else{
+        
     self.index--;
     self.isYES=YES;
         ZCLog(@"%d",self.index);
     [self.afterBtn setTitle:@"下一洞" forState:UIControlStateNormal];
-    
+    self.navigationItem.title=[NSString stringWithFormat:@"球洞%d",self.index+1];
     [UIView animateWithDuration:0.5 animations:^{
         self.holeScoringView.transform = CGAffineTransformMakeScale(0.01, 0.01);
     } completion:^(BOOL finished) {
@@ -347,6 +357,7 @@
 //点击开始
 -(void)clickTheStartBtn
 {
+    
     
     if (self.index>=17 && [self.dataArray[17] isSave]) {
         
@@ -391,7 +402,7 @@
         self.index++;
         
         ZCLog(@"%d",self.index);
-           
+         self.navigationItem.title=[NSString stringWithFormat:@"球洞%d",self.index+1];
         
         if (self.index<=17) {
             
@@ -633,9 +644,14 @@
     }else if (play1.stroke-play2.stroke==0)
     {//打平
         
-        
-        
-        if (switchModel.drau_to_next==1) {
+        if (switchModel.drau_to_win==0 && switchModel.drau_to_next==0) {//没有开启打平进入下一洞和平局让杆
+            
+            play1.winScore=0;
+            play2.winScore=0;
+            play1.score=play1.score;
+            play2.score=play2.score;
+            
+        }else if (switchModel.drau_to_next==1) {//开启打平进入下一洞
             
             if (self.isModify) {
                 ZCLog(@"%d",fightTheLandlordModel.isNext);

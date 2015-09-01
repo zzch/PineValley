@@ -24,6 +24,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
+    self.navigationItem.title=@"历史";
     self.tableView.rowHeight=100;
     self.tableView.sectionHeaderHeight=140;
     self.dataArray= [ZCDatabaseTool theHistoricalRecord];

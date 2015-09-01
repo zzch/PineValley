@@ -1069,7 +1069,7 @@
 //结束编辑事件  （退出键盘）
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    //     self.bKeyBoardHide = NO;
+    
     [self.view endEditing:YES];
 }
 

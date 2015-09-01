@@ -38,6 +38,11 @@
 @property(nonatomic,weak)UILabel *numberLabel2;
 @property(nonatomic,weak)UILabel *numberLabel3;
 @property(nonatomic,weak)UILabel *numberLabel4;
+
+
+@property(nonatomic,weak)UIImageView *bjRedImage;
+@property(nonatomic,weak)UIImageView *bjMiddleImage;
+
 // 1为点击左边的成绩   2为点击中左间的成绩  3 为点击中右边的成绩 4为最右边
 @property(nonatomic,assign)int index;
 @end
@@ -57,25 +62,39 @@
 
 -(void)addControls
 {
+    
+    UIImageView *bjMiddleImage=[[UIImageView alloc] init];
+    bjMiddleImage.image=[UIImage imageNamed:@"hole_bjimage"];
+    [self addSubview:bjMiddleImage];
+    self.bjMiddleImage=bjMiddleImage;
+    
     UIScrollView *scollView=[[UIScrollView  alloc] init];
     [scollView setShowsVerticalScrollIndicator:NO];
     scollView.bounces=NO;
     [self addSubview:scollView];
     self.scollView=scollView;
     
-    UILabel *holeNumber=[[UILabel alloc] init];
-    [scollView addSubview:holeNumber];
-    self.holeNumber=holeNumber;
     
-    UILabel *nameLabel=[[UILabel alloc] init];
-    nameLabel.text=@"标准杆";
-    nameLabel.textAlignment=NSTextAlignmentCenter;
-    [scollView addSubview:nameLabel];
-    self.nameLabel=nameLabel;
+    UIImageView *bjRedImage=[[UIImageView alloc] init];
+    bjRedImage.image=[UIImage imageNamed:@"yule_dingbu_bj"];
+    [scollView addSubview:bjRedImage];
+    self.bjRedImage=bjRedImage;
+    
+    
+//    UILabel *holeNumber=[[UILabel alloc] init];
+//    [scollView addSubview:holeNumber];
+//    self.holeNumber=holeNumber;
+//    
+//    UILabel *nameLabel=[[UILabel alloc] init];
+//    nameLabel.text=@"标准杆";
+//    nameLabel.textAlignment=NSTextAlignmentCenter;
+//    [scollView addSubview:nameLabel];
+//    self.nameLabel=nameLabel;
     
     //计分成绩cliclkThescoreButton
     UIButton *scoreLabel=[[UIButton alloc] init];
-    scoreLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"ganshuluru"]];
+    scoreLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"yule_anniu_mor"]];
+    [scoreLabel setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
     [scoreLabel setTitle:@"-" forState:UIControlStateNormal];
     scoreLabel.titleLabel.font=[UIFont systemFontOfSize:25];    [scoreLabel addTarget:self action:@selector(cliclkThescoreButton) forControlEvents:UIControlEventTouchUpInside];
     [scollView addSubview:scoreLabel];
@@ -172,15 +191,17 @@
     
     UIButton *liftScoreLabel=[[UIButton alloc] init];
     liftScoreLabel.tag=23300;
-    liftScoreLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"ganshuluru"]];
+    liftScoreLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"yule_anniu_mor"]];
     [liftScoreLabel setTitle:@"-" forState:UIControlStateNormal];
+    [liftScoreLabel setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
     liftScoreLabel.titleLabel.font=[UIFont systemFontOfSize:25];    [liftScoreLabel addTarget:self action:@selector(cliclkTheScoreLabel:) forControlEvents:UIControlEventTouchUpInside];
     [scollView addSubview:liftScoreLabel];
     self.liftScoreLabel=liftScoreLabel;
     
     
     UIButton *middleScoreLabel=[[UIButton alloc] init];
-    middleScoreLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"ganshuluru"]];
+    middleScoreLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"yule_anniu_mor"]];
+    [middleScoreLabel setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
     [middleScoreLabel setTitle:@"-" forState:UIControlStateNormal];
     middleScoreLabel.titleLabel.font=[UIFont systemFontOfSize:25];
     middleScoreLabel.tag=23301;
@@ -191,7 +212,8 @@
     
     
     UIButton *rightScoreLabel=[[UIButton alloc] init];
-    rightScoreLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"ganshuluru"]];
+    rightScoreLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"yule_anniu_mor"]];
+    [rightScoreLabel setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
     [rightScoreLabel setTitle:@"-" forState:UIControlStateNormal];
     rightScoreLabel.titleLabel.font=[UIFont systemFontOfSize:25];
     rightScoreLabel.tag=23302;
@@ -202,7 +224,8 @@
     
     
     UIButton *lastScoreLabel=[[UIButton alloc] init];
-    lastScoreLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"ganshuluru"]];
+    lastScoreLabel.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"yule_anniu_mor"]];
+    [lastScoreLabel setTitleColor:ZCColor(85, 85, 85) forState:UIControlStateNormal];
     [lastScoreLabel setTitle:@"-" forState:UIControlStateNormal];
     lastScoreLabel.titleLabel.font=[UIFont systemFontOfSize:25];
     lastScoreLabel.tag=23303;
@@ -436,7 +459,7 @@
     if (offPlayer1.stroke==0) {
         [self.liftScoreLabel setTitle:@"-" forState:UIControlStateNormal];
     }else{
-        [self.liftScoreLabel setTitle:[NSString stringWithFormat:@"%ld",offPlayer1.stroke] forState:UIControlStateNormal];
+        [self.liftScoreLabel setTitle:[NSString stringWithFormat:@"%ld",(long)offPlayer1.stroke] forState:UIControlStateNormal];
     }
 
     
@@ -444,7 +467,7 @@
     if (offPlayer2.stroke==0) {
         [self.middleScoreLabel setTitle:@"-" forState:UIControlStateNormal];
     }else{
-        [self.middleScoreLabel setTitle:[NSString stringWithFormat:@"%ld",offPlayer2.stroke] forState:UIControlStateNormal];
+        [self.middleScoreLabel setTitle:[NSString stringWithFormat:@"%ld",(long)offPlayer2.stroke] forState:UIControlStateNormal];
     }
 
     
@@ -455,14 +478,14 @@
     if (offPlayer3.stroke==0) {
         [self.rightScoreLabel setTitle:@"-" forState:UIControlStateNormal];
     }else{
-        [self.rightScoreLabel setTitle:[NSString stringWithFormat:@"%ld",offPlayer3.stroke] forState:UIControlStateNormal];
+        [self.rightScoreLabel setTitle:[NSString stringWithFormat:@"%ld",(long)offPlayer3.stroke] forState:UIControlStateNormal];
     }
 
     
     if (offPlayer4.stroke==0) {
         [self.lastScoreLabel setTitle:@"-" forState:UIControlStateNormal];
     }else{
-        [self.lastScoreLabel setTitle:[NSString stringWithFormat:@"%ld",offPlayer4.stroke] forState:UIControlStateNormal];
+        [self.lastScoreLabel setTitle:[NSString stringWithFormat:@"%ld",(long)offPlayer4.stroke] forState:UIControlStateNormal];
     }
 
     
@@ -548,23 +571,31 @@
     
     self.scollView.frame=self.bounds;
     
-    CGFloat holeNumberX=30;
-    CGFloat holeNumberY=21;
-    CGFloat holeNumberW=100;
-    CGFloat holeNumberH=20;
-    self.holeNumber.frame=CGRectMake(holeNumberX, holeNumberY, holeNumberW, holeNumberH);
-    
-    CGFloat nameLabelW=60;
-    CGFloat nameLabelH=20;
-    CGFloat nameLabelX=(SCREEN_WIDTH-nameLabelW)/2;
-    CGFloat nameLabelY=19;
-    self.nameLabel.frame=CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH);
     
     
-    CGFloat scoreLabelW=61;
-    CGFloat scoreLabelH=61;
+    CGFloat bjRedImageH=SCREEN_HEIGHT*0.174295;
+    self.bjRedImage.frame=CGRectMake(0, 0, SCREEN_WIDTH, bjRedImageH);
+    
+    CGFloat bjMiddleImageY=bjRedImageH;
+    CGFloat bjMiddleImageH=SCREEN_HEIGHT*0.62676;
+    self.bjMiddleImage.frame=CGRectMake(0, bjMiddleImageY, SCREEN_WIDTH, bjMiddleImageH);
+//    CGFloat holeNumberX=30;
+//    CGFloat holeNumberY=21;
+//    CGFloat holeNumberW=100;
+//    CGFloat holeNumberH=20;
+//    self.holeNumber.frame=CGRectMake(holeNumberX, holeNumberY, holeNumberW, holeNumberH);
+//    
+//    CGFloat nameLabelW=60;
+//    CGFloat nameLabelH=20;
+//    CGFloat nameLabelX=(SCREEN_WIDTH-nameLabelW)/2;
+//    CGFloat nameLabelY=19;
+//    self.nameLabel.frame=CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH);
+    
+    
+    CGFloat scoreLabelW=60;
+    CGFloat scoreLabelH=60;
     CGFloat scoreLabelX=(SCREEN_WIDTH-scoreLabelW)/2;
-    CGFloat scoreLabelY=nameLabelY+nameLabelH+25;
+    CGFloat scoreLabelY=bjRedImageH-30;
     self.scoreLabel.frame=CGRectMake(scoreLabelX, scoreLabelY, scoreLabelW, scoreLabelH);
     
 //    CGFloat promptLabelX=40;
@@ -659,34 +690,34 @@
     
     
     CGFloat liftScoreLabelY=liftLabelY+liftLabelH+20;
-    CGFloat liftScoreLabelW=61;
-    CGFloat liftScoreLabelH=61;
+    CGFloat liftScoreLabelW=60;
+    CGFloat liftScoreLabelH=60;
     CGFloat liftScoreLabelX=liftImageViewX+(liftImageViewW-liftScoreLabelW)/2;
     self.liftScoreLabel.frame=CGRectMake(liftScoreLabelX, liftScoreLabelY, liftScoreLabelW, liftScoreLabelH);
     
     
     CGFloat middleScoreLabelY=middleLabelY+middleLabelH+20;
-    CGFloat middleScoreLabelW=61;
-    CGFloat middleScoreLabelH=61;
+    CGFloat middleScoreLabelW=60;
+    CGFloat middleScoreLabelH=60;
     CGFloat middleScoreLabelX=middleImageViewX+(middleImageViewW-middleScoreLabelW)/2;
     self.middleScoreLabel.frame=CGRectMake(middleScoreLabelX, middleScoreLabelY, middleScoreLabelW, middleScoreLabelH);
     
     
     CGFloat rightScoreLabelY=liftScoreLabelY;
-    CGFloat rightScoreLabelW=61;
-    CGFloat rightScoreLabelH=61;
+    CGFloat rightScoreLabelW=60;
+    CGFloat rightScoreLabelH=60;
     CGFloat rightScoreLabelX=rightImageViewX+(rightImageViewW-rightScoreLabelW)/2;
     self.rightScoreLabel.frame=CGRectMake(rightScoreLabelX, rightScoreLabelY, rightScoreLabelW, rightScoreLabelH);
     
     
     
     CGFloat lastScoreLabelY=liftScoreLabelY;
-    CGFloat lastScoreLabelW=61;
-    CGFloat lastScoreLabelH=61;
+    CGFloat lastScoreLabelW=60;
+    CGFloat lastScoreLabelH=60;
     CGFloat lastScoreLabelX=lastImageViewX+(lastImageViewW-lastScoreLabelW)/2;
     self.lastScoreLabel.frame=CGRectMake(lastScoreLabelX, lastScoreLabelY, lastScoreLabelW, lastScoreLabelH);
     
-    self.scollView.contentSize=CGSizeMake(0, lastScoreLabelY+lastScoreLabelH+50);
+    self.scollView.contentSize=CGSizeMake(0, lastScoreLabelY+lastScoreLabelH+20);
     
 }
 

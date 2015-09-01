@@ -133,6 +133,7 @@
         self.lasVegasGameView=lasVegasGameView;
         
         [self.afterBtn setTitle:@"下一洞" forState:UIControlStateNormal];
+        self.navigationItem.title=[NSString stringWithFormat:@"球洞%d",self.index];
  
     }else{
     
@@ -144,6 +145,7 @@
     [self.view addSubview:lasVegasGameView];
     lasVegasGameView.lasVegasModel=self.dataArray[self.index];
     self.lasVegasGameView=lasVegasGameView;
+        self.navigationItem.title=[NSString stringWithFormat:@"球洞%d",self.index+1];
     
     }
 
@@ -330,7 +332,7 @@
     self.index--;
     self.isYES=YES;
     [self.afterBtn setTitle:@"下一洞" forState:UIControlStateNormal];
-    
+    self.navigationItem.title=[NSString stringWithFormat:@"球洞%d",self.index+1];
     [UIView animateWithDuration:0.5 animations:^{
         self.lasVegasGameView.transform = CGAffineTransformMakeScale(0.01, 0.01);
     } completion:^(BOOL finished) {
@@ -386,7 +388,7 @@
         
         self.index++;
         
-        
+        self.navigationItem.title=[NSString stringWithFormat:@"球洞%d",self.index+1];
         
         [UIView animateWithDuration:0.5 animations:^{
             self.lasVegasGameView.transform = CGAffineTransformMakeScale(0.01, 0.01);

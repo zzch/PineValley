@@ -493,17 +493,17 @@
                 break;
             case 13004:
                 self.isOpen4=0;
-                self.drawToWinView.hidden=NO;
-                [self clickTheButton1:nil];
-                self.isOpen5=1;
-                self.switch2.on=YES;
-                [self layoutSubviews];
+//                self.drawToWinView.hidden=NO;
+//                [self clickTheButton1:nil];
+//                self.isOpen5=1;
+//                self.switch2.on=YES;
+                //[self layoutSubviews];
                 break;
             case 13005:
                 self.isOpen5=0;
                 self.whoWin=0;
-                self.switch1.on=YES;
-                self.isOpen4=1;
+//                self.switch1.on=YES;
+//                self.isOpen4=1;
                 self.drawToWinView.hidden=YES;
                 [self layoutSubviews];
                 break;

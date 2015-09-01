@@ -90,11 +90,28 @@
     
     self.parLabel.text=[NSString stringWithFormat:@"%ld/18",historicalRecordModel.count];
     if (historicalRecordModel.earned>=0) {
-        self.scoreLabel.text=[NSString stringWithFormat:@"+%ld",(long)historicalRecordModel.earned];
+        self.scoreLabel.textColor=ZCColor(9, 133, 12);
+        self.scoreLabel.text=[NSString stringWithFormat:@"%ld",(long)historicalRecordModel.earned];
     }else{
+        self.scoreLabel.textColor=ZCColor(255, 0, 0);
         self.scoreLabel.text=[NSString stringWithFormat:@"%ld",(long)historicalRecordModel.earned];
     }
+    
+   CGFloat w= [ZCTool getFrame:CGSizeMake(150, 40) content:[NSString stringWithFormat:@"%ld",(long)historicalRecordModel.earned] fontSize:[UIFont systemFontOfSize:25]].size.width;
 
+    ZCLog(@"%f",w);
+    
+    if (w<50) {
+        self.scoreLabel.font=[UIFont systemFontOfSize:25];
+    }else if (w>50&&w<70)
+    {
+    self.scoreLabel.font=[UIFont systemFontOfSize:20];
+    }else{
+    
+    self.scoreLabel.font=[UIFont systemFontOfSize:17];
+    }
+    
+    
 }
 
 

@@ -15,6 +15,7 @@
 @property(nonatomic,weak)UILabel *progressLabel;
 @property(nonatomic,assign)int index;
 @property(nonatomic,weak)UIImageView *moneyImage;
+@property(nonatomic,weak)UIImageView *winImage;
 @end
 @implementation ZCEntertainmentRankingCell
 
@@ -112,7 +113,19 @@
 
 -(void)setRanking:(int)ranking
 {
-  self.rankingLabel.text=[NSString stringWithFormat:@"%d",ranking];
+    if (ranking==1) {
+        UIImageView *winImage=[[UIImageView alloc] init];
+        winImage.image=[UIImage imageNamed:@"winone"];
+        [self.rankingLabel addSubview:winImage];
+        self.winImage=winImage;
+        
+    }else{
+    self.rankingLabel.text=[NSString stringWithFormat:@"%d",ranking];
+    }
+    
+    
+    
+  
 }
 
 
@@ -121,12 +134,13 @@
     [super layoutSubviews];
     CGFloat  rankingLabelX=0;
     CGFloat  rankingLabelY=0;
-    CGFloat  rankingLabelW=45;
+    CGFloat  rankingLabelW=55;
     CGFloat  rankingLabelH=self.frame.size.height;
     self.rankingLabel.frame=CGRectMake(rankingLabelX, rankingLabelY, rankingLabelW, rankingLabelH);
     
+    self.winImage.frame=CGRectMake(14, (self.frame.size.height-42)/2, 28, 42);
     
-    CGFloat  userImageViewX=rankingLabelW+5;
+    CGFloat  userImageViewX=rankingLabelW;
     
     CGFloat  userImageViewW=80;
     CGFloat  userImageViewH=80;

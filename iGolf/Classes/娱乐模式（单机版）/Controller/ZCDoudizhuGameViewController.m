@@ -143,6 +143,7 @@
         [self.view addSubview:doudizhuGameView];
         self.doudizhuGameView=doudizhuGameView;
         [self.afterBtn setTitle:@"下一洞" forState:UIControlStateNormal];
+        self.navigationItem.title=[NSString stringWithFormat:@"球洞%d",self.index];
     }else{
     
     ZCDoudizhuGameView *doudizhuGameView=self.viewArray[self.index];
@@ -153,6 +154,7 @@
     [self.view addSubview:doudizhuGameView];
    // doudizhuGameView.delegate=self;
     self.doudizhuGameView=doudizhuGameView;
+    self.navigationItem.title=[NSString stringWithFormat:@"球洞%d",self.index+1];
     
     }
     
@@ -334,7 +336,7 @@
     
     self.isYES=YES;
     [self.afterBtn setTitle:@"下一洞" forState:UIControlStateNormal];
-    
+    self.navigationItem.title=[NSString stringWithFormat:@"球洞%d",self.index+1];
     [UIView animateWithDuration:0.5 animations:^{
         self.doudizhuGameView.transform = CGAffineTransformMakeScale(0.01, 0.01);
     } completion:^(BOOL finished) {
@@ -386,7 +388,7 @@
         
         
         self.index++;
-        
+        self.navigationItem.title=[NSString stringWithFormat:@"球洞%d",self.index+1];
         
         
         [UIView animateWithDuration:0.5 animations:^{
