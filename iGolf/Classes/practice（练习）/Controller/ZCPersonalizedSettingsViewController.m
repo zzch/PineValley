@@ -25,6 +25,8 @@
 @property(nonatomic,weak)UIButton *startBtn;
 //是否可以点击开始
 @property(nonatomic,assign,getter=isClick)BOOL click;
+
+@property(nonatomic,weak)UIScrollView *scrollView;
 @end
 
 @implementation ZCPersonalizedSettingsViewController
@@ -37,9 +39,16 @@
     
     //监听通知中心
    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(selfViewClick)];
+    [self.view addGestureRecognizer:tap];
     
     
-     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
+//     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidChangeFrame:) name:UIKeyboardWillChangeFrameNotification object:nil];
+    
+    UIScrollView *scrollView=[[UIScrollView alloc] init];
+    scrollView.frame=self.view.bounds;
+    [self.view addSubview:scrollView];
+    self.scrollView=scrollView;
     
     
     
@@ -52,7 +61,8 @@
     fiestLabel.frame=CGRectMake(fiestLabelX, fiestLabelY, fiestLabelW, fiestLabelH);
     fiestLabel.textAlignment=NSTextAlignmentCenter;
     fiestLabel.text=@"第一步  上传头像";
-    [self.view addSubview:fiestLabel ];
+    [scrollView addSubview:fiestLabel ];
+    
     
     
     UIButton *imageButton=[[UIButton alloc] init];
@@ -65,14 +75,14 @@
     imageButton.layer.masksToBounds = YES;
     imageButton.layer.cornerRadius = 35;
     [imageButton setImage:[UIImage imageNamed:@"gxhsz_touxiang"] forState:UIControlStateNormal];
-     [self.view addSubview:imageButton];
+     [scrollView addSubview:imageButton];
     self.imageButton=imageButton;
     
     
     UIView *xian1=[[UIView alloc] init];
     xian1.frame=CGRectMake(10, imageButtonY+imageButtonH+(SCREEN_HEIGHT*0.0271), SCREEN_WIDTH-20, 0.5);
     xian1.backgroundColor=ZCColor(170, 170, 170);
-    [self.view addSubview:xian1];
+    [scrollView addSubview:xian1];
     
     
     
@@ -86,7 +96,7 @@
     secondLabel.frame=CGRectMake(secondLabelX, secondLabelY, secondLabelW, secondLabelH);
     secondLabel.textAlignment=NSTextAlignmentCenter;
     secondLabel.text=@"第二步  设置昵称";
-    [self.view addSubview:secondLabel ];
+    [scrollView addSubview:secondLabel ];
     
     
     
@@ -99,7 +109,7 @@
 
     nameLabel.frame=CGRectMake(nameLabelX, nameLabelY, nameLabelW, nameLabelH);
     nameLabel.text=@"给自己起个好听的名字:";
-    [self.view addSubview:nameLabel];
+    [scrollView addSubview:nameLabel];
     
     
    
@@ -122,12 +132,12 @@
     
     UIImageView *imageView=[[UIImageView alloc] initWithFrame:CGRectMake(nameTextFieldX, nameTextFieldY, nameTextFieldW, nameTextFieldH)];
     imageView.image=image;
-    [self.view addSubview:imageView];
+    [scrollView addSubview:imageView];
     
     
      UITextField *nameTextField=[[UITextField alloc] init];
      nameTextField.frame=CGRectMake(nameTextFieldX, nameTextFieldY, nameTextFieldW, nameTextFieldH);
-    [self.view addSubview:nameTextField];
+    [scrollView addSubview:nameTextField];
     self.nameTextField=nameTextField;
     //nameTextField.keyboardType=
     [nameTextField addTarget:self action:@selector(nameTextFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
@@ -138,7 +148,7 @@
     UIView *xian2=[[UIView alloc] init];
     xian2.frame=CGRectMake(10, nameTextFieldY+nameTextFieldH+(SCREEN_HEIGHT*0.04), SCREEN_WIDTH-20, 0.5);
     xian2.backgroundColor=ZCColor(170, 170, 170);
-    [self.view addSubview:xian2];
+    [scrollView addSubview:xian2];
     
     
     
@@ -152,7 +162,7 @@
     thirdLabel.frame=CGRectMake(thirdLabelX, thirdLabelY, thirdLabelW, thirdLabelH);
     thirdLabel.textAlignment=NSTextAlignmentCenter;
     thirdLabel.text=@"第三步  设置性别";
-    [self.view addSubview:thirdLabel ];
+    [scrollView addSubview:thirdLabel ];
     
     
     UIButton *manBtn=[[UIButton alloc] init];
@@ -167,7 +177,7 @@
     [manBtn setTitle:@"男" forState:UIControlStateNormal];
     [manBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [manBtn addTarget:self action:@selector(clickTheManBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:manBtn];
+    [scrollView addSubview:manBtn];
     self.manBtn=manBtn;
     
     
@@ -184,10 +194,10 @@
     self.wonamBtn=wonamBtn;
    
     [wonamBtn addTarget:self action:@selector(clickTheWonamBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:wonamBtn];
+    [scrollView addSubview:wonamBtn];
 
     
-    
+    scrollView.contentSize=CGSizeMake(0, wonamBtnY+wonamBtnH+130);
     
     UIButton *startBtn=[[UIButton alloc] init];
     CGFloat startBtnX=0;
@@ -369,7 +379,7 @@
 }
 
 
-
+//
 - (void)keyboardDidChangeFrame:(NSNotification *)noti
 {
         
@@ -517,15 +527,13 @@
 //    //self.bKeyBoardHide = NO;
 //}
 
-
-
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+-(void)selfViewClick
 {
-   
-    
     [self.view endEditing:YES];
 
 }
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

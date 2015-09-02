@@ -35,6 +35,9 @@
 @property(nonatomic,weak)UIImageView *imageView1;
 @property(nonatomic,weak)UIImageView *imageView2;
 @property(nonatomic,weak)UIImageView *imageView3;
+
+@property(nonatomic,weak)UIScrollView *scollView;
+
 @end
 @implementation ZCFightTheLandlordView
 
@@ -60,6 +63,16 @@
         
         
         
+        UIScrollView *scollView=[[UIScrollView  alloc] init];
+        scollView.backgroundColor=ZCColor(237, 237, 237);
+        
+        
+        scollView.bounces=NO;
+        [self addSubview:scollView];
+        self.scollView=scollView;
+
+        
+        
         UILabel *farmersLabel=[[UILabel alloc] init];
         CGFloat farmersLabelX=15;
         CGFloat farmersLabelY=17;
@@ -69,14 +82,14 @@
         farmersLabel.text=@"平民";
         farmersLabel.textColor=ZCColor(34, 34, 34);
         farmersLabel.textAlignment=NSTextAlignmentCenter;
-        [self addSubview:farmersLabel];
+        [scollView addSubview:farmersLabel];
         
         UILabel *numberLabel=[[UILabel alloc] init];
         numberLabel.frame=CGRectMake(farmersLabelX, farmersLabelY+farmersLabelH+5, farmersLabelW, farmersLabelH);
         numberLabel.text=@"1号发球";
         numberLabel.font=[UIFont systemFontOfSize:12];
         numberLabel.textAlignment=NSTextAlignmentCenter;
-        [self addSubview:numberLabel];
+        [scollView addSubview:numberLabel];
         
         
         
@@ -89,14 +102,14 @@
         diZhuLabel.text=@"地主";
         diZhuLabel.textColor=ZCColor(34, 34, 34);
         diZhuLabel.textAlignment=NSTextAlignmentCenter;
-        [self addSubview:diZhuLabel];
+        [scollView addSubview:diZhuLabel];
         
         UILabel *numberLabel2=[[UILabel alloc] init];
         numberLabel2.frame=CGRectMake(diZhuLabelX, farmersLabelY+farmersLabelH+5, farmersLabelW, farmersLabelH);
         numberLabel2.text=@"2号发球";
         numberLabel2.font=[UIFont systemFontOfSize:12];
         numberLabel2.textAlignment=NSTextAlignmentCenter;
-        [self addSubview:numberLabel2];
+        [scollView addSubview:numberLabel2];
 
         
         
@@ -110,14 +123,14 @@
         farmersLabel2.text=@"平民";
         farmersLabel2.textColor=ZCColor(34, 34, 34);
         farmersLabel2.textAlignment=NSTextAlignmentCenter;
-        [self addSubview:farmersLabel2];
+        [scollView addSubview:farmersLabel2];
         
         UILabel *numberLabel3=[[UILabel alloc] init];
         numberLabel3.frame=CGRectMake(farmersLabel2X, farmersLabelY+farmersLabelH+5, farmersLabelW, farmersLabelH);
         numberLabel3.text=@"3号发球";
         numberLabel3.font=[UIFont systemFontOfSize:12];
         numberLabel3.textAlignment=NSTextAlignmentCenter;
-        [self addSubview:numberLabel3];
+        [scollView addSubview:numberLabel3];
 
         
         
@@ -132,7 +145,7 @@
         personView.frame=CGRectMake(10, farmersLabel2Y+50, SCREEN_WIDTH-20, 136);
         personView.image=[ZCTool imagePullLitre:@"taimian"];
         personView.userInteractionEnabled=YES;
-        [self addSubview:personView];
+        [scollView addSubview:personView];
         [self addView:personView];
         self.personView=personView;
         
@@ -143,14 +156,14 @@
         textLabel.textAlignment=NSTextAlignmentCenter;
         textLabel.text=@"拖动头像来改变发球的顺序";
         textLabel.font=[UIFont systemFontOfSize:13];
-        [self addSubview:textLabel];
+        [scollView addSubview:textLabel];
         
         
         CGFloat firstViewY=textLabel.frame.size.height+textLabel.frame.origin.y;
         UIView *firstView=[[UIView alloc] init];
         firstView.frame=CGRectMake(0, firstViewY, SCREEN_WIDTH, 40);
         firstView.backgroundColor=[UIColor whiteColor];
-        [self addSubview:firstView];
+        [scollView addSubview:firstView];
         
         [self addView:firstView andNameLabelText:@"小鸟球翻一倍"];
         
@@ -159,7 +172,7 @@
         UIView *secondView=[[UIView alloc] init];
         secondView.frame=CGRectMake(0, secondViewY, SCREEN_WIDTH, 40);
         secondView.backgroundColor=[UIColor whiteColor];
-        [self addSubview:secondView];
+        [scollView addSubview:secondView];
        // self.secondView=secondView;
         [self addView:secondView andNameLabelText:@"老鹰球翻两倍"];
         
@@ -167,12 +180,12 @@
         UIView *thirdView=[[UIView alloc] init];
         thirdView.frame=CGRectMake(0, thirdViewY, SCREEN_WIDTH, 40);
         thirdView.backgroundColor=[UIColor whiteColor];
-        [self addSubview:thirdView];
+        [scollView addSubview:thirdView];
         //self.thirdView=thirdView;
         [self addView:thirdView andNameLabelText:@"打平进入下一洞"];
         
         
-
+        scollView.contentSize = CGSizeMake(0,thirdViewY+50 );
 
     }
     return self;
@@ -722,6 +735,17 @@
    
     
     
+
+}
+
+
+
+
+
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
+    self.scollView.frame=CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
 
 }
 

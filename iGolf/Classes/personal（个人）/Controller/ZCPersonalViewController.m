@@ -34,6 +34,7 @@
 @property(nonatomic,weak)UIImageView *headImage;
 @property(nonatomic,weak)NSString *imagePath;
 @property(nonatomic,weak)UILabel *nameLabel;
+@property(nonatomic,weak)UIScrollView *scrollView;
 @end
 
 @implementation ZCPersonalViewController
@@ -128,6 +129,10 @@
 //设置
 -(void)initSettingsButton
 {
+    
+    
+    
+    
     UIButton *settingsButton=[[UIButton alloc] init];
 //    CGFloat top = 25; // 顶端盖高度
 //    CGFloat bottom = 25 ; // 底端盖高度
@@ -147,7 +152,7 @@
     settingsButton.backgroundColor=[UIColor whiteColor];
     [settingsButton addTarget:self action:@selector(clicksettingsButton) forControlEvents:UIControlEventTouchUpInside];
     [settingsButton setBackgroundImage:[UIImage imageNamed:@"hang_bj_03"] forState:UIControlStateNormal];
-    [self.view addSubview:settingsButton];
+    [self.scrollView addSubview:settingsButton];
     self.settingsButton=settingsButton;
     [self addChildControls:settingsButton andText:@"账号与安全"];
     
@@ -160,7 +165,7 @@
     [abountUsBtn setBackgroundImage:[UIImage imageNamed:@"hang_bj_03"] forState:UIControlStateNormal];
 
     [abountUsBtn addTarget:self action:@selector(clicktheAbountUsBtn) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:abountUsBtn];
+    [self.scrollView addSubview:abountUsBtn];
     [self addChildControls:abountUsBtn andText:@"关于我们"];
     
     
@@ -174,7 +179,7 @@
     [feedbackBtn setBackgroundImage:[UIImage imageNamed:@"hang_bj_03"] forState:UIControlStateNormal];
    
     [feedbackBtn addTarget:self action:@selector(clickThefeedbackBtn) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:feedbackBtn];
+    [self.scrollView addSubview:feedbackBtn];
     [self addChildControls:feedbackBtn andText:@"意见反馈"];
 
     
@@ -192,10 +197,10 @@
     [LoggedOutBtn setTitle:@"退出登录" forState:UIControlStateNormal];
     [LoggedOutBtn setTitleColor:ZCColor(255, 0, 0) forState:UIControlStateNormal];
     [LoggedOutBtn addTarget:self action:@selector(clickLoggedOutBtn) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:LoggedOutBtn];
+    [self.scrollView addSubview:LoggedOutBtn];
 
     
-    
+    self.scrollView.contentSize=CGSizeMake(0, LoggedOutBtnY+LoggedOutBtnH+20);
 //    
 //    UIImageView *image1=[[UIImageView alloc] init];
 //    CGFloat imageX=10;
@@ -213,6 +218,9 @@
 
 -(void)addChildControls:(UIButton *)Button andText:(NSString *)text
 {
+    
+    
+    
     //设置
     UILabel *settingsLabel=[[UILabel alloc] init];
     CGFloat settingsLabelX=10;//imageW+imageX+15;
@@ -334,6 +342,15 @@ ZCLog(@"网络下的载111122222 ");
 //头部图片View wo_bj
 -(void)initImageView
 {
+    
+    UIScrollView *scrollView=[[UIScrollView alloc] init];
+    scrollView.frame=self.view.bounds;
+    scrollView.bounces=NO;
+    [self.view addSubview:scrollView];
+    self.scrollView=scrollView;
+    
+    
+    
     UIButton *headImageView=[[UIButton alloc] init];
    // headImageView.userInteractionEnabled=YES;
     CGFloat headImageViewX=0;
@@ -364,7 +381,7 @@ ZCLog(@"网络下的载111122222 ");
 //    headImageView.frame=CGRectMake(headImageViewX, headImageViewY, headImageViewW, headImageViewH);
 //        headImageView.backgroundColor=[UIColor colorWithPatternImage:[UIImage imageNamed:@"bjtu"]];
 //    }
-    [self.view addSubview:headImageView];
+    [self.scrollView addSubview:headImageView];
     self.headImageView=headImageView;
     
     

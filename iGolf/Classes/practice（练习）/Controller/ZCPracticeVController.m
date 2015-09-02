@@ -147,15 +147,24 @@
 //    [self.view addSubview:nameLabel];
 //
     
-    //竞技比赛
+  
+    
+    
+    
+    
+    //竞技比赛jingjibisai_4s
+    
     UIButton *sportsCompetition=[[UIButton alloc] init];
     CGFloat sportsCompetitionX=7;
     CGFloat sportsCompetitionY=10;
     CGFloat sportsCompetitionW=SCREEN_WIDTH-16;
     CGFloat sportsCompetitionH=(SCREEN_HEIGHT-50)/4-15;
     sportsCompetition.frame=CGRectMake(sportsCompetitionX, sportsCompetitionY, sportsCompetitionW, sportsCompetitionH);
+    if (SCREEN_HEIGHT==480) {
+        [sportsCompetition setImage:[UIImage imageNamed:@"jingjibisai_4s"] forState:UIControlStateNormal];
+    }else{
     [sportsCompetition setImage:[UIImage imageNamed:@"shouye_jingjibisai"] forState:UIControlStateNormal];
-    
+    }
     [sportsCompetition addTarget:self action:@selector(clickThesportsCompetition) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:sportsCompetition];
     
@@ -166,7 +175,13 @@
     CGFloat entertainmentBtnW=sportsCompetitionW;
     CGFloat entertainmentBtnH=sportsCompetitionH;
     entertainmentBtn.frame=CGRectMake(entertainmentBtnX, entertainmentBtnY, entertainmentBtnW, entertainmentBtnH);
+    if (SCREEN_HEIGHT==480)
+    {
+    [entertainmentBtn setImage:[UIImage imageNamed:@"yilemoshi_4s"] forState:UIControlStateNormal];
+    }else{
     [entertainmentBtn setImage:[UIImage imageNamed:@"shouye_yulemoshi"] forState:UIControlStateNormal];
+    }
+    
     [entertainmentBtn addTarget:self action:@selector(clickTheBtn) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:entertainmentBtn];
 
@@ -180,8 +195,12 @@
     CGFloat technicalStatisticsW=sportsCompetitionW;
     CGFloat technicalStatisticsH=sportsCompetitionH;
     technicalStatistics.frame=CGRectMake(technicalStatisticsX, technicalStatisticsY, technicalStatisticsW, technicalStatisticsH);
-    [technicalStatistics setImage:[UIImage imageNamed:@"3"] forState:UIControlStateNormal];
-
+    if (SCREEN_HEIGHT==480)
+    {
+    [technicalStatistics setImage:[UIImage imageNamed:@"jishutongji_4s"] forState:UIControlStateNormal];
+    }else{
+    [technicalStatistics setImage:[UIImage imageNamed:@"jishutongji"] forState:UIControlStateNormal];
+    }
     
     [technicalStatistics addTarget:self action:@selector(clickTheTechnicalStatistics) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:technicalStatistics];
@@ -194,7 +213,12 @@
     CGFloat personalCenterW=sportsCompetitionW;
     CGFloat personalCenterH=sportsCompetitionH;
     personalCenter.frame=CGRectMake(personalCenterX, personalCenterY, personalCenterW, personalCenterH);
-    [personalCenter setImage:[UIImage imageNamed:@"4"] forState:UIControlStateNormal];
+    if (SCREEN_HEIGHT==480)
+    {
+    [personalCenter setImage:[UIImage imageNamed:@"gerenzhongxin_4s"] forState:UIControlStateNormal];
+    }else{
+    [personalCenter setImage:[UIImage imageNamed:@"gerenzhongxin"] forState:UIControlStateNormal];
+    }
     
     [personalCenter addTarget:self action:@selector(clickThePersonalCenter) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:personalCenter];
