@@ -35,9 +35,9 @@
 {
     // 1.添加
     UIPageControl *pageControl = [[UIPageControl alloc] init];
-    pageControl.numberOfPages = 3;
+    pageControl.numberOfPages = 4;
     CGFloat centerX = self.view.frame.size.width * 0.5;
-    CGFloat centerY = self.view.frame.size.height - 30;
+    CGFloat centerY = self.view.frame.size.height - 100;
     pageControl.center = CGPointMake(centerX, centerY);
     pageControl.bounds = CGRectMake(0, 0, 100, 30);
     pageControl.userInteractionEnabled = NO;
@@ -73,11 +73,11 @@
     // 2.添加图片
     CGFloat imageW = scrollView.frame.size.width;
     CGFloat imageH = scrollView.frame.size.height;
-    for (int index = 0; index<3; index++) {
+    for (int index = 0; index<4; index++) {
         UIImageView *imageView = [[UIImageView alloc] init];
         
         // 设置图片
-        NSString *name = [NSString stringWithFormat:@"4-%d", index + 1];
+        NSString *name = [NSString stringWithFormat:@"yindaoye_%d", index + 1];
         imageView.image = [UIImage imageNamed:name];
         
         // 设置frame
@@ -86,17 +86,59 @@
         
         [scrollView addSubview:imageView];
         
-        // 在最后一个图片上面添加按钮
-        if (index == 3 - 1) {
-            [self setupLastImageView:imageView];
-        }
+//        // 在最后一个图片上面添加按钮
+//        if (index == 3 - 1) {
+//            [self setupLastImageView:imageView];
+//        }
+        
+        [self setupLastImageView];
     }
     
     // 3.设置滚动的内容尺寸
-    scrollView.contentSize = CGSizeMake(imageW * 3, 0);
+    scrollView.contentSize = CGSizeMake(imageW * 4, 0);
     scrollView.showsHorizontalScrollIndicator = NO;
     scrollView.pagingEnabled = YES;
     scrollView.bounces = NO;
+}
+
+/**
+ *  添加内容在所有图片上   改版后调用
+ */
+- (void)setupLastImageView
+{
+    UIImageView *bjImageView=[[UIImageView alloc] init];
+    bjImageView.image=[UIImage imageNamed:@"yindao_dibu"];
+    bjImageView.frame=CGRectMake(0, SCREEN_HEIGHT-61, SCREEN_WIDTH, 61);
+    [self.view addSubview:bjImageView];
+    
+    // 0.让imageView能跟用户交互
+    bjImageView.userInteractionEnabled = YES;
+
+    
+    
+    // 1.添加开始按钮
+    UIButton *startButton = [[UIButton alloc] init];
+    [startButton setBackgroundImage:[UIImage imageNamed:@"yindao_anniu"] forState:UIControlStateNormal];
+    
+    
+    
+    // 2.设置frame
+    CGFloat centerW =125;
+    CGFloat centerH =40;
+    CGFloat centerX = (bjImageView.frame.size.width -centerW)/2;
+    CGFloat centerY = (bjImageView.frame.size.height -centerH)/2;
+    
+    //startButton.center = CGPointMake(centerX, centerY);
+    //startButton.bounds = (CGRect){CGPointZero, startButton.currentBackgroundImage.size};
+    startButton.frame=CGRectMake(centerX, centerY, centerW, centerH);
+    // 3.设置文字
+    [startButton setTitle:@"立即开始" forState:UIControlStateNormal];
+    [startButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    /****************************************/
+    [startButton addTarget:self action:@selector(start) forControlEvents:UIControlEventTouchUpInside];
+    [bjImageView addSubview:startButton];
+
+
 }
 
 /**
@@ -199,12 +241,12 @@
     self.pageControl.currentPage = pageInt;
     
     
-    if (pageInt==2) {
-        self.pageControl.hidden=YES ;
-    }else
-    {
-        self.pageControl.hidden=NO;
-    }
+//    if (pageInt==2) {
+//        self.pageControl.hidden=YES ;
+//    }else
+//    {
+//        self.pageControl.hidden=NO;
+//    }
 }
 
 

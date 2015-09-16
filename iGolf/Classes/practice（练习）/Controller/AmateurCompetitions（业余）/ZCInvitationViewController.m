@@ -49,7 +49,7 @@
     
     if (self.isYes==YES) {
         ZCScorecardTableViewController *vc = self.navigationController.viewControllers[index-2];
-        //ZCScorecardTableViewController *vc=[[ZCScorecardTableViewController alloc] init];
+        
         [self.navigationController popToViewController:vc animated:YES
          ];
 
