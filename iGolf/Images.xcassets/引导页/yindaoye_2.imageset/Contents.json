@@ -6,8 +6,13 @@
     },
     {
       "idiom" : "universal",
+<<<<<<< HEAD
       "filename" : "yindaoye_2.png",
       "scale" : "2x"
+=======
+      "scale" : "2x",
+      "filename" : "yindaoye_2.png"
+>>>>>>> e129282d8441059599ed73b540d7aa0cf352eb84
     },
     {
       "idiom" : "universal",
