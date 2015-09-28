@@ -31,7 +31,7 @@
     CGFloat nameimageViewX=(SCREEN_WIDTH-nameimageViewW)/2;
     CGFloat nameimageViewY=SCREEN_HEIGHT*0.163;
     nameimageView.frame=CGRectMake(nameimageViewX, nameimageViewY, nameimageViewW, nameimageViewH);
-    nameimageView.image=[UIImage imageNamed:@"wenzi_logo"];
+    nameimageView.image=[UIImage imageNamed:@"woaigaoerfu_wenzi"];
     [self.view addSubview:nameimageView];
     
     

@@ -6,12 +6,13 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "yindaoye_2.png",
-      "scale" : "2x"
+      "scale" : "2x",
+      "filename" : "woaigaoerfu_wenzi@2x.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "woaigaoerfu_wenzi@3x.png"
     }
   ],
   "info" : {
